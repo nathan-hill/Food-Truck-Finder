@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {LoginData} from './LoginData'
 import {Page1Data} from './Page1Data'
 import {Page2Data} from './Page2Data'
+import LoginTest from './LoginPage'
 
 export class Home extends React.Component {
   render() {
@@ -29,7 +29,7 @@ export class Login extends React.Component {
   render() {
     return (
       <div>
-        <LoginData />
+        <LoginTest/>
       </div>
     );
   }
