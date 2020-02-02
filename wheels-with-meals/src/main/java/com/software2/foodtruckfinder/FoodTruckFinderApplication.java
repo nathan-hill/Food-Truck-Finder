@@ -1,4 +1,4 @@
-package com.example.foodtruckfinder;
+package com.software2.foodtruckfinder;
 
 
 import org.springframework.boot.SpringApplication;

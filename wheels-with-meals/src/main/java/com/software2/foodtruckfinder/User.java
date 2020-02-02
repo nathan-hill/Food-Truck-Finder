@@ -1,4 +1,4 @@
-package com.example.foodtruckfinder;
+package com.software2.foodtruckfinder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.example.foodtruckfinder;
+package com.software2.foodtruckfinder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
