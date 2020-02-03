@@ -30,11 +30,12 @@ export class Login extends React.Component {
     return (
       <div>
         This is the login page!
-        <LoginTest/>
+        
       </div>
     );
   }
 }
+//<LoginTest/>
 
 export class Page1 extends React.Component {
   render() {
