@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {Page1Data} from './Page1Data'
 import {Page2Data} from './Page2Data'
-import LoginTest from './LoginPage'
+// import LoginTest from './LoginPage'
 
 export class Home extends React.Component {
   render() {
     return (
       <div className="container padded">
-        This is the home page.
+        This is not the home page.
         <ul>
           <li>
             <Link to="/Page1">Page1</Link>
