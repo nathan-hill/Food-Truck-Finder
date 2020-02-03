@@ -29,6 +29,7 @@ export class Login extends React.Component {
   render() {
     return (
       <div>
+        This is the login page!
         <LoginTest/>
       </div>
     );
