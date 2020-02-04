@@ -66,6 +66,8 @@ buildSrc/build
 /src/asciidoc/build
 target/
 
+src/main/resources/application.properties
+
 # Eclipse artifacts, including WTP generated manifests
 .classpath
 .project
