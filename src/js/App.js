@@ -15,6 +15,7 @@ export default class App extends Component {
 					<Route exact path="/Login" component={Pages.Login} />
 					<Route exact path="/page1" component={Pages.Page1} />
 					<Route exact path="/page2" component={Pages.Page2} />
+					<Route exact path="/GoogleTest" component={Pages.GoogleTest} />
 				</div>
 			</HashRouter>
 		);
