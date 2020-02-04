@@ -48,6 +48,7 @@ export class Page1 extends React.Component {
 }
 
 export class Page2 extends React.Component {
+  
   render() {
     return (
       <div>
