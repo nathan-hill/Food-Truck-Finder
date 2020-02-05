@@ -26,37 +26,14 @@ export class Home extends React.Component {
   }
 }
 
-function generateUserList() {
-  var requestData = []
-  axios({
-    method: "get",
-    url: "http://localhost:8080/demo/all",
-    headers: {
-      "content-type": "application/json",
-      Accept: "application/json"
-    }
-  })
-    .then(function(response) {
-      console.log(response.data);
-      requestData = response.data;
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-
-    return requestData;
-}
-
 export class DatabaseListing extends React.Component {
   constructor(props) {
     super(props);
-
-    var userList = generateUserList();
     console.log("here")
-    console.log(userList);
+    console.log(this.userList);
 
-    if (userList !== "undefined") {
-      userList = [];
+    if (this.userList !== "undefined") {
+      this.userList = [];
     }
 
     var method = function(){
@@ -64,8 +41,31 @@ export class DatabaseListing extends React.Component {
     }
 
     this.state = {
-      users: userList, things: ["a", "b"],
+      users: this.userList, things: ["a", "b"],
     };
+
+    this.addUser = this.addUser.bind(this);
+    this.generateUserList = this.generateUserList.bind(this);
+  }
+
+  generateUserList() {
+    var requestData = []
+    axios({
+      method: "get",
+      url: "http://localhost:8080/demo/all",
+      headers: {
+        "content-type": "application/json",
+        Accept: "application/json"
+      }
+    })
+      .then(function(response) {
+        console.log(response.data);
+        requestData = response.data;
+        return requestData;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   addUser(e) {
@@ -87,8 +87,8 @@ export class DatabaseListing extends React.Component {
     })
       .then(function(response) {
         //console.log(response);
-        var newUsers = generateUserList();
-        console.log(generateUserList());
+        var newUsers = this.generateUserList();
+        console.log(newUsers);
         this.setState({ users: newUsers });
       })
       .catch(function(error) {
