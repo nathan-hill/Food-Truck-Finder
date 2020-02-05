@@ -5,7 +5,6 @@ export class Page2Data extends Component {
         return (
             <div>
                 page 2
-                Suprize wuhan
             </div>
         )
     }
