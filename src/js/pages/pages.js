@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {Page1Data} from './Page1Data'
 import {Page2Data} from './Page2Data'
-// import LoginTest from './LoginPage'
+import LoginTest from './LoginPage'
 
 export class Home extends React.Component {
   render() {
@@ -14,7 +14,7 @@ export class Home extends React.Component {
             <Link to="/Page1">Page1</Link>
           </li>
           <li>
-            <Link to="/Page2">Page2</Link>
+            <Link to="/Page2">Login Component</Link>
           </li>
           <li>
               <Link to="/Login">Login</Link>
@@ -51,7 +51,7 @@ export class Page2 extends React.Component {
   render() {
     return (
       <div>
-        <Page2Data />
+        <LoginTest />
       </div>
     );
   }
