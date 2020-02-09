@@ -7,6 +7,7 @@ import * as Pages from './pages/pages';
 
 
 export default class App extends Component {
+	
     render() {
         return (
 			<HashRouter>

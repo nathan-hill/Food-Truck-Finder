@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {Page1Data} from './Page1Data'
 import {Page2Data} from './Page2Data'
-import SimpleMap from "./GoogleTest";
+import SimpleMap  from "./GoogleTest";
+
 // import LoginTest from './LoginPage'
 
 export class Home extends React.Component {
@@ -66,9 +67,9 @@ export class GoogleTest extends React.Component {
   
   render() {
     return (
-      <div>
-        <SimpleMap />
-      </div>
+        <div>
+          <SimpleMap />
+        </div>
     );
-  }
+   }
 }

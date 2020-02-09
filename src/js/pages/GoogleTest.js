@@ -1,35 +1,41 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import { geolocated } from "react-geolocated";
  
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
  
 class SimpleMap extends Component {
-  static defaultProps = {
-    center: {
-      lat: 31.54,
-      lng: -97.14
-    },
-    zoom: 11
-  };
  
   render() {
-    return (
+    return !this.props.isGeolocationAvailable ? (
+      <div>Your browser does not support Geolocation</div>
+  ) : !this.props.isGeolocationEnabled ? (
+      <div>Geolocation is not enabled</div>
+  ) : this.props.coords ? (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyCE0anFhOri3B98esx3V6i46vfSezirX_k'}}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
+          //bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+          defaultCenter={[this.props.coords.latitude, 
+          this.props.coords.longitude]}
+          defaultZoom={11}
         >
           <AnyReactComponent
-            lat={31.5493}
-            lng={-97.1467}
-            text="Oh hi Mark"
+            lat={59.955413}
+            lng={30.337844}
+            text="My Marker"
           />
         </GoogleMapReact>
       </div>
-    );
+    ) : (
+      <div>Getting the location data&hellip; </div>
+  );
   }
 }
  
-export default SimpleMap;
+export default geolocated({
+  positionOptions: {
+      enableHighAccuracy: false,
+  },
+  userDecisionTimeout: 5000,
+})(SimpleMap);
