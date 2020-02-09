@@ -1,6 +1,6 @@
 # Deploy Site
 
-https://wheels-with-meals.herokuapp.com/
+https://dashboard.heroku.com/apps/wheels-with-meals-frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
