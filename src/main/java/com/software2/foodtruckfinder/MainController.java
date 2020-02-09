@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+@CrossOrigin
 @Controller // This means that this class is a Controller
-@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path this is assigned to
+@RequestMapping(path = "/demo") // This means URL's start with /demo (after Application path this is assigned to
 // apply to the entire class)
 public class MainController {
     @Autowired // This means to get the bean called userRepository
@@ -24,8 +28,9 @@ public class MainController {
         return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
+    @GetMapping(path = "/all")
+    public @ResponseBody
+    Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
     }

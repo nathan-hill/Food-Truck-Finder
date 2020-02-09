@@ -8,7 +8,6 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '13'
 
-ext['spring.version']='5.2.1.RELEASE'
 
 repositories {
 	mavenCentral()
