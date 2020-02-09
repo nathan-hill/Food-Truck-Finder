@@ -52,7 +52,7 @@ export class DatabaseListing extends React.Component {
     var requestData = []
     axios({
       method: "get",
-      url: "http://localhost:8080/demo/all",
+      url: "https://wheels-with-meals-backend.herokuapp.com/demo/all",
       headers: {
         "content-type": "application/json",
         Accept: "application/json"
@@ -78,7 +78,7 @@ export class DatabaseListing extends React.Component {
 
     axios({
       method: "post",
-      url: "http://localhost:8080/demo/add",
+      url: "https://wheels-with-meals-backend.herokuapp.com/demo/add",
       data: user,
       headers: {
         "content-type": "application/json",
