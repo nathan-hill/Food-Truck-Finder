@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+
+// import LoginTest from './LoginPage'
+
 import { TwoFieldForm } from "../components/TwoFieldForm";
 import  LoginPage  from "./LoginPage";
 import axios from "axios";
+import SimpleMap  from "./GoogleTest";
+
 
 export class Home extends React.Component {
   render() {
@@ -15,6 +21,9 @@ export class Home extends React.Component {
           </li>
           <li>
             <Link to="/loginpage"> Log In </Link>
+          </li>
+          <li>
+              <Link to="/GoogleTest">GoogleTest</Link>
           </li>
         </ul>
       </div>
@@ -115,7 +124,9 @@ export class DatabaseListing extends React.Component {
   }
 }
 
+
 export class Login extends React.Component {
+
   render() {
     return (
       <div>
@@ -124,4 +135,15 @@ export class Login extends React.Component {
       </div>
     );
   }
+}
+
+export class GoogleTest extends React.Component {
+  
+  render() {
+    return (
+        <div>
+          <SimpleMap />
+        </div>
+    );
+   }
 }
