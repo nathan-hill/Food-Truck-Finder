@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Page1Data } from "./Page1Data";
-import { Page2Data } from "./Page2Data";
 import { TwoFieldForm } from "../components/TwoFieldForm";
+import  LoginPage  from "./LoginPage";
 import axios from "axios";
 
 export class Home extends React.Component {
@@ -12,13 +11,10 @@ export class Home extends React.Component {
         This is not the home page.
         <ul>
           <li>
-            <Link to="/Page1">Page1</Link>
-          </li>
-          <li>
-            <Link to="/Page2">Page2</Link>
-          </li>
-          <li>
             <Link to="/Request">Request from DB</Link>
+          </li>
+          <li>
+            <Link to="/loginpage"> Log In </Link>
           </li>
         </ul>
       </div>
@@ -29,19 +25,20 @@ export class Home extends React.Component {
 export class DatabaseListing extends React.Component {
   constructor(props) {
     super(props);
-    console.log("here")
+    console.log("here");
     console.log(this.userList);
 
     if (this.userList !== "undefined") {
       this.userList = [];
     }
 
-    var method = function(){
+    var method = function() {
       console.log(this.userList);
-    }
+    };
 
     this.state = {
-      users: this.userList, things: ["a", "b"],
+      users: this.userList,
+      things: ["a", "b"]
     };
 
     this.addUser = this.addUser.bind(this);
@@ -49,7 +46,7 @@ export class DatabaseListing extends React.Component {
   }
 
   generateUserList() {
-    var requestData = []
+    var requestData = [];
     axios({
       method: "get",
       url: "https://wheels-with-meals-backend.herokuapp.com/demo/all",
@@ -118,23 +115,12 @@ export class DatabaseListing extends React.Component {
   }
 }
 
-export class Page1 extends React.Component {
+export class Login extends React.Component {
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <Page1Data />
-      </div>
-    );
-  }
-}
-
-export class Page2 extends React.Component {
-  render() {
-    return (
-      <div>
-        <Link to="/">Back</Link>
-        <Page2Data />
+        <LoginPage />
       </div>
     );
   }
