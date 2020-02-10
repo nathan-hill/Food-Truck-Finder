@@ -19,10 +19,10 @@ export function getAllUsers() {
 export function logInUser(u) {
   const request = {
     method: "GET",
-    data: { email: u.email, password: u.password },
     url: backend_url + "login/",
-    headers: { "content-type": "application/json" }
-  };
+    data: u, 
+    headers: { "content-type": "application/json", Accept: "application/json" }
+  }
 
   console.log(request);
 
@@ -36,15 +36,16 @@ export function logInUser(u) {
 }
 
 export function postNewUser(u) {
-  axios({
+  const request = {
     method: "POST",
     url: backend_url + "users/add/",
-    data: {
-      email: u.email,
-      password: u.password
-    },
+    data: u,
     headers: { "content-type": "application/json", Accept: "application/json" }
-  })
+  }
+
+  console.log(request);
+
+  axios(request)
     .then(function(response) {
       console.log(response.data);
     })

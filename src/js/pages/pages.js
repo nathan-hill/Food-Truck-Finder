@@ -30,7 +30,8 @@ export class Home extends React.Component {
   }
 }
 
-const sendFormData = function(e) {
+const sendFormDataPostNewUser = function(e) {
+  e.preventDefault();
   const user = {
     email: e.target.elements.email.value,
     password: e.target.elements.password.value
@@ -47,7 +48,7 @@ export class DatabaseListing extends React.Component {
       <div>
         <Link to="/loginpage/">Back</Link>
         <TwoFieldForm
-          action={sendFormData}
+          action={sendFormDataPostNewUser}
           fieldOne={"email:"}
           fieldTwo={"password:"}
           buttonLabel={"Submit"}
@@ -56,6 +57,17 @@ export class DatabaseListing extends React.Component {
     );
   }
 }
+
+const sendFormDataLoginUser = function(e) {
+  e.preventDefault();
+
+  const user = {
+    email: e.target.elements.email.value,
+    password: e.target.elements.password.value
+  };
+
+  Request.logInUser(user);
+};
 
 export class Login extends React.Component {
   constructor(props) {
@@ -67,24 +79,11 @@ export class Login extends React.Component {
     };
   }
 
-  loginUser(e) {
-    e.preventDefault();
-
-    const user = {
-      email: e.target.elements.email.value,
-      password: e.target.elements.password.value
-    };
-
-    console.log("the fields contain -> ");
-    console.log(user);
-    Request.logInUser(user);
-  }
-
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <LoginPage action={this.loginUser} />
+        <LoginPage action={sendFormDataLoginUser} />
       </div>
     );
   }
