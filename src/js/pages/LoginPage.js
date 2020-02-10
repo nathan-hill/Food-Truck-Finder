@@ -14,6 +14,25 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
+    }
+
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+  }
+
+  onChange(e) {
+    this.setState({[e.target.name]: e.target.value});
+  }
+
   render() {
     const classes = makeStyles();
     return (
@@ -26,7 +45,7 @@ class LoginPage extends React.Component {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={this.onSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
