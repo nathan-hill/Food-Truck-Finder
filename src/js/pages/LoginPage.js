@@ -13,6 +13,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+function consoleTest(e){
+  e.preventDefault();
+  console.log("ehllo");
+};
+
 class LoginPage extends React.Component {
   render() {
     const classes = makeStyles();
@@ -26,7 +31,7 @@ class LoginPage extends React.Component {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={this.props.action}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -69,7 +74,7 @@ class LoginPage extends React.Component {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#/Request/" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

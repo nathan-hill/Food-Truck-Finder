@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 // import LoginTest from './LoginPage'
 
 import { TwoFieldForm } from "../components/TwoFieldForm";
-import  LoginPage  from "./LoginPage";
+import LoginPage from "./LoginPage";
 import axios from "axios";
-import SimpleMap  from "./GoogleTest";
-
+import SimpleMap from "./GoogleTest";
+import * as Request from "../helpers/backendRequests";
 
 export class Home extends React.Component {
   render() {
@@ -23,7 +22,7 @@ export class Home extends React.Component {
             <Link to="/loginpage"> Log In </Link>
           </li>
           <li>
-              <Link to="/GoogleTest">GoogleTest</Link>
+            <Link to="/GoogleTest">GoogleTest</Link>
           </li>
         </ul>
       </div>
@@ -31,119 +30,72 @@ export class Home extends React.Component {
   }
 }
 
+const sendFormData = function(e) {
+  const user = {
+    email: e.target.elements.email.value,
+    password: e.target.elements.password.value
+  };
+
+  console.log(user);
+
+  return Request.postNewUser(user);
+};
+
 export class DatabaseListing extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log("here");
-    console.log(this.userList);
-
-    if (this.userList !== "undefined") {
-      this.userList = [];
-    }
-
-    var method = function() {
-      console.log(this.userList);
-    };
-
-    this.state = {
-      users: this.userList,
-      things: ["a", "b"]
-    };
-
-    this.addUser = this.addUser.bind(this);
-    this.generateUserList = this.generateUserList.bind(this);
-  }
-
-  generateUserList() {
-    var requestData = [];
-    axios({
-      method: "get",
-      url: "https://wheels-with-meals-backend.herokuapp.com/demo/all",
-      headers: {
-        "content-type": "application/json",
-        Accept: "application/json"
-      }
-    })
-      .then(function(response) {
-        console.log(response.data);
-        requestData = response.data;
-        return requestData;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
-
-  addUser(e) {
-    e.preventDefault();
-
-    const user = {
-      name: e.target.elements.name.value,
-      email: e.target.elements.email.value
-    };
-
-    axios({
-      method: "post",
-      url: "https://wheels-with-meals-backend.herokuapp.com/demo/add",
-      data: user,
-      headers: {
-        "content-type": "application/json",
-        Accept: "application/json"
-      }
-    })
-      .then(function(response) {
-        //console.log(response);
-        var newUsers = this.generateUserList();
-        console.log(newUsers);
-        this.setState({ users: newUsers });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
-
   render() {
     return (
       <div>
-        <Link to="/">Back</Link>
+        <Link to="/loginpage/">Back</Link>
         <TwoFieldForm
-          action={this.addUser}
-          fieldOne={"Name:"}
-          fieldTwo={"Email:"}
+          action={sendFormData}
+          fieldOne={"email:"}
+          fieldTwo={"password:"}
           buttonLabel={"Submit"}
         />
-        <br />
-        Users Currently Registered
-        <ul>
-          {this.state.users.map(useritem => (
-            <li>{useritem.name}</li>
-          ))}
-        </ul>
       </div>
     );
   }
 }
 
-
 export class Login extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
+
+  loginUser(e) {
+    e.preventDefault();
+
+    const user = {
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value
+    };
+
+    console.log("the fields contain -> ");
+    console.log(user);
+    Request.logInUser(user);
+  }
 
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <LoginPage />
+        <LoginPage action={this.loginUser} />
       </div>
     );
   }
 }
 
 export class GoogleTest extends React.Component {
-  
   render() {
     return (
-        <div>
-          <SimpleMap />
-        </div>
+      <div>
+        <SimpleMap />
+      </div>
     );
-   }
+  }
 }
