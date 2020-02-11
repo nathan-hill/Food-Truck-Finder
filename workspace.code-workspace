@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
+
 		"files.exclude": {
 			"**/.classpath": true,
 			"**/.project": true,
@@ -12,5 +13,6 @@
 			"**/.factorypath": true
 		},
 		"java.configuration.updateBuildConfiguration": "automatic"
+
 	}
 }
