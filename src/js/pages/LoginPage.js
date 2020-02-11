@@ -12,13 +12,18 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { connect } from "react-redux";
+import { login } from "../actions/login";
+import PropTypes from "prop-types";
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      errors: {},
+      isLoading: false
     }
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -27,6 +32,12 @@ class LoginPage extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+
+    this.setState({isLoading: true})
+    this.props.login(this.state).then(
+        (res) => this.context.router.push('/'),
+        (err) => this.setState({errors: err.data.errors, isLoading: false})
+    );
   }
 
   onChange(e) {
@@ -34,6 +45,7 @@ class LoginPage extends React.Component {
   }
 
   render() {
+    const { errors, username, password, isLoading } = this.state;
     const classes = makeStyles();
     return (
       <Container component="main" maxWidth="xs">
@@ -55,6 +67,7 @@ class LoginPage extends React.Component {
               label="Username"
               name="username"
               autoComplete="username"
+              error={errors.username}
               autoFocus
             />
             <TextField
@@ -65,6 +78,7 @@ class LoginPage extends React.Component {
               name="password"
               label="Password"
               type="password"
+              error={errors.password}
               id="password"
               autoComplete="current-password"
             />
@@ -78,6 +92,7 @@ class LoginPage extends React.Component {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={isLoading}
             >
               Sign In
             </Button>
@@ -120,4 +135,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default LoginPage;
+LoginPage.propTypes = {
+    login: PropTypes.func.isRequired
+}
+
+LoginPage.contextTypes = {
+    router: PropTypes.object.isRequired
+}
+
+export default connect(null, { login })(LoginPage);
