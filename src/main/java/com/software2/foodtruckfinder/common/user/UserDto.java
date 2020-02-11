@@ -7,9 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import alloy.util.Momento;
 
-/**
- * Created by jlutteringer on 8/23/17.
- */
 public class UserDto implements Momento<String> {
     private Long id;
     private String principal;
