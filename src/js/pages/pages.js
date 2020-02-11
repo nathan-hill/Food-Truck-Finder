@@ -66,6 +66,8 @@ const sendFormDataLoginUser = function(e) {
     password: e.target.elements.password.value
   };
 
+  console.log(user);
+
   Request.logInUser(user);
 };
 
