@@ -1,9 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Page1Data } from "./Page1Data";
-import { Page2Data } from "./Page2Data";
+
+
+// import LoginTest from './LoginPage'
+
 import { TwoFieldForm } from "../components/TwoFieldForm";
+import  LoginPage  from "./LoginPage";
 import axios from "axios";
+import SimpleMap  from "./GoogleTest";
+
 
 export class Home extends React.Component {
   render() {
@@ -12,13 +17,13 @@ export class Home extends React.Component {
         This is not the home page.
         <ul>
           <li>
-            <Link to="/Page1">Page1</Link>
-          </li>
-          <li>
-            <Link to="/Page2">Page2</Link>
-          </li>
-          <li>
             <Link to="/Request">Request from DB</Link>
+          </li>
+          <li>
+            <Link to="/loginpage"> Log In </Link>
+          </li>
+          <li>
+              <Link to="/GoogleTest">GoogleTest</Link>
           </li>
         </ul>
       </div>
@@ -26,46 +31,47 @@ export class Home extends React.Component {
   }
 }
 
-function generateUserList() {
-  var requestData = []
-  axios({
-    method: "get",
-    url: "http://localhost:8080/demo/all",
-    headers: {
-      "content-type": "application/json",
-      Accept: "application/json"
-    }
-  })
-    .then(function(response) {
-      console.log(response.data);
-      requestData = response.data;
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-
-    return requestData;
-}
-
 export class DatabaseListing extends React.Component {
   constructor(props) {
     super(props);
+    console.log("here");
+    console.log(this.userList);
 
-    var userList = generateUserList();
-    console.log("here")
-    console.log(userList);
-
-    if (userList !== "undefined") {
-      userList = [];
+    if (this.userList !== "undefined") {
+      this.userList = [];
     }
 
-    var method = function(){
+    var method = function() {
       console.log(this.userList);
-    }
+    };
 
     this.state = {
-      users: userList, things: ["a", "b"],
+      users: this.userList,
+      things: ["a", "b"]
     };
+
+    this.addUser = this.addUser.bind(this);
+    this.generateUserList = this.generateUserList.bind(this);
+  }
+
+  generateUserList() {
+    var requestData = [];
+    axios({
+      method: "get",
+      url: "https://wheels-with-meals-backend.herokuapp.com/demo/all",
+      headers: {
+        "content-type": "application/json",
+        Accept: "application/json"
+      }
+    })
+      .then(function(response) {
+        console.log(response.data);
+        requestData = response.data;
+        return requestData;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   addUser(e) {
@@ -78,7 +84,7 @@ export class DatabaseListing extends React.Component {
 
     axios({
       method: "post",
-      url: "http://localhost:8080/demo/add",
+      url: "https://wheels-with-meals-backend.herokuapp.com/demo/add",
       data: user,
       headers: {
         "content-type": "application/json",
@@ -87,8 +93,8 @@ export class DatabaseListing extends React.Component {
     })
       .then(function(response) {
         //console.log(response);
-        var newUsers = generateUserList();
-        console.log(generateUserList());
+        var newUsers = this.generateUserList();
+        console.log(newUsers);
         this.setState({ users: newUsers });
       })
       .catch(function(error) {
@@ -118,24 +124,26 @@ export class DatabaseListing extends React.Component {
   }
 }
 
-export class Page1 extends React.Component {
+
+export class Login extends React.Component {
+
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <Page1Data />
+        <LoginPage />
       </div>
     );
   }
 }
 
-export class Page2 extends React.Component {
+export class GoogleTest extends React.Component {
+  
   render() {
     return (
-      <div>
-        <Link to="/">Back</Link>
-        <Page2Data />
-      </div>
+        <div>
+          <SimpleMap />
+        </div>
     );
-  }
+   }
 }
