@@ -1,9 +1,10 @@
 package com.software2.foodtruckfinder.secure.security;
 
 
+import com.software2.foodtruckfinder.User;
+import com.software2.foodtruckfinder.UserRepository;
 import com.software2.foodtruckfinder.secure.exception.ResourceNotFoundException;
-import com.software2.foodtruckfinder.secure.model.User;
-import com.software2.foodtruckfinder.secure.repo.UserRepository;
+//import com.software2.foodtruckfinder.secure.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(
+        User user = userRepository.findById(Math.toIntExact(id)).orElseThrow(
                 () -> new ResourceNotFoundException("User", "id", id)
         );
 
