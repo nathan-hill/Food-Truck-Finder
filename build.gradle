@@ -19,7 +19,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.4.RELEASE'
-
+	compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
 	compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
 	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.4.0.RELEASE'
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
