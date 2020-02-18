@@ -72,6 +72,8 @@ class LoginPage extends React.Component {
               label="Username"
               name="username"
               autoComplete="username"
+              value={username}
+              onChange={this.onChange}
               error={errors.username}
               autoFocus
             />
@@ -83,6 +85,8 @@ class LoginPage extends React.Component {
               name="password"
               label="Password"
               type="password"
+              value={password}
+              onChange={this.onChange}
               error={errors.password}
               id="password"
               autoComplete="current-password"
