@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //const backend_url = "http://localhost:8080/v/";
-const backend_url = "http://wheels-with-meals-frontend.herokuapp.com/v/"
+const backend_url = "http://wheels-with-meals-backend.herokuapp.com/v/"
 
 const request_headers =
   "Access-Control-Allow-Origin: " *
