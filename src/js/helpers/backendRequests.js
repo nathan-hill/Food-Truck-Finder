@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const backend_url = "http://localhost:8080/v/";
+//const backend_url = "http://localhost:8080/v/";
+const backend_url = "http://wheels-with-meals-frontend.herokuapp.com/v/"
 
 const request_headers =
   "Access-Control-Allow-Origin: " *
@@ -24,9 +25,11 @@ export function getAllUsers() {
     });
 }
 
+
+
 export function logInUser(u) {
   axios
-    .get(backend_url + "login/", {
+    .post(backend_url + "login/", {
       data: {
         'email': u.email,
         'password': u.password
