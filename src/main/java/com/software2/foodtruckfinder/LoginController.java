@@ -12,14 +12,15 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping(path = "/")
+    @PostMapping(path = "/")
     public @ResponseBody
     ResponseEntity<User> validateUser(@RequestBody User loginUser) {
 
-        System.out.println(loginUser.getEmail() + loginUser.getEmail());
+        System.out.print(loginUser.getEmail() + " "  + loginUser.getEmail());
         // This returns a JSON or XML with the users
         Iterable<User> users = userRepository.findAll();
         for (User user : users) {
+            System.out.println(" ?== " + user.getEmail() + " " + user.getPassword());
             if (user.getEmail().equals(loginUser.getEmail()) && user.getPassword().equals(loginUser.getPassword())) {
                 return ResponseEntity.ok().body(user);
             }

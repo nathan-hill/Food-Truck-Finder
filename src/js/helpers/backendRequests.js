@@ -25,15 +25,12 @@ export function getAllUsers() {
     });
 }
 
-
-
 export function logInUser(u) {
   axios
     .post(backend_url + "login/", {
-      data: {
-        'email': u.email,
-        'password': u.password
-      },
+      email: u.email,
+      password: u.password,
+      id: "",
       headers: {
         "Access-Control-Allow-Origin": "*",
         "content-type": "application/json",
@@ -41,28 +38,14 @@ export function logInUser(u) {
       }
     })
     .then(function(response) {
-      console.log(response.data);
+      //console.log(response.data);
+        console.log(response.data)
+        return response.data;
     })
     .catch(function(error) {
       console.log(error);
+      //show error
     });
-
-  // const request = {
-  //   method: "GET",
-  //   url: backend_url + "login",
-  //   data: u,
-  //   headers: { 'Access-Control-Allow-Origin': '*', 'content-type': 'application/json', 'Accept': 'application/json' }
-  // };
-
-  // console.log(request);
-
-  // axios(request)
-  //   .then(function(response) {
-  //     console.log(response.data);
-  //   })
-  //   .catch(function(error) {
-  //     console.log(error);
-  //   });
 }
 
 export function postNewUser(u) {

@@ -68,24 +68,29 @@ const sendFormDataLoginUser = function(e) {
 
   console.log(user);
 
-  Request.logInUser(user);
+  var requestData = Request.logInUser(user);
+
+  console.log(requestData);
+
 };
 
 export class Login extends React.Component {
   constructor(props) {
     super(props);
 
+
     this.state = {
-      email: "",
-      password: ""
+      redirect: "",
     };
+
+    this.sendFormDataLoginUser = sendFormDataLoginUser.bind(this);
   }
 
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <LoginPage action={sendFormDataLoginUser} />
+        <LoginPage action={sendFormDataLoginUser} redirect={this.state.redirect}/>
       </div>
     );
   }
