@@ -34,7 +34,8 @@ const sendFormDataPostNewUser = function(e) {
   e.preventDefault();
   const user = {
     email: e.target.elements.email.value,
-    password: e.target.elements.password.value
+    password: e.target.elements.password.value,
+    id: ""
   };
 
   console.log(user);

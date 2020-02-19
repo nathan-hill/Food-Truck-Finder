@@ -12,8 +12,6 @@ public class User {
     @NotNull
     private String password;
 
-
-
     public String getEmail() {
         return email;
     }
