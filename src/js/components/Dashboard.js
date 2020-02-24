@@ -163,7 +163,7 @@ export default function Dashboard() {
         <List>{mainListItems}</List>
         <Divider />
         <List component="nav">
-          <Link href="/TestRouting" passHref>
+          <Link href="/TestRouting" passhref>
             {secondaryListItems}
           </Link>
         </List>

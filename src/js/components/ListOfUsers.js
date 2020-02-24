@@ -3,6 +3,7 @@ import * as Request from "./../helpers/backendRequests";
 
 export class ListOfUsers extends Component {
   constructor(props) {
+      console.log("Hello")
     super(props);
 
     this.state = {
@@ -10,17 +11,28 @@ export class ListOfUsers extends Component {
     };
   }
 
-  async onComponentDidMount() {
-    var users = await Request.getAllUsers();
-
-    this.setState({ users: users });
+  componentWillReceiveProps(props) {
+  const { refresh } = this.props;
+  if (props.refresh !== refresh) {
+    Request.getAllUsers()
+      .then(function(r){
+          this.setState({users: r.data})
+      })
   }
+}
+
+//   async componentDidMount() {
+//       console.log("Mounted")
+//     var users = await Request.getAllUsers();
+
+//     this.setState({ users: users });
+//   }
 
   render() {
     return (
       <div>
-        {this.state.users.map(u => (
-          <p>u</p>
+        {this.props.users.map(u => (
+          <p>{u.email} {u.password}</p>
         ))}
       </div>
     );
