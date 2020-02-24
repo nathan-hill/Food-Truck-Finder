@@ -1,56 +1,41 @@
-//package com.software2.foodtruckfinder.secure.controller;
-//
-//import com.software2.foodtruckfinder.secure.exception.ResourceNotFoundException;
-//import com.software2.foodtruckfinder.secure.model.User;
-//import com.software2.foodtruckfinder.secure.payload.UserIdentityAvailability;
-//import com.software2.foodtruckfinder.secure.payload.UserProfile;
-//import com.software2.foodtruckfinder.secure.payload.UserSummary;
-//import com.software2.foodtruckfinder.secure.repo.UserRepository;
-//import com.software2.foodtruckfinder.secure.security.CurrentUser;
-//import com.software2.foodtruckfinder.secure.security.UserPrincipal;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.web.bind.annotation.*;
-//
-//@RestController
-//@RequestMapping("/api")
-//public class UserController {
-//
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//
-//
-//    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-//
-//    @GetMapping("/user/me")
-//    @PreAuthorize("hasRole('USER')")
-//    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-//        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-//        return userSummary;
-//    }
-//
-//    @GetMapping("/user/checkUsernameAvailability")
-//    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
-//        Boolean isAvailable = !userRepository.existsByUsername(username);
-//        return new UserIdentityAvailability(isAvailable);
-//    }
-//
-//    @GetMapping("/user/checkEmailAvailability")
-//    public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
-//        Boolean isAvailable = !userRepository.existsByEmail(email);
-//        return new UserIdentityAvailability(isAvailable);
-//    }
-//
-//    @GetMapping("/users/{username}")
-//    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
-//        User user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-//
-//        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt());
-//
-//        return userProfile;
-//    }
-//}
+package com.software2.foodtruckfinder.secure.controller;
+
+import com.software2.foodtruckfinder.secure.model.User;
+import com.software2.foodtruckfinder.secure.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@CrossOrigin
+@Controller // This means that this class is a Controller
+@RequestMapping(path = "/v/users")
+public class UserController {
+    @Autowired
+    private UserRepository userRepository;
+
+    @PostMapping(path = "add")
+    public @ResponseBody
+    ResponseEntity<User> addNewUser(@RequestBody User newUser) {
+        User n = new User();
+        n.setEmail(newUser.getEmail());
+        n.setPassword(newUser.getPassword());
+        User generatedUser = userRepository.save(n);
+        return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/")
+    public @ResponseBody
+    Iterable<User> getAllUsers() {
+        // This returns a JSON or XML with the users
+        return userRepository.findAll();
+    }
+
+    @DeleteMapping(path = "delete")
+    public @ResponseBody
+    Boolean deleteAllUsers() {
+        userRepository.deleteAll();
+        return true;
+    }
+}

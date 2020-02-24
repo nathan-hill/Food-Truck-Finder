@@ -1,7 +1,7 @@
 package com.software2.foodtruckfinder.secure.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.software2.foodtruckfinder.User;
+import com.software2.foodtruckfinder.secure.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
 
 public class UserPrincipal implements UserDetails {
     private Long id;
@@ -26,27 +27,22 @@ public class UserPrincipal implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String name, String username, String email, String password) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.authorities = authorities;
     }
 
     public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getRoleName())
-        ).collect(Collectors.toList());
 
         return new UserPrincipal(
                 user.getId(),
                 user.getName(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getPassword(),
-                authorities
+                user.getPassword()
         );
     }
 
@@ -111,3 +107,4 @@ public class UserPrincipal implements UserDetails {
         return Objects.hash(id);
     }
 }
+

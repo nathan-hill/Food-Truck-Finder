@@ -1,19 +1,14 @@
 package com.software2.foodtruckfinder.secure.controller;
 
-
-
-import com.software2.foodtruckfinder.User;
-import com.software2.foodtruckfinder.UserRepository;
 import com.software2.foodtruckfinder.secure.exception.AppException;
-import com.software2.foodtruckfinder.secure.model.RoleName;
+import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.payload.ApiResponse;
 import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
 import com.software2.foodtruckfinder.secure.payload.LoginRequest;
 import com.software2.foodtruckfinder.secure.payload.SignUpRequest;
-import com.software2.foodtruckfinder.secure.repo.RoleRepository;
+import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,27 +22,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.management.relation.Role;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Qualifier("org.springframework.security.authenticationManager")
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -89,11 +77,6 @@ public class AuthController {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow(() -> new AppException("User Role not set."));
-
-        user.setRoles(Collections.singleton(userRole));
-
         User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
@@ -103,3 +86,4 @@ public class AuthController {
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 }
+

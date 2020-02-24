@@ -1,18 +1,16 @@
-package com.software2.foodtruckfinder;
+package com.software2.foodtruckfinder.secure.model;
 
 import com.software2.foodtruckfinder.secure.audit.DateAudit;
 import org.hibernate.annotations.NaturalId;
-import javax.management.relation.Role;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Entity
-@Table(name = "user", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
         }),
@@ -42,12 +40,6 @@ public class User extends DateAudit {
     @NotBlank
     @Size(max = 100)
     private String password;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
 
     public User() {
 
@@ -100,11 +92,4 @@ public class User extends DateAudit {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }
