@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Dashboard from './../components/Dashboard'
 
 import { TwoFieldForm } from "../components/TwoFieldForm";
-import LoginPage from "./LoginPage";
-import axios from "axios";
-import SimpleMap from "./GoogleTest";
+import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
+import ListOfUsers from "./../components/ListOfUsers"
 
-export class Home extends React.Component {
+export class TestRouting extends React.Component {
   render() {
     return (
       <div className="container padded">
@@ -20,7 +20,7 @@ export class Home extends React.Component {
             <Link to="/loginpage"> Log In </Link>
           </li>
           <li>
-            <Link to="/GoogleTest">GoogleTest</Link>
+            <Link to="/Dashboard">Dashboard</Link>
           </li>
         </ul>
       </div>
@@ -51,6 +51,8 @@ export class DatabaseListing extends React.Component {
           fieldTwo={"password:"}
           buttonLabel={"Submit"}
         />
+        <h3>List Of Users</h3>
+        <ListOfUsers/>
       </div>
     );
   }
@@ -94,11 +96,11 @@ export class Login extends React.Component {
   }
 }
 
-export class GoogleTest extends React.Component {
+export class Home extends React.Component {
   render() {
     return (
       <div>
-        <SimpleMap />
+        <Dashboard />
       </div>
     );
   }
