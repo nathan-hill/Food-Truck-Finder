@@ -15,11 +15,13 @@ import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import { login } from "../actions/login";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 
 function consoleTest(e){
   e.preventDefault();
   console.log("ehllo");
 };
+
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -36,11 +38,12 @@ class LoginPage extends React.Component {
   }
 
   onSubmit(e) {
+
     e.preventDefault();
 
     this.setState({isLoading: true})
     this.props.login(this.state).then(
-        (res) => this.context.router.push('/'),
+        (res) => this.props.history.push("/"),
         (err) => this.setState({errors: {}, isLoading: false})
     );
   }
@@ -145,11 +148,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 LoginPage.propTypes = {
-    login: PropTypes.func.isRequired
-}
+    login: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
+};
 
-LoginPage.contextTypes = {
-    router: PropTypes.object.isRequired
-}
-
-export default connect(null, { login })(LoginPage);
+export default connect(null, { login })(withRouter(LoginPage));

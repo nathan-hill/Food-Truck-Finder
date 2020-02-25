@@ -25,10 +25,7 @@ export function login(data) {
         Accept: "application/json"
     };
 
-    data.data = {
-        "usernameOrEmail" : data.username,
-        "password" : data.password
-    };
+    data.usernameOrEmail = data.username;
 
     console.log(data);
 
