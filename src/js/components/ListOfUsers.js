@@ -3,7 +3,6 @@ import * as Request from "./../helpers/backendRequests";
 
 export class ListOfUsers extends Component {
   constructor(props) {
-    console.log("Hello");
     super(props);
 
     this.state = {
