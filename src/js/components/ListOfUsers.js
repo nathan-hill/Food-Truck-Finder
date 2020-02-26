@@ -3,37 +3,45 @@ import * as Request from "./../helpers/backendRequests";
 
 export class ListOfUsers extends Component {
   constructor(props) {
-      console.log("Hello")
+    console.log("Hello");
     super(props);
 
     this.state = {
-      users: []
+      trucks: []
     };
   }
 
   componentWillReceiveProps(props) {
-  const { refresh } = this.props;
-  if (props.refresh !== refresh) {
-    Request.getAllUsers()
-      .then(function(r){
-          this.setState({users: r.data})
-      })
+    const { refresh } = this.props;
+    if (props.refresh !== refresh) {
+      Request.getAllTrucks().then(function(r) {
+        this.setState({ trucks: r.data });
+      });
+    }
   }
-}
 
-//   async componentDidMount() {
-//       console.log("Mounted")
-//     var users = await Request.getAllUsers();
+  //   async componentDidMount() {
+  //       console.log("Mounted")
+  //     var users = await Request.getAllUsers();
 
-//     this.setState({ users: users });
-//   }
+  //     this.setState({ users: users });
+  //   }
 
   render() {
     return (
       <div>
-        {this.props.users.map(u => (
-          <p>{u.email} {u.password}</p>
-        ))}
+        <table style={{ width: "50%",border: "1px solid black", textAlign: "left", borderCollapse: "collapse" }}>
+          <tr>
+            <th>Truck Name</th>
+            <th>Schedule</th>
+          </tr>
+          {this.props.trucks.map(t => (
+            <tr>
+              <td>{t.name}</td>
+              <td>{t.schedule}</td>
+            </tr>
+          ))}
+        </table>
       </div>
     );
   }

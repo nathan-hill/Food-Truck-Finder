@@ -61,3 +61,38 @@ export function postNewUser(u) {
       console.log(error);
     });
 }
+
+export function postNewTruck(t) {
+  const request = {
+    method: "POST",
+    url: backend_url + "trucks/add/",
+    data: t,
+    headers: request_headers
+  };
+
+  console.log(request);
+
+  axios(request)
+    .then(function(response) {
+      console.log(response.data);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}
+
+
+export function getAllTrucks() {
+  return axios({
+    method: "GET",
+    url: backend_url + "trucks/",
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}

@@ -33,17 +33,17 @@ export class DatabaseListing extends React.Component {
     super(props);
 
     this.state = {
-      users: []
+      trucks: []
     };
 
-    this.sendFormDataPostNewUser = this.sendFormDataPostNewUser.bind(this);
+    this.sendFormDataPostNewUser = this.sendFormDataPostNewTruck.bind(this);
   }
 
   async componentDidMount() {
     console.log("Mounted");
-    var users = await Request.getAllUsers();
+    var users = await Request.getAllTrucks();
 
-    this.setState({ users: users });
+    this.setState({ trucks: users });
   }
 
   sendFormDataPostNewUser = function(e) {
@@ -60,18 +60,33 @@ export class DatabaseListing extends React.Component {
     return Request.postNewUser(user);
   };
 
+
+  sendFormDataPostNewTruck = function(e) {
+    e.preventDefault();
+    const truck = {
+      name: e.target.elements.name.value,
+      schedule: e.target.elements.schedule.value
+    };
+
+    //this.setState({users: this.state.users.push()});
+
+    console.log(truck);
+
+    return Request.postNewTruck(truck);
+  };
+
   render() {
     return (
       <div>
         <Link to="/loginpage/">Back</Link>
         <TwoFieldForm
-          action={this.sendFormDataPostNewUser}
-          fieldOne={"email:"}
-          fieldTwo={"password:"}
+          action={this.sendFormDataPostNewTruck}
+          fieldOne={"Food Truck Name"}
+          fieldTwo={"Food Truck hours:"}
           buttonLabel={"Submit"}
         />
-        <h3>List Of Users</h3>
-        <ListOfUsers users={this.state.users} />
+        <h3>List Of Owned Food Trucks</h3>
+        <ListOfUsers trucks={this.state.trucks} />
       </div>
     );
   }
