@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const backend_url = "http://localhost:8080/v/";
+//const backend_url = "http://localhost:8080/v/";
+const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
 
 const request_headers =
   "Access-Control-Allow-Origin: " *
@@ -26,11 +27,10 @@ export function getAllUsers() {
 
 export function logInUser(u) {
   axios
-    .get(backend_url + "login/", {
-      data: {
-        'email': u.email,
-        'password': u.password
-      },
+    .post(backend_url + "login/", {
+      email: u.email,
+      password: u.password,
+      id: "",
       headers: {
         "Access-Control-Allow-Origin": "*",
         "content-type": "application/json",
@@ -38,28 +38,14 @@ export function logInUser(u) {
       }
     })
     .then(function(response) {
-      console.log(response.data);
+      //console.log(response.data);
+        console.log(response.data)
+        return response.data;
     })
     .catch(function(error) {
       console.log(error);
+      //show error
     });
-
-  // const request = {
-  //   method: "GET",
-  //   url: backend_url + "login",
-  //   data: u,
-  //   headers: { 'Access-Control-Allow-Origin': '*', 'content-type': 'application/json', 'Accept': 'application/json' }
-  // };
-
-  // console.log(request);
-
-  // axios(request)
-  //   .then(function(response) {
-  //     console.log(response.data);
-  //   })
-  //   .catch(function(error) {
-  //     console.log(error);
-  //   });
 }
 
 export function postNewUser(u) {

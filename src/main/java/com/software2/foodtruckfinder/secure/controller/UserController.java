@@ -21,6 +21,13 @@ public class UserController {
         User n = new User();
         n.setEmail(newUser.getEmail());
         n.setPassword(newUser.getPassword());
+
+        for (User user: userRepository.findAll()) {
+            if(user.getEmail().equals(newUser.getEmail())){
+                return ResponseEntity.status(400).build();
+            }
+        }
+
         User generatedUser = userRepository.save(n);
         return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
     }
