@@ -1,11 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 
 // import LoginTest from './LoginPage'
 
-=======
->>>>>>> origin/Dashboard
 import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "./LoginPage";
 import axios from "axios";
