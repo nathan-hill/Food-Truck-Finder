@@ -70,3 +70,26 @@ export function postNewUser(u) {
       console.log(error);
     });
 }
+
+export function UpdateUser(u) {
+  const request = {
+    method: "POST",
+    url: backend_url + "users/update/",
+    data: u,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+      Accept: "application/json"
+    }
+  };
+
+  console.log(request);
+
+  axios(request)
+    .then(function(response) {
+      console.log(response.data);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}
