@@ -11,12 +11,12 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
-import Link from '@material-ui/core/Link';
+//import Link from 'react-router-dom'; < -- fix this
 
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
+import { GuestListItems, CustomerListItems, OwnerListItems, secondaryListItems } from "./listItems";
 import SimpleMap from "./SimpleMap";
 
 // change size of expanded sidebar
@@ -113,6 +113,21 @@ export default function Dashboard() {
     setOpen(false);
   };
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  
+  //const userState = this.state.user;
+
+  const userState = 'owner';
+  let mainList;
+
+  if(userState=='owner'){
+    mainList = OwnerListItems;
+  }
+  else if(userState=='customer'){
+    mainList = CustomerListItems;
+  }
+  else {
+    mainList = GuestListItems;
+  }
 
   return (
     <div className={classes.root}>
@@ -160,12 +175,12 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{mainList}</List>
         <Divider />
         <List component="nav">
-          <Link href="/TestRouting" passhref>
+          {/* <Link to="/TestRouting" passhref> */}
             {secondaryListItems}
-          </Link>
+          {/* </Link> */}
         </List>
       </Drawer>
       {/* <main className={classes.content}> */}

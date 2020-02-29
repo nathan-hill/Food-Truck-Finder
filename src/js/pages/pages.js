@@ -6,6 +6,7 @@ import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
+import FoodTruckDetails from "./../components/foodTruckDetails";
 
 export class TestRouting extends React.Component {
   render() {
@@ -130,6 +131,7 @@ export class Login extends React.Component {
     );
   }
 }
+
 
 export class Home extends React.Component {
   render() {
