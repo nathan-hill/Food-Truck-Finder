@@ -22,16 +22,11 @@
     "react-geolocated": "^3.0.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.1",
-<<<<<<< HEAD
-    "reactstrap": "^8.4.1",
-    "use-position": "0.0.6"
-=======
     "redux": "^4.0.5",
     "react-redux": "^7.1.3",
     "redux-thunk": "^2.3.0",
     "use-position": "0.0.6",
     "react-router": "^5.1.2"
->>>>>>> 13f2b57c5ca7ebf5312d2e057571321cc797edfb
   },
   "scripts": {
     "start": "react-scripts start ",
