@@ -1,5 +1,7 @@
-package com.software2.foodtruckfinder;
+package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.User;
+import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,7 @@ public class UserController {
     @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<User> addNewUser(@RequestBody User newUser) {
-        User n = new User();
+        User n = new User("", "");
         n.setEmail(newUser.getEmail());
         n.setPassword(newUser.getPassword());
 
