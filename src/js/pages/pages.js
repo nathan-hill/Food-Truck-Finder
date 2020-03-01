@@ -6,7 +6,8 @@ import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
-import FoodTruckDetails from "./../components/foodTruckDetails";
+import FoodTruckTable from './../components/FoodTruckTable';
+
 
 export class TestRouting extends React.Component {
   render() {
@@ -22,6 +23,9 @@ export class TestRouting extends React.Component {
           </li>
           <li>
             <Link to="/Dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/FoodTruckTable">FoodTruckTable</Link>
           </li>
         </ul>
       </div>
@@ -127,6 +131,27 @@ export class Login extends React.Component {
           action={sendFormDataLoginUser}
           redirect={this.state.redirect}
         />
+      </div>
+    );
+  }
+}
+
+export class Table extends React.Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+
+    this.sendFormDataLoginUser = sendFormDataLoginUser.bind(this);
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Back</Link>
+        <FoodTruckTable/>
       </div>
     );
   }

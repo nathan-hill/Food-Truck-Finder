@@ -119,15 +119,17 @@ export default function Dashboard() {
   const userState = 'owner';
   let mainList;
 
-  if(userState=='owner'){
+  if(userState==='owner'){
     mainList = OwnerListItems;
   }
-  else if(userState=='customer'){
+  else if(userState==='customer'){
     mainList = CustomerListItems;
   }
   else {
     mainList = GuestListItems;
   }
+
+  
 
   return (
     <div className={classes.root}>
