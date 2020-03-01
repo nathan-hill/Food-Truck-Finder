@@ -16,7 +16,7 @@ public class UserController {
     @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<User> addNewUser(@RequestBody User newUser) {
-        User n = new User();
+        User n = new User("", "");
         n.setEmail(newUser.getEmail());
         n.setPassword(newUser.getPassword());
 
