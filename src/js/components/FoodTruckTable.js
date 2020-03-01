@@ -26,13 +26,19 @@ export default function MaterialTableDemo() {
       columns={state.columns}
       data={state.data}
       editable={{
+        // add method
         onRowAdd: newData =>
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
               setState(prevState => {
+                // sets the table to current state
                 const data = [...prevState.data];
+
+                // adds a new data point to the table
                 data.push(newData);
+
+
                 return { ...prevState, data };
               });
             }, 600);
@@ -43,7 +49,10 @@ export default function MaterialTableDemo() {
               resolve();
               if (oldData) {
                 setState(prevState => {
+                  // sets the table to current state
                   const data = [...prevState.data];
+
+                  // updates the table position
                   data[data.indexOf(oldData)] = newData;
                   return { ...prevState, data };
                 });
@@ -55,7 +64,10 @@ export default function MaterialTableDemo() {
             setTimeout(() => {
               resolve();
               setState(prevState => {
+                // sets the table to current state
                 const data = [...prevState.data];
+
+                // deletes a data point form the table
                 data.splice(data.indexOf(oldData), 1);
                 return { ...prevState, data };
               });
