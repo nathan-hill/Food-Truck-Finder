@@ -34,21 +34,10 @@ class Profile extends React.Component {
               margin="normal"
               required
               fullWidth
-              id="FirstName"
-              label="FirstName"
-              name="FirstName"
-              autoComplete="FirstName"
-              autoFocus
-            />
-          <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="LastName"
-              label="Last Name"
-              name="LastName"
-              autoComplete="LastName"
+              id="Name"
+              label="Name"
+              name="Name"
+              autoComplete="Name"
               autoFocus
             />
             <TextField
