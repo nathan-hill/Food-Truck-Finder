@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "eslint": "^6.8.0",
     "google-map-react": "^1.1.6",
+    "material-table": "^1.57.2",
     "jwt-decode": "^2.2.0",
     "lodash": "latest",
     "prop-types": "latest",
