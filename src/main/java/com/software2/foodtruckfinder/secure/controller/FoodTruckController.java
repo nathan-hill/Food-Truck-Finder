@@ -57,10 +57,10 @@ public class FoodTruckController {
         return truckRepository.findById(integer);
     }
 
-    @GetMapping(path = "findTrucksByOwner")
+    @GetMapping(path = "findTrucksByownerID")
     public @ResponseBody
     List<Truck> findTrucksByOwner(Long l){
-        return truckRepository.findTrucksByOwner(l);
+        return truckRepository.findTrucksByOwnerID(l);
     }
 
 }
