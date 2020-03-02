@@ -7,6 +7,7 @@ import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckTable from './../components/FoodTruckTable';
+import FoodTruckDetails from "./../components/FoodTruckDetails";
 
 
 export class TestRouting extends React.Component {
@@ -157,6 +158,15 @@ export class Table extends React.Component{
   }
 }
 
+export class TruckDetails extends React.Component {
+  render() {
+      return(
+        <div>
+          <FoodTruckDetails/>
+        </div>
+      );
+  }
+}
 
 export class Home extends React.Component {
   render() {

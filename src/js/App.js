@@ -13,6 +13,7 @@ export default class App extends Component {
             <Route exact path="/loginpage" component={Pages.Login} />
             <Route exact path="/TestRouting" component={Pages.TestRouting} />
             <Route exact path="/FoodTruckTable" component={Pages.Table} />
+            <Route exact path="/FoodTruckDetails" component={Pages.TruckDetails} />
           </div>
         </HashRouter>
       </div>

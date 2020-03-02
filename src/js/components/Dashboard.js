@@ -18,6 +18,11 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { GuestListItems, CustomerListItems, OwnerListItems, secondaryListItems } from "./listItems";
 import SimpleMap from "./SimpleMap";
+import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+import { logout } from "../actions/login";
+import {withRouter} from "react-router";
+import PropTypes from "prop-types";
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -103,7 +108,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard() {
+function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -116,7 +121,7 @@ export default function Dashboard() {
   
   //const userState = this.state.user;
 
-  const userState = 'cust';
+  const userState = 'customer';
   let mainList;
 
   if(userState==='owner'){
@@ -129,7 +134,29 @@ export default function Dashboard() {
     mainList = GuestListItems;
   }
 
-  
+  console.log(props.auth);
+
+  let logOutButton;
+  let logInButton;
+  if(props.auth.isAuthenticated) {
+    logOutButton = <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        className={classes.submit}
+    >
+      LOG OUT
+    </Button>
+  } else {
+    logInButton = <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        className={classes.submit}
+    >
+      LOG IN
+    </Button>
+  }
 
   return (
     <div className={classes.root}>
@@ -157,6 +184,15 @@ export default function Dashboard() {
           >
             Wheels With Meals
           </Typography>
+
+          <form className={classes.form} noValidate onSubmit={() => props.history.push("/loginpage")}>
+            {logInButton}
+          </form>
+
+          <form className={classes.form} noValidate onSubmit={() => props.logout()}>
+            {logOutButton}
+          </form>
+
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
@@ -193,3 +229,14 @@ export default function Dashboard() {
     </div>
   );
 }
+
+Dashboard.propTypes = {
+  history: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth : state.auth,
+});
+
+export default connect(mapStateToProps, {logout})(withRouter(Dashboard));
