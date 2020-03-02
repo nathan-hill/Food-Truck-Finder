@@ -24,22 +24,17 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String email;
 
-    @NotBlank
-    @Size(max = 20)
-    private String type;
-
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String name, String username, String email, String password, String type) {
+    public UserPrincipal(Long id, String name, String username, String email, String password) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.type = type;
     }
 
     public static UserPrincipal create(User user) {
@@ -49,18 +44,11 @@ public class UserPrincipal implements UserDetails {
                 user.getName(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getPassword(),
-                user.getType()
+                user.getPassword()
         );
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public Long getId() {
         return id;

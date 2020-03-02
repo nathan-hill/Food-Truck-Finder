@@ -46,21 +46,29 @@ public class UserController {
         return true;
     }
 
-    String findTypeByID(Long id){
-        User u = userRepository.findUserByid(id);
-        return u.getType();
-    }
+//    @GetMapping(path = "/findTypeByID")
+//    public @ResponseBody
+//    String findTypeByID(Long id){
+//        User u = userRepository.findUserByid(id);
+//        return u.getType();
+//    }
 
+    @GetMapping(path = "/findNameByID")
+    public @ResponseBody
     String findNameByID(Long id){
         User u = userRepository.findUserByid(id);
         return u.getName();
     }
 
+    @GetMapping(path = "/findEmailByID")
+    public @ResponseBody
     String findEmailByID(Long id){
         User u = userRepository.findUserByid(id);
         return u.getEmail();
     }
 
+    @GetMapping(path = "/findUserNameByID")
+    public @ResponseBody
     String findUserNameByID(Long id){
         User u = userRepository.findUserByid(id);
         return u.getUsername();
