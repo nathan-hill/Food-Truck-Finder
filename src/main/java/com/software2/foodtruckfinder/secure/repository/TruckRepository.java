@@ -13,6 +13,7 @@ import java.util.Optional;
 
 public interface TruckRepository extends CrudRepository<Truck, Integer> {
 
+    @Query("SELECT t FROM Truck t WHERE t.id = ?1")
     Optional<Truck> findById(Integer in);
 
     List<Truck> findTrucksByOwnerID(String userId);
