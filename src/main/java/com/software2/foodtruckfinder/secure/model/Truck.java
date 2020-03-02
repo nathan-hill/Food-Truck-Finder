@@ -17,6 +17,7 @@ public class Truck {
     private String Description;
     @NotNull
     private String Menu;
+
     @NotNull
     private Long ownerID;
 
