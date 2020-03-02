@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface TruckRepository extends CrudRepository<Truck, Integer> {
 
-    Optional<Truck> findByTruckId(Integer in);
+    Optional<Truck> findById(Integer in);
 
     List<Truck> findTrucksByOwnerID(String userId);
 
