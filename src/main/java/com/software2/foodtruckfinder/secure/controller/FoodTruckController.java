@@ -59,7 +59,7 @@ public class FoodTruckController {
 
     @GetMapping(path = "findTrucksByownerID")
     public @ResponseBody
-    List<Truck> findTrucksByOwner(Long l){
+    List<Truck> findTrucksByOwnerID(Long l){
         return truckRepository.findTrucksByOwnerID(l);
     }
 
