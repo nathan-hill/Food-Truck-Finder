@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -54,7 +55,13 @@ public class FoodTruckController {
     public @ResponseBody
     Optional<Truck> findById(Integer integer){
         // This returns a JSON or XML with the trucks
-        return truckRepository.findById();
+        return truckRepository.findById(integer);
+    }
+
+    @GetMapping(path = "findTrucksByOwner")
+    public @ResponseBody
+    List<Truck> findTrucksByOwner(Long l){
+        return truckRepository.findTrucksByOwner(l);
     }
 
 }
