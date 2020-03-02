@@ -23,6 +23,7 @@ import { connect } from "react-redux";
 import { logout } from "../actions/login";
 import {withRouter} from "react-router";
 import PropTypes from "prop-types";
+import axios from 'axios';
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -108,6 +109,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function temp() {
+  let data = {
+    id: 26
+  };
+
+  data.headers = {
+    "Access-Control-Allow-Origin": "*",
+    "content-type": "application/json",
+    Accept: "application/json"
+  };
+
+  console.log("printing test response");
+
+  axios.get("http://localhost:8080/v/trucks/findTruckByID", data).then(res => {
+    console.log(res);
+  })
+}
+
 function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -135,6 +154,8 @@ function Dashboard(props) {
   }
 
   console.log(props.auth);
+
+  temp();
 
   let logOutButton;
   let logInButton;
