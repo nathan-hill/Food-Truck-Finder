@@ -24,19 +24,6 @@ public class SignUpRequest {
     @Size(min = 6, max = 20)
     private String password;
 
-    @NotBlank
-    @Size(max = 20)
-    @Email
-    private String type;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getName() {
         return name;
     }
