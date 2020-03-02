@@ -1,6 +1,10 @@
-package com.software2.foodtruckfinder;
+package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.Truck;
+import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -42,5 +46,30 @@ public class FoodTruckController {
     Boolean deleteAllTrucks() {
         truckRepository.deleteAll();
         return true;
+    }
+
+    String findScheduleByID(Long id){
+        Truck t = truckRepository.findTruckByid(id);
+        return t.getSchedule();
+    }
+
+    String findNameByID(Long id){
+        Truck t = truckRepository.findTruckByid(id);
+        return t.getName();
+    }
+
+    Long findOwnerByID(Long id){
+        Truck t = truckRepository.findTruckByid(id);
+        return t.getOwnerID();
+    }
+
+    String findMenuByID(Long id){
+        Truck t = truckRepository.findTruckByid(id);
+        return t.getMenu();
+    }
+
+    String findDescriptionByID(Long id){
+        Truck t = truckRepository.findTruckByid(id);
+        return t.getDescription();
     }
 }

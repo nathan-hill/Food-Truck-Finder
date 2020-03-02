@@ -45,4 +45,25 @@ public class UserController {
         userRepository.deleteAll();
         return true;
     }
+
+    String findTypeByID(Long id){
+        User u = userRepository.findUserByid(id);
+        return u.getType();
+    }
+
+    String findNameByID(Long id){
+        User u = userRepository.findUserByid(id);
+        return u.getName();
+    }
+
+    String findEmailByID(Long id){
+        User u = userRepository.findUserByid(id);
+        return u.getEmail();
+    }
+
+    String findUserNameByID(Long id){
+        User u = userRepository.findUserByid(id);
+        return u.getUsername();
+    }
+
 }

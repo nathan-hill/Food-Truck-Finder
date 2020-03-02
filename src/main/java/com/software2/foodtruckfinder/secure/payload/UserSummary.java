@@ -4,11 +4,21 @@ public class UserSummary {
     private Long id;
     private String username;
     private String name;
+    private String type;
 
-    public UserSummary(Long id, String username, String name) {
+    public UserSummary(Long id, String username, String name, String type) {
         this.id = id;
         this.username = username;
         this.name = name;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Long getId() {
