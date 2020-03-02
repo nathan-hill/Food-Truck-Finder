@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @CrossOrigin
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/v/users")
@@ -46,32 +48,10 @@ public class UserController {
         return true;
     }
 
-//    @GetMapping(path = "/findTypeByID")
-//    public @ResponseBody
-//    String findTypeByID(Long id){
-//        User u = userRepository.findUserByid(id);
-//        return u.getType();
-//    }
-
-    @GetMapping(path = "/findNameByID")
+    @GetMapping(path = "getUserByID")
     public @ResponseBody
-    String findNameByID(Long id){
-        User u = userRepository.findUserByid(id);
-        return u.getName();
-    }
-
-    @GetMapping(path = "/findEmailByID")
-    public @ResponseBody
-    String findEmailByID(Long id){
-        User u = userRepository.findUserByid(id);
-        return u.getEmail();
-    }
-
-    @GetMapping(path = "/findUserNameByID")
-    public @ResponseBody
-    String findUserNameByID(Long id){
-        User u = userRepository.findUserByid(id);
-        return u.getUsername();
+    Optional<User> findUserByID(Long id){
+        return userRepository.findUserByid(id);
     }
 
 }

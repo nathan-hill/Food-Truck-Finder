@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/v/trucks")
@@ -48,28 +51,16 @@ public class FoodTruckController {
         return true;
     }
 
-    String findScheduleByID(Long id){
-        Truck t = truckRepository.findTruckByid(id);
-        return t.getSchedule();
+    @GetMapping(path = "findTruckByID")
+    public @ResponseBody
+    Optional<Truck> findById(Integer integer){
+        return truckRepository.findById(integer);
     }
 
-    String findNameByID(Long id){
-        Truck t = truckRepository.findTruckByid(id);
-        return t.getName();
+    @GetMapping(path = "findTrucksByOwner")
+    public @ResponseBody
+    List<Truck> findTrucksByOwner(Long l){
+        return truckRepository.findTrucksByOwner(l);
     }
 
-    Long findOwnerByID(Long id){
-        Truck t = truckRepository.findTruckByid(id);
-        return t.getOwnerID();
-    }
-
-    String findMenuByID(Long id){
-        Truck t = truckRepository.findTruckByid(id);
-        return t.getMenu();
-    }
-
-    String findDescriptionByID(Long id){
-        Truck t = truckRepository.findTruckByid(id);
-        return t.getDescription();
-    }
 }
