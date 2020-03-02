@@ -111,7 +111,7 @@ const useStyles = makeStyles(theme => ({
 
 function temp() {
   let data = {
-    id: 26
+    id: "26"
   };
 
   data.headers = {
@@ -122,7 +122,7 @@ function temp() {
 
   console.log("printing test response");
 
-  axios.get("http://localhost:8080/v/trucks/findTruckByID", data).then(res => {
+  axios.get("http://localhost:8080/v/trucks/findTruckByID?integer=26").then(res => {
     console.log(res);
   })
 }
