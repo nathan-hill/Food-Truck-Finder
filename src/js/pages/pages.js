@@ -38,11 +38,24 @@ export class TestRouting extends React.Component {
 export class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
+
+    this.sendFormDataPostNewUser = this.sendFormDataPostNewUser.bind(this);
   }
+  sendFormDataPostNewUser = function(e) {
+    e.preventDefault();
+    const user = {
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value
+    };
+
+    console.log(user);
+
+    return Request.postNewUser(user);
+  };
 
   render() {
     return <div> 
-      <SignUp/>
+      <SignUp action={this.sendFormDataPostNewUser}/>
     </div>;
   }
 }
@@ -65,19 +78,6 @@ export class DatabaseListing extends React.Component {
     this.setState({ trucks: users });
   }
 
-  sendFormDataPostNewUser = function(e) {
-    e.preventDefault();
-    const user = {
-      email: e.target.elements.email.value,
-      password: e.target.elements.password.value
-    };
-
-    //this.setState({users: this.state.users.push()});
-
-    console.log(user);
-
-    return Request.postNewUser(user);
-  };
 
   sendFormDataPostNewTruck = function(e) {
     e.preventDefault();
