@@ -54,7 +54,6 @@ public class FoodTruckController {
     @GetMapping(path = "findTruckByID")
     public @ResponseBody
     Optional<Truck> findById(Integer integer){
-        // This returns a JSON or XML with the trucks
         return truckRepository.findById(integer);
     }
 
