@@ -1,5 +1,6 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,22 +56,23 @@ public class UserController {
         return userRepository.findUserByid(id);
     }
 
-//    @PutMapping(value = "updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.OK)
-//    public ResponseEntity<User> updateUser(@RequestBody User udets) {
-//
-//        User newUser = findUserByID(udets.getId());
-//        if(newUser != null){
-//            newUser.setId(udets.getId());
-//            newUser.setEmail(udets.getEmail());
-//            newUser.setName(udets.getName());
-//            newUser.setPassword(udets.getPassword());
-//            newUser.setUsername(udets.getUsername());
-//
-//            User generatedUser = userRepository.save(newUser);
-//            return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
-//        }else{
-//            return null;
-//        }
-//    }
+
+    @PutMapping(value = "updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<User> updateUser(@RequestBody User udets) {
+
+        if(userRepository.existsById(udets.getId())){
+            User newUser = new User();
+            newUser.setId(udets.getId());
+            newUser.setEmail(udets.getEmail());
+            newUser.setName(udets.getName());
+            newUser.setPassword(udets.getPassword());
+            newUser.setUsername(udets.getUsername());
+
+            User generatedUser = userRepository.save(newUser);
+            return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
+        }else{
+            return null;
+        }
+    }
 }

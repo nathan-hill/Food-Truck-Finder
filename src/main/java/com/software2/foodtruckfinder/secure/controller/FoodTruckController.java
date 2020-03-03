@@ -69,8 +69,6 @@ public class FoodTruckController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Truck> updateTruck(@RequestBody Truck tdets) {
 
-        System.out.println(tdets.getOwnerID());
-
         if(truckRepository.existsById(tdets.getId())){
             Truck newT = new Truck();
             newT.setId(tdets.getId());
