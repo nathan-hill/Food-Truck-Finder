@@ -9,6 +9,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import { Link } from "react-router-dom"
 
 export const GuestListItems = (
   <div>
@@ -117,12 +118,36 @@ export const OwnerListItems = (
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button component="a" to='/TestRouting'>
-      <ListItemIcon>
+    <ListSubheader inset>Raw Components</ListSubheader>
+    <ListItem button to="/" component={Link}>>
+      <ListItemIcon> 
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Hello"/>
+      <ListItemText primary="/" />
+    </ListItem>
+    <ListItem button to="/Request" component={Link}>>
+      <ListItemIcon> 
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="/Request" />
+    </ListItem>
+    <ListItem button to="/loginpage" component={Link}>>
+      <ListItemIcon> 
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="/loginpage" />
+    </ListItem>
+    <ListItem button to="/TestRouting" component={Link}>>
+      <ListItemIcon> 
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="/TestRouting" />
+    </ListItem>
+    <ListItem button to="/Table" component={Link}>>
+      <ListItemIcon> 
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="/Table" />
     </ListItem>
   </div>
 );
