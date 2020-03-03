@@ -208,7 +208,7 @@ export class OwnerProfile extends React.Component {
       <div>
         <Link to="/">Back</Link>
         <OwnerSettings />
-        <FoodTruckTable/>
+        <FoodTruckTable />
       </div>
     );
   }
