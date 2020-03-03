@@ -40,101 +40,122 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
+class MaterialTableDemo extends React.Component {
+    constructor(props) {
+        super(props);
 
-function MaterialTableDemo(props) {
-    const [state, setState] = React.useState({
-        columns: [
-            {title: 'Food Truck Name', field: 'name'},
-            {title: 'Schedule', field: 'schedule'},
-            {title: 'Description', field: 'description'},
-            {title: 'Menu', field: 'Menu'},
-            {title: 'Route', field: 'Route'},
-        ],
-        data: [
-
-            // load the result set of food trucks for the user
-            {
-                name: 'tacos',
-                schedule: 'Monday-Friday',
-                Route: 'BSB',
-            },
-            {
-                name: 'burgers',
-                schedule: 'Monday-Saturday',
-                Route: 'Baylor Sub Building',
-            },
-        ],
-    });
-
-
-    console.log("ID: ", props.auth.user.sub);
-    axios.get("http://localhost:8080/v/trucks/findTrucksByownerID", {
-        params: {
-            l: props.auth.user.sub
+        this.state = {
+            columns: [
+                {title: 'Food Truck Name', field: 'name'},
+                {title: 'Schedule', field: 'schedule'},
+                {title: 'Description', field: 'description'},
+                {title: 'Menu', field: 'Menu'},
+                {title: 'Route', field: 'Route'},
+            ], data:[],
         }
-    }).then(res => {
-        state.data = res.data;
-        console.log(state.data)
-    });
+    }
 
-    return (
-        <MaterialTable
-            icons={tableIcons}
-            title="Food Truck Table"
-            columns={state.columns}
-            data={state.data}
-            editable={{
-                // add method
-                onRowAdd: newData =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            setState(prevState => {
-                                // sets the table to current state
-                                const data = [...prevState.data];
+    componentDidMount = () => {
+        console.log("ID: ", this.props.auth.user.sub);
+        axios.get("http://localhost:8080/v/trucks/findTrucksByownerID", {
+            params: {
+                l: this.props.auth.user.sub
+            }
+        }).then(res => {
+            this.setState({data: res.data})
+            console.log(this.state.data)
+        });
+    }
 
-                                // adds a new data point to the table
-                                data.push(newData);
-
-
-                                return {...prevState, data};
-                            });
-                        }, 600);
-                    }),
-                onRowUpdate: (newData, oldData) =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            if (oldData) {
-                                setState(prevState => {
+    render() {
+        return (
+            <MaterialTable
+                icons={tableIcons}
+                title="Food Truck Table"
+                columns={this.state.columns}
+                data={this.state.data}
+                editable={{
+                    // add method
+                    onRowAdd: newData =>
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                this.setState(prevState => {
                                     // sets the table to current state
                                     const data = [...prevState.data];
 
-                                    // updates the table position
-                                    data[data.indexOf(oldData)] = newData;
+                                    // adds a new data point to the table
+                                    data.push(newData);
+
+
                                     return {...prevState, data};
                                 });
-                            }
-                        }, 600);
-                    }),
-                onRowDelete: oldData =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            setState(prevState => {
-                                // sets the table to current state
-                                const data = [...prevState.data];
+                            }, 600);
+                        }),
+                    onRowUpdate: (newData, oldData) =>
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                if (oldData) {
+                                    this.setState(prevState => {
+                                        // sets the table to current state
+                                        const data = [...prevState.data];
 
-                                // deletes a data point form the table
-                                data.splice(data.indexOf(oldData), 1);
-                                return {...prevState, data};
-                            });
-                        }, 600);
-                    }),
-            }}
-        />
-    );
+                                        // updates the table position
+                                        data[data.indexOf(oldData)] = newData;
+                                        return {...prevState, data};
+                                    });
+                                }
+                            }, 600);
+                        }),
+                    onRowDelete: oldData =>
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                this.setState(prevState => {
+                                    // sets the table to current state
+                                    const data = [...prevState.data];
+
+                                    // deletes a data point form the table
+                                    data.splice(data.indexOf(oldData), 1);
+                                    return {...prevState, data};
+                                });
+                            }, 600);
+                        }),
+                }}
+            />
+        );
+    }
 }
+
+
+// function MaterialTableDemo(props) {
+//     const [state, setState] = React.useState({
+//         columns: [
+//             {title: 'Food Truck Name', field: 'name'},
+//             {title: 'Schedule', field: 'schedule'},
+//             {title: 'Description', field: 'description'},
+//             {title: 'Menu', field: 'Menu'},
+//             {title: 'Route', field: 'Route'},
+//         ],
+//         data: [
+//
+//             // load the result set of food trucks for the user
+//             {
+//                 name: 'tacos',
+//                 schedule: 'Monday-Friday',
+//                 Route: 'BSB',
+//             },
+//             {
+//                 name: 'burgers',
+//                 schedule: 'Monday-Saturday',
+//                 Route: 'Baylor Sub Building',
+//             },
+//         ],
+//     });
+//
+//
+// }
 
 const mapStateToProps = state => ({
     auth: state.auth,
