@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path = "add")
+    @PostMapping(path = "/add")
     public @ResponseBody
     ResponseEntity<User> addNewUser(@RequestBody User newUser) {
         User n = new User();
@@ -39,7 +39,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @DeleteMapping(path = "delete")
+    @DeleteMapping(path = "/delete")
     public @ResponseBody
     Boolean deleteAllUsers() {
         userRepository.deleteAll();

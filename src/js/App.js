@@ -9,6 +9,7 @@ export default class App extends Component {
         <HashRouter>
           <div>
             <Route exact path="/" component={Pages.Home} />
+            <Route exact path="/create_account" component={Pages.CreateAccount} />
             <Route exact path="/Request" component={Pages.DatabaseListing} />
             <Route exact path="/loginpage" component={Pages.Login} />
             <Route exact path="/TestRouting" component={Pages.TestRouting} />
@@ -18,5 +19,4 @@ export default class App extends Component {
       </div>
     );
   }
-
 }
