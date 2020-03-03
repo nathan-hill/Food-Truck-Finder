@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -20,6 +21,14 @@ class FoodTruckDetails extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onEditSubmit = this.onEditSubmit.bind(this);
+
+        axios.get("http://localhost:8080/v/trucks/findTruckByID", {
+            params: {
+                l: this.state.id
+            }
+        }).then(res => {
+            console.log(res)
+        });
     }
 
     onChange(e) {

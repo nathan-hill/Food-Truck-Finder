@@ -18,8 +18,8 @@ public class Truck {
     @NotNull
     private String Menu;
 
-    @ManyToOne
-    @JoinColumn(name = "ownerID", referencedColumnName = "uid")
+//    @ManyToOne
+//    @JoinColumn(name = "ownerID", referencedColumnName = "uid")
     private User ownerID;
 
 

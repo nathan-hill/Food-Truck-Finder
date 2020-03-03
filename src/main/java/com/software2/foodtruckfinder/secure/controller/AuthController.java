@@ -28,7 +28,7 @@ import java.util.Collections;
 
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/v/api/auth")
 public class AuthController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+        System.out.println(loginRequest.getPassword() + " " + loginRequest.getUsernameOrEmail());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
@@ -74,6 +74,8 @@ public class AuthController {
         // Creating user's account
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword());
+
+        System.out.println(user.toString());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
