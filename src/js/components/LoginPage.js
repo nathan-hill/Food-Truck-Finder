@@ -44,6 +44,7 @@ class LoginPage extends React.Component {
   }
 
   onChange(e) {
+    console.log(e.target.name,e.target.value);
     this.setState({[e.target.name]: e.target.value});
   }
 

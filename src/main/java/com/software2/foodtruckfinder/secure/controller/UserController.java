@@ -4,9 +4,12 @@ import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -48,5 +51,30 @@ public class UserController {
     Boolean deleteAllUsers() {
         userRepository.deleteAll();
         return true;
+    }
+
+    @GetMapping(path = "getUserByID")
+    public @ResponseBody
+    User findUserByID(Long id){
+        return userRepository.findUserByid(id);
+    }
+
+    @PutMapping(value = "updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<User> updateUser(@RequestBody User udets) {
+
+        if(userRepository.existsById(udets.getId())){
+            User newUser = new User();
+            newUser.setId(udets.getId());
+            newUser.setEmail(udets.getEmail());
+            newUser.setName(udets.getName());
+            newUser.setPassword(udets.getPassword());
+            newUser.setUsername(udets.getUsername());
+
+            User generatedUser = userRepository.save(newUser);
+            return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
+        }else{
+            return null;
+        }
     }
 }

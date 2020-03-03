@@ -1,13 +1,17 @@
 package com.software2.foodtruckfinder;
 
+import com.software2.foodtruckfinder.secure.controller.FoodTruckController;
 import com.software2.foodtruckfinder.secure.controller.UserController;
+import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.model.User;
+import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,9 +30,8 @@ public class FoodTruckControllerTest {
 
         db.add(a);
         db.add(b);
+
         ftc = new FoodTruckController(new TruckRepository() {
-
-
             @Override
             public <S extends Truck> S save(S entity) {
                 return null;
@@ -42,6 +45,11 @@ public class FoodTruckControllerTest {
             @Override
             public Optional<Truck> findById(Integer integer) {
                 return Optional.empty();
+            }
+
+            @Override
+            public List<Truck> findTrucksByOwnerID(long userId) {
+                return null;
             }
 
             @Override
