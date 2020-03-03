@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
+import Profile from "../components/Profile";
+import axios from "axios";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
@@ -26,6 +28,9 @@ export class TestRouting extends React.Component {
           </li>
           <li>
             <Link to="/FoodTruckTable">FoodTruckTable</Link>
+          </li>
+          <li>
+            <Link to="/Profile">User Profile</Link>
           </li>
           <li>
             <Link to="/create_account">Create Account</Link>
@@ -131,6 +136,24 @@ export class DatabaseListing extends React.Component {
 }
 
 
+const sendFormDataUpdateUser = function(e) {
+  e.preventDefault();
+
+  const user = {
+    FirstName: e.target.elements.FirstName.value,
+    LastName: e.target.elements.LastName.value,
+    email: e.target.elements.email.value,
+    username: e.target.elements.username.value,
+    password: e.target.elements.password.value
+  };
+  
+  console.log(user);
+
+  var requestData = Request.UpdateUser(user);
+
+  console.log(requestData);
+}
+
 export class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -181,6 +204,28 @@ export class TruckDetails extends React.Component {
       );
   }
 }
+export class UserProfile extends React.Component {
+  constructor(props) {
+    super(props);
+
+
+    this.state = {
+      redirect: "",
+    };
+
+    this.sendFormDataUpdateUser = sendFormDataUpdateUser.bind(this);
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Back</Link>
+        <Profile action={sendFormDataUpdateUser} redirect={this.state.redirect}/>
+      </div>
+    );
+  }
+}
+
 
 export class Home extends React.Component {
   render() {

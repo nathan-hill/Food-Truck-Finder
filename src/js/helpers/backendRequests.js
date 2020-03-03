@@ -44,6 +44,19 @@ export function postNewUser(u) {
     });
 }
 
+export function UpdateUser(u) {
+  const request = {
+    method: "POST",
+    url: backend_url + "users/update/",
+    data: u,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+      Accept: "application/json"
+    }
+  }
+}
+
 export function postNewTruck(t) {
   const request = {
     method: "POST",
