@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
-
+import SignUp from "../components/SignUp"
 import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
-import FoodTruckTable from './../components/FoodTruckTable';
-
+import FoodTruckTable from "./../components/FoodTruckTable";
 
 export class TestRouting extends React.Component {
   render() {
@@ -27,9 +26,24 @@ export class TestRouting extends React.Component {
           <li>
             <Link to="/FoodTruckTable">FoodTruckTable</Link>
           </li>
+          <li>
+            <Link to="/create_account">Create Account</Link>
+          </li>
         </ul>
       </div>
     );
+  }
+}
+
+export class CreateAccount extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <div> 
+      <SignUp/>
+    </div>;
   }
 }
 
@@ -64,7 +78,6 @@ export class DatabaseListing extends React.Component {
 
     return Request.postNewUser(user);
   };
-
 
   sendFormDataPostNewTruck = function(e) {
     e.preventDefault();
@@ -136,7 +149,7 @@ export class Login extends React.Component {
   }
 }
 
-export class Table extends React.Component{
+export class Table extends React.Component {
   constructor(props) {
     super(props);
 
@@ -151,12 +164,11 @@ export class Table extends React.Component{
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckTable/>
+        <FoodTruckTable />
       </div>
     );
   }
 }
-
 
 export class Home extends React.Component {
   render() {
