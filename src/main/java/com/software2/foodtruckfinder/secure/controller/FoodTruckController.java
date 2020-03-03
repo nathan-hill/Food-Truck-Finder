@@ -1,11 +1,8 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Truck;
-import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +52,7 @@ public class FoodTruckController {
 
     @GetMapping(path = "findTruckByID")
     public @ResponseBody
-    Truck findByTruckId(Integer integer){
+    Optional<Truck> findByTruckId(Integer integer){
         return truckRepository.findById(integer);
     }
 
@@ -69,8 +66,9 @@ public class FoodTruckController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Truck> updateTruck(@RequestBody Truck tdets) {
 
-        Truck newT = findByTruckId(tdets.getId());
-        if(newT != null){
+        if(truckRepository.existsById(tdets.getId())){
+            Truck newT = new Truck();
+            newT.setId(tdets.getId());
             newT.setDescription(tdets.getDescription());
             newT.setMenu(tdets.getMenu());
             newT.setName(tdets.getName());
