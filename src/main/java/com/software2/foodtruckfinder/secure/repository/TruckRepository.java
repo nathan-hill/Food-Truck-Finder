@@ -16,6 +16,6 @@ public interface TruckRepository extends CrudRepository<Truck, Integer> {
 
     Optional<Truck> findById(Integer in);
 
-    List<Truck> findTrucksByOwnerID(String userId);
+    List<Truck> findTrucksByOwnerID(long userId);
 
 }

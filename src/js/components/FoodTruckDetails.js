@@ -46,7 +46,7 @@ class FoodTruckDetails extends React.Component {
             schedule: this.state.schedule,
             description: this.state.description,
             menu: this.state.menu,
-            ownerID: this.state.ownerID,
+            ownerid: this.state.ownerid,
         }
         data.headers = {
             "Access-Control-Allow-Origin": "*",

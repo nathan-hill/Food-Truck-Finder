@@ -17,6 +17,8 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import axios from "axios";
+import { connect } from "react-redux";
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -41,7 +43,7 @@ const tableIcons = {
 
 
 
-export default function MaterialTableDemo() {
+function MaterialTableDemo(props) {
   const [state, setState] = React.useState({
     columns: [
       { title: 'Food Truck Name', field: 'name' },
@@ -63,6 +65,16 @@ export default function MaterialTableDemo() {
       //   Route: 'Baylor Sub Building',
       // },
     ],
+  });
+
+
+  console.log("ID: ", props.auth.user.sub);
+  axios.get("http://localhost:8080/v/trucks/findTrucksByownerID", {
+      params: {
+          l: props.auth.user.sub
+      }
+  }).then(res => {
+      console.log(res);
   });
 
   return (
@@ -123,3 +135,9 @@ export default function MaterialTableDemo() {
     />
   );
 }
+
+const mapStateToProps = state => ({
+    auth : state.auth,
+});
+
+export default connect(mapStateToProps,null)(MaterialTableDemo);
