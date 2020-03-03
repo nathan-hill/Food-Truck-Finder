@@ -3,8 +3,8 @@ import setAuthorizationToken from "../helpers/setAuthorizationToken";
 import jwtDecode from "jwt-decode";
 import {SET_CURRENT_USER} from "./types";
 
-//const backend_url = "localhost:8080/v/"
-const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+const backend_url = "http://localhost:8080/v/"
+//const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
 
 export function setCurrentUser(user) {
     return {

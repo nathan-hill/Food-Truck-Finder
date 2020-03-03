@@ -7,6 +7,9 @@ import axios from "axios";
 import {UserProfile} from "../pages/pages";
 import { connect } from "react-redux";
 
+const backend_url = "http://localhost:8080/v/";
+//const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+
 class customerSettings extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +19,7 @@ class customerSettings extends React.Component {
             username: "",
             email: "",
             password: "",
+            type: "",
             isDisabled: true,
         };
 
@@ -24,9 +28,9 @@ class customerSettings extends React.Component {
         this.onEditSubmit = this.onEditSubmit.bind(this);
 
         console.log("getting user data:");
-        axios.get("http://localhost:8080/v/getUserByID", {
+        axios.get(backend_url + "users/getUserByID", {
             params: {
-                id: this.state.id
+                id: this.props.auth.user.sub
             }
         }).then(res => {
             console.log(res);
@@ -47,6 +51,7 @@ class customerSettings extends React.Component {
             username: this.state.username,
             email: this.state.email,
             password: this.state.password,
+            type: this.state.type,
         }
         data.headers = {
             "Access-Control-Allow-Origin": "*",
@@ -54,7 +59,7 @@ class customerSettings extends React.Component {
             Accept: "application/json"
         };
 
-        axios.put("http://localhost:8080/v/users",data).then(res => {
+        axios.put(backend_url + "users/updateByUser",data).then(res => {
             console.log(res);
         })
     }
@@ -65,7 +70,7 @@ class customerSettings extends React.Component {
     }
 
     render() {
-        const { name, schedule, description, menu, isDisabled } = this.state;
+        const { name, username, email, isDisabled } = this.state;
         const classes = makeStyles();
 
         let submitButton;
@@ -125,7 +130,7 @@ class customerSettings extends React.Component {
                             label="Username"
                             name="username"
                             onChange={this.onChange}
-                            value={name} //username not defined error when I try to change it
+                            value={username} //username not defined error when I try to change it
                             disabled={isDisabled}
                             autoFocus
                         />  
@@ -139,24 +144,11 @@ class customerSettings extends React.Component {
                             label="Email"
                             name="email"
                             onChange={this.onChange}
-                            value={name} //email not defined error as well
+                            value={email} //email not defined error as well
                             disabled={isDisabled}
                             autoFocus
                         />
 
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="password"
-                            label="Password"
-                            name="password"
-                            onChange={this.onChange}
-                            value={menu}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
                         {submitButton}
                    </form>
                 </div>

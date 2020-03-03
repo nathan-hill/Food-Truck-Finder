@@ -40,8 +40,8 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
-//const backend_url = "localhost:8080/v/"
-const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+const backend_url = "http://localhost:8080/v/"
+//const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
 
 class MaterialTableDemo extends React.Component {
     constructor(props) {
@@ -113,6 +113,10 @@ class MaterialTableDemo extends React.Component {
 
                             console.log("NEW DATA: ");
                             console.log(newData);
+
+                            axios.put(backend_url + "trucks/updateByTruck",newData).then(res => {
+                                console.log(res);
+                            })
                         }),
                     onRowDelete: oldData =>
                         new Promise(resolve => {
