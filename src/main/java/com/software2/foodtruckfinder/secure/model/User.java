@@ -26,7 +26,6 @@ public class User extends DateAudit {
     }
 
     @Id
-    @Column(name="uid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

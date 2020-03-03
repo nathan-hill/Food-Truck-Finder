@@ -20,6 +20,13 @@ public class Truck {
     @NotNull
     private long ownerID;
 
+    public long getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(long ownerID) {
+        this.ownerID = ownerID;
+    }
 
     public String getMenu() {
         return Menu;
