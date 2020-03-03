@@ -19,6 +19,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    public UserController(UserRepository ur){
+        this.userRepository = ur;
+    }
+
     @PostMapping(path = "/add")
     public @ResponseBody
     ResponseEntity<User> addNewUser(@RequestBody User newUser) {
