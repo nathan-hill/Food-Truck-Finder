@@ -21,9 +21,6 @@ import java.util.Set;
         })
 })
 public class User extends DateAudit {
-    enum Type{
-        CUSTOMER, OWNER, ADMIN
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +31,7 @@ public class User extends DateAudit {
     private String name;
 
     @NotBlank
-    @Size(max = 15)
+    @Size(min = 4, max = 15)
     private String username;
 
     @NaturalId
@@ -44,21 +41,30 @@ public class User extends DateAudit {
     private String email;
 
     @NotBlank
-    @Size(max = 100)
+    @Size(min = 6, max = 100)
     private String password;
 
     @NotBlank
-    //private Type type;
+    private String type;
 
     public User() {
 
     }
 
-    public User(String name, String username, String email, String password) {
+    public User(String name, String username, String email, String password, String t) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.type = t;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setId(Long id) {
@@ -109,7 +115,7 @@ public class User extends DateAudit {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                //", type=" + type +
+                ", type=" + type +
                 '}';
     }
 }
