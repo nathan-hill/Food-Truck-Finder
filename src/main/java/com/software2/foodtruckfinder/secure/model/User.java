@@ -46,7 +46,7 @@ public class User extends DateAudit {
     private String password;
 
     @NotBlank
-    private Type type;
+    //private Type type;
 
     public User() {
 
@@ -107,7 +107,7 @@ public class User extends DateAudit {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", type=" + type +
+                //", type=" + type +
                 '}';
     }
 }

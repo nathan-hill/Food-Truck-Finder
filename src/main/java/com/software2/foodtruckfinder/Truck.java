@@ -26,9 +26,12 @@ public class Truck {
         return Schedule;
     }
 
+    public Integer getId(){return this.id;}
+
     public void setSchedule(String schedule) {
         Schedule = schedule;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }

@@ -13,6 +13,10 @@ public class FoodTruckController {
     @Autowired
     private TruckRepository truckRepository;
 
+    public FoodTruckController(TruckRepository truckRepository){
+        this.truckRepository = truckRepository;
+    }
+
     @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<Truck> addNewTruck(@RequestBody Truck newTruck) {
