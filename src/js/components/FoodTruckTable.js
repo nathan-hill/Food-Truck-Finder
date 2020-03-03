@@ -1,5 +1,5 @@
 import React from 'react';
-import { forwardRef } from 'react';
+import {forwardRef} from 'react';
 import MaterialTable from 'material-table';
 
 import AddBox from '@material-ui/icons/AddBox';
@@ -18,126 +18,126 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-  };
-
-
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref}/>),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref}/>),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref}/>),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref}/>),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref}/>),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref}/>),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref}/>),
+    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref}/>),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
+};
 
 
 function MaterialTableDemo(props) {
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Food Truck Name', field: 'name' },
-      { title: 'Schedule', field: 'schedule' },
-      { title: 'Description', field: 'description' },
-      { title: 'Menu', field: 'Menu' },
-      { title: 'Route', field: 'Route' },
-    ],
-    data: [
+    const [state, setState] = React.useState({
+        columns: [
+            {title: 'Food Truck Name', field: 'name'},
+            {title: 'Schedule', field: 'schedule'},
+            {title: 'Description', field: 'description'},
+            {title: 'Menu', field: 'Menu'},
+            {title: 'Route', field: 'Route'},
+        ],
+        data: [
 
-      // // load the result set of food trucks for the user
-      // { name: 'tacos',
-      //  schedule: 'Monday-Friday', 
-      //  Route: 'BSB' 
-      // },
-      // {
-      //   name: 'burgers',
-      //   schedule: 'Monday-Saturday',
-      //   Route: 'Baylor Sub Building',
-      // },
-    ],
-  });
-
-
-  console.log("ID: ", props.auth.user.sub);
-  axios.get("http://localhost:8080/v/trucks/findTrucksByownerID", {
-      params: {
-          l: props.auth.user.sub
-      }
-  }).then(res => {
-      console.log(res);
-  });
-
-  return (
-    <MaterialTable
-      icons={tableIcons}
-      title="Food Truck Table"
-      columns={state.columns}
-      data={state.data}
-      editable={{
-        // add method
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                // sets the table to current state
-                const data = [...prevState.data];
-
-                // adds a new data point to the table
-                data.push(newData);
+            // load the result set of food trucks for the user
+            {
+                name: 'tacos',
+                schedule: 'Monday-Friday',
+                Route: 'BSB',
+            },
+            {
+                name: 'burgers',
+                schedule: 'Monday-Saturday',
+                Route: 'Baylor Sub Building',
+            },
+        ],
+    });
 
 
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState(prevState => {
-                  // sets the table to current state
-                  const data = [...prevState.data];
+    console.log("ID: ", props.auth.user.sub);
+    axios.get("http://localhost:8080/v/trucks/findTrucksByownerID", {
+        params: {
+            l: props.auth.user.sub
+        }
+    }).then(res => {
+        state.data = res.data;
+        console.log(state.data)
+    });
 
-                  // updates the table position
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                // sets the table to current state
-                const data = [...prevState.data];
+    return (
+        <MaterialTable
+            icons={tableIcons}
+            title="Food Truck Table"
+            columns={state.columns}
+            data={state.data}
+            editable={{
+                // add method
+                onRowAdd: newData =>
+                    new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve();
+                            setState(prevState => {
+                                // sets the table to current state
+                                const data = [...prevState.data];
 
-                // deletes a data point form the table
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-      }}
-    />
-  );
+                                // adds a new data point to the table
+                                data.push(newData);
+
+
+                                return {...prevState, data};
+                            });
+                        }, 600);
+                    }),
+                onRowUpdate: (newData, oldData) =>
+                    new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve();
+                            if (oldData) {
+                                setState(prevState => {
+                                    // sets the table to current state
+                                    const data = [...prevState.data];
+
+                                    // updates the table position
+                                    data[data.indexOf(oldData)] = newData;
+                                    return {...prevState, data};
+                                });
+                            }
+                        }, 600);
+                    }),
+                onRowDelete: oldData =>
+                    new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve();
+                            setState(prevState => {
+                                // sets the table to current state
+                                const data = [...prevState.data];
+
+                                // deletes a data point form the table
+                                data.splice(data.indexOf(oldData), 1);
+                                return {...prevState, data};
+                            });
+                        }, 600);
+                    }),
+            }}
+        />
+    );
 }
 
 const mapStateToProps = state => ({
-    auth : state.auth,
+    auth: state.auth,
 });
 
-export default connect(mapStateToProps,null)(MaterialTableDemo);
+export default connect(mapStateToProps, null)(MaterialTableDemo);

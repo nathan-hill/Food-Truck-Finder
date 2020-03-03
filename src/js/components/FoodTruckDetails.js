@@ -15,7 +15,6 @@ class FoodTruckDetails extends React.Component {
             schedule: "",
             description: "",
             menu: "",
-            ownerid: 0,
             isDisabled: true,
         };
 
@@ -47,7 +46,7 @@ class FoodTruckDetails extends React.Component {
             schedule: this.state.schedule,
             description: this.state.description,
             menu: this.state.menu,
-            ownerid: this.state.ownerid,
+            ownerID: this.state.ownerID,
         }
         data.headers = {
             "Access-Control-Allow-Origin": "*",
