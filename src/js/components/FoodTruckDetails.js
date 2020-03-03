@@ -10,11 +10,11 @@ class FoodTruckDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: 26,
-            foodTruckName: "",
-            currentSchedule: "",
+            id: 1,
+            name: "",
+            schedule: "",
             description: "",
-            currentMenu: "",
+            menu: "",
             isDisabled: true,
         };
 
@@ -22,12 +22,14 @@ class FoodTruckDetails extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onEditSubmit = this.onEditSubmit.bind(this);
 
+        console.log("TRYING TO DO A GET NOW!!!")
         axios.get("http://localhost:8080/v/trucks/findTruckByID", {
             params: {
-                l: this.state.id
+                integer: this.state.id
             }
         }).then(res => {
-            console.log(res)
+            console.log(res);
+            this.setState(res.data);
         });
     }
 
@@ -37,6 +39,24 @@ class FoodTruckDetails extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
+
+        let data = {
+            id: this.state.id,
+            name: this.state.name,
+            schedule: this.state.schedule,
+            description: this.state.description,
+            menu: this.state.menu,
+            ownerID: this.state.ownerID,
+        }
+        data.headers = {
+            "Access-Control-Allow-Origin": "*",
+            "content-type": "application/json",
+            Accept: "application/json"
+        };
+
+        axios.put("http://localhost:8080/v/trucks/updateByTruck",data).then(res => {
+            console.log(res);
+        })
     }
 
     onEditSubmit(e) {
@@ -45,7 +65,7 @@ class FoodTruckDetails extends React.Component {
     }
 
     render() {
-        const { foodTruckName, currentSchedule, description, currentMenu, isDisabled } = this.state;
+        const { name, schedule, description, menu, isDisabled } = this.state;
         const classes = makeStyles();
 
         let submitButton;
@@ -87,11 +107,11 @@ class FoodTruckDetails extends React.Component {
                             margin="normal"
                             required
                             fullWidth
-                            id="foodTruckName"
+                            id="name"
                             label="Food Truck Name"
-                            name="foodTruckName"
+                            name="name"
                             onChange={this.onChange}
-                            value={foodTruckName}
+                            value={name}
                             disabled={isDisabled}
                             autoFocus
                         />
@@ -101,11 +121,11 @@ class FoodTruckDetails extends React.Component {
                             margin="normal"
                             required
                             fullWidth
-                            id="currentSchedule"
+                            id="schedule"
                             label="Current Schedule"
-                            name="currentSchedule"
+                            name="schedule"
                             onChange={this.onChange}
-                            value={currentSchedule}
+                            value={schedule}
                             disabled={isDisabled}
                             autoFocus
                         />
@@ -129,11 +149,11 @@ class FoodTruckDetails extends React.Component {
                             margin="normal"
                             required
                             fullWidth
-                            id="currentMenu"
+                            id="menu"
                             label="Current Menu"
-                            name="currentMenu"
+                            name="menu"
                             onChange={this.onChange}
-                            value={currentMenu}
+                            value={menu}
                             disabled={isDisabled}
                             autoFocus
                         />

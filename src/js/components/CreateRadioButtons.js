@@ -5,12 +5,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
-export default function FormControlLabelPosition() {
+export default function FormControlLabelPosition(props) {
   const [value, setValue] = React.useState('female');
 
   const handleChange = event => {
+    console.log("handle")
     setValue(event.target.value);
-    //props.action();
+    props.action();
   };
 
   return (
