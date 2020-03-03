@@ -40,6 +40,9 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
+//const backend_url = "localhost:8080/v/"
+const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+
 class MaterialTableDemo extends React.Component {
     constructor(props) {
         super(props);
@@ -57,7 +60,7 @@ class MaterialTableDemo extends React.Component {
 
     componentDidMount = () => {
         console.log("ID: ", this.props.auth.user.sub);
-        axios.get("http://localhost:8080/v/trucks/findTrucksByownerID", {
+        axios.get(backend_url + "trucks/findTrucksByownerID", {
             params: {
                 l: this.props.auth.user.sub
             }
@@ -127,35 +130,6 @@ class MaterialTableDemo extends React.Component {
         );
     }
 }
-
-
-// function MaterialTableDemo(props) {
-//     const [state, setState] = React.useState({
-//         columns: [
-//             {title: 'Food Truck Name', field: 'name'},
-//             {title: 'Schedule', field: 'schedule'},
-//             {title: 'Description', field: 'description'},
-//             {title: 'Menu', field: 'Menu'},
-//             {title: 'Route', field: 'Route'},
-//         ],
-//         data: [
-//
-//             // load the result set of food trucks for the user
-//             {
-//                 name: 'tacos',
-//                 schedule: 'Monday-Friday',
-//                 Route: 'BSB',
-//             },
-//             {
-//                 name: 'burgers',
-//                 schedule: 'Monday-Saturday',
-//                 Route: 'Baylor Sub Building',
-//             },
-//         ],
-//     });
-//
-//
-// }
 
 const mapStateToProps = state => ({
     auth: state.auth,
