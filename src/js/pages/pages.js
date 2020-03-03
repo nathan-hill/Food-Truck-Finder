@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
-import Profile from "../components/Profile";
+import Profile from "./Profile";
 import axios from "axios";
-import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckTable from "./../components/FoodTruckTable";
@@ -20,16 +19,10 @@ export class TestRouting extends React.Component {
             <Link to="/Request">Request from DB</Link>
           </li>
           <li>
-            <Link to="/loginpage"> Log In </Link>
-          </li>
-          <li>
             <Link to="/Dashboard">Dashboard</Link>
           </li>
           <li>
             <Link to="/FoodTruckTable">FoodTruckTable</Link>
-          </li>
-          <li>
-            <Link to="/Profile">User Profile</Link>
           </li>
           <li>
             <Link to="/create_account">Create Account</Link>
