@@ -18,15 +18,10 @@ public class Truck {
     @NotNull
     private String Menu;
 
-    @NotNull
-    private Long ownerID;
+    @ManyToOne
+    @JoinColumn(name = "ownerID", referencedColumnName = "uid")
+    private User ownerID;
 
-    public Long getOwnerID() {
-        return ownerID;
-    }
-    public void setOwnerID(Long ownerID) {
-        this.ownerID = ownerID;
-    }
 
     public String getMenu() {
         return Menu;

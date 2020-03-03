@@ -9,6 +9,7 @@ class FoodTruckDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: 26,
             foodTruckName: "",
             currentSchedule: "",
             description: "",
