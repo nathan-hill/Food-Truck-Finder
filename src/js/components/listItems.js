@@ -107,7 +107,7 @@ export const OwnerListItems = (
       </ListItemIcon>
       <ListItemText primary="View Ratings/Reviews" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to="/OwnerDetails" component={Link}>>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
