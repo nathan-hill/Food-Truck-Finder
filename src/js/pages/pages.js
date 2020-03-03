@@ -5,10 +5,8 @@ import Dashboard from "./../components/Dashboard";
 // import LoginTest from './LoginPage'
 
 import { TwoFieldForm } from "../components/TwoFieldForm";
-import Profile from "./Profile";
-import LoginPage from "./LoginPage";
+import Profile from "../components/Profile";
 import axios from "axios";
-import SimpleMap from "./GoogleTest";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";

@@ -62,7 +62,6 @@ export function postNewUser(u) {
     });
 }
 
-<<<<<<< HEAD
 export function UpdateUser(u) {
   const request = {
     method: "POST",
@@ -73,14 +72,15 @@ export function UpdateUser(u) {
       "content-type": "application/json",
       Accept: "application/json"
     }
-=======
+  }
+}
+
 export function postNewTruck(t) {
   const request = {
     method: "POST",
     url: backend_url + "trucks/add/",
     data: t,
     headers: request_headers
->>>>>>> master
   };
 
   console.log(request);
@@ -92,8 +92,6 @@ export function postNewTruck(t) {
     .catch(function(error) {
       console.log(error);
     });
-<<<<<<< HEAD
-=======
 }
 
 
@@ -110,5 +108,4 @@ export function getAllTrucks() {
     .catch(function(error) {
       console.log(error);
     });
->>>>>>> master
 }

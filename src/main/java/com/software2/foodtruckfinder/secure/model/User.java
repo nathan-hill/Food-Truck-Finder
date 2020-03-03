@@ -41,9 +41,7 @@ public class User extends DateAudit {
     @Size(max = 100)
     private String password;
 
-    public User() {
-
-    }
+    public User(){}
 
     public User(String name, String username, String email, String password) {
         this.name = name;
