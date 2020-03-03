@@ -123,7 +123,7 @@ class customerSettings extends React.Component {
                             label="Username"
                             name="username"
                             onChange={this.onChange}
-                            value={name}
+                            value={name} //username not defined error when I try to change it
                             disabled={isDisabled}
                             autoFocus
                         />  
@@ -137,7 +137,7 @@ class customerSettings extends React.Component {
                             label="Email"
                             name="email"
                             onChange={this.onChange}
-                            value={name}
+                            value={name} //email not defined error as well
                             disabled={isDisabled}
                             autoFocus
                         />

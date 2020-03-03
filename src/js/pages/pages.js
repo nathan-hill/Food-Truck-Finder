@@ -8,7 +8,6 @@ import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
-import OwnerSettings from "./../components/OwnerSettings";
 
 export class TestRouting extends React.Component {
   render() {
@@ -207,7 +206,7 @@ export class OwnerProfile extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <OwnerSettings />
+        <CustomerSettings />
         <FoodTruckTable />
       </div>
     );
