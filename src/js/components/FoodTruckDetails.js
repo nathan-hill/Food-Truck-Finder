@@ -15,6 +15,7 @@ class FoodTruckDetails extends React.Component {
             schedule: "",
             description: "",
             menu: "",
+            ownerid: 0,
             isDisabled: true,
         };
 

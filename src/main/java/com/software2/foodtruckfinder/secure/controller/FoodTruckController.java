@@ -25,6 +25,9 @@ public class FoodTruckController {
         Truck n = new Truck();
         n.setName(newTruck.getName());
         n.setSchedule(newTruck.getSchedule());
+        n.setDescription(newTruck.getDescription());
+        n.setOwnerID(newTruck.getOwnerID());
+        n.setMenu(newTruck.getMenu());
 
         for (Truck truck: truckRepository.findAll()) {
             if(truck.getName().equals(newTruck.getName())){
@@ -73,6 +76,7 @@ public class FoodTruckController {
             newT.setMenu(tdets.getMenu());
             newT.setName(tdets.getName());
             newT.setSchedule(tdets.getSchedule());
+            newT.setOwnerID(tdets.getOwnerID());
 
             Truck generatedTruck = truckRepository.save(newT);
             return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
