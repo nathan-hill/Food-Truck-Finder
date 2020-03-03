@@ -17,10 +17,8 @@ public class Truck {
     private String Description;
     @NotNull
     private String Menu;
-
-//    @ManyToOne
-//    @JoinColumn(name = "ownerID", referencedColumnName = "uid")
-    private User ownerID;
+    @NotNull
+    private long ownerID;
 
 
     public String getMenu() {

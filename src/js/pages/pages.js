@@ -6,13 +6,8 @@ import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
-<<<<<<< HEAD
-import FoodTruckTable from './../components/FoodTruckTable';
 import FoodTruckDetails from "./../components/FoodTruckDetails";
-
-=======
 import FoodTruckTable from "./../components/FoodTruckTable";
->>>>>>> origin/master
 
 export class TestRouting extends React.Component {
   render() {
