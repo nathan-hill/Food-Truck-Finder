@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
-
+import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
-import FoodTruckTable from './../components/FoodTruckTable';
-
+import FoodTruckTable from "./../components/FoodTruckTable";
 
 export class TestRouting extends React.Component {
   render() {
@@ -27,7 +26,55 @@ export class TestRouting extends React.Component {
           <li>
             <Link to="/FoodTruckTable">FoodTruckTable</Link>
           </li>
+          <li>
+            <Link to="/create_account">Create Account</Link>
+          </li>
         </ul>
+      </div>
+    );
+  }
+}
+
+export class CreateAccount extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      status: ""
+    };
+
+    this.sendFormDataPostNewUser = this.sendFormDataPostNewUser.bind(this);
+  }
+
+  sendFormDataPostNewUser = async function(e) {
+    e.preventDefault();
+    const user = {
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value,
+      name:
+        e.target.elements.firstName.value + ' ' + e.target.elements.lastName.value,
+      username: e.target.elements.username.value,
+      type: e.target.elements.type.value
+    };
+
+    console.log(user);
+
+    var status = await Request.postNewUser(user);
+
+    console.log("The status is");
+    console.log(status.message)
+
+    this.setState({ status: status.message });
+  };
+
+  render() {
+    console.log("redering the page as " + this.state.status);
+    return (
+      <div>
+        <SignUp
+          status={this.state.status}
+          action={this.sendFormDataPostNewUser}
+        />
       </div>
     );
   }
@@ -50,21 +97,6 @@ export class DatabaseListing extends React.Component {
 
     this.setState({ trucks: users });
   }
-
-  sendFormDataPostNewUser = function(e) {
-    e.preventDefault();
-    const user = {
-      email: e.target.elements.email.value,
-      password: e.target.elements.password.value
-    };
-
-    //this.setState({users: this.state.users.push()});
-
-    console.log(user);
-
-    return Request.postNewUser(user);
-  };
-
 
   sendFormDataPostNewTruck = function(e) {
     e.preventDefault();
@@ -97,20 +129,6 @@ export class DatabaseListing extends React.Component {
   }
 }
 
-const sendFormDataLoginUser = function(e) {
-  e.preventDefault();
-
-  const user = {
-    email: e.target.elements.email.value,
-    password: e.target.elements.password.value
-  };
-
-  console.log(user);
-
-  var requestData = Request.logInUser(user);
-
-  console.log(requestData);
-};
 
 export class Login extends React.Component {
   constructor(props) {
@@ -120,7 +138,6 @@ export class Login extends React.Component {
       redirect: ""
     };
 
-    this.sendFormDataLoginUser = sendFormDataLoginUser.bind(this);
   }
 
   render() {
@@ -128,7 +145,6 @@ export class Login extends React.Component {
       <div>
         <Link to="/">Back</Link>
         <LoginPage
-          action={sendFormDataLoginUser}
           redirect={this.state.redirect}
         />
       </div>
@@ -136,27 +152,24 @@ export class Login extends React.Component {
   }
 }
 
-export class Table extends React.Component{
+export class Table extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       redirect: ""
     };
-
-    this.sendFormDataLoginUser = sendFormDataLoginUser.bind(this);
   }
 
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckTable/>
+        <FoodTruckTable />
       </div>
     );
   }
 }
-
 
 export class Home extends React.Component {
   render() {

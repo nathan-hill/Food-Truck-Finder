@@ -21,6 +21,10 @@ import java.util.Set;
         })
 })
 public class User extends DateAudit {
+    enum Type{
+        CUSTOMER, OWNER, ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,6 +46,9 @@ public class User extends DateAudit {
     @NotBlank
     @Size(max = 100)
     private String password;
+
+    @NotBlank
+    private Type type;
 
     public User() {
 
@@ -94,4 +101,15 @@ public class User extends DateAudit {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }
