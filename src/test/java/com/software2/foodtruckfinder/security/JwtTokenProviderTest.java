@@ -28,7 +28,7 @@ public class JwtTokenProviderTest {
     @DisplayName("null generateToken test")
     @Test
     void generateTokenTest(){
-        assertThrows(IllegalArgumentException.class, ()->jtp.generateToken(null));
+        assertThrows(NullPointerException.class, ()->jtp.generateToken(null));
     }
 
     @DisplayName("null getUserId test")

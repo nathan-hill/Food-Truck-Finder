@@ -45,16 +45,12 @@ public class User extends DateAudit {
     @Size(max = 100)
     private String password;
 
-<<<<<<< HEAD
-    public User(){}
-=======
     @NotBlank
-    private Type type;
+    //private Type type;
 
     public User() {
 
     }
->>>>>>> master
 
     public User(String name, String username, String email, String password) {
         this.name = name;
@@ -111,7 +107,7 @@ public class User extends DateAudit {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", type=" + type +
+                //", type=" + type +
                 '}';
     }
 }

@@ -11,6 +11,7 @@ public class UserTest {
     @BeforeEach
     void init(){
         user = new User("Name", "Username", "Email", "Password");
+        user.setId(500l);
     }
 
     @DisplayName("Name Tests")
@@ -83,5 +84,17 @@ public class UserTest {
             user.setPassword("NewPassword");
             assertEquals("NewPassword", user.getPassword());
         }
+    }
+
+    @DisplayName("toString test")
+    @Test
+    void toStringTest(){
+        assertEquals("User{" +
+                "id=" + 500 +
+                ", name='Name" + '\'' +
+                ", username='Username" + '\'' +
+                ", email='Email" + '\'' +
+                ", password='Password" + '\'' +
+                '}', user.toString());
     }
 }

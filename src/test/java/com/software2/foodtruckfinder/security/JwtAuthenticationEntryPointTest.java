@@ -37,7 +37,12 @@ public class JwtAuthenticationEntryPointTest {
     @DisplayName("Valid Test")
     @Test
     void validTest(){
-        Exception e = new Exception("error message");
-        assertDoesNotThrow(()->jp.commence(new HttpServletRequestWrapper(new MockHttpServletRequest()), new HttpServletResponseWrapper(new MockHttpServletResponse()), (AuthenticationException)e));
+        AuthenticationException e = new AuthenticationException("error message") {
+            @Override
+            public String getMessage() {
+                return super.getMessage();
+            }
+        };
+        assertDoesNotThrow(()->jp.commence(new HttpServletRequestWrapper(new MockHttpServletRequest()), new HttpServletResponseWrapper(new MockHttpServletResponse()), e));
     }
 }
