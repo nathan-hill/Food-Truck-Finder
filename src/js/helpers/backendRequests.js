@@ -24,38 +24,20 @@ export function getAllUsers() {
     });
 }
 
-export function logInUser(u) {
-  axios
-    .post(backend_url + "login/", {
-      email: u.email,
-      password: u.password,
-      id: "",
-      headers: request_headers
-    })
-    .then(function(response) {
-      //console.log(response.data);
-        console.log(response.data)
-        return response.data;
-    })
-    .catch(function(error) {
-      console.log(error);
-      //show error
-    });
-}
-
 export function postNewUser(u) {
   const request = {
     method: "POST",
-    url: backend_url + "users/add/",
+    url: backend_url + "api/auth/signup",
     data: u,
     headers: request_headers
   };
 
   console.log(request);
 
-  axios(request)
+  return axios(request)
     .then(function(response) {
       console.log(response.data);
+      return response.data
     })
     .catch(function(error) {
       console.log(error);
