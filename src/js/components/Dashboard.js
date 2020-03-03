@@ -115,7 +115,7 @@ export default function Dashboard() {
   
   //const userState = this.state.user;
 
-  const userState = 'cust';
+  const userState = 'customer';
   let mainList;
 
   if(userState==='owner'){

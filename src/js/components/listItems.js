@@ -72,7 +72,7 @@ export const CustomerListItems = (
       </ListItemIcon>
       <ListItemText primary="Ratings/Reviews" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to="/CustomerDetails" component={Link}>>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
@@ -89,7 +89,7 @@ export const OwnerListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button>
+    <ListItem button  to="/FoodTruckTable" component={Link}>>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
@@ -119,35 +119,13 @@ export const OwnerListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Raw Components</ListSubheader>
-    <ListItem button to="/" component={Link}>>
-      <ListItemIcon> 
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/" />
-    </ListItem>
-    <ListItem button to="/Request" component={Link}>>
-      <ListItemIcon> 
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/Request" />
-    </ListItem>
-    <ListItem button to="/loginpage" component={Link}>>
-      <ListItemIcon> 
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/loginpage" />
-    </ListItem>
+    
     <ListItem button to="/TestRouting" component={Link}>>
       <ListItemIcon> 
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="/TestRouting" />
     </ListItem>
-    <ListItem button to="/Table" component={Link}>>
-      <ListItemIcon> 
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/Table" />
-    </ListItem>
+    
   </div>
 );
