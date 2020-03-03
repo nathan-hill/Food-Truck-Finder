@@ -17,11 +17,16 @@ public class Truck {
     private String Description;
     @NotNull
     private String Menu;
+    @NotNull
+    private long ownerID;
 
-    @ManyToOne
-    @JoinColumn(name = "ownerID", referencedColumnName = "uid")
-    private User ownerID;
+    public long getOwnerID() {
+        return ownerID;
+    }
 
+    public void setOwnerID(long ownerID) {
+        this.ownerID = ownerID;
+    }
 
     public String getMenu() {
         return Menu;
