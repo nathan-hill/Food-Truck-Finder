@@ -19,6 +19,10 @@ import javax.validation.constraints.Size;
         })
 })
 public class User extends DateAudit {
+    enum Type{
+        CUSTOMER, OWNER, ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,7 +45,16 @@ public class User extends DateAudit {
     @Size(max = 100)
     private String password;
 
+<<<<<<< HEAD
     public User(){}
+=======
+    @NotBlank
+    private Type type;
+
+    public User() {
+
+    }
+>>>>>>> master
 
     public User(String name, String username, String email, String password) {
         this.name = name;
@@ -90,4 +103,15 @@ public class User extends DateAudit {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }
