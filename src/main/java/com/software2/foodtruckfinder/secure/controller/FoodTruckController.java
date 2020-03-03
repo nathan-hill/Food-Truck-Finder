@@ -76,6 +76,7 @@ public class FoodTruckController {
             newT.setMenu(tdets.getMenu());
             newT.setName(tdets.getName());
             newT.setSchedule(tdets.getSchedule());
+            newT.setOwnerID(tdets.getOwnerID());
 
             Truck generatedTruck = truckRepository.save(newT);
             return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
