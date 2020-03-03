@@ -7,13 +7,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import RadioButtons from "./../components/CreateRadioButtons";
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +38,7 @@ export default class SignUp extends React.Component {
     super(props);
 
     this.state = {
-      rbstate: "false"
+      rbstate: true
     };
   }
   // export default funciton RadioButtons() {
@@ -53,15 +50,15 @@ export default class SignUp extends React.Component {
   // }
 
   changeRBState = (e) => {
-    e.surpressDefault();
 
     console.log("Im HEr")
 
-    this.setState({ rbstate: "true" });
+    this.setState({ rbstate: false });
   };
 
   render() {
     const classes = useStyles;
+    console.log(this.state.rbstate);
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -141,12 +138,12 @@ export default class SignUp extends React.Component {
                   {this.props.status}
                 </Typography>
                 <br />
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
-                />
+                /> */}
               </Grid>
             </Grid>
             <Button
