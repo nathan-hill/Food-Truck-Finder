@@ -1,13 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
-<<<<<<< HEAD
-
-// import LoginTest from './LoginPage'
-
-=======
 import SignUp from "../components/SignUp";
->>>>>>> 519272161b93246980e5247d381926083f41cf5f
 import { TwoFieldForm } from "../components/TwoFieldForm";
 import Profile from "./Profile";
 import LoginPage from "./LoginPage";
@@ -37,11 +31,7 @@ export class TestRouting extends React.Component {
             <Link to="/FoodTruckTable">FoodTruckTable</Link>
           </li>
           <li>
-<<<<<<< HEAD
-            <Link to="/Profile">User Profile</Link>
-=======
             <Link to="/create_account">Create Account</Link>
->>>>>>> 519272161b93246980e5247d381926083f41cf5f
           </li>
         </ul>
       </div>
@@ -203,7 +193,6 @@ export class Table extends React.Component {
   }
 }
 
-<<<<<<< HEAD
 export class UserProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -227,8 +216,6 @@ export class UserProfile extends React.Component {
 }
 
 
-=======
->>>>>>> 519272161b93246980e5247d381926083f41cf5f
 export class Home extends React.Component {
   render() {
     return (
