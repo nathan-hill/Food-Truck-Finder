@@ -4,6 +4,7 @@ import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +51,26 @@ public class UserController {
 
     @GetMapping(path = "getUserByID")
     public @ResponseBody
-    Optional<User> findUserByID(Long id){
+    User findUserByID(Long id){
         return userRepository.findUserByid(id);
     }
 
+    @PutMapping(value = "updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<User> updateUser(@RequestBody User udets) {
+
+        User newUser = findUserByID(udets.getId());
+        if(newUser != null){
+            newUser.setId(udets.getId());
+            newUser.setEmail(udets.getEmail());
+            newUser.setName(udets.getName());
+            newUser.setPassword(udets.getPassword());
+            newUser.setUsername(udets.getUsername());
+
+            User generatedUser = userRepository.save(newUser);
+            return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
+        }else{
+            return null;
+        }
+    }
 }

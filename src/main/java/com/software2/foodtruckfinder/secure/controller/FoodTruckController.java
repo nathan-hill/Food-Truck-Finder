@@ -1,11 +1,13 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Truck;
+import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +55,7 @@ public class FoodTruckController {
 
     @GetMapping(path = "findTruckByID")
     public @ResponseBody
-    Optional<Truck> findByTruckId(Integer integer){
+    Truck findByTruckId(Integer integer){
         return truckRepository.findById(integer);
     }
 
@@ -61,6 +63,24 @@ public class FoodTruckController {
     public @ResponseBody
     List<Truck> findTrucksByOwnerID(String l){
         return truckRepository.findTrucksByOwnerID(l);
+    }
+
+    @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Truck> updateTruck(@RequestBody Truck tdets) {
+
+        Truck newT = findByTruckId(tdets.getId());
+        if(newT != null){
+            newT.setDescription(tdets.getDescription());
+            newT.setMenu(tdets.getMenu());
+            newT.setName(tdets.getName());
+            newT.setSchedule(tdets.getSchedule());
+
+            Truck generatedTruck = truckRepository.save(newT);
+            return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
+        }else{
+            return null;
+        }
     }
 
 }
