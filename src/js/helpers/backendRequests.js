@@ -76,7 +76,6 @@ export function postNewTruck(t) {
     });
 }
 
-
 export function getAllTrucks() {
   return axios({
     method: "GET",
