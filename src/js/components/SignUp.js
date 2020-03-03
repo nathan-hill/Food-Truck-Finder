@@ -12,6 +12,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import RadioButtons from "./../components/CreateRadioButtons";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -36,10 +39,28 @@ const useStyles = makeStyles(theme => ({
 export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      rbstate: "false"
+    };
   }
+  // export default funciton RadioButtons() {
+  //   const [selectedValue, setSelectedValue] = React.useState("a");
+
+  //   handleChange = event => {
+  //     setSelectedValue(event.target.value);
+  //   };
+  // }
+
+  changeRBState = (e) => {
+    e.surpressDefault();
+
+    console.log("Im HEr")
+
+    this.setState({ rbstate: "true" });
+  };
 
   render() {
-
     const classes = useStyles;
     return (
       <Container component="main" maxWidth="xs">
@@ -96,14 +117,30 @@ export default class SignUp extends React.Component {
                   variant="outlined"
                   required
                   fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"
                   id="password"
                   autoComplete="current-password"
                 />
-              </Grid>
-              <Grid item xs={12}>
+                <Grid item xs={12} style={{ paddingTop: "35px" }}>
+                  <RadioButtons action={this.changeRBState} />
+                </Grid>
+                <Typography style={{ color: "RED" }}>
+                  {this.props.status}
+                </Typography>
+                <br />
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
@@ -118,6 +155,7 @@ export default class SignUp extends React.Component {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={this.state.rbstate}
             >
               Sign Up
             </Button>
