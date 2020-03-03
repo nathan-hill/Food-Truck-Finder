@@ -13,31 +13,31 @@ import { Link } from "react-router-dom"
 
 export const GuestListItems = (
   <div>
-    <ListItem button>
+    <ListItem button to="/LoginPage" component={Link}>>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to="/LoginPage" component={Link}>>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primary="Food Trucks" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to="/LoginPage" component={Link}>>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Subscriptions" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to="/LoginPage" component={Link}>>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
       <ListItemText primary="Ratings/Reviews" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to="/LoginPage" component={Link}>>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
@@ -48,7 +48,7 @@ export const GuestListItems = (
 
 export const CustomerListItems = (
   <div>
-    <ListItem button>
+    <ListItem button to="/LoginPage">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
