@@ -3,6 +3,9 @@ import setAuthorizationToken from "../helpers/setAuthorizationToken";
 import jwtDecode from "jwt-decode";
 import {SET_CURRENT_USER} from "./types";
 
+//const backend_url = "localhost:8080/v/"
+const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+
 export function setCurrentUser(user) {
     return {
         type: SET_CURRENT_USER,
@@ -30,7 +33,7 @@ export function login(data) {
     console.log(data);
 
     return dispatch => {
-        return axios.post("http://localhost:8080/v/api/auth/signin",data).then(res => {
+        return axios.post(backend_url + "api/auth/signin",data).then(res => {
            const token = res.data.accessToken;
            localStorage.setItem("jwtToken",token);
            setAuthorizationToken(token);
