@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
-import Profile from "./Profile";
-import LoginPage from "./LoginPage";
-import axios from "axios";
-import SimpleMap from "./GoogleTest";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckTable from "./../components/FoodTruckTable";
+import CustomerSettings from "./../components/UserSettings";
+import OwnerSettings from "./../components/OwnerSettings";
 
 export class TestRouting extends React.Component {
   render() {
@@ -134,23 +132,6 @@ export class DatabaseListing extends React.Component {
 }
 
 
-const sendFormDataUpdateUser = function(e) {
-  e.preventDefault();
-
-  const user = {
-    FirstName: e.target.elements.FirstName.value,
-    LastName: e.target.elements.LastName.value,
-    email: e.target.elements.email.value,
-    username: e.target.elements.username.value,
-    password: e.target.elements.password.value
-  };
-  
-  console.log(user);
-
-  var requestData = Request.UpdateUser(user);
-
-  console.log(requestData);
-}
 
 export class Login extends React.Component {
   constructor(props) {
@@ -197,22 +178,41 @@ export class UserProfile extends React.Component {
   constructor(props) {
     super(props);
 
-
     this.state = {
-      redirect: "",
+      redirect: ""
     };
-
-    this.sendFormDataUpdateUser = sendFormDataUpdateUser.bind(this);
   }
 
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <Profile action={sendFormDataUpdateUser} redirect={this.state.redirect}/>
+        <CustomerSettings />
       </div>
     );
   }
+
+}
+
+export class OwnerProfile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Back</Link>
+        <OwnerSettings />
+        <FoodTruckTable/>
+      </div>
+    );
+  }
+
 }
 
 

@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 
-class customerSettings extends React.Component {
+class OwnerSettings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -57,6 +57,10 @@ class customerSettings extends React.Component {
         })
     }
 
+    onTruckSubmit(e){
+        e.preventDefault();
+    }
+
     onEditSubmit(e) {
         e.preventDefault();
         this.setState({isDisabled: !this.state.isDisabled})
@@ -92,9 +96,11 @@ class customerSettings extends React.Component {
             </Button>
         }
 
+
         return (
             <Container component="main" maxWidth="xs">
                 <div className={classes.paper}>
+
                     <form className={classes.form} noValidate onSubmit={this.onEditSubmit}>
                         {editCancelButton}
                     </form>
@@ -157,10 +163,11 @@ class customerSettings extends React.Component {
                         />
                         {submitButton}
                    </form>
+
                 </div>
             </Container>
         );
     }
 }
 
-export default customerSettings;
+export default OwnerSettings;
