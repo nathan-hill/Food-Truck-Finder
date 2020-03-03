@@ -56,7 +56,10 @@ export function UpdateUser(u) {
     }
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> UserProfile
 export function postNewTruck(t) {
   const request = {
     method: "POST",
@@ -75,7 +78,6 @@ export function postNewTruck(t) {
       console.log(error);
     });
 }
-
 
 export function getAllTrucks() {
   return axios({
