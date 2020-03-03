@@ -25,6 +25,9 @@ public class FoodTruckController {
         Truck n = new Truck();
         n.setName(newTruck.getName());
         n.setSchedule(newTruck.getSchedule());
+        n.setDescription(newTruck.getDescription());
+        n.setOwnerID(newTruck.getOwnerID());
+        n.setMenu(newTruck.getMenu());
 
         for (Truck truck: truckRepository.findAll()) {
             if(truck.getName().equals(newTruck.getName())){

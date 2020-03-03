@@ -2,6 +2,8 @@ package com.software2.foodtruckfinder.secure.repository;
 
 import com.software2.foodtruckfinder.secure.model.Truck;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
