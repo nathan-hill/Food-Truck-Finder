@@ -52,8 +52,8 @@ class MaterialTableDemo extends React.Component {
                 {title: 'Food Truck Name', field: 'name'},
                 {title: 'Schedule', field: 'schedule'},
                 {title: 'Description', field: 'description'},
-                {title: 'Menu', field: 'Menu'},
-                {title: 'Route', field: 'Route'},
+                {title: 'Menu', field: 'menu'},
+                {title: 'Route', field: 'route'},
             ], data:[],
         }
     }
@@ -110,6 +110,9 @@ class MaterialTableDemo extends React.Component {
                                     });
                                 }
                             }, 600);
+
+                            console.log("NEW DATA: ");
+                            console.log(newData);
                         }),
                     onRowDelete: oldData =>
                         new Promise(resolve => {

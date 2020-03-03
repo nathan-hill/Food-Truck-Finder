@@ -4,12 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import {UserProfile} from "../pages/pages";
+import { connect } from "react-redux";
 
 class customerSettings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: 1,
+            id: props.auth.user.sub,
             name: "",
             username: "",
             email: "",
@@ -21,10 +23,10 @@ class customerSettings extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onEditSubmit = this.onEditSubmit.bind(this);
 
-        console.log("TRYING TO DO A GET NOW!!!")
-        axios.get("http://localhost:8080/v/users", {
+        console.log("getting user data:");
+        axios.get("http://localhost:8080/v/getUserByID", {
             params: {
-                integer: this.state.id
+                id: this.state.id
             }
         }).then(res => {
             console.log(res);
@@ -163,4 +165,8 @@ class customerSettings extends React.Component {
     }
 }
 
-export default customerSettings;
+const mapStateToProps = state => ({
+    auth : state.auth,
+});
+
+export default connect(mapStateToProps,null)(customerSettings);
