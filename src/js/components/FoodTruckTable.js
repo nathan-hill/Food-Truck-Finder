@@ -40,8 +40,7 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
-const backend_url = "http://localhost:8080/v/"
-//const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+var constants = require("./../helpers/constants");
 
 class MaterialTableDemo extends React.Component {
     constructor(props) {
@@ -60,7 +59,7 @@ class MaterialTableDemo extends React.Component {
 
     componentDidMount = () => {
         console.log("ID: ", this.props.auth.user.sub);
-        axios.get(backend_url + "trucks/findTrucksByownerID", {
+        axios.get(constants.backend_url + "trucks/findTrucksByownerID", {
             params: {
                 l: this.props.auth.user.sub
             }
@@ -114,7 +113,7 @@ class MaterialTableDemo extends React.Component {
                             console.log("NEW DATA: ");
                             console.log(newData);
 
-                            axios.put(backend_url + "trucks/updateByTruck",newData).then(res => {
+                            axios.put(constants.backend_url + "trucks/updateByTruck",newData).then(res => {
                                 console.log(res);
                             })
                         }),

@@ -1,5 +1,5 @@
 import React from "react";
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -16,36 +16,34 @@ import { login } from "../actions/login";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 
-
-
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       errors: {},
       isLoading: false
-    }
+    };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   onSubmit(e) {
-
     e.preventDefault();
 
-    this.setState({isLoading: true})
+    this.setState({ isLoading: true });
     this.props.login(this.state).then(
-        (res) => this.props.history.push("/"),
-        (err) => this.setState({errors: {}, isLoading: false})
+      //console.log("finished"),
+      res => this.props.history.push("/"),
+      err => this.setState({ errors: {}, isLoading: false })
     );
   }
 
   onChange(e) {
-    console.log(e.target.name,e.target.value);
-    this.setState({[e.target.name]: e.target.value});
+    console.log(e.target.name, e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -106,9 +104,7 @@ class LoginPage extends React.Component {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to="/">
-                  Forgot password?
-                </Link>
+                <Link to="/">Forgot password?</Link>
               </Grid>
               <Grid item>
                 <Link to="/create_account">
@@ -144,8 +140,8 @@ class LoginPage extends React.Component {
 // }));
 
 LoginPage.propTypes = {
-    login: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired
+  login: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default connect(null, { login })(withRouter(LoginPage));
