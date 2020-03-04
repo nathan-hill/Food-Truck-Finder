@@ -19,7 +19,7 @@ public class UserPrincipalTest {
     @DisplayName("UserPrincipal create constructor test")
     @Test
     void UserPrincipalCreateTEst(){
-        User user = new User("name", "username", "email", "password");
+        User user = new User("name", "username", "email", "password", "type");
         UserPrincipal up1 = UserPrincipal.create(user);
         assertAll(
                 ()->assertEquals("name", up1.getName()),

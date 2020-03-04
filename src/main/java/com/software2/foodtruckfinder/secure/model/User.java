@@ -115,7 +115,7 @@ public class User extends DateAudit {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", type=" + type +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
