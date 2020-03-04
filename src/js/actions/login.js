@@ -34,7 +34,7 @@ export function login(data) {
   return dispatch => {
     return axios
       .post(constants.backend_url + "api/auth/signin", data)
-      .then(res => {
+      .then(async res => {
         const token = res.data.accessToken;
         let decodedToken = jwtDecode(token);
         localStorage.setItem("jwtToken", token);
@@ -43,11 +43,14 @@ export function login(data) {
         console.log(decodedToken);
 
         let userRole = "";
-        Request.getUserByID(decodedToken.sub)
+        userRole = await Request.getUserByID(decodedToken.sub)
         .then(function(r) {
-            console.log(r)
-          userRole = r.role;
+            //console.log(r.type)
+          //userRole = r.type;
+          return r.type;
         });
+
+        console.log(userRole);
 
         localStorage.setItem("role", userRole);
         dispatch(setCurrentUser(jwtDecode(token)));
