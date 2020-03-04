@@ -1,5 +1,6 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
