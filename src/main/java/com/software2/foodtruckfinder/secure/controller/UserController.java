@@ -60,7 +60,6 @@ public class UserController {
         return userRepository.findUserByid(id);
     }
 
-
     @PutMapping(value = "updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> updateUser(@RequestBody User udets) {

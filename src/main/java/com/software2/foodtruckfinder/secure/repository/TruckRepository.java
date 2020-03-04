@@ -2,6 +2,7 @@ package com.software2.foodtruckfinder.secure.repository;
 
 import com.software2.foodtruckfinder.secure.model.Truck;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,6 +18,6 @@ public interface TruckRepository extends CrudRepository<Truck, Integer> {
 
     Optional<Truck> findById(Integer in);
 
-    List<Truck> findTrucksByOwnerID(String userId);
+    List<Truck> findTrucksByOwnerID(long userId);
 
 }

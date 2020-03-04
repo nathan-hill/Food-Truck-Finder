@@ -19,6 +19,10 @@ public class FoodTruckController {
     @Autowired
     private TruckRepository truckRepository;
 
+    public FoodTruckController(TruckRepository truckRepository) {
+        this.truckRepository = truckRepository;
+    }
+
     @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<Truck> addNewTruck(@RequestBody Truck newTruck) {
@@ -61,13 +65,15 @@ public class FoodTruckController {
 
     @GetMapping(path = "findTrucksByownerID")
     public @ResponseBody
-    List<Truck> findTrucksByOwnerID(String l){
+    List<Truck> findTrucksByOwnerID(long l){
         return truckRepository.findTrucksByOwnerID(l);
     }
 
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Truck> updateTruck(@RequestBody Truck tdets) {
+
+        System.out.println(tdets.getOwnerID());
 
         if(truckRepository.existsById(tdets.getId())){
             Truck newT = new Truck();

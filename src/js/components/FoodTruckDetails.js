@@ -1,25 +1,23 @@
+
 import React from "react";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import {UserProfile} from "../pages/pages";
-import { connect } from "react-redux";
 
-//const backend_url = "http://localhost:8080/v/";
+//const backend_url = "localhost:8080/v/"
 const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
 
-class customerSettings extends React.Component {
+class FoodTruckDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: props.auth.user.sub,
+            id: 1,
             name: "",
-            username: "",
-            email: "",
-            password: "",
-            type: "",
+            schedule: "",
+            description: "",
+            menu: "",
             isDisabled: true,
         };
 
@@ -27,10 +25,10 @@ class customerSettings extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onEditSubmit = this.onEditSubmit.bind(this);
 
-        console.log("getting user data:");
-        axios.get(backend_url + "users/getUserByID", {
+        console.log("TRYING TO DO A GET NOW!!!")
+        axios.get( backend_url + "trucks/findTruckByID", {
             params: {
-                id: this.props.auth.user.sub
+                integer: this.state.id
             }
         }).then(res => {
             console.log(res);
@@ -48,10 +46,10 @@ class customerSettings extends React.Component {
         let data = {
             id: this.state.id,
             name: this.state.name,
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password,
-            type: this.state.type,
+            schedule: this.state.schedule,
+            description: this.state.description,
+            menu: this.state.menu,
+            ownerID: this.state.ownerID,
         }
         data.headers = {
             "Access-Control-Allow-Origin": "*",
@@ -59,7 +57,7 @@ class customerSettings extends React.Component {
             Accept: "application/json"
         };
 
-        axios.put(backend_url + "users/updateByUser",data).then(res => {
+        axios.put(backend_url + "v/trucks/updateByTruck",data).then(res => {
             console.log(res);
         })
     }
@@ -70,7 +68,7 @@ class customerSettings extends React.Component {
     }
 
     render() {
-        const { name, username, email, isDisabled } = this.state;
+        const { name, schedule, description, menu, isDisabled } = this.state;
         const classes = makeStyles();
 
         let submitButton;
@@ -113,7 +111,7 @@ class customerSettings extends React.Component {
                             required
                             fullWidth
                             id="name"
-                            label="Name"
+                            label="Food Truck Name"
                             name="name"
                             onChange={this.onChange}
                             value={name}
@@ -126,29 +124,42 @@ class customerSettings extends React.Component {
                             margin="normal"
                             required
                             fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
+                            id="schedule"
+                            label="Current Schedule"
+                            name="schedule"
                             onChange={this.onChange}
-                            value={username} //username not defined error when I try to change it
+                            value={schedule}
                             disabled={isDisabled}
                             autoFocus
-                        />  
+                        />
 
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
+                            id="description"
+                            label="Description"
+                            name="description"
                             onChange={this.onChange}
-                            value={email} //email not defined error as well
+                            value={description}
                             disabled={isDisabled}
                             autoFocus
                         />
 
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="menu"
+                            label="Current Menu"
+                            name="menu"
+                            onChange={this.onChange}
+                            value={menu}
+                            disabled={isDisabled}
+                            autoFocus
+                        />
                         {submitButton}
                    </form>
                 </div>
@@ -157,8 +168,4 @@ class customerSettings extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
-    auth : state.auth,
-});
-
-export default connect(mapStateToProps,null)(customerSettings);
+export default FoodTruckDetails;
