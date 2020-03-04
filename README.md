@@ -1,4 +1,5 @@
 # Deploy Site
+![Node.js CI](https://github.com/MarkFuller1/Food-Truck-Finder/workflows/Node.js%20CI/badge.svg) ![Java CI](https://github.com/MarkFuller1/Food-Truck-Finder/workflows/Java%20CI/badge.svg)
 
 https://wheels-with-meals-frontend.herokuapp.com/#/
 
