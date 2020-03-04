@@ -35,7 +35,6 @@ export function login(data) {
 
     return dispatch => {
         return axios.post(backend_url + "api/auth/signin",data).then(res => {
-            Request.getUserByID(res.data.)
  
            const token = res.data.accessToken;
            localStorage.setItem("jwtToken",token);
