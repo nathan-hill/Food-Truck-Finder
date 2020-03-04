@@ -16,7 +16,7 @@ public class JwtTokenProvider {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     @Value("JWTSuperSecretKey")
-    private String jwtSecret;
+    private String jwtSecret = "JWTSuperSecretKey";
 
     @Value("604800000")
     private int jwtExpirationInMs;
