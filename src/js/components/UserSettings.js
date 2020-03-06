@@ -6,9 +6,8 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import {UserProfile} from "../pages/pages";
 import { connect } from "react-redux";
+var constants = require("./../helpers/constants")
 
-//const backend_url = "http://localhost:8080/v/";
-const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
 
 class customerSettings extends React.Component {
     constructor(props) {
@@ -28,7 +27,7 @@ class customerSettings extends React.Component {
         this.onEditSubmit = this.onEditSubmit.bind(this);
 
         console.log("getting user data:");
-        axios.get(backend_url + "users/getUserByID", {
+        axios.get(constants.backend_url + "users/getUserByID", {
             params: {
                 id: this.props.auth.user.sub
             }
@@ -59,7 +58,7 @@ class customerSettings extends React.Component {
             Accept: "application/json"
         };
 
-        axios.put(backend_url + "users/updateByUser",data).then(res => {
+        axios.put(constants.backend_url + "users/updateByUser",data).then(res => {
             console.log(res);
         })
     }

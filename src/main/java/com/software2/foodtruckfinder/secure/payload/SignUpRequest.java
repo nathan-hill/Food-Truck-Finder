@@ -1,5 +1,7 @@
 package com.software2.foodtruckfinder.secure.payload;
 
+import com.software2.foodtruckfinder.secure.model.User;
+
 import javax.validation.constraints.*;
 
 /**
@@ -7,6 +9,11 @@ import javax.validation.constraints.*;
  */
 
 public class SignUpRequest {
+
+    enum Type{
+        CUSTOMER, OWNER, ADMIN
+    }
+
     @NotBlank
     @Size(min = 4, max = 40)
     private String name;
@@ -23,6 +30,18 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 6, max = 20)
     private String password;
+
+    @NotBlank
+    @Size(min = 4, max = 20)
+    private Type type;
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;

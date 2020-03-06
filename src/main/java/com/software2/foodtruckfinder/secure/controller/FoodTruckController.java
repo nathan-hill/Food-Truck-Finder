@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/v/trucks")
+@RequestMapping(path = "/v/trucks/")
 public class FoodTruckController {
     @Autowired
     private TruckRepository truckRepository;
@@ -43,7 +43,7 @@ public class FoodTruckController {
         return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public @ResponseBody
     Iterable<Truck> getAllTrucks() {
         // This returns a JSON or XML with the trucks

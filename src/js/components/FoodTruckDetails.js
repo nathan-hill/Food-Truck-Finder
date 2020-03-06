@@ -5,9 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-
-//const backend_url = "localhost:8080/v/"
-const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+var constants = require('./../helpers/constants')
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -26,7 +24,7 @@ class FoodTruckDetails extends React.Component {
         this.onEditSubmit = this.onEditSubmit.bind(this);
 
         console.log("TRYING TO DO A GET NOW!!!")
-        axios.get( backend_url + "trucks/findTruckByID", {
+        axios.get( constants.backend_url + "trucks/findTruckByID", {
             params: {
                 integer: this.state.id
             }
@@ -57,7 +55,7 @@ class FoodTruckDetails extends React.Component {
             Accept: "application/json"
         };
 
-        axios.put(backend_url + "v/trucks/updateByTruck",data).then(res => {
+        axios.put(constants.backend_url + "v/trucks/updateByTruck",data).then(res => {
             console.log(res);
         })
     }

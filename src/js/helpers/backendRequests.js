@@ -1,7 +1,5 @@
 import axios from "axios";
-
-//const backend_url = "http://localhost:8080/v/";
-const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+var constants = require("./../helpers/constants")
 
 const request_headers = {
       "Access-Control-Allow-Origin": "*",
@@ -12,7 +10,23 @@ const request_headers = {
 export function getAllUsers() {
   return axios({
     method: "GET",
-    url: backend_url + "users/",
+    url: constants.backend_url + "users/",
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}
+
+export function getUserByID(i){
+  return axios({
+    method: "GET",
+    url: constants.backend_url + "users/getUserByID",
+    params: {id: i},
     headers: request_headers
   })
     .then(function(response) {
@@ -27,7 +41,7 @@ export function getAllUsers() {
 export function postNewUser(u) {
   const request = {
     method: "POST",
-    url: backend_url + "api/auth/signup",
+    url: constants.backend_url + "api/auth/signup",
     data: u,
     headers: request_headers
   };
@@ -47,7 +61,7 @@ export function postNewUser(u) {
 export function UpdateUser(u) {
   const request = {
     method: "POST",
-    url: backend_url + "users/update/",
+    url: constants.backend_url + "users/update/",
     data: u,
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -60,7 +74,7 @@ export function UpdateUser(u) {
 export function postNewTruck(t) {
   const request = {
     method: "POST",
-    url: backend_url + "trucks/add/",
+    url: constants.backend_url + "trucks/add/",
     data: t,
     headers: request_headers
   };
@@ -79,7 +93,7 @@ export function postNewTruck(t) {
 export function getAllTrucks() {
   return axios({
     method: "GET",
-    url: backend_url + "trucks/",
+    url: constants.backend_url + "trucks/",
     headers: request_headers
   })
     .then(function(response) {
