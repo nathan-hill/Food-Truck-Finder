@@ -10,6 +10,8 @@ import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
+import Schedule from "./../components/FoodTruckSchedule";
+
 
 export class TestRouting extends React.Component {
   render() {
@@ -34,6 +36,9 @@ export class TestRouting extends React.Component {
           </li>
           <li>
             <Link to="/create_account">Create Account</Link>
+          </li>
+          <li>
+            <Link to="/FoodTruckSchedule">Food Truck Schedule</Link>
           </li>
         </ul>
       </div>
@@ -135,8 +140,6 @@ export class DatabaseListing extends React.Component {
   }
 }
 
-
-
 export class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -183,10 +186,12 @@ export class TruckDetails extends React.Component {
       return(
         <div>
           <FoodTruckDetails/>
+          
         </div>
       );
   }
 }
+
 export class UserProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -222,12 +227,12 @@ export class OwnerProfile extends React.Component {
         <Link to="/">Back</Link>
         <CustomerSettings />
         <FoodTruckTable />
+        
       </div>
     );
   }
 
 }
-
 
 export class Home extends React.Component {
   render() {
@@ -238,3 +243,16 @@ export class Home extends React.Component {
     );
   }
 }
+
+export class FoodTruckSchedule extends React.Component{
+  render() {
+    return (
+      <div>
+        
+        <Link to="/">Back</Link>
+        <Schedule/>
+      </div>
+    );
+  }
+}
+

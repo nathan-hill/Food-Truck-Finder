@@ -11,32 +11,42 @@ import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { Link } from "react-router-dom"
 
+
+
+
+
 export const GuestListItems = (
+  
   <div>
-    <ListItem button>
+    <ListItem>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
+    
+    
     <ListItem button>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primary="Food Trucks" />
     </ListItem>
+
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Subscriptions" />
     </ListItem>
+
     <ListItem button>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
       <ListItemText primary="Ratings/Reviews" />
     </ListItem>
+
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
@@ -143,11 +153,11 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="/TestRouting" />
     </ListItem>
-    <ListItem button to="/Table" component={Link}>>
+    <ListItem button to="/FoodTruckSchedule" component={Link}>>
       <ListItemIcon> 
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="/Table" />
+      <ListItemText primary="/FoodTruckSchedule" />
     </ListItem>
   </div>
 );
