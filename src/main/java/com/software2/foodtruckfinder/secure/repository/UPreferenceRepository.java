@@ -11,13 +11,13 @@ import java.util.List;
 public interface UPreferenceRepository extends JpaRepository<UserPreferences, Long> {
 
 
-    List<String> findDislikesByUser(Long id);
+    List<String> findDislikesById(Long id);
 
-    List<String> findLikesByUser(Long id);
+    List<String> findLikesById(Long id);
 
-    UserPreferences findUserPreferencesByid(Long id);
+    UserPreferences findUserPreferencesById(Long id);
 
-    Double findProximityByUser(Long id);
+    Double findProximityById(Long id);
 
-    Integer findPriceByUser(Long id);
+    Integer findPriceById(Long id);
 }

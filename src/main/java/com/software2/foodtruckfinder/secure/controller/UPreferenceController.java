@@ -65,7 +65,7 @@ public class UPreferenceController {
     @GetMapping(path = "getUPreferencesByID")
     public @ResponseBody
     UserPreferences findUPreferencesByID(Long id){
-        return uprefRepository.findUserPreferencesByid(id);
+        return uprefRepository.findUserPreferencesById(id);
     }
 
     @PutMapping(value = "updateByUPreferences", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,26 +91,26 @@ public class UPreferenceController {
     @GetMapping(path = "getDislikesByID")
     public @ResponseBody
     List<String> findDislikesByUser(Long id){
-        return uprefRepository.findDislikesByUser(id);
+        return uprefRepository.findDislikesById(id);
     }
 
     //added should return list of preferences whatever that is
     @GetMapping(path = "getLikesByID")
     public @ResponseBody
     List<String> findPreferencesByUser(Long id){
-        return uprefRepository.findLikesByUser(id);
+        return uprefRepository.findLikesById(id);
     }
 
     //added should return list of preferences whatever that is
     @GetMapping(path = "getProximityByID")
     public @ResponseBody
     Double findProximityByUser(Long id){
-        return uprefRepository.findProximityByUser(id);
+        return uprefRepository.findProximityById(id);
     }
     //added should return list of preferences whatever that is
     @GetMapping(path = "getPriceByID")
     public @ResponseBody
     Integer findPriceByUser(Long id){
-        return uprefRepository.findPriceByUser(id);
+        return uprefRepository.findPriceById(id);
     }
 }

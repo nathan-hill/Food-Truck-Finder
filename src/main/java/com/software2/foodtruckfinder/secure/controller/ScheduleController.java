@@ -1,19 +1,12 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Schedule;
-import com.software2.foodtruckfinder.secure.model.Truck;
-import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
-import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -47,7 +40,7 @@ public class ScheduleController {
     @GetMapping(path = "getScheduleByID")
     public @ResponseBody
     List<Schedule> findScheduleByID(Integer id){
-        return scheduleRepository.findByTruck(id);
+        return scheduleRepository.findByTruckID(id);
     }
 
     @GetMapping(path = "getSingleScheduleByID")

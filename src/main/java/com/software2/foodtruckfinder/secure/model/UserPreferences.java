@@ -1,12 +1,9 @@
 package com.software2.foodtruckfinder.secure.model;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-
+@Entity
 public class UserPreferences {
 
     @Id

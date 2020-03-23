@@ -60,8 +60,6 @@ public class ReviewController {
     @DeleteMapping(path = "/getReviewsByUser")
     public @ResponseBody
     List<Review> getReviewsByUser(Long uid) {
-        return revRepository.findReviewsByUser(uid);
+        return revRepository.findReviewsByUserID(uid);
     }
-
-
 }
