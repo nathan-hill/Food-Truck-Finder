@@ -1,9 +1,7 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Review;
-import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
-import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
