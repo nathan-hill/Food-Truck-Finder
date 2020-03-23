@@ -58,7 +58,7 @@ public class ScheduleController {
 
     // not sure how we should update yet
     // based on page
-    
+
 //    @PutMapping(value = "updateBy", produces = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseStatus(HttpStatus.OK)
 //    public ResponseEntity<User> updateUser(@RequestBody User udets) {

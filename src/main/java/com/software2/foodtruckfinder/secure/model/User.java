@@ -48,14 +48,6 @@ public class User extends DateAudit {
     @NotBlank
     private String type;
 
-
-    // added these two fields
-    @ElementCollection
-    private List<String> preferences;
-    @ElementCollection
-    private List<String> dislikes;
-
-
     public User() {
 
     }
@@ -68,6 +60,12 @@ public class User extends DateAudit {
         this.type = t;
     }
 
+    // added these two fields
+    @ElementCollection
+    private List<String> foodLikes;
+    @ElementCollection
+    private List<String> dislikes;
+
     public List<String> getDislikes() {
         return dislikes;
     }
@@ -76,12 +74,12 @@ public class User extends DateAudit {
         this.dislikes = dislikes;
     }
 
-    public List<String> getPreferences() {
-        return preferences;
+    public List<String> getFoodLikes() {
+        return foodLikes;
     }
 
-    public void setPreferences(List<String> preferences) {
-        this.preferences = preferences;
+    public void setFoodLikes(List<String> preferences) {
+        this.foodLikes = preferences;
     }
 
     public String getType() {

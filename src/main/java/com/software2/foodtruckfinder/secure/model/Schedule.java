@@ -13,9 +13,11 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     //will have to set truckid
     @NotNull
     private long truckID;
+
     @NotNull
     private DayOfWeek day;
 
@@ -27,6 +29,7 @@ public class Schedule {
     private LocalTime startTime;
 
     private LocalTime endTime;
+
     //will have to change
     private String location;
 
