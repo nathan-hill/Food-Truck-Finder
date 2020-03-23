@@ -2,12 +2,14 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import axios from "axios";
 import {UserProfile} from "../pages/pages";
 import { connect } from "react-redux";
+import Button from '@material-ui/core/Button';
+import PreferenceDialog from "./PreferenceDialog";
 var constants = require("./../helpers/constants")
 
+  
 
 class customerSettings extends React.Component {
     constructor(props) {
@@ -67,6 +69,8 @@ class customerSettings extends React.Component {
         e.preventDefault();
         this.setState({isDisabled: !this.state.isDisabled})
     }
+
+    
 
     render() {
         const { name, username, email, isDisabled } = this.state;
@@ -150,6 +154,9 @@ class customerSettings extends React.Component {
 
                         {submitButton}
                    </form>
+                </div>
+                <div>
+                    <PreferenceDialog/>
                 </div>
             </Container>
         );
