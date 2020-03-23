@@ -7,9 +7,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -47,6 +48,14 @@ public class User extends DateAudit {
     @NotBlank
     private String type;
 
+
+    // added these two fields
+    @ElementCollection
+    private List<String> preferences;
+    @ElementCollection
+    private List<String> dislikes;
+
+
     public User() {
 
     }
@@ -57,6 +66,22 @@ public class User extends DateAudit {
         this.email = email;
         this.password = password;
         this.type = t;
+    }
+
+    public List<String> getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(List<String> dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public List<String> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<String> preferences) {
+        this.preferences = preferences;
     }
 
     public String getType() {
@@ -119,3 +144,6 @@ public class User extends DateAudit {
                 '}';
     }
 }
+
+
+

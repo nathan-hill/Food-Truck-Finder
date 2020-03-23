@@ -19,6 +19,16 @@ public class Truck {
     private String Menu;
     @NotNull
     private long ownerID;
+    @NotNull
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public long getOwnerID() {
         return ownerID;

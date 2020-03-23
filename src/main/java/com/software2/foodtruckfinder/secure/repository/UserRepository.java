@@ -12,7 +12,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-//    ResponseEntity<User> updateUser(@RequestBody User u);
+    List<String> findDislikesByUser(Long id);
+
+    List<String> findPreferencesByUser(Long id);
 
     User findUserByid(Long id);
 
