@@ -8,12 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ScheduleRepository extends JpaRepository<User, Long>  {
+public interface ScheduleRepository extends JpaRepository<Schedule, Long>  {
 
     Schedule findByid(Long id);
 
     boolean existsById(Long id);
 
-    List<Schedule> findByTruck(Integer truckID);
+    List<Schedule> findByTruckID(Integer truckID);
 
 }

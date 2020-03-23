@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<String> findDislikesByUser(Long id);
+    List<String> findDislikesById(Long id);
 
-    List<String> findPreferencesByUser(Long id);
+    List<String> findPreferencesById(Long id);
 
     User findUserByid(Long id);
 

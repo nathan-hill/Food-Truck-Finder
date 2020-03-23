@@ -84,14 +84,14 @@ public class UserController {
     @GetMapping(path = "getDislikesByID")
     public @ResponseBody
     List<String> findDislikesByUser(Long id){
-        return userRepository.findDislikesByUser(id);
+        return userRepository.findDislikesById(id);
     }
 
     //added should return list of preferences whatever that is
     @GetMapping(path = "getPreferencesByID")
     public @ResponseBody
     List<String> findPreferencesByUser(Long id){
-        return userRepository.findPreferencesByUser(id);
+        return userRepository.findPreferencesById(id);
     }
 
 

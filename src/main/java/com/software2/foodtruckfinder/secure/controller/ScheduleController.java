@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,7 @@ public class ScheduleController {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
-    public ScheduleController(ScheduleRepository sr){
+    public ScheduleController(ScheduleRepository sr) {
         this.scheduleRepository = sr;
     }
 
@@ -31,11 +33,26 @@ public class ScheduleController {
     // in the database
 
 
-//    @PostMapping(path = "/add")
-//    public @ResponseBody
-//    ResponseEntity<User> addNewSchedule(@RequestBody User newUser) {
-//
-//    }
+    @PostMapping(path = "/add")
+    public @ResponseBody
+    ResponseEntity<Schedule[]> addNewSchedule(@RequestBody Schedule[] days) throws CloneNotSupportedException {
+        List<Schedule> generated = new ArrayList<>();
+
+        Schedule temp = new Schedule();
+        for (Schedule s : days) {
+            temp = s.clone();
+
+            System.out.println(s.toString() + "\n" + temp.toString());
+
+            if (temp == null) {
+                continue;
+            }
+            generated.add(scheduleRepository.save(temp));
+        }
+
+        return new ResponseEntity<Schedule[]>(
+                generated.toArray(new Schedule[generated.size()]), HttpStatus.OK);
+    }
 
     @DeleteMapping(path = "/delete")
     public @ResponseBody
@@ -46,19 +63,19 @@ public class ScheduleController {
 
     @GetMapping(path = "getScheduleByID")
     public @ResponseBody
-    List<Schedule> findScheduleByID(Integer id){
-        return scheduleRepository.findByTruck(id);
+    List<Schedule> findScheduleByID(Integer id) {
+        return scheduleRepository.findByTruckID(id);
     }
 
     @GetMapping(path = "getSingleScheduleByID")
     public @ResponseBody
-    Schedule findSingleScheduleByID(Long id){
+    Schedule findSingleScheduleByID(Long id) {
         return scheduleRepository.findByid(id);
     }
 
     // not sure how we should update yet
     // based on page
-    
+
 //    @PutMapping(value = "updateBy", produces = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseStatus(HttpStatus.OK)
 //    public ResponseEntity<User> updateUser(@RequestBody User udets) {
