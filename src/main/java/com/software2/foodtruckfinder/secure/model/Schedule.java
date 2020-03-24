@@ -19,7 +19,7 @@ public class Schedule {
     @NotNull
     private long truckID;
     @NotNull
-    private DayOfWeek day;
+    private Integer day;
     private LocalTime startTime;
     private LocalTime endTime;
     private Double longitude;
@@ -31,7 +31,7 @@ public class Schedule {
     public long getTruckID() {
         return truckID;
     }
-    public DayOfWeek getDay() {
+    public Integer getDay() {
         return day;
     }
     public LocalTime getStartTime() {
@@ -52,7 +52,7 @@ public class Schedule {
     public void setTruckID(long truckID) {
         this.truckID = truckID;
     }
-    public void setDay(DayOfWeek day) {
+    public void setDay(Integer day) {
         this.day = day;
     }
     public void setStartTime(LocalTime startTime) {

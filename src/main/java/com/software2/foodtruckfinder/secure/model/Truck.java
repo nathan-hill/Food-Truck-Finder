@@ -84,7 +84,7 @@ public class Truck {
         return type;
     }
 
-    public Cost getCost() {
-        return cost;
+    public Integer getCost() {
+        return cost.ordinal();
     }
 }

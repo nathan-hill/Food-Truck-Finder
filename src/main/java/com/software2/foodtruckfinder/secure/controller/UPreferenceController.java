@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -94,13 +95,19 @@ public class UPreferenceController {
     public @ResponseBody
     List<Long> findTruckPreferences(@RequestParam("id") Long id, @RequestParam("lon") Double lon, @RequestParam("lat") Double lat) {
 
-//        retrieve all relevant data to the preference computation
+        //retrieve all relevant data to the preference computation
         Optional<UserPreferences> pref = uprefRepository.findById(id);
-        List<Schedule> sched = scheduleRepository.findAll().stream().filter(x -> x.getDay().equals(Calendar.getInstance(TimeZone.getDefault()))).collect(Collectors.toList());
-        sched.stream().forEach(x -> System.out.println(x.toString()));
+        //List<Schedule> sched = scheduleRepository.findAll().stream().filter(x -> x.getDay().equals(getDayOfWeek(Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK)))).collect(Collectors.toList());
+        List<Schedule> sched = scheduleRepository.findAll();
+
+        //only look at schedules that pertain to today
+        int dayOfWeekNumber = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK);
+        sched.removeIf(s -> !s.getDay().equals(dayOfWeekNumber));
+
+        //remove all trucks that do not have a schedule for today
         List<Truck> truckList = new ArrayList();
         Iterable<Truck> iTrucks = truckRepository.findAll();
-        iTrucks.forEach(truckList::add);
+        truckList = iteratorToList(iTrucks.iterator());
 
         if (pref.isEmpty()) {
             return new ArrayList<Long>();
@@ -116,12 +123,18 @@ public class UPreferenceController {
 
         //get a list of the distances between here and the current location of the truck
         for (int j = 0; j < sched.stream().count(); j++) {
-            distances.put(sched.get(j).getId(), distance(sched.get(j).getLatitude(), sched.get(j).getLongitude(), lat, lon));
+            distances.put(sched.get(j).getTruckID(), distance(sched.get(j).getLatitude(), sched.get(j).getLongitude(), lat, lon));
         }
+
+        //only use trucks who have a schedule for today
+        List<Long> scheduledTrucks = new ArrayList<>();
+        sched.forEach(s -> scheduledTrucks.add(s.getTruckID()));
+        truckList.removeIf(t -> !scheduledTrucks.contains(t.getId()));
 
         //Get a list of the prices for each of the trucks
         for (int j = 0; j < truckList.stream().count(); j++) {
-            prices.put(truckList.get(j).getId(), (double) Math.abs(pref.get().getPrice() - truckList.get(j).getCost().ordinal()));
+            Double price = (double) Math.abs(pref.get().getPrice() - truckList.get(j).getCost() + 1);
+            prices.put(truckList.get(j).getId(), price);
         }
 
         /*********************************
@@ -129,28 +142,29 @@ public class UPreferenceController {
          *******************************/
 
 
-        normalizeMap(prices);
-        normalizeMap(distances);
-        MapUtil.sortByValue(distances);
+        prices = normalizeMap(prices);
+        distances = normalizeMap(distances);
+        distances = MapUtil.sortByValue(distances);
 
-        for(Map.Entry<Long, Double> e : prices.entrySet()){
-            ranking.put(e.getKey(), distances.get(e.getKey()) + prices.get(e.getKey()) + ratings.get(e.getKey()));
+        for (Iterator<Map.Entry<Long, Double>> it = prices.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<Long, Double> e = it.next();
+            ranking.put(e.getKey(), distances.get(e.getKey()) + prices.get(e.getKey()) /*+ ratings.get(e.getKey())*/);
         }
 
         MapUtil.sortByValue(ranking);
 
 
-        return new ArrayList<Long> (ranking.keySet());
+        return new ArrayList<Long>(ranking.keySet());
     }
 
     private Double distance(Double x1, Double y1, Double x2, Double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2.0) + Math.pow(y2 - y1, 2.0));
     }
 
-    private Map<Long, Double> normalizeMap(Map<Long, Double>sortedMap) {
-        MapUtil.sortByValue(sortedMap);
-        Double minSet = sortedMap.get(0);
-        Double maxSet = sortedMap.get(sortedMap.size() - 1);
+    private Map<Long, Double> normalizeMap(Map<Long, Double> sortedMap) {
+        sortedMap = MapUtil.sortByValue(sortedMap);
+        Double minSet = Collections.min(sortedMap.values());
+        Double maxSet = Collections.max(sortedMap.values());
         Integer minNorm = -1;
         Integer maxNorm = 1;
 
@@ -160,5 +174,43 @@ public class UPreferenceController {
         }
 
         return sortedMap;
+    }
+
+    private String getDayOfWeek(int value) {
+        String day = "";
+        switch (value) {
+            case 1:
+                day = "SUNDAY";
+                break;
+            case 2:
+                day = "MONDAY";
+                break;
+            case 3:
+                day = "TUESDAY";
+                break;
+            case 4:
+                day = "WEDNESDAY";
+                break;
+            case 5:
+                day = "THURSDAY";
+                break;
+            case 6:
+                day = "FRIDAY";
+                break;
+            case 7:
+                day = "SATURDAY";
+                break;
+        }
+        return day;
+    }
+
+    private List<Truck> iteratorToList(Iterator<Truck> i){
+        List<Truck> res = new ArrayList<>();
+
+        for (Iterator<Truck> it = i; it.hasNext(); ) {
+            Truck t = it.next();
+            res.add(t);
+        }
+        return res;
     }
 }
