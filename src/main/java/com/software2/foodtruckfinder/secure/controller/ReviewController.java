@@ -1,13 +1,17 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Review;
+import com.software2.foodtruckfinder.secure.model.Schedule;
+import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -39,6 +43,26 @@ public class ReviewController {
 
         Review generatedRev = revRepository.save(n);
         return new ResponseEntity<Review>(generatedRev, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Review> updateReview(@RequestBody Review r) {
+
+        if (revRepository.existsById(r.getId())) {
+
+            Review n = new Review();
+            n.setId(r.getId());
+            n.setDescription(r.getDescription());
+            n.setUserID(r.getUserID());
+            n.setRating(r.getRating());
+
+            Review generatedReview = revRepository.save(n);
+            return new ResponseEntity<Review>(generatedReview, HttpStatus.OK);
+        } else {
+            return null;
+        }
+
     }
 
     @GetMapping(path = "/")

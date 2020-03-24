@@ -23,11 +23,6 @@ public class ScheduleController {
         this.scheduleRepository = sr;
     }
 
-    // not sure how to add yet based on page.. Am I receiving each day?
-    // Am I receiving all days at once? I need all 7 days to exist either way
-    // in the database
-
-
     @PostMapping(path = "/add")
     public @ResponseBody
     ResponseEntity<Schedule[]> addNewSchedule(@RequestBody Schedule[] days) throws CloneNotSupportedException {
@@ -65,27 +60,28 @@ public class ScheduleController {
         return scheduleRepository.findByid(id);
     }
 
-    // not sure how we should update yet
-    // based on page
+    @PostMapping(path = "/update")
+    public @ResponseBody
+    ResponseEntity<Schedule[]> updateSchedule(@RequestBody Schedule[] days) throws CloneNotSupportedException {
+        if(scheduleRepository.existsById(days[0].getId())) {
+            List<Schedule> generated = new ArrayList<>();
 
-//    @PutMapping(value = "updateBy", produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.OK)
-//    public ResponseEntity<User> updateUser(@RequestBody User udets) {
-//
-//        if(scheduleRepository.existsById(udets.getId())){
-//            User newUser = new User();
-//            newUser.setId(udets.getId());
-//            newUser.setEmail(udets.getEmail());
-//            newUser.setName(udets.getName());
-//            newUser.setPassword(udets.getPassword());
-//            newUser.setUsername(udets.getUsername());
-//
-//            User generatedUser = scheduleRepository.save(newUser);
-//            return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
-//        }else{
-//            return null;
-//        }
-//    }
+            Schedule temp = new Schedule();
+            for (Schedule s : days) {
+                temp = s.clone();
+
+                System.out.println(s.toString() + "\n" + temp.toString());
+
+                generated.add(scheduleRepository.save(temp));
+            }
+
+            return new ResponseEntity<Schedule[]>(
+                    generated.toArray(new Schedule[generated.size()]), HttpStatus.OK);
+        }
+        else {
+            return null;
+        }
+    }
 
 
 }
