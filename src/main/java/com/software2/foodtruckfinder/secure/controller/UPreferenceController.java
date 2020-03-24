@@ -30,16 +30,15 @@ public class UPreferenceController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity<UserPreferences> addNewUPreferences(@RequestBody UserPreferences newP) {
+    ResponseEntity<UserPreferences> addNewUPreferences(@RequestBody UserPreferences up) {
         UserPreferences n = new UserPreferences();
-        n.setId(newP.getId());
-        n.setPrice(newP.getPrice());
-        n.setProximity(newP.getProximity());
-        n.setFoodLikes(newP.getFoodLikes());
-        n.setDislikes(newP.getDislikes());
+        n.setId(up.getId());
+        n.setPrice(up.getPrice());
+        n.setProximity(up.getProximity());
+        n.setLikes(up.getLikes());
 
         for (UserPreferences uP: uprefRepository.findAll()) {
-            if(uP.getId().equals(newP.getId())){
+            if(uP.getId().equals(up.getId())){
                 return ResponseEntity.status(400).build();
             }
         }
@@ -62,23 +61,23 @@ public class UPreferenceController {
         return true;
     }
 
-    @GetMapping(path = "getUPreferencesByID")
+    @GetMapping(path = "/getUPreferencesByID")
     public @ResponseBody
     UserPreferences findUPreferencesByID(Long id){
+        System.out.println(id);
         return uprefRepository.findUserPreferencesById(id);
     }
 
     @PutMapping(value = "updateByUPreferences", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserPreferences> updateUPreferences(@RequestBody UserPreferences uf) {
+    public ResponseEntity<UserPreferences> updateUPreferences(@RequestBody UserPreferences up) {
 
-        if(uprefRepository.existsById(uf.getId())){
+        if(uprefRepository.existsById(up.getId())){
             UserPreferences n = new UserPreferences();
-            n.setId(uf.getId());
-            n.setPrice(uf.getPrice());
-            n.setProximity(uf.getProximity());
-            n.setFoodLikes(uf.getFoodLikes());
-            n.setDislikes(uf.getDislikes());
+            n.setId(up.getId());
+            n.setPrice(up.getPrice());
+            n.setProximity(up.getProximity());
+            n.setLikes(up.getLikes());
 
             UserPreferences generatedUser = uprefRepository.save(n);
             return new ResponseEntity<UserPreferences>(generatedUser, HttpStatus.OK);

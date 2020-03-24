@@ -117,8 +117,8 @@ function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [role, setRole] = React.useState(
-    localStorage.getItem("role") === undefined
-      ? "guest"
+    typeof localStorage.getItem("role") === undefined || localStorage.getItem("role") === "undefined" || localStorage.getItem("role") === "null"
+      ? "Guest"
       : localStorage.getItem("role")
   );
   console.log("the user role is " + role);

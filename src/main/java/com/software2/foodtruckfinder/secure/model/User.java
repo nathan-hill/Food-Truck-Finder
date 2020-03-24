@@ -35,7 +35,6 @@ public class User extends DateAudit {
     @Size(min = 4, max = 15)
     private String username;
 
-    @NaturalId
     @NotBlank
     @Size(max = 40)
     @Email
@@ -58,28 +57,6 @@ public class User extends DateAudit {
         this.email = email;
         this.password = password;
         this.type = t;
-    }
-
-    // added these two fields
-    @ElementCollection
-    private List<String> foodLikes;
-    @ElementCollection
-    private List<String> dislikes;
-
-    public List<String> getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(List<String> dislikes) {
-        this.dislikes = dislikes;
-    }
-
-    public List<String> getFoodLikes() {
-        return foodLikes;
-    }
-
-    public void setFoodLikes(List<String> preferences) {
-        this.foodLikes = preferences;
     }
 
     public String getType() {

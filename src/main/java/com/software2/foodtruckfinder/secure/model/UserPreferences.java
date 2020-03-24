@@ -1,67 +1,69 @@
 package com.software2.foodtruckfinder.secure.model;
 
+import net.bytebuddy.implementation.bind.annotation.Default;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+
 @Entity
 public class UserPreferences {
-
     @Id
     @NotNull
     private Long id;
-
-    // added these two fields
     @ElementCollection
-    private List<String> foodLikes;
-
-    @ElementCollection
-    private List<String> dislikes;
-
-    @NotNull
+    private List<Preference> likes;
+    @Column(columnDefinition = "numeric(3,1) default 30 not null")
     private Double proximity;
-
     @NotNull
     private Integer price;
 
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Double getProximity() {
-        return proximity;
-    }
-
-    public void setProximity(Double proximity) {
-        this.proximity = proximity;
+    @Override
+    public String toString() {
+        return "UserPreferences{" +
+                "id=" + id +
+                ", likes=" + likes +
+                ", proximity=" + proximity +
+                ", price=" + price +
+                '}';
     }
 
     public Long getId() {
         return id;
     }
 
+    public List<Preference> getLikes() {
+        return likes;
+    }
+
+    public Double getProximity() {
+        return proximity;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public List<String> getDislikes() {
-        return dislikes;
+    public void setLikes(List<Preference> likes) {
+        this.likes = likes;
     }
 
-    public void setDislikes(List<String> dislikes) {
-        this.dislikes = dislikes;
+    public void setProximity(Double proximity) {
+        this.proximity = proximity;
     }
 
-    public List<String> getFoodLikes() {
-        return foodLikes;
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
-    public void setFoodLikes(List<String> preferences) {
-        this.foodLikes = preferences;
+    public UserPreferences(@NotNull Long id) {
+        this.id = id;
     }
+    public UserPreferences(){
 
-
+    }
 }
