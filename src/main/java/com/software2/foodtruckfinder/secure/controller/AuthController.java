@@ -2,10 +2,12 @@ package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.exception.AppException;
 import com.software2.foodtruckfinder.secure.model.User;
+import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.payload.ApiResponse;
 import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
 import com.software2.foodtruckfinder.secure.payload.LoginRequest;
 import com.software2.foodtruckfinder.secure.payload.SignUpRequest;
+import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Collections;
 
 
 @RestController
@@ -42,6 +43,11 @@ public class AuthController {
 
     @Autowired
     JwtTokenProvider tokenProvider;
+
+    @Autowired
+    UPreferenceRepository userPreferencesRepository;
+
+    //Long counter = userRepository.count();
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -81,6 +87,7 @@ public class AuthController {
         System.out.println(user.toString());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setId(counter++);
 
         User result = userRepository.save(user);
 
@@ -88,6 +95,7 @@ public class AuthController {
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
 
+        userPreferencesRepository.save(new UserPreferences(result.getId()));
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }

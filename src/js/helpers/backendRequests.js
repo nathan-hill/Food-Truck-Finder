@@ -1,11 +1,11 @@
 import axios from "axios";
-var constants = require("./../helpers/constants")
+var constants = require("./../helpers/constants");
 
 const request_headers = {
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "application/json",
-      Accept: "application/json"
-}
+  "Access-Control-Allow-Origin": "*",
+  "content-type": "application/json",
+  Accept: "application/json"
+};
 
 export function getAllUsers() {
   return axios({
@@ -22,11 +22,11 @@ export function getAllUsers() {
     });
 }
 
-export function getUserByID(i){
+export function getUserByID(i) {
   return axios({
     method: "GET",
     url: constants.backend_url + "users/getUserByID",
-    params: {id: i},
+    params: { id: i },
     headers: request_headers
   })
     .then(function(response) {
@@ -51,7 +51,7 @@ export function postNewUser(u) {
   return axios(request)
     .then(function(response) {
       console.log(response.data);
-      return response.data
+      return response.data;
     })
     .catch(function(error) {
       console.log(error);
@@ -68,7 +68,7 @@ export function UpdateUser(u) {
       "content-type": "application/json",
       Accept: "application/json"
     }
-  }
+  };
 }
 
 export function postNewTruck(t) {
@@ -94,6 +94,28 @@ export function getAllTrucks() {
   return axios({
     method: "GET",
     url: constants.backend_url + "trucks/",
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}
+
+export function getPreferredTrucks(id, lon, lat) {
+  console.log("making request for preferred trucks")
+  console.log(id + " " + lon + " " + lat);
+  return axios({
+    method: "GET",
+    url: constants.backend_url + "upref/getPreferred",
+    params: {
+      id: id,
+      lon: lon,
+      lat: lat
+    },
     headers: request_headers
   })
     .then(function(response) {

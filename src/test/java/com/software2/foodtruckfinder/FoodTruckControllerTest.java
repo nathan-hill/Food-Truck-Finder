@@ -43,6 +43,11 @@ public class FoodTruckControllerTest {
             }
 
             @Override
+            public boolean existsById(Long id) {
+                return false;
+            }
+
+            @Override
             public Optional<Truck> findById(Integer integer) {
                 return Optional.empty();
             }

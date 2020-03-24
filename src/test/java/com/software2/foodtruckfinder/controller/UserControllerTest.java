@@ -239,7 +239,8 @@ public class UserControllerTest {
             }
 
             @Override
-            public List<String> findDislikesByUser(Long id) {
+
+            public List<String> findDislikesById(Long id) {
                 return null;
             }
 

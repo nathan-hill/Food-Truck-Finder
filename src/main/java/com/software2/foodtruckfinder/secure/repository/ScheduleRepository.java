@@ -1,7 +1,6 @@
 package com.software2.foodtruckfinder.secure.repository;
 
 import com.software2.foodtruckfinder.secure.model.Schedule;
-import com.software2.foodtruckfinder.secure.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -79,22 +79,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js")
-                .permitAll()
-                .antMatchers("/v/api/auth/**") // changing this to the users endpoints will allow you to access the user endpoints
-                .permitAll()
-                .antMatchers("/v/users/delete")//remove this in final deliverable
-                .permitAll()
-                .antMatchers("/v/users/")
-                .permitAll()
-                .antMatchers("/v/trucks/findTruckByID")
-                .permitAll()
-                .antMatchers("/v/schedule/**")
-                .permitAll()
-                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
-                .permitAll()
+                        "/**/*.js").permitAll()
+                .antMatchers("/v/api/auth/**").permitAll() // changing this to the users endpoints will allow you to access the user endpoints
+                .antMatchers("/v/users/delete").permitAll()//remove this in final deliverable
+                .antMatchers("/v/users/").permitAll()
+                .antMatchers("/v/trucks/findTruckByID").permitAll()
+                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability").permitAll()
+                .antMatchers("/v/upref/**").permitAll()
+                .antMatchers("/v/schedule/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**").permitAll()
                 .anyRequest()
                 .authenticated();
 
