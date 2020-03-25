@@ -16,100 +16,67 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //will have to set truckid
     @NotNull
     private long truckID;
-
     @NotNull
     private DayOfWeek day;
-
-    //might have to change
-    // should null the schedule if on this day the truck is closed
-    @NotNull
-    private boolean isOpen;
-
     private LocalTime startTime;
-
     private LocalTime endTime;
-
-    //will have to change
-    private String location;
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        if (isOpen() == false){
-            this.endTime = null;
-        }
-        else{
-            this.endTime = endTime;
-        }
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        if (isOpen() == false){
-            this.startTime = null;
-        }
-        else{
-            this.startTime = startTime;
-        }
-
-    }
-
-    public boolean isOpen() {
-        return isOpen;
-    }
-
-    public void setOpen(boolean open) {
-        if (open == false){
-            isOpen = open;
-            setStartTime(null);
-            setEndTime(null);
-            setLocation(null);
-        }
-
-    }
-
-    public DayOfWeek getDay() {
-        return day;
-    }
-
-    public void setDay(DayOfWeek day) {
-        this.day = day;
-    }
-
-    public long getTruckID() {
-        return truckID;
-    }
-
-    public void setTruckID(long truckID) {
-        this.truckID = truckID;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        if (isOpen() == false){
-            this.location = null;
-        }
-        else{
-            this.location = location;
-        }
-    }
+    private Double longitude;
+    private Double latitude;
 
     public Long getId() {
         return id;
     }
-
+    public long getTruckID() {
+        return truckID;
+    }
+    public DayOfWeek getDay() {
+        return day;
+    }
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+    public Double getLongitude() {
+        return longitude;
+    }
+    public Double getLatitude() {
+        return latitude;
+    }
     public void setId(Long id) {
         this.id = id;
+    }
+    public void setTruckID(long truckID) {
+        this.truckID = truckID;
+    }
+    public void setDay(DayOfWeek day) {
+        this.day = day;
+    }
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + id +
+                ", truckID=" + truckID +
+                ", day=" + day +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
     }
 }

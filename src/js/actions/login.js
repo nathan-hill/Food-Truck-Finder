@@ -45,8 +45,6 @@ export function login(data) {
         let userRole = "";
         userRole = await Request.getUserByID(decodedToken.sub)
         .then(function(r) {
-            //console.log(r.type)
-          //userRole = r.type;
           return r.type;
         });
 

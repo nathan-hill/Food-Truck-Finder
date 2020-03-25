@@ -244,7 +244,7 @@ function Dashboard(props) {
       {/* <div className={classes.appBarSpacer} /> */}
       {/* <Container maxWidth="lg" className={classes.container}></Container> */}
       {/* </main> */}
-      <SimpleMap />
+      <SimpleMap/>
     </div>
   );
 }
