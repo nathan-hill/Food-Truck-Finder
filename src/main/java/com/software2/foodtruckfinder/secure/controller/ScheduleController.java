@@ -44,9 +44,6 @@ public class ScheduleController {
 
             System.out.println(s.toString() + "\n" + temp.toString());
 
-            if (temp == null) {
-                continue;
-            }
             generated.add(scheduleRepository.save(temp));
         }
 
@@ -61,13 +58,13 @@ public class ScheduleController {
         return true;
     }
 
-    @GetMapping(path = "getScheduleByID")
+    @GetMapping(path = "/getScheduleByID")
     public @ResponseBody
     List<Schedule> findScheduleByID(Integer id) {
         return scheduleRepository.findByTruckID(id);
     }
 
-    @GetMapping(path = "getSingleScheduleByID")
+    @GetMapping(path = "/getSingleScheduleByID")
     public @ResponseBody
     Schedule findSingleScheduleByID(Long id) {
         return scheduleRepository.findByid(id);
