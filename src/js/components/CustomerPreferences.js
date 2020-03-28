@@ -1,6 +1,7 @@
 import React from "react";
 import * as Requests from "./../helpers/backendRequests";
 import { connect } from "react-redux";
+import CreateTable from "./CreateTable";
 
 var data = {
   columns: ["Proximity", "Price", "Food Type"],
@@ -37,7 +38,7 @@ class CustomerPreferences extends React.Component {
     );
     console.log("preferred trucks")
     console.log(preferred);
-    this.setState({ rows: data.rows, columns: data.columns });
+    this.setState({generalData: preferred, generalCols: Object.keys(preferred[0])})
   }
 
   getcurrentLocation() {
@@ -62,26 +63,7 @@ class CustomerPreferences extends React.Component {
     return (
       <div id="container" className="container">
         <h1>Recommended Food Trucks</h1>
-        <h3>Your Preferences</h3>
-        <table className="table">
-          <thead>
-            <tr>
-              {this.state.columns.map((column, index) => {
-                return <th>{column}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {" "}
-            {this.state.rows.map(row => (
-              <tr>
-                <td>{row[0]}</td>
-                <td>{row[1]}</td>
-                <td>{row[2]}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <CreateTable rows={this.state.generalData} cols={this.state.generalCols}/>
       </div>
     );
   }
