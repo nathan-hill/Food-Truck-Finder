@@ -3,16 +3,12 @@ import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
-<<<<<<< HEAD
-import Profile from "./Profile";
-import axios from "axios";
-=======
 import LoginPage from "../components/LoginPage";
->>>>>>> UserProfile
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
+import NotificationTable from "./../components/Notifications";
 
 export class TestRouting extends React.Component {
   render() {
@@ -193,6 +189,25 @@ export class UserProfile extends React.Component {
     );
   }
 
+}
+
+export class Notifications extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Back</Link>
+        <NotificationTable />
+      </div>
+    );
+  }
 }
 
 export class OwnerProfile extends React.Component {

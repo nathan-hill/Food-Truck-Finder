@@ -56,10 +56,6 @@ export function UpdateUser(u) {
     }
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> UserProfile
 export function postNewTruck(t) {
   const request = {
     method: "POST",

@@ -17,6 +17,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { GuestListItems, CustomerListItems, OwnerListItems, secondaryListItems } from "./listItems";
 import SimpleMap from "./SimpleMap";
+import { Link } from 'react';
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -156,7 +157,10 @@ export default function Dashboard() {
           >
             Wheels With Meals
           </Typography>
-          <IconButton color="inherit">
+          <IconButton 
+            color="inherit"
+            containerElement={<Link to="/Notifications" />}
+            linkButton={true}>
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>

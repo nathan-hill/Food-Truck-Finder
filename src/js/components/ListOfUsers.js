@@ -19,12 +19,12 @@ export class ListOfUsers extends Component {
     }
   }
 
-  //   async componentDidMount() {
-  //       console.log("Mounted")
-  //     var users = await Request.getAllUsers();
+     async componentDidMount() {
+         console.log("Mounted")
+       var users = await Request.getAllUsers();
 
-  //     this.setState({ users: users });
-  //   }
+       this.setState({ users: users });
+     }
 
   render() {
     return (
@@ -35,10 +35,10 @@ export class ListOfUsers extends Component {
             <th>Schedule</th>
           </tr>
           {this.props.trucks.map(t => (
-            <tr>
+            <li>
               <td>{t.name}</td>
               <td>{t.schedule}</td>
-            </tr>
+            </li>
           ))}
         </table>
       </div>
