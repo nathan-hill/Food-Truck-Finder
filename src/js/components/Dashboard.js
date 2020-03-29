@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,7 +17,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { GuestListItems, CustomerListItems, OwnerListItems, secondaryListItems } from "./listItems";
 import SimpleMap from "./SimpleMap";
-import { Link } from 'react';
+ 
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -129,7 +129,9 @@ export default function Dashboard() {
     mainList = GuestListItems;
   }
 
-  
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(prevState => !prevState);
 
   return (
     <div className={classes.root}>
@@ -159,8 +161,8 @@ export default function Dashboard() {
           </Typography>
           <IconButton 
             color="inherit"
-            containerElement={<Link to="/Notifications" />}
-            linkButton={true}>
+            >
+
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
@@ -188,6 +190,7 @@ export default function Dashboard() {
           {/* </Link> */}
         </List>
       </Drawer>
+
       {/* <main className={classes.content}> */}
       {/* <div className={classes.appBarSpacer} /> */}
       {/* <Container maxWidth="lg" className={classes.container}></Container> */}

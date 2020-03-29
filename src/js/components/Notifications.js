@@ -21,7 +21,6 @@ import axios from "axios";
 import {connect} from "react-redux";
 
 const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
@@ -47,26 +46,29 @@ class NotificationTable extends React.Component {
     constructor(props) {
         super(props);
 
+        //may need to rename fields to match data returns
         this.state = {
             columns: [
-                {title: 'Food Truck', field: 'name'},
+                {title: 'Status', field: 'status'},
                 {title: 'Date', field: 'date'},
-                {title: 'Subject', field: 'subject'},
+                {title: 'Food Truck', field: 'name'},
+                {title: 'Message', field: 'message'},
             ], data:[],
         }
     }
 
-    //componentDidMount = () => {
-      //  console.log("ID: ", this.props.auth.user.sub);
-        //axios.get(backend_url + "notifications/findNotificationsByCustomerID", {
-          //  params: {
-            //    l: this.props.auth.user.sub
-            //}
-        //}).then(res => {
-          //  this.setState({data: res.data})
-          //  console.log(this.state.data)
-       // });
-    //}
+    componentDidMount = () => {
+        console.log("ID: ", this.props.auth.user.sub);
+        //fill with correct url when gotten from Connor
+        axios.get(backend_url + "notifications/findNotificationsByCustomerID", {
+            params: {
+                l: this.props.auth.user.sub
+            }
+        }).then(res => {
+            this.setState({data: res.data})
+            console.log(this.state.data)
+        });
+    }
 
     render() {
         return (
@@ -88,6 +90,23 @@ class NotificationTable extends React.Component {
                                     data.splice(data.indexOf(oldData), 1);
                                     return {...prevState, data};
                                 });
+                            }, 600);
+                        }),
+                        //update status as read
+                        onRowUpdate: (newData, oldData) =>
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                if (oldData) {
+                                    this.setState(prevState => {
+                                        // sets the table to current state
+                                        const data = [...prevState.data];
+
+                                        // updates the table position
+                                        data[data.indexOf(oldData)] = newData;
+                                        return {...prevState, data};
+                                    });
+                                }
                             }, 600);
                         }),
                 }}
