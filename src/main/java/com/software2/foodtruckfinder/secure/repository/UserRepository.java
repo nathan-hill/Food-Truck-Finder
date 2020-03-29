@@ -12,10 +12,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<String> findDislikesById(Long id);
-
-    List<String> findPreferencesById(Long id);
-
     User findUserByid(Long id);
 
     boolean existsById(Long id);
