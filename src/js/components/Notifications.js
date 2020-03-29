@@ -21,6 +21,7 @@ import axios from "axios";
 import {connect} from "react-redux";
 
 const tableIcons = {
+
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
@@ -43,32 +44,43 @@ const backend_url = "localhost:8080/v/"
 //const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
 
 class NotificationTable extends React.Component {
+    
+    handleClick(props){
+        //database call to mark notification as read
+        //number of unread used for badge on dashboard icon
+    }
+
     constructor(props) {
         super(props);
 
         //may need to rename fields to match data returns
         this.state = {
             columns: [
-                {title: 'Status', field: 'status'},
+                {title: 'Mark As', 
+                id: 'mark-as-button',
+                render: ({row}) => (<button onClick={(e) => this.handleClick(row, e)}>Mark as Read</button>)},
+                {title: 'Current Status', field: 'status'},
                 {title: 'Date', field: 'date'},
                 {title: 'Food Truck', field: 'name'},
                 {title: 'Message', field: 'message'},
-            ], data:[],
+            ], data:[['read', '3/29/2020', 'my truck', 'notify'],[]],
         }
     }
 
-    componentDidMount = () => {
-        console.log("ID: ", this.props.auth.user.sub);
+    //fill with list from database
+
+    //componentDidMount = () => {
+        //console.log("ID: ", this.props.auth.user.sub);
         //fill with correct url when gotten from Connor
-        axios.get(backend_url + "notifications/findNotificationsByCustomerID", {
-            params: {
-                l: this.props.auth.user.sub
-            }
-        }).then(res => {
-            this.setState({data: res.data})
-            console.log(this.state.data)
-        });
-    }
+        //axios.get(backend_url + "notifications/findNotificationsByCustomerID", {
+            //params: {
+                //l: this.props.auth.user.sub
+            //}
+        //}).then(res => {
+            //this.setState({data: res.data})
+            //console.log(this.state.data)
+        //});
+    //}
 
     render() {
         return (
@@ -90,23 +102,6 @@ class NotificationTable extends React.Component {
                                     data.splice(data.indexOf(oldData), 1);
                                     return {...prevState, data};
                                 });
-                            }, 600);
-                        }),
-                        //update status as read
-                        onRowUpdate: (newData, oldData) =>
-                        new Promise(resolve => {
-                            setTimeout(() => {
-                                resolve();
-                                if (oldData) {
-                                    this.setState(prevState => {
-                                        // sets the table to current state
-                                        const data = [...prevState.data];
-
-                                        // updates the table position
-                                        data[data.indexOf(oldData)] = newData;
-                                        return {...prevState, data};
-                                    });
-                                }
                             }, 600);
                         }),
                 }}
