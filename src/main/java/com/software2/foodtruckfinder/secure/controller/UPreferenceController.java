@@ -11,10 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.DayOfWeek;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller

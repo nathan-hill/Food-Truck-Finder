@@ -10,7 +10,7 @@ import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
-import CustomerPreferences from "./../components/CustomerPreferences";
+import FoodTruckPreferences from "../components/FoodTruckPreferences";
 
 export class TestRouting extends React.Component {
   render() {
@@ -241,7 +241,7 @@ export class CustPreferences extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <CustomerPreferences/>
+        <FoodTruckPreferences/>
       </div>
     );
   }

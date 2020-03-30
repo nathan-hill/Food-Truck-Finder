@@ -119,6 +119,7 @@ class customerSettings extends React.Component {
     axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
       console.log(res);
     });
+    this.setState({isDisabled: true})
   }
 
   valuetext(value) {

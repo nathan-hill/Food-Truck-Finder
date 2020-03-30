@@ -1,5 +1,5 @@
 import React from "react";
-import * as Requests from "./../helpers/backendRequests";
+import * as Requests from "../helpers/backendRequests";
 import { connect } from "react-redux";
 import CreateTable from "./CreateTable";
 
@@ -10,7 +10,7 @@ var data = {
   ]
 };
 
-class CustomerPreferences extends React.Component {
+class FoodTruckPreferences extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,4 +73,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(CustomerPreferences);
+export default connect(mapStateToProps, null)(FoodTruckPreferences);
