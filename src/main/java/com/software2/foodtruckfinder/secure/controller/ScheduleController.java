@@ -70,8 +70,6 @@ public class ScheduleController {
             for (Schedule s : days) {
                 temp = s.clone();
 
-                System.out.println(s.toString() + "\n" + temp.toString());
-
                 generated.add(scheduleRepository.save(temp));
             }
 

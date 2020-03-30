@@ -68,7 +68,6 @@ public class UPreferenceController {
     @GetMapping(path = "/getUPreferencesByID")
     public @ResponseBody
     UserPreferences findUPreferencesByID(Long id) {
-        System.out.println(id);
         return uprefRepository.findUserPreferencesById(id);
     }
 
