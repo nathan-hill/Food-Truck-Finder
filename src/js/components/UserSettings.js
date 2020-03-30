@@ -17,6 +17,7 @@ import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
 import CheckBoxList from "./CheckBoxList";
 import createSpacing from "@material-ui/core/styles/createSpacing";
+import * as Request from "./../helpers/backendRequests";
 var constants = require("./../helpers/constants");
 
 class customerSettings extends React.Component {
@@ -34,6 +35,7 @@ class customerSettings extends React.Component {
       price: 1,
       likes: []
     };
+    this.priceArray = ["$", "$$", "$$$", "$$$$"];
 
     this.onChange = this.onChange.bind(this);
     this.onSliderChange = this.onSliderChange.bind(this);
@@ -42,32 +44,22 @@ class customerSettings extends React.Component {
     this.onEditSubmit = this.onEditSubmit.bind(this);
     this.onCheckBoxChange = this.onCheckBoxChange.bind(this);
     this.valuetext = this.valuetext.bind(this);
+  }
 
-    console.log("getting user data:");
-    axios.get(constants.backend_url + "users/getUserByID", {
-            params: {
-                id: this.props.auth.user.sub
-            }
-        }).then(res => {
-            console.log(res);
-            this.setState(res.data);
-        });
+  async componentDidMount() {
+    let userData = await Request.getUserByID(this.state.id);
+    let preferences = await Request.getUPById(this.state.id);
 
-    // axios
-    //   .get(constants.backend_url + "upref/getUPreferencesByID", {
-    //     params: {
-    //       id: this.props.auth.user.sub
-    //     }
-    //   })
-    //   .then(res => {
-    //     this.setState({
-    //       likes: res.data.likes,
-    //       proximity: res.data.proximity,
-    //       price: res.data.price
-    //     });
-    //     console.log("state after getting data")
-    //     console.log(this.state);
-    //   });
+
+    console.log("Gey user Data");
+    console.log(userData);
+
+    this.setState({
+      name: userData.name,
+      username: userData.username,
+      email: userData.email
+    });
+    this.setState({proximity: preferences.proximity, price: preferences.price, likes: preferences.likes})
   }
 
   onChange(e) {
@@ -141,12 +133,10 @@ class customerSettings extends React.Component {
   }
 
   render() {
-    const { name, username, email, isDisabled } = this.state;
-
     console.log(this.state);
 
     let submitButton;
-    if (!isDisabled) {
+    if (!this.state.isDisabled) {
       submitButton = (
         <Button
           type="submit"
@@ -173,7 +163,7 @@ class customerSettings extends React.Component {
           onClick={this.onEditSubmit}
           //   className={classes.submit}
         >
-          {isDisabled ? "Edit" : "Cancel"}
+          {this.state.isDisabled ? "Edit" : "Cancel"}
         </Button>
       );
     }
@@ -207,8 +197,8 @@ class customerSettings extends React.Component {
             label="Name"
             name="name"
             onChange={this.onChange}
-            value={name}
-            disabled={isDisabled}
+            value={this.state.name}
+            disabled={this.state.isDisabled}
             autoFocus
           />
         </Grid>
@@ -223,8 +213,8 @@ class customerSettings extends React.Component {
             label="Username"
             name="username"
             onChange={this.onChange}
-            value={username} //username not defined error when I try to change it
-            disabled={isDisabled}
+            value={this.state.username} //username not defined error when I try to change it
+            disabled={this.state.isDisabled}
             autoFocus
           />
         </Grid>
@@ -239,8 +229,8 @@ class customerSettings extends React.Component {
             label="Email"
             name="email"
             onChange={this.onChange}
-            value={email} //email not defined error as well
-            disabled={isDisabled}
+            value={this.state.email} //email not defined error as well
+            disabled={this.state.isDisabled}
             autoFocus
           />
         </Grid>
@@ -254,7 +244,8 @@ class customerSettings extends React.Component {
           >
             <Typography gutterBottom>Maximum distance (mi)</Typography>
             <Slider
-              defaultValue={Number(this.state.proximity)}
+              defaultValue={30}
+              value={this.state.proximity}
               getAriaValueText={this.valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
@@ -262,7 +253,7 @@ class customerSettings extends React.Component {
               marks
               min={1}
               max={30}
-              disabled={isDisabled}
+              disabled={this.state.isDisabled}
               onChange={this.onSliderChange}
             />
           </Paper>
@@ -273,16 +264,16 @@ class customerSettings extends React.Component {
             <InputLabel htmlFor="price-native">Price</InputLabel>
             <Select
               native
-              priceValue={this.state.price}
+              // defaultValue={label}
               onChange={this.onSelectChange}
               input={<Input id="price-native" />}
-              disabled={isDisabled}
+              disabled={this.state.isDisabled}
+              defaultValue={this.priceArray[this.state.price]}
             >
+
               <option aria-label="None" priceValue="" />
-              <option priceValue={1}>$</option>
-              <option priceValue={2}>$$</option>
-              <option priceValue={3}>$$$</option>
-              <option priceValue={4}>$$$$</option>
+              {this.priceArray.map((val, i) => <option value={i+1} key={i}>{val}</option>)}
+
             </Select>
           </Paper>
         </Grid>
@@ -300,7 +291,7 @@ class customerSettings extends React.Component {
                 "Vietnamese"
               ]}
               likes={this.state.likes}
-              disabled={isDisabled}
+              disabled={this.state.isDisabled}
               onChange={this.onCheckBoxChange}
             />
           </Paper>

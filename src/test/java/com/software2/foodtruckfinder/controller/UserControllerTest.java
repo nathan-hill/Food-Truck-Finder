@@ -232,17 +232,6 @@ public class UserControllerTest {
                 return Optional.empty();
             }
 
-
-            @Override
-            public List<String> findDislikesById(Long id) {
-                return null;
-            }
-
-            @Override
-            public List<String> findPreferencesById(Long id) {
-                return null;
-            }
-
             @Override
             public User findUserByid(Long id) {
                 return null;

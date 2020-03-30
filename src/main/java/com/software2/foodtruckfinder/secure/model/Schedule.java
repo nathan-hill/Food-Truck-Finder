@@ -20,10 +20,24 @@ public class Schedule {
     private long truckID;
     @NotNull
     private Integer day;
+    private boolean isOpen;
     private LocalTime startTime;
     private LocalTime endTime;
     private Double longitude;
     private Double latitude;
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+        if(isOpen == false){
+            setEndTime(null);
+            setStartTime(null);
+            setLatitude(null);
+            setLongitude(null);
+        }
+    }
 
     public Long getId() {
         return id;
@@ -85,6 +99,7 @@ public class Schedule {
         Schedule newClone = new Schedule();
         newClone.setLatitude(this.getLatitude());
         newClone.setLongitude(this.getLongitude());
+        newClone.setOpen(this.isOpen());
         newClone.setId(this.getId());
         newClone.setDay(this.getDay());
         newClone.setEndTime(this.getEndTime());

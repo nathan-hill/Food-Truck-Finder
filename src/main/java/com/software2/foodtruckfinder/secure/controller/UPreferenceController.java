@@ -70,8 +70,13 @@ public class UPreferenceController {
     @GetMapping(path = "/getUPreferencesByID")
     public @ResponseBody
     UserPreferences findUPreferencesByID(Long id) {
-        System.out.println("/getUPreferencesByID -> " + id);
-        return uprefRepository.findUserPreferencesById(id);
+
+        UserPreferences opt = uprefRepository.findUserPreferencesById(id);
+        System.out.println("/getUPreferencesByID -> " + opt);
+        if(opt == null){
+            opt = new UserPreferences(id);
+        }
+        return opt;
     }
 
     @PutMapping(value = "/updateByUPreferences", produces = MediaType.APPLICATION_JSON_VALUE)

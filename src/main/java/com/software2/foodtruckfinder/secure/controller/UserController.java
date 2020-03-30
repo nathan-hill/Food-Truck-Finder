@@ -70,59 +70,46 @@ public class UserController {
     @PutMapping(value = "/updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Object updateUser(@RequestBody UserUserPreferenceCombo userUserPreferenceCombo) {
-        //unpack the data
-        User user = userUserPreferenceCombo.user;
-        UserPreferences userPreferences = userUserPreferenceCombo.preferences;
+        try {
+            //unpack the data
+            User user = userUserPreferenceCombo.user;
+            UserPreferences userPreferences = userUserPreferenceCombo.preferences;
 
-        System.out.println("user -> " + userUserPreferenceCombo.user.toString());
-        System.out.println("preferences -> " + userUserPreferenceCombo.preferences.toString());
+            System.out.println("user -> " + userUserPreferenceCombo.user.toString());
+            System.out.println("preferences -> " + userUserPreferenceCombo.preferences.toString());
 
-        //retrieve the old user from database
-        Optional<User> storedUser = userRepository.findById(user.getId());
-        User generatedUser = null;
+            //retrieve reference of the old user from database
+            User storedUser = userRepository.getOne(user.getId());
+            User generatedUser = null;
 
-        //if the user exists
-        if (!storedUser.isEmpty()) {
-            //build a new user with the passed data and the stored data
-            storedUser.get().setEmail(user.getEmail());
-            storedUser.get().setName(user.getName());
-            storedUser.get().setUsername(user.getUsername());
-            Long id = storedUser.get().getId();
+            //update the new user
+            storedUser.setEmail(user.getEmail());
+            storedUser.setName(user.getName());
+            storedUser.setUsername(user.getUsername());
+            userRepository.save(storedUser);
 
-            //delete the old user
-            userRepository.deleteById(user.getId());
+            //get the stored preferences
+            if (!userPreferencesRepository.findById(user.getId()).isPresent()) {
+                userPreferencesRepository.save(new UserPreferences(user.getId()));
+            }
+            UserPreferences storedUserPreferences = userPreferencesRepository.getOne(user.getId());
 
-            //save the new user
-            storedUser.get().setId(id);
-            generatedUser = userRepository.save(storedUser.get());
-            assert id.equals(generatedUser.getId());
-        } else {
-            return new ResponseEntity<String>("user not found", HttpStatus.BAD_REQUEST);
+            //build the new preferences
+            storedUserPreferences.setLikes(userPreferences.getLikes());
+            storedUserPreferences.setPrice(userPreferences.getPrice());
+            storedUserPreferences.setProximity(userPreferences.getProximity());
+
+            System.out.println(storedUserPreferences.toString());
+
+            //save the new preferences
+            UserPreferences generatedUPreferences = userPreferencesRepository.save(storedUserPreferences);
+
+            return new ResponseEntity<UserUserPreferenceCombo>(new UserUserPreferenceCombo(storedUser, storedUserPreferences), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.toString());
         }
-
-        UserPreferences storedUserPreferences;
-
-        //get the stored preferences
-        if (!userPreferencesRepository.findById(userPreferences.getId()).isEmpty()) {
-            storedUserPreferences = userPreferencesRepository.findById(userPreferences.getId()).get();
-
-            //if it exists delete it
-            userPreferencesRepository.deleteById(storedUserPreferences.getId());
-        } else {
-            storedUserPreferences = new UserPreferences();
-        }
-
-        //build the new preferences
-        storedUserPreferences.setLikes(userPreferences.getLikes());
-        storedUserPreferences.setId(generatedUser.getId());
-        storedUserPreferences.setPrice(userPreferences.getPrice());
-        storedUserPreferences.setProximity(userPreferences.getProximity());
-
-        System.out.println(storedUserPreferences.toString());
-
-        //save the new preferences
-        UserPreferences generatedUPreferences = userPreferencesRepository.save(storedUserPreferences);
-
-        return new ResponseEntity<UserUserPreferenceCombo>(new UserUserPreferenceCombo(generatedUser, generatedUPreferences), HttpStatus.OK);
     }
 }

@@ -4,6 +4,7 @@ import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -60,10 +61,12 @@ public class UserPreferences {
         this.price = price;
     }
 
-    public UserPreferences(@NotNull Long id) {
-        this.id = id;
-    }
-    public UserPreferences(){
+    public UserPreferences() {};
 
+    public UserPreferences(Long id){
+        this.id = id;
+        this.likes = new ArrayList<>();
+        this.proximity = 15.0;
+        this.price = 1;
     }
 }
