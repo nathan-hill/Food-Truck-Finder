@@ -22,8 +22,8 @@ export function getAllUsers() {
     });
 }
 
-export function getUserByID(i) {
-  return axios({
+export async function getUserByID(i) {
+  return await axios({
     method: "GET",
     url: constants.backend_url + "users/getUserByID",
     params: { id: i },
@@ -38,7 +38,7 @@ export function getUserByID(i) {
     });
 }
 
-export function postNewUser(u) {
+export async function postNewUser(u) {
   const request = {
     method: "POST",
     url: constants.backend_url + "api/auth/signup",
@@ -48,7 +48,7 @@ export function postNewUser(u) {
 
   console.log(request);
 
-  return axios(request)
+  return await axios(request)
     .then(function(response) {
       console.log(response.data);
       return response.data;
@@ -58,7 +58,7 @@ export function postNewUser(u) {
     });
 }
 
-export function UpdateUser(u) {
+export async function UpdateUser(u) {
   const request = {
     method: "POST",
     url: constants.backend_url + "users/update/",
@@ -71,7 +71,7 @@ export function UpdateUser(u) {
   };
 }
 
-export function postNewTruck(t) {
+export async function postNewTruck(t) {
   const request = {
     method: "POST",
     url: constants.backend_url + "trucks/add/",
@@ -81,17 +81,18 @@ export function postNewTruck(t) {
 
   console.log(request);
 
-  axios(request)
+  return await axios(request)
     .then(function(response) {
       console.log(response.data);
+      return response;
     })
     .catch(function(error) {
       console.log(error);
     });
 }
 
-export function getAllTrucks() {
-  return axios({
+export async function getAllTrucks() {
+  return await axios({
     method: "GET",
     url: constants.backend_url + "trucks/",
     headers: request_headers
@@ -105,10 +106,10 @@ export function getAllTrucks() {
     });
 }
 
-export function getPreferredTrucks(id, lon, lat) {
+export async function getPreferredTrucks(id, lon, lat) {
   console.log("making request for preferred trucks")
   console.log(id + " " + lon + " " + lat);
-  return axios({
+  return await axios({
     method: "GET",
     url: constants.backend_url + "upref/getPreferred",
     params: {
@@ -124,5 +125,23 @@ export function getPreferredTrucks(id, lon, lat) {
     })
     .catch(function(error) {
       console.log(error);
+    });
+}
+
+
+export async function getUPById(id) {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "upref/getUPreferencesByID",
+    params: {id},
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error) {
+      console.log(error);
+      return error;
     });
 }
