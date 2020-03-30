@@ -44,36 +44,30 @@ class customerSettings extends React.Component {
     this.valuetext = this.valuetext.bind(this);
 
     console.log("getting user data:");
-    axios
-      .get(constants.backend_url + "users/getUserByID", {
-        params: {
-          id: this.props.auth.user.sub
-        }
-      })
-      .then(res => {
-        console.log(res);
-        this.setState({
-          id: res.data.id,
-          name: res.data.name,
-          username: res.data.username,
-          email: res.data.email
+    axios.get(constants.backend_url + "users/getUserByID", {
+            params: {
+                id: this.props.auth.user.sub
+            }
+        }).then(res => {
+            console.log(res);
+            this.setState(res.data);
         });
-      });
 
-    axios
-      .get(constants.backend_url + "upref/getUPreferencesByID", {
-        params: {
-          id: this.props.auth.user.sub
-        }
-      })
-      .then(res => {
-        console.log(res);
-        this.setState({
-          likes: res.data.likes,
-          proximity: res.data.proximity,
-          price: res.data.price
-        });
-      });
+    // axios
+    //   .get(constants.backend_url + "upref/getUPreferencesByID", {
+    //     params: {
+    //       id: this.props.auth.user.sub
+    //     }
+    //   })
+    //   .then(res => {
+    //     this.setState({
+    //       likes: res.data.likes,
+    //       proximity: res.data.proximity,
+    //       price: res.data.price
+    //     });
+    //     console.log("state after getting data")
+    //     console.log(this.state);
+    //   });
   }
 
   onChange(e) {
@@ -105,6 +99,7 @@ class customerSettings extends React.Component {
     e.preventDefault();
 
     console.log("Submit form");
+    this.setState({isDisabled: true})
     console.log(this.state);
 
     let udata = {

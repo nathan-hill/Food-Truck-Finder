@@ -13,7 +13,7 @@ public class UserPreferences {
     private Long id;
     @ElementCollection
     private List<Preference> likes;
-    @Column(columnDefinition = "numeric(3,1) default 30 not null")
+    @Column(columnDefinition = "numeric(3,1) default 30")
     private Double proximity;
     @NotNull
     private Integer price;

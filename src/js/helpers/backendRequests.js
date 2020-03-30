@@ -90,8 +90,8 @@ export function postNewTruck(t) {
     });
 }
 
-export function getAllTrucks() {
-  return axios({
+export async function getAllTrucks() {
+  return await axios({
     method: "GET",
     url: constants.backend_url + "trucks/",
     headers: request_headers
@@ -105,8 +105,41 @@ export function getAllTrucks() {
     });
 }
 
+export async function getUserPreferences(id) {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "upref/getUPreferencesByID",
+    params: { id: id }
+  })
+    .then(function(res) {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch(function(e) {
+      console.log(e);
+      return e;
+    });
+}
+
+export async function getUserSettings(id){
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "users/getUserByID",
+    params: { id: id }
+  })
+    .then(function(res) {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch(function(e) {
+      console.log(e);
+      return e;
+    });
+
+}
+
 export function getPreferredTrucks(id, lon, lat) {
-  console.log("making request for preferred trucks")
+  console.log("making request for preferred trucks");
   console.log(id + " " + lon + " " + lat);
   return axios({
     method: "GET",

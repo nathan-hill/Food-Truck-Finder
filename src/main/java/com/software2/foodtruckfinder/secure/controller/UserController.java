@@ -63,6 +63,7 @@ public class UserController {
     @GetMapping(path = "/getUserByID")
     public @ResponseBody
     User findUserByID(Long id) {
+        System.out.println("/getUserByID -> " + id);
         return userRepository.findUserByid(id);
     }
 
@@ -86,12 +87,15 @@ public class UserController {
             storedUser.get().setEmail(user.getEmail());
             storedUser.get().setName(user.getName());
             storedUser.get().setUsername(user.getUsername());
+            Long id = storedUser.get().getId();
 
             //delete the old user
             userRepository.deleteById(user.getId());
 
             //save the new user
+            storedUser.get().setId(id);
             generatedUser = userRepository.save(storedUser.get());
+            assert id.equals(generatedUser.getId());
         } else {
             return new ResponseEntity<String>("user not found", HttpStatus.BAD_REQUEST);
         }
