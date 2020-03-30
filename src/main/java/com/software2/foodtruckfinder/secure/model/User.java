@@ -7,9 +7,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -34,7 +35,6 @@ public class User extends DateAudit {
     @Size(min = 4, max = 15)
     private String username;
 
-    @NaturalId
     @NotBlank
     @Size(max = 40)
     @Email
@@ -119,3 +119,6 @@ public class User extends DateAudit {
                 '}';
     }
 }
+
+
+

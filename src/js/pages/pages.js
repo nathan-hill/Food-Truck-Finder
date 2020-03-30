@@ -13,6 +13,7 @@ import CustomerSettings from "./../components/UserSettings";
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
+import FoodTruckPreferences from "../components/FoodTruckPreferences";
 
 export class TestRouting extends React.Component {
   render() {
@@ -266,8 +267,28 @@ export class OwnerProfile extends React.Component {
       </div>
     );
   }
+}
+
+export class CustPreferences extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Back</Link>
+        <FoodTruckPreferences/>
+      </div>
+    );
+  }
 
 }
+
 
 
 export class Home extends React.Component {

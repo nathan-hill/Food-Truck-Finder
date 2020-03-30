@@ -7,8 +7,8 @@ import javax.persistence.*;
 @Entity // This tells Hibernate to make a table out of this class
 public class Truck {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @NotNull
     private String Name;
     @NotNull
@@ -18,51 +18,73 @@ public class Truck {
     @NotNull
     private String Menu;
     @NotNull
-    private long ownerID;
+    private Long ownerID;
+    @NotNull
+    private String type;
+    @NotNull
+    private Cost cost;
 
-    public long getOwnerID() {
-        return ownerID;
-    }
-
-    public void setOwnerID(long ownerID) {
-        this.ownerID = ownerID;
-    }
-
-    public String getMenu() {
-        return Menu;
-    }
-
-    public void setMenu(String menu) {
-        Menu = menu;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public String getName() {
-        return Name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setName(String name) {
         Name = name;
     }
 
-    public String getSchedule() {
-        return Schedule;
-    }
-
     public void setSchedule(String schedule) {
         Schedule = schedule;
     }
 
-    public Integer getId() {
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public void setMenu(String menu) {
+        Menu = menu;
+    }
+
+    public void setOwnerID(Long ownerID) {
+        this.ownerID = ownerID;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setCost(Cost cost) {
+        this.cost = cost;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id){this.id = id;}
+    public String getName() {
+        return Name;
+    }
+
+    public String getSchedule() {
+        return Schedule;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public String getMenu() {
+        return Menu;
+    }
+
+    public Long getOwnerID() {
+        return ownerID;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Integer getCost() {
+        return cost.ordinal();
+    }
 }

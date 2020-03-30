@@ -16,7 +16,7 @@ public class TruckTest {
         truck = new Truck();
         truck.setSchedule("MWF 10-3");
         truck.setName("coolTruckName");
-        truck.setId(456);
+        truck.setId((long) 456);
     }
 
     @DisplayName("get functions tests")
@@ -34,7 +34,7 @@ public class TruckTest {
     void setTests(){
         truck.setName("new cool truck name");
         truck.setSchedule("M-F 4:30-8");
-        truck.setId(789);
+        truck.setId((long) 789);
 
         assertAll(
                 ()->assertEquals("M-F 4:30-8", truck.getSchedule()),

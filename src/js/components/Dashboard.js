@@ -118,8 +118,8 @@ function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [role, setRole] = React.useState(
-    localStorage.getItem("role") === undefined
-      ? "guest"
+    typeof localStorage.getItem("role") === undefined || localStorage.getItem("role") === "undefined" || localStorage.getItem("role") === "null"
+      ? "Guest"
       : localStorage.getItem("role")
   );
 
@@ -250,7 +250,7 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
       {/* <div className={classes.appBarSpacer} /> */}
       {/* <Container maxWidth="lg" className={classes.container}></Container> */}
       {/* </main> */}
-      <SimpleMap />
+      <SimpleMap/>
     </div>
   );
 }
