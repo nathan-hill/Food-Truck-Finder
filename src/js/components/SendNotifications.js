@@ -30,7 +30,7 @@ class SendNotificationForm extends React.Component {
         e.preventDefault();
 
         let data = {
-            truck: this.state.id,
+            truck: this.state.selectedOption,
             message: this.state.message,
         }
         data.headers = {
