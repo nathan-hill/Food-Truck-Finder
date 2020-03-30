@@ -2,7 +2,9 @@ package com.software2.foodtruckfinder.secure.controller;
 
 
 import com.software2.foodtruckfinder.secure.model.Message;
+import com.software2.foodtruckfinder.secure.model.Subscription;
 import com.software2.foodtruckfinder.secure.repository.MessageRepository;
+import com.software2.foodtruckfinder.secure.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
     @Autowired
     private MessageRepository mRepository;
+    @Autowired
+    private SubscriptionRepository subRepository;
 
     public MessageController(MessageRepository mr) {
         this.mRepository = mr;
@@ -37,6 +41,20 @@ public class MessageController {
         return new ResponseEntity<Message>(generatedM, HttpStatus.OK);
     }
 
+    @PostMapping(path = "/sendToAllByTruckSubscription")
+    public @ResponseBody
+    void addNewMessageBySubscription(@RequestBody Message m, Long truckid) throws CloneNotSupportedException {
+
+        for(Subscription s : subRepository.findReviewsByTruckID(truckid)){
+            Message n = new Message();
+            n = m.clone();
+            n.setReceiver(s.getUid());
+            Message generatedM = mRepository.save(n);
+        }
+    }
+
+
+
     @GetMapping(path = "/")
     public @ResponseBody
     Iterable<Message> getAllMessages() {
@@ -57,6 +75,7 @@ public class MessageController {
     Iterable<Message> findMesssagesByUserId(Long user_id) {
         return mRepository.findByUser(user_id);
     }
+
 
 
 

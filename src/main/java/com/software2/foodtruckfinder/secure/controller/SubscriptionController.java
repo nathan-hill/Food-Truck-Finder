@@ -58,6 +58,14 @@ public class SubscriptionController {
         return true;
     }
 
+    @GetMapping(path = "/getAllByTruck")
+    public @ResponseBody
+    Iterable<Subscription> getAllSubscription(Long truckid) {
+        // This returns a JSON or XML with the users
+        return subRepository.findReviewsByTruckID(truckid);
+    }
+
+
     @GetMapping(path = "/getSubscriptionByID")
     public @ResponseBody
     Subscription findSubscriptionById(Long id) {

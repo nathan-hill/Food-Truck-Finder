@@ -10,4 +10,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 
 
     Subscription findSubscriptionById(Long id);
+
+    Iterable<Subscription> findReviewsByTruckID(Long tid);
 }
