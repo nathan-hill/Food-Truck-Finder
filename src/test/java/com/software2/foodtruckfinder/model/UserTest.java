@@ -10,7 +10,7 @@ public class UserTest {
 
     @BeforeEach
     void init(){
-        user = new User("Name", "Username", "Email", "Password");
+        user = new User("Name", "Username", "Email", "Password", "Type");
         user.setId(500l);
     }
 
@@ -95,6 +95,7 @@ public class UserTest {
                 ", username='Username" + '\'' +
                 ", email='Email" + '\'' +
                 ", password='Password" + '\'' +
-                '}', user.toString());
+                ", type='Type" + "\'}"
+                , user.toString());
     }
 }

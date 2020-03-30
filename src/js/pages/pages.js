@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
+import axios from "axios";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
+import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
 import NotificationTable from "./../components/Notifications";
@@ -26,6 +28,9 @@ export class TestRouting extends React.Component {
           </li>
           <li>
             <Link to="/FoodTruckTable">FoodTruckTable</Link>
+          </li>
+          <li>
+            <Link to="/Profile">User Profile</Link>
           </li>
           <li>
             <Link to="/create_account">Create Account</Link>
@@ -176,6 +181,15 @@ export class Table extends React.Component {
   }
 }
 
+export class TruckDetails extends React.Component {
+  render() {
+      return(
+        <div>
+          <FoodTruckDetails/>
+        </div>
+      );
+  }
+}
 export class UserProfile extends React.Component {
   constructor(props) {
     super(props);

@@ -15,9 +15,20 @@ import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { GuestListItems, CustomerListItems, OwnerListItems, secondaryListItems } from "./listItems";
+import {
+  GuestListItems,
+  CustomerListItems,
+  OwnerListItems,
+  secondaryListItems
+} from "./listItems";
 import SimpleMap from "./SimpleMap";
  
+import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+import { logout } from "../actions/login";
+import { withRouter } from "react-router";
+import PropTypes from "prop-types";
+import axios from "axios";
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -103,9 +114,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard() {
+function Dashboard(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [role, setRole] = React.useState(
+    localStorage.getItem("role") === undefined
+      ? "guest"
+      : localStorage.getItem("role")
+  );
+
+const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen(prevState => !prevState);
+  console.log("the user role is " + role);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -113,25 +133,46 @@ export default function Dashboard() {
     setOpen(false);
   };
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  
+
   //const userState = this.state.user;
 
-  const userState = 'cust';
+  //const userState = 'customer';
   let mainList;
 
-  if(userState==='owner'){
+  if (role === "owner") {
     mainList = OwnerListItems;
-  }
-  else if(userState==='customer'){
+  } else if (role === "customer") {
     mainList = CustomerListItems;
-  }
-  else {
+  } else {
     mainList = GuestListItems;
   }
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggle = () => setDropdownOpen(prevState => !prevState);
+  
+  let logOutButton;
+  let logInButton;
+  if (props.auth.isAuthenticated) {
+    logOutButton = (
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        className={classes.submit}
+      >
+        LOG OUT
+      </Button>
+    );
+  } else {
+    logInButton = (
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        className={classes.submit}
+      >
+        LOG IN
+      </Button>
+    );
+  }
 
   return (
     <div className={classes.root}>
@@ -157,13 +198,26 @@ export default function Dashboard() {
             noWrap
             className={classes.title}
           >
-            Wheels With Meals
+            Wheels With Meals: {role}
           </Typography>
-          <IconButton 
-            color="inherit"
-            href = "#/Notifications"
-            >
+       
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={() => props.history.push("/loginpage")}
+          >
+            {logInButton}
+          </form>
 
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={() => props.logout()}
+          >
+            {logOutButton}
+          </form>
+          
+          <IconButton color="inherit" href = "#/Notifications">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
@@ -187,7 +241,7 @@ export default function Dashboard() {
         <Divider />
         <List component="nav">
           {/* <Link to="/TestRouting" passhref> */}
-            {secondaryListItems}
+          {secondaryListItems}
           {/* </Link> */}
         </List>
       </Drawer>
@@ -200,3 +254,14 @@ export default function Dashboard() {
     </div>
   );
 }
+
+Dashboard.propTypes = {
+  history: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logout })(withRouter(Dashboard));

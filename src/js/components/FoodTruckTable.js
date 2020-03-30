@@ -40,8 +40,7 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
-//const backend_url = "localhost:8080/v/"
-const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+var constants = require("./../helpers/constants");
 
 class MaterialTableDemo extends React.Component {
     constructor(props) {
@@ -52,15 +51,15 @@ class MaterialTableDemo extends React.Component {
                 {title: 'Food Truck Name', field: 'name'},
                 {title: 'Schedule', field: 'schedule'},
                 {title: 'Description', field: 'description'},
-                {title: 'Menu', field: 'Menu'},
-                {title: 'Route', field: 'Route'},
+                {title: 'Menu', field: 'menu'},
+                {title: 'Route', field: 'route'},
             ], data:[],
         }
     }
 
     componentDidMount = () => {
         console.log("ID: ", this.props.auth.user.sub);
-        axios.get(backend_url + "trucks/findTrucksByownerID", {
+        axios.get(constants.backend_url + "trucks/findTrucksByownerID", {
             params: {
                 l: this.props.auth.user.sub
             }
@@ -110,6 +109,13 @@ class MaterialTableDemo extends React.Component {
                                     });
                                 }
                             }, 600);
+
+                            console.log("NEW DATA: ");
+                            console.log(newData);
+
+                            axios.put(constants.backend_url + "trucks/updateByTruck",newData).then(res => {
+                                console.log(res);
+                            })
                         }),
                     onRowDelete: oldData =>
                         new Promise(resolve => {

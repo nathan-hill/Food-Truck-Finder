@@ -21,6 +21,7 @@ public class UserControllerTest {
 
     @BeforeEach
     void init(){
+
         uc = new UserController(new UserRepository() {
             @Override
             public Optional<User> findByEmail(String email) {
@@ -235,6 +236,11 @@ public class UserControllerTest {
             @Override
             public Optional<User> findById(Long aLong) {
                 return Optional.empty();
+            }
+
+            @Override
+            public User findUserByid(Long id) {
+                return null;
             }
 
             @Override
