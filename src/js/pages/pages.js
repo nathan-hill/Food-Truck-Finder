@@ -36,6 +36,10 @@ export class TestRouting extends React.Component {
           <li>
             <Link to="/create_account">Create Account</Link>
           </li>
+          <li>
+            <Link to="/SendNotifications">send Notification</Link>
+          </li>
+          
         </ul>
       </div>
     );

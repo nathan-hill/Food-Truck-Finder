@@ -79,7 +79,7 @@ public class MessageController {
 
 
 
-    @PutMapping(value = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Message> updateMessage(@RequestBody Message m) throws CloneNotSupportedException {
 
