@@ -9,6 +9,8 @@ import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
 import NotificationTable from "./../components/Notifications";
+import SendNotificationForm from "./../components/SendNotifications";
+import Button from "@material-ui/core/Button";
 
 export class TestRouting extends React.Component {
   render() {
@@ -166,6 +168,9 @@ export class Table extends React.Component {
       <div>
         <Link to="/">Back</Link>
         <FoodTruckTable />
+        <Button href="#/SendNotifications">
+          Send Notification
+        </Button>
       </div>
     );
   }
@@ -205,6 +210,25 @@ export class Notifications extends React.Component {
       <div>
         <Link to="/">Back</Link>
         <NotificationTable />
+      </div>
+    );
+  }
+}
+
+export class SendNotification extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Dashboard</Link>
+        <SendNotificationForm />
       </div>
     );
   }

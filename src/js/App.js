@@ -17,6 +17,7 @@ export default class App extends Component {
             <Route exact path="/UserProfile" component={Pages.UserProfile} />
             <Route exact path="/OwnerProfile" component={Pages.OwnerProfile} />
             <Route exact path="/Notifications" component={Pages.Notifications} />
+            <Route exact path="/SendNotifications" component={Pages.SendNotification} />
           </div>
         </HashRouter>
       </div>

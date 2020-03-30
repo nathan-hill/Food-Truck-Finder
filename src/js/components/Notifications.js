@@ -59,11 +59,11 @@ class NotificationTable extends React.Component {
                 {title: 'Mark As', 
                 id: 'mark-as-button',
                 render: ({row}) => (<button onClick={(e) => this.handleClick(row, e)}>Mark as Read</button>)},
-                {title: 'Current Status', field: 'status'},
-                {title: 'Date', field: 'date'},
-                {title: 'Food Truck', field: 'name'},
-                {title: 'Message', field: 'message'},
-            ], data:[['read', '3/29/2020', 'my truck', 'notify'],[]],
+                {title: 'Current Status', field: 'isRead'},
+                {title: 'Date', field: 'sentTime'},
+                {title: 'Food Truck', field: 'sender'},
+                {title: 'Message', field: 'text'},
+            ], data:[],
         }
     }
 

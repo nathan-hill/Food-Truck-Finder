@@ -161,6 +161,7 @@ export default function Dashboard() {
           </Typography>
           <IconButton 
             color="inherit"
+            href = "#/Notifications"
             >
 
             <Badge badgeContent={4} color="secondary">

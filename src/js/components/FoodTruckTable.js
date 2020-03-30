@@ -126,7 +126,8 @@ class MaterialTableDemo extends React.Component {
                             }, 600);
                         }),
                 }}
-            />
+            >
+            </MaterialTable>
         );
     }
 }
