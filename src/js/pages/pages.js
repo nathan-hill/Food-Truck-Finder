@@ -10,6 +10,7 @@ import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
+import FoodTruckPreferences from "../components/FoodTruckPreferences";
 
 export class TestRouting extends React.Component {
   render() {
@@ -225,8 +226,28 @@ export class OwnerProfile extends React.Component {
       </div>
     );
   }
+}
+
+export class CustPreferences extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Back</Link>
+        <FoodTruckPreferences/>
+      </div>
+    );
+  }
 
 }
+
 
 
 export class Home extends React.Component {

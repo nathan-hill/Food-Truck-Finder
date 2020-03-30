@@ -15,6 +15,10 @@
     "jwt-decode": "^2.2.0",
     "lodash": "latest",
     "material-table": "^1.57.2",
+    "mobx": "^5.15.4",
+    "mobx-persist": "^0.4.1",
+    "mobx-react": "^6.1.8",
+    "mobx-react-form": "^2.0.8",
     "prop-types": "latest",
     "qs": "^6.9.1",
     "react": "^16.12.0",
@@ -27,7 +31,9 @@
     "react-scripts": "3.3.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "use-position": "0.0.6"
+    "use-position": "0.0.6",
+    "valid-url": "^1.0.9",
+    "validatorjs": "^3.18.1"
   },
   "scripts": {
     "start": "react-scripts start ",

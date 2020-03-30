@@ -19,9 +19,6 @@ export class SimpleMap extends Component {
           ]}
           defaultZoom={15}
         ></GoogleMapReact>
-        {/* <div style={{ position: "absolute", top: "0%", left: "0%" }}>
-          { <Dashboard /> }
-        </div> */}
       </div>
     ) : (
       <div>Getting the location data&hellip; </div>

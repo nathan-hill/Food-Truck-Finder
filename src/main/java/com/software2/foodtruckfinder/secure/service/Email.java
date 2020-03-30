@@ -1,6 +1,6 @@
 package com.software2.foodtruckfinder.secure.service;
+import java.util.*;
 
-import java.util.Properties;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;

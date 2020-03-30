@@ -1,7 +1,8 @@
 package com.software2.foodtruckfinder.secure.controller;
 
-import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.model.User;
+import com.software2.foodtruckfinder.secure.model.UserUserPreferenceCombo;
+import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import com.software2.foodtruckfinder.secure.model.UserPreferences;
 
+import java.time.Instant;
 import java.util.Optional;
+
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -18,8 +22,10 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UPreferenceRepository userPreferencesRepository;
 
-    public UserController(UserRepository ur){
+    public UserController(UserRepository ur) {
         this.userRepository = ur;
     }
 
@@ -30,8 +36,8 @@ public class UserController {
         n.setEmail(newUser.getEmail());
         n.setPassword(newUser.getPassword());
 
-        for (User user: userRepository.findAll()) {
-            if(user.getEmail().equals(newUser.getEmail())){
+        for (User user : userRepository.findAll()) {
+            if (user.getEmail().equals(newUser.getEmail())) {
                 return ResponseEntity.status(400).build();
             }
         }
@@ -54,28 +60,56 @@ public class UserController {
         return true;
     }
 
-    @GetMapping(path = "getUserByID")
+    @GetMapping(path = "/getUserByID")
     public @ResponseBody
-    User findUserByID(Long id){
+    User findUserByID(Long id) {
+        System.out.println("/getUserByID -> " + id);
         return userRepository.findUserByid(id);
     }
 
-    @PutMapping(value = "updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<User> updateUser(@RequestBody User udets) {
+    public Object updateUser(@RequestBody UserUserPreferenceCombo userUserPreferenceCombo) {
+        try {
+            //unpack the data
+            User user = userUserPreferenceCombo.user;
+            UserPreferences userPreferences = userUserPreferenceCombo.preferences;
 
-        if(userRepository.existsById(udets.getId())){
-            User newUser = new User();
-            newUser.setId(udets.getId());
-            newUser.setEmail(udets.getEmail());
-            newUser.setName(udets.getName());
-            newUser.setPassword(udets.getPassword());
-            newUser.setUsername(udets.getUsername());
+            System.out.println("user -> " + userUserPreferenceCombo.user.toString());
+            System.out.println("preferences -> " + userUserPreferenceCombo.preferences.toString());
 
-            User generatedUser = userRepository.save(newUser);
-            return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
-        }else{
-            return null;
+            //retrieve reference of the old user from database
+            User storedUser = userRepository.getOne(user.getId());
+            User generatedUser = null;
+
+            //update the new user
+            storedUser.setEmail(user.getEmail());
+            storedUser.setName(user.getName());
+            storedUser.setUsername(user.getUsername());
+            userRepository.save(storedUser);
+
+            //get the stored preferences
+            if (!userPreferencesRepository.findById(user.getId()).isPresent()) {
+                userPreferencesRepository.save(new UserPreferences(user.getId()));
+            }
+            UserPreferences storedUserPreferences = userPreferencesRepository.getOne(user.getId());
+
+            //build the new preferences
+            storedUserPreferences.setLikes(userPreferences.getLikes());
+            storedUserPreferences.setPrice(userPreferences.getPrice());
+            storedUserPreferences.setProximity(userPreferences.getProximity());
+
+            System.out.println(storedUserPreferences.toString());
+
+            //save the new preferences
+            UserPreferences generatedUPreferences = userPreferencesRepository.save(storedUserPreferences);
+
+            return new ResponseEntity<UserUserPreferenceCombo>(new UserUserPreferenceCombo(storedUser, storedUserPreferences), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.toString());
         }
     }
 }

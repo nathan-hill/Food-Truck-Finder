@@ -72,6 +72,12 @@ export const CustomerListItems = (
       </ListItemIcon>
       <ListItemText primary="Ratings/Reviews" />
     </ListItem>
+    <ListItem button to="/customerPreferences" component={Link}>>
+      <ListItemIcon> 
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Preferences" />
+    </ListItem>
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
@@ -148,6 +154,12 @@ export const secondaryListItems = (
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="/Table" />
+    </ListItem>
+    <ListItem button to="/customerPreferences" component={Link}>>
+      <ListItemIcon> 
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Customers_Preferences" />
     </ListItem>
   </div>
 );

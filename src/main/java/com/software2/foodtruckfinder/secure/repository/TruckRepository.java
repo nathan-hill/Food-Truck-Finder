@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public interface TruckRepository extends CrudRepository<Truck, Integer> {
 
-    boolean existsById(Integer id);
+    boolean existsById(Long id);
 
     Optional<Truck> findById(Integer in);
 

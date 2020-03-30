@@ -1,10 +1,12 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.User;
+import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.payload.ApiResponse;
 import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
 import com.software2.foodtruckfinder.secure.payload.LoginRequest;
 import com.software2.foodtruckfinder.secure.payload.SignUpRequest;
+import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
 import com.software2.foodtruckfinder.secure.service.Email;
@@ -41,6 +43,9 @@ public class AuthController {
 
     @Autowired
     JwtTokenProvider tokenProvider;
+
+    @Autowired
+    UPreferenceRepository userPreferencesRepository;
 
     @PostMapping("/notify")
     public ResponseEntity<?> sendEmail(@RequestBody Email e){
@@ -90,6 +95,7 @@ public class AuthController {
         System.out.println(user.toString());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setId(counter++);
 
         User result = userRepository.save(user);
 
@@ -97,6 +103,7 @@ public class AuthController {
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
 
+        userPreferencesRepository.save(new UserPreferences(result.getId()));
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }

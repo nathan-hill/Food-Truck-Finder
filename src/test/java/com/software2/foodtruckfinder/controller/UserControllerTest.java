@@ -20,7 +20,7 @@ public class UserControllerTest {
     UserController uc;
 
     @BeforeEach
-    void init(){
+    void init() {
 
         uc = new UserController(new UserRepository() {
             @Override
@@ -189,9 +189,7 @@ public class UserControllerTest {
             }
 
             @Override
-            public void flush() {
-
-            }
+            public void flush() {}
 
             @Override
             public <S extends User> S saveAndFlush(S entity) {
@@ -199,14 +197,10 @@ public class UserControllerTest {
             }
 
             @Override
-            public void deleteInBatch(Iterable<User> entities) {
-
-            }
+            public void deleteInBatch(Iterable<User> entities) {}
 
             @Override
-            public void deleteAllInBatch() {
-
-            }
+            public void deleteAllInBatch() {}
 
             @Override
             public User getOne(Long aLong) {
@@ -297,27 +291,26 @@ public class UserControllerTest {
 
     @DisplayName("null addNewUser Test")
     @Test
-    void nullAddNewTest(){
-        assertThrows(NullPointerException.class, ()->uc.addNewUser(null));
+    void nullAddNewTest() {
+        assertThrows(NullPointerException.class, () -> uc.addNewUser(null));
     }
 
     /**
-    @DisplayName("valid addNewUser Test")
-    @Test
-    void validAddNewTest(){
-        assertNotNull(uc.addNewUser(new User("name", "username", "email", "password")));
-    }
+     * @DisplayName("valid addNewUser Test")
+     * @Test void validAddNewTest(){
+     * assertNotNull(uc.addNewUser(new User("name", "username", "email", "password")));
+     * }
      **/
 
     @DisplayName("getAllUsers Test")
     @Test
-    void getAllTest(){
+    void getAllTest() {
         assertNotNull(uc.getAllUsers());
     }
 
     @DisplayName("deleteAllUsers Test")
     @Test
-    void deleteAllTest(){
+    void deleteAllTest() {
         assertTrue(uc.deleteAllUsers());
     }
 }
