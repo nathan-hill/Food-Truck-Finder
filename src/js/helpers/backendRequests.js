@@ -104,3 +104,19 @@ export function getAllTrucks() {
       console.log(error);
     });
 }
+
+export async function sendNotification(data){
+  return await axios({
+    method: "POST",
+    url: constants.backend_url + "sendNotification/",
+    params:{data:data},
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}

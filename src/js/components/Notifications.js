@@ -40,8 +40,7 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
-const backend_url = "localhost:8080/v/"
-//const backend_url = "https://wheels-with-meals-backend.herokuapp.com/v/"
+var constants = require("./../helpers/constants");
 
 class NotificationTable extends React.Component {
     

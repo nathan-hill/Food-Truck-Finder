@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import * as Request from './../helpers/backendRequests'
 
 class SendNotificationForm extends React.Component {
     constructor(props) {
@@ -34,9 +35,7 @@ class SendNotificationForm extends React.Component {
             Accept: "application/json"
         };
 
-        axios.put("http://localhost:8080/v/sendNotification",data).then(res => {
-            console.log(res);
-        })
+        Request.sendNotification(data);
     }
 
 
