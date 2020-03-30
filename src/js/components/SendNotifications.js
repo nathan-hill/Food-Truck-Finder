@@ -12,8 +12,10 @@ class SendNotificationForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            truck: "",
+            name: "",
+            id: "",
             message: "",
+            selectedOption: null,
         };
 
         this.onChange = this.onChange.bind(this);
@@ -28,7 +30,7 @@ class SendNotificationForm extends React.Component {
         e.preventDefault();
 
         let data = {
-            truck: this.state.truck,
+            truck: this.state.id,
             message: this.state.message,
         }
         data.headers = {
@@ -50,8 +52,6 @@ class SendNotificationForm extends React.Component {
         this.setState({
           name: data.name,
           id: data.id,
-          message: "",
-          selectedOption: null,
         });
     }
 
@@ -77,14 +77,15 @@ class SendNotificationForm extends React.Component {
             </Button>
         }
 
-        //const options = [
-            //{ value : this.data.id, label: this.data.name }
-        //]
-
         const options = [
-            { value : 'Truck1', label: 'truck1'},
-            { value : 'Truck2', label: 'truck2'}
+            { value : this.state.id, label: this.state.name }
         ]
+
+        //for testing
+        //const options = [
+            //{ value : 'Truck1', label: 'truck1'},
+            //{ value : 'Truck2', label: 'truck2'}
+        //]
 
 
         return (
