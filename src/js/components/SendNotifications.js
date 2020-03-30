@@ -1,10 +1,12 @@
 import React from "react";
+import Select from 'react-select';
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import * as Request from './../helpers/backendRequests'
+import * as Request from './../helpers/backendRequests';
+import {connect} from "react-redux";
 
 class SendNotificationForm extends React.Component {
     constructor(props) {
@@ -38,9 +40,28 @@ class SendNotificationForm extends React.Component {
         Request.sendNotification(data);
     }
 
+    async componentDidMount() {
+        let data = await Request.getAllTrucks(this.state.id);
+    
+    
+        console.log("Gey user Data");
+        console.log(data);
+    
+        this.setState({
+          name: data.name,
+          id: data.id,
+          message: "",
+          selectedOption: null,
+        });
+    }
+
+    handleChange = (selectedOption) => {
+        this.setState({ selectedOption });
+    }
+
 
     render() {
-        const { truck, message } = this.state;
+        const { selectedOption, message } = this.state;
         const classes = makeStyles();
 
         let submitButton;
@@ -56,23 +77,21 @@ class SendNotificationForm extends React.Component {
             </Button>
         }
 
+        //const options = [
+            //{ value : this.data.id, label: this.data.name }
+        //]
+
+        const options = [
+            { value : 'Truck1', label: 'truck1'},
+            { value : 'Truck2', label: 'truck2'}
+        ]
+
 
         return (
             <Container component="main" maxWidth="xs">
                 <div className={classes.paper}>
                     <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="truck"
-                            label="Food Truck"
-                            name="truck"
-                            onChange={this.onChange}
-                            value={truck}
-                            autoFocus
-                        />
+                        <Select options = { options } />
 
                         <TextField
                             variant="outlined"

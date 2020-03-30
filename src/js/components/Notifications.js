@@ -68,18 +68,17 @@ class NotificationTable extends React.Component {
 
     //fill with list from database
 
-    //componentDidMount = () => {
-        //console.log("ID: ", this.props.auth.user.sub);
-        //fill with correct url when gotten from Connor
-        //axios.get(backend_url + "notifications/findNotificationsByCustomerID", {
-            //params: {
-                //l: this.props.auth.user.sub
-            //}
-        //}).then(res => {
-            //this.setState({data: res.data})
-            //console.log(this.state.data)
-        //});
-    //}
+    componentDidMount = () => {
+        console.log("ID: ", this.props.auth.user.sub);
+        axios.get(constants.backend_url + "/v/message/getMessagesbyUserID", {
+            params: {
+                l: this.props.auth.user.sub
+            }
+        }).then(res => {
+            this.setState({data: res.data})
+            console.log(this.state.data)
+        });
+    }
 
     render() {
         return (
