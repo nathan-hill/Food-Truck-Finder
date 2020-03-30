@@ -45,7 +45,7 @@ public class MessageController {
     public @ResponseBody
     void addNewMessageBySubscription(@RequestBody Message m, Long truckid) throws CloneNotSupportedException {
 
-        for(Subscription s : subRepository.findReviewsByTruckID(truckid)){
+        for(Subscription s : subRepository.findReviewsByTruckId(truckid)){
             Message n = new Message();
             n = m.clone();
             n.setReceiver(s.getUid());

@@ -1,6 +1,5 @@
 package com.software2.foodtruckfinder.secure.controller;
 
-import com.software2.foodtruckfinder.secure.exception.AppException;
 import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.payload.ApiResponse;
@@ -10,6 +9,7 @@ import com.software2.foodtruckfinder.secure.payload.SignUpRequest;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
+import com.software2.foodtruckfinder.secure.service.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +47,15 @@ public class AuthController {
     @Autowired
     UPreferenceRepository userPreferencesRepository;
 
-    //Long counter = userRepository.count();
+    @PostMapping("/notify")
+    public ResponseEntity<?> sendEmail(@RequestBody Email e){
+        System.out.println(e.toString());
+        if(e.send()){
+            return ResponseEntity.ok("Send Message");
+        }else{
+            return ResponseEntity.badRequest().body("Failed to send message");
+        }
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

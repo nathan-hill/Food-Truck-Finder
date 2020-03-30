@@ -15,23 +15,23 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.4.RELEASE'
-    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.4.RELEASE'
+	compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	compile "javax.mail:mail:1.4"
+
+	compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:6.2.4'
 
 
-    compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:6.2.4'
-
-    compile "javax.mail:mail:1.4"
-    compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
-    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.4.0.RELEASE'
-    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+	compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
+	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.4.0.RELEASE'
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	runtimeOnly 'mysql:mysql-connector-java'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 }
 
 test {

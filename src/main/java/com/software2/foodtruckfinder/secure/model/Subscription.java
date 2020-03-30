@@ -13,7 +13,7 @@ public class Subscription {
 
     private Long uid;
 
-    private Long truckid;
+    private Long truckId;
 
     public Long getId() {
         return id;
@@ -24,11 +24,11 @@ public class Subscription {
     }
 
     public Long getTruckid() {
-        return truckid;
+        return truckId;
     }
 
     public void setTruckid(Long truckid) {
-        this.truckid = truckid;
+        this.truckId = truckid;
     }
 
     public Long getUid() {

@@ -62,7 +62,7 @@ public class SubscriptionController {
     public @ResponseBody
     Iterable<Subscription> getAllSubscription(Long truckid) {
         // This returns a JSON or XML with the users
-        return subRepository.findReviewsByTruckID(truckid);
+        return subRepository.findReviewsByTruckId(truckid);
     }
 
 
