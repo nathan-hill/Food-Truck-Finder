@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 public class NotificationRequest {
     public Long[] to;
+
+    public NotificationRequest() {
+    }
+
     public String message;
 
     public NotificationRequest(Long[] to, Long from, String message) {
