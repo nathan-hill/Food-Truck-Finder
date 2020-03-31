@@ -23,20 +23,21 @@ export function getAllUsers() {
 }
 
 export function getUnreadNotifications(i) {
-  return 1     //for testing
+  //return 1    //for testing
   return(axios({
     method: "GET",
-    url: constants.backend_url + "message/getNumberUnreadMessagesByID",
+    url: constants.backend_url + "message/getUnreadMessagesByUserS",
     params: { id : i },
     headers: request_headers
   })
-    .then(function(response) {
+    .then(response => {
       console.log(response.data);
+      this.responseData = response.data;
       return response.data;
     })
     .catch(function(error){
       console.log(error);
-    }));
+    })).length;
   
 }
 

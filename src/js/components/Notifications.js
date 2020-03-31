@@ -53,7 +53,8 @@ class NotificationTable extends React.Component {
         this.state = {
             columns: [
                 {title: 'Date', field: 'sentTime'},
-                {title: 'Food Truck', field: 'sender'},
+                {title: 'Food Truck', field: 'truckName'},
+                {title: 'Food Truck ID', field: 'sender'},
                 {title: 'Message', field: 'text'},
             ], data:[],
         }
@@ -63,11 +64,7 @@ class NotificationTable extends React.Component {
 
     componentDidMount = () => {
         console.log("ID: ", this.props.auth.user.sub);
-<<<<<<< HEAD
-        axios.get("localhost:8080/#/v/message/getMessagesbyUserID", {
-=======
         axios.get(constants.backend_url + "message/getMessagesbyUserID", {
->>>>>>> 7e1d32719760e63c52df6fd15aa92b138cdaddfd
             params: {
                 id: this.props.auth.user.sub
             }

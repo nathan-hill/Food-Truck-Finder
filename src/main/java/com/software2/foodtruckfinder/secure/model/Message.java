@@ -1,7 +1,5 @@
 package com.software2.foodtruckfinder.secure.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,18 +24,24 @@ public class Message {
     private Long receiver;
 
     @NotBlank
-    @Size(max = 1000)
+    @Size(max = 256)
     private String text;
 
     @NotBlank
     private Timestamp sentTime;
 
     @NotBlank
-    private String subject;
-
-    @NotBlank
-    @Type(type="boolean")
     private Boolean isRead;
+
+    private String truckName;
+
+    public String getTruckName() {
+        return truckName;
+    }
+
+    public void setTruckName(String truckName) {
+        this.truckName = truckName;
+    }
 
     public Long getId() {
         return id;
@@ -90,15 +94,6 @@ public class Message {
     public Message() {
     }
 
-    public Message(@NotBlank Long sender, @NotBlank Long receiver, @NotBlank @Size(max = 1000) String text, @NotBlank Timestamp sentTime, @NotBlank String subject, @NotBlank Boolean isRead) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.text = text;
-        this.sentTime = sentTime;
-        this.subject = subject;
-        this.isRead = isRead;
-    }
-
     @Override
     public String toString() {
         return "Message{" +
@@ -108,6 +103,7 @@ public class Message {
                 ", text='" + text + '\'' +
                 ", sentTime=" + sentTime +
                 ", isRead=" + isRead +
+                ", truckName='" + truckName + '\'' +
                 '}';
     }
 
@@ -116,31 +112,32 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return id.equals(message.id) &&
-                sender.equals(message.sender) &&
-                receiver.equals(message.receiver) &&
-                text.equals(message.text) &&
-                sentTime.equals(message.sentTime) &&
-                isRead.equals(message.isRead);
+        return Objects.equals(id, message.id) &&
+                Objects.equals(sender, message.sender) &&
+                Objects.equals(receiver, message.receiver) &&
+                Objects.equals(text, message.text) &&
+                Objects.equals(sentTime, message.sentTime) &&
+                Objects.equals(isRead, message.isRead) &&
+                Objects.equals(truckName, message.truckName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sender, receiver, text, sentTime, isRead);
+        return Objects.hash(id, sender, receiver, text, sentTime, isRead, truckName);
     }
 
-//    public Boolean isInConvo(long uid1, long uid2){
-//        if(uid1 == sender && uid2 == receiver){
-//            return true;
-//        }
-//        else if(uid1 == receiver && uid2 == sender){
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
-//
-//    }
+    public Boolean isInConvo(long uid1, long uid2){
+        if(uid1 == sender && uid2 == receiver){
+            return true;
+        }
+        else if(uid1 == receiver && uid2 == sender){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
 
 
     @Override
@@ -152,7 +149,17 @@ public class Message {
         newClone.setSender(this.getSender());
         newClone.setSentTime(this.getSentTime());
         newClone.setText(this.getText());
+        newClone.setTruckName(this.getTruckName());
 
         return newClone;
+    }
+
+    public Message(@NotBlank String truckName, @NotBlank Long sender, @NotBlank Long receiver, @NotBlank @Size(max = 1000) String text, @NotBlank Timestamp sentTime, @NotBlank String subject, @NotBlank Boolean isRead) {
+        this.truckName = truckName;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.text = text;
+        this.sentTime = sentTime;
+        this.isRead = isRead;
     }
 }

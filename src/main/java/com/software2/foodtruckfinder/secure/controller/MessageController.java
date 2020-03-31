@@ -74,7 +74,7 @@ public class MessageController {
                 e.send();
 
                 //save a message to them.
-                _mRepository.save(new Message(from.getId(), to.getId(), n.getMessage(), new Timestamp(System.currentTimeMillis()), "Notification", false));
+                _mRepository.save(new Message(from.getName(), from.getId(), to.getId(), n.getMessage(), new Timestamp(System.currentTimeMillis()), "Notification", false));
             }
 
         }
@@ -103,7 +103,7 @@ public class MessageController {
                 count = count+1;
             }
         }
-        count = 4;
+        System.out.println(count);
         return count;
     }
 
