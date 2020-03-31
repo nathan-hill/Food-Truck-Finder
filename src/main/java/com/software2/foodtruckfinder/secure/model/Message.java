@@ -33,6 +33,16 @@ public class Message {
     @NotBlank
     private Boolean isRead;
 
+    private String truckName;
+
+    public String getTruckName() {
+        return truckName;
+    }
+
+    public void setTruckName(String truckName) {
+        this.truckName = truckName;
+    }
+
     public Long getId() {
         return id;
     }
@@ -93,6 +103,7 @@ public class Message {
                 ", text='" + text + '\'' +
                 ", sentTime=" + sentTime +
                 ", isRead=" + isRead +
+                ", truckName='" + truckName + '\'' +
                 '}';
     }
 
@@ -101,17 +112,18 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return id.equals(message.id) &&
-                sender.equals(message.sender) &&
-                receiver.equals(message.receiver) &&
-                text.equals(message.text) &&
-                sentTime.equals(message.sentTime) &&
-                isRead.equals(message.isRead);
+        return Objects.equals(id, message.id) &&
+                Objects.equals(sender, message.sender) &&
+                Objects.equals(receiver, message.receiver) &&
+                Objects.equals(text, message.text) &&
+                Objects.equals(sentTime, message.sentTime) &&
+                Objects.equals(isRead, message.isRead) &&
+                Objects.equals(truckName, message.truckName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sender, receiver, text, sentTime, isRead);
+        return Objects.hash(id, sender, receiver, text, sentTime, isRead, truckName);
     }
 
     public Boolean isInConvo(long uid1, long uid2){
@@ -137,6 +149,7 @@ public class Message {
         newClone.setSender(this.getSender());
         newClone.setSentTime(this.getSentTime());
         newClone.setText(this.getText());
+        newClone.setTruckName(this.getTruckName());
 
         return newClone;
     }

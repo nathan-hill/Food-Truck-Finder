@@ -93,6 +93,7 @@ export async function getAllTrucks() {
     });
 }
 
+<<<<<<< HEAD
 export async function getUserPreferences(id) {
   return await axios({
     method: "GET",
@@ -137,6 +138,13 @@ export async function getPreferredTrucks(id, lon, lat) {
       lon: lon,
       lat: lat
     },
+=======
+export async function sendNotification(data){
+  return await axios({
+    method: "POST",
+    url: constants.backend_url + "sendNotification/",
+    params:{data:data},
+>>>>>>> 1e77dfbb109633ba20bf8ab54489518a192161f6
     headers: request_headers
   })
     .then(function(response) {
@@ -146,6 +154,7 @@ export async function getPreferredTrucks(id, lon, lat) {
     .catch(function(error) {
       console.log(error);
     });
+<<<<<<< HEAD
 }
 
 
@@ -165,3 +174,6 @@ export async function getUPById(id) {
       return error;
     });
 }
+=======
+}
+>>>>>>> 1e77dfbb109633ba20bf8ab54489518a192161f6
