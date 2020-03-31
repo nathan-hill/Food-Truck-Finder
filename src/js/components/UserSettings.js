@@ -12,6 +12,11 @@ import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
 import CheckBoxList from "./CheckBoxList";
 import * as Request from "./../helpers/backendRequests";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 var constants = require("./../helpers/constants");
 
 class customerSettings extends React.Component {
@@ -33,7 +38,7 @@ class customerSettings extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSliderChange = this.onSliderChange.bind(this);
-    this.onSelectChange = this.onSelectChange.bind(this);
+    this.onRadioChange = this.onRadioChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onEditSubmit = this.onEditSubmit.bind(this);
     this.onCheckBoxChange = this.onCheckBoxChange.bind(this);
@@ -44,7 +49,6 @@ class customerSettings extends React.Component {
     let userData = await Request.getUserByID(this.state.id);
     let preferences = await Request.getUPById(this.state.id);
 
-
     console.log("Gey user Data");
     console.log(userData);
 
@@ -53,7 +57,11 @@ class customerSettings extends React.Component {
       username: userData.username,
       email: userData.email
     });
-    this.setState({proximity: preferences.proximity, price: preferences.price, likes: preferences.likes})
+    this.setState({
+      proximity: preferences.proximity,
+      price: preferences.price,
+      likes: preferences.likes
+    });
   }
 
   onChange(e) {
@@ -62,9 +70,9 @@ class customerSettings extends React.Component {
     console.log(this.state);
   }
 
-  onSelectChange(e) {
-    console.log(e.target.value.length);
-    this.setState({ price: Number(e.target.value.length) });
+  onRadioChange(e) {
+    console.log(e.target.value);
+    this.setState({ price: Number(e.target.value) });
   }
 
   onSliderChange(e, val) {
@@ -85,7 +93,7 @@ class customerSettings extends React.Component {
     e.preventDefault();
 
     console.log("Submit form");
-    this.setState({isDisabled: true})
+    this.setState({ isDisabled: true });
     console.log(this.state);
 
     let udata = {
@@ -115,7 +123,7 @@ class customerSettings extends React.Component {
     axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
       console.log(res);
     });
-    this.setState({isDisabled: true})
+    this.setState({ isDisabled: true });
   }
 
   valuetext(value) {
@@ -256,8 +264,8 @@ class customerSettings extends React.Component {
 
         <Grid item xs={12} alignContent={"center"}>
           <Paper styles={{ textAlign: "center", color: "gray" }}>
-            <InputLabel htmlFor="price-native">Price</InputLabel>
-            <Select
+            {/* <InputLabel htmlFor="price-native">Price</InputLabel> */}
+            {/* <Select
               native
               // defaultValue={label}
               onChange={this.onSelectChange}
@@ -269,7 +277,47 @@ class customerSettings extends React.Component {
               <option aria-label="None" priceValue="" />
               {this.priceArray.map((val, i) => <option value={i+1} key={i}>{val}</option>)}
 
-            </Select>
+            </Select> */}
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Select Pice</FormLabel>
+              <RadioGroup
+                disabled={this.state.isDisabled}
+                onChange={this.onRadioChange}
+                row
+                aria-label="position"
+                name="position"
+                defaultValue="top"
+              >
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="0"
+                  control={<Radio color="primary" />}
+                  label="$"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="1"
+                  control={<Radio color="primary" />}
+                  label="$$"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="2"
+                  control={<Radio color="primary" />}
+                  label="$$$"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="3"
+                  control={<Radio color="primary" />}
+                  label="$$$$"
+                  labelPlacement="top"
+                />
+              </RadioGroup>
+            </FormControl>
           </Paper>
         </Grid>
         <Grid item xs>

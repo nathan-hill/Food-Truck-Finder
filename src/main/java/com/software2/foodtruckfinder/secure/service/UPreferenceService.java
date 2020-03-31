@@ -47,7 +47,7 @@ public class UPreferenceService {
 
         for(Map.Entry<Long, Double> e: distances.entrySet()){
 //            System.err.println(e.getKey() + " " + e.getValue());
-            ranking.put(e.getKey(), distances.get(e.getKey()) + prices.get(e.getKey()));
+            ranking.put(e.getKey(), distances.get(e.getKey()) + (3 * prices.get(e.getKey())));
         }
 
 //        for (Map.Entry<Long, Double> e : prices.entrySet()) {
