@@ -3,13 +3,6 @@ import * as Requests from "../helpers/backendRequests";
 import { connect } from "react-redux";
 import CreateTable from "./CreateTable";
 
-var data = {
-  columns: ["Proximity", "Price", "Food Type"],
-  rows: [
-    ["Proximity Placeholder", "Price placeholder", "Food Type Placeholder"]
-  ]
-};
-
 class FoodTruckPreferences extends React.Component {
   constructor(props) {
     super(props);

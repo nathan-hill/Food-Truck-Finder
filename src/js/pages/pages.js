@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
-import axios from "axios";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
@@ -37,9 +36,18 @@ export class TestRouting extends React.Component {
             <Link to="/create_account">Create Account</Link>
           </li>
           <li>
+<<<<<<< HEAD
             <Link to="/SendNotifications">send Notification</Link>
           </li>
           
+=======
+            <Link to="/UserProfile">UserProfile</Link>
+          </li>
+          <li>
+            <Link to="/FoodTruckPreference">Recommended Food Trucks</Link>
+          </li>
+
+>>>>>>> master
         </ul>
       </div>
     );
