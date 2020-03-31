@@ -12,13 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    @Modifying
+    @Modifying(flushAutomatically = true)
     @Transactional
     @Query("update Message set isRead = true where receiver = id and isRead = false")
     void markAllAsRead(Long id);
 
-    @Query("SELECT m FROM Message m  WHERE m.sender=(:user) or m.receiver= (:user)")
-    List<Message> findByUser(@Param("user") Long uid);
+    List<Message> findByReceiver( Long uid );
 
     Iterable<Message> findByIsReadFalseAndReceiver(Long id);
 

@@ -96,7 +96,7 @@ public class MessageController {
     @GetMapping(path="/getNumberUnreadByID")
     public @ResponseBody
     int getNumberUnread(@RequestBody Long id) {
-        Iterable<Message> messages = _mRepository.findByUser(id);
+        Iterable<Message> messages = _mRepository.findByReceiver(id);
         int count = 0;
         for(Message m : messages ){
             if(!m.getRead()){
@@ -124,8 +124,11 @@ public class MessageController {
     //should be all you need to get all messages that are associated with a user
     @GetMapping(path = "/getMessagesbyUserID")
     public @ResponseBody
-    Iterable<Message> findMesssagesByUserId(Long user_id) {
-        return _mRepository.findByUser(user_id);
+    Iterable<Message> findMesssagesByUserId(@RequestParam("id") Long id) {
+        System.out.println(id);
+        Iterable<Message> m =_mRepository.findByReceiver(id);
+        m.forEach(System.out::println);
+        return m;
     }
 
 
@@ -133,7 +136,7 @@ public class MessageController {
     @GetMapping(path = "/getUnreadMessagesbyUserID")
     public @ResponseBody
     int findUnreadByUserId(Long user_id){
-        Iterable<Message> messIt = _mRepository.findByUser(user_id);
+        Iterable<Message> messIt = _mRepository.findByReceiver(user_id);
         int count = 0;
         for (Message m : messIt ){
             if(!m.getRead()){
