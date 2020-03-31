@@ -4,8 +4,6 @@ import axios from "axios";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import Select from "@material-ui/core/Select";
 import Slider from "@material-ui/core/Slider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
