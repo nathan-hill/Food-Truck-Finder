@@ -23,7 +23,7 @@ export function getAllUsers() {
 }
 
 export function getUnreadNotifications(i) {
-  //return 1     //for testing
+  return 1     //for testing
   return(axios({
     method: "GET",
     url: constants.backend_url + "message/getNumberUnreadMessagesByID",
