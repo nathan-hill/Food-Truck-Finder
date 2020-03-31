@@ -31,6 +31,7 @@ public class FoodTruckControllerTest {
         db.add(a);
         db.add(b);
 
+        /**********************************************
         ftc = new FoodTruckController(new TruckRepository() {
             @Override
             public <S extends Truck> S save(S entity) {
@@ -57,36 +58,36 @@ public class FoodTruckControllerTest {
                 return null;
             }
 
-            @Override
-            public boolean existsById(Integer integer) {
-                return false;
-            }
+            //@Override
+            //public boolean existsById(Integer integer) {
+                //return false;
+            //}
 
-            @Override
-            public Iterable<Truck> findAll() {
-                return new Iterable<Truck>() {
-                    @Override
-                    public Iterator<Truck> iterator() {
-                        return null;
-                    }
-                };
+            //@Override
+            //public Iterable<Truck> findAll() {
+                //return new Iterable<Truck>() {
+                    //@Override
+                    //public Iterator<Truck> iterator() {
+                        //return null;
+                    //}
+                //};
 
-            }
+            //}
 
-            @Override
-            public Iterable<Truck> findAllById(Iterable<Integer> integers) {
-                return null;
-            }
+            //@Override
+            //public Iterable<Truck> findAllById(Iterable<Integer> integers) {
+                //return null;
+            //}
 
             @Override
             public long count() {
                 return 0;
             }
 
-            @Override
-            public void deleteById(Integer integer) {
+            //@Override
+            //public void deleteById(Integer integer) {
 
-            }
+            //}
 
             @Override
             public void delete(Truck entity) {
@@ -103,6 +104,7 @@ public class FoodTruckControllerTest {
 
             }
         });
+         *********************************************************/
     }
 
     @DisplayName("null addNewTruck Test")

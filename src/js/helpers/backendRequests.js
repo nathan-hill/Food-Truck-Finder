@@ -23,10 +23,10 @@ export function getAllUsers() {
 }
 
 export function getUnreadNotifications(i) {
-  //return 5     //for testing
-  return axios({
+  //return 1     //for testing
+  return(axios({
     method: "GET",
-    url: constants.backend_url + "message/getUnreadMessagesbyUserID",
+    url: constants.backend_url + "message/getNumberUnreadMessagesByID",
     params: { id : i },
     headers: request_headers
   })
@@ -36,7 +36,8 @@ export function getUnreadNotifications(i) {
     })
     .catch(function(error){
       console.log(error);
-    });
+    }));
+  
 }
 
 export async function getUserByID(i) {
@@ -165,8 +166,8 @@ export async function getPreferredTrucks(id, lon, lat) {
 export async function sendNotification(data){
   return await axios({
     method: "POST",
-    url: constants.backend_url + "sendNotification/",
-    params:{data:data},
+    url: constants.backend_url + "message/sendToAllByTruckId",
+    data: data,
     headers: request_headers
   })
     .then(function(response) {

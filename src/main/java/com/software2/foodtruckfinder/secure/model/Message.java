@@ -1,5 +1,7 @@
 package com.software2.foodtruckfinder.secure.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,13 +26,17 @@ public class Message {
     private Long receiver;
 
     @NotBlank
-    @Size(max = 256)
+    @Size(max = 1000)
     private String text;
 
     @NotBlank
     private Timestamp sentTime;
 
     @NotBlank
+    private String subject;
+
+    @NotBlank
+    @Type(type="boolean")
     private Boolean isRead;
 
     public Long getId() {
@@ -84,6 +90,15 @@ public class Message {
     public Message() {
     }
 
+    public Message(@NotBlank Long sender, @NotBlank Long receiver, @NotBlank @Size(max = 1000) String text, @NotBlank Timestamp sentTime, @NotBlank String subject, @NotBlank Boolean isRead) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.text = text;
+        this.sentTime = sentTime;
+        this.subject = subject;
+        this.isRead = isRead;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -114,18 +129,18 @@ public class Message {
         return Objects.hash(id, sender, receiver, text, sentTime, isRead);
     }
 
-    public Boolean isInConvo(long uid1, long uid2){
-        if(uid1 == sender && uid2 == receiver){
-            return true;
-        }
-        else if(uid1 == receiver && uid2 == sender){
-            return true;
-        }
-        else{
-            return false;
-        }
-
-    }
+//    public Boolean isInConvo(long uid1, long uid2){
+//        if(uid1 == sender && uid2 == receiver){
+//            return true;
+//        }
+//        else if(uid1 == receiver && uid2 == sender){
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
+//
+//    }
 
 
     @Override
