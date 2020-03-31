@@ -35,8 +35,8 @@ public class Email {
             message.setText(msg);
             //send message
             Transport.send(message);
-            System.out.println("message sent successfully to " + to + "msg:" + msg);
-        } catch (MessagingException e) {
+            System.out.println("message sent successfully to " + to + " msg:" + msg);
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

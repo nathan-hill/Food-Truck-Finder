@@ -62,9 +62,10 @@ public class MessageController {
             for (Subscription s : subscriptions_for_truck) {
                 //send them a message
                 Truck from = _truckRepository.getOne(recipient);
-                User to = _userRepository.getOne(s.getId());
+                User to = _userRepository.getOne(s.getUid());
 
                 Email e = new Email(to.getEmail(), from.getName(), n.message);
+                e.send();
 
                 //save a message to them.
                 _mRepository.save(new Message(from.getId(), to.getId(), n.getMessage(), new Timestamp(System.currentTimeMillis()), "Notification", false));
