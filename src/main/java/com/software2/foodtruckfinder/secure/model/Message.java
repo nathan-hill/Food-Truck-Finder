@@ -1,5 +1,7 @@
 package com.software2.foodtruckfinder.secure.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +36,7 @@ public class Message {
     private String subject;
 
     @NotBlank
+    @Type(type="boolean")
     private Boolean isRead;
 
     public Long getId() {

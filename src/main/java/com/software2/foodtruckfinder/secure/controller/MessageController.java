@@ -7,7 +7,9 @@ import com.software2.foodtruckfinder.secure.repository.SubscriptionRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.service.Email;
+import com.software2.foodtruckfinder.secure.service.UPreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -72,6 +75,19 @@ public class MessageController {
             }
 
         }
+    }
+
+    @PostMapping(path="/markAllAsRead")
+    public ResponseEntity<?> markAllMessagesAsRead(@RequestBody Long id){
+
+        _mRepository.markAllAsRead(id);
+
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
+    @GetMapping(path="/getUnreadMessagesByUser")
+    public ResponseEntity<?> getUnreadMessages(@RequestBody Long id){
+        return new ResponseEntity<List<Message>>(UPreferenceService.iteratorToList(_mRepository.findByIsReadFalseAndReceiver(id).iterator()), HttpStatus.OK);
     }
 
 
