@@ -86,7 +86,6 @@ class SendNotificationForm extends React.Component {
               //   onChange={this.onSelectChange}
             >
               <option aria-label="None"/>
-              <option>here</option>
               {this.state.trucks.map((val, i) => (
                 <option key={val.id}>{val.name}</option>
               ))}
