@@ -1,13 +1,8 @@
 import React from "react";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
-import { UserProfile } from "../pages/pages";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-import PreferenceDialog from "./PreferenceDialog";
-import InputBase from "@material-ui/core/InputBase";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Select from "@material-ui/core/Select";
@@ -16,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
 import CheckBoxList from "./CheckBoxList";
-import createSpacing from "@material-ui/core/styles/createSpacing";
 import * as Request from "./../helpers/backendRequests";
 var constants = require("./../helpers/constants");
 

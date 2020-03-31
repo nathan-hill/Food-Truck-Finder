@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
-import axios from "axios";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";

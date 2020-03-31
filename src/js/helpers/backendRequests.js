@@ -58,19 +58,6 @@ export async function postNewUser(u) {
     });
 }
 
-export async function UpdateUser(u) {
-  const request = {
-    method: "POST",
-    url: constants.backend_url + "users/update/",
-    data: u,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "application/json",
-      Accept: "application/json"
-    }
-  };
-}
-
 export async function postNewTruck(t) {
   const request = {
     method: "POST",

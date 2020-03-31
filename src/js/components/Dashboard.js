@@ -27,7 +27,6 @@ import { connect } from "react-redux";
 import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-import axios from "axios";
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -116,7 +115,7 @@ const useStyles = makeStyles(theme => ({
 function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [role, setRole] = React.useState(
+  const [role] = React.useState(
     typeof localStorage.getItem("role") === undefined || localStorage.getItem("role") === "undefined" || localStorage.getItem("role") === "null"
       ? "Guest"
       : localStorage.getItem("role")
