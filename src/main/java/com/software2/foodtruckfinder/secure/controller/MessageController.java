@@ -78,6 +78,21 @@ public class MessageController {
 
 
 
+    @GetMapping(path = "/getUnreadMessagesbyUserID")
+    public @ResponseBody
+    int findUnreadByUserId(Long user_id){
+        Iterable<Message> messIt = mRepository.findByUser(user_id);
+        int count = 0;
+        for (Message m : messIt ){
+            if(!m.getRead()){
+                count = count + 1;
+            }
+        }
+        return count;
+    }
+
+
+
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

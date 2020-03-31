@@ -77,58 +77,6 @@ class SendNotificationForm extends React.Component {
       );
     }
 
-<<<<<<< HEAD
-    onChange(e) {
-        this.setState({[e.target.name]: e.target.value});
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        let data = {
-            truck: this.state.selectedOption,
-            message: this.state.message,
-        }
-        data.headers = {
-            "Access-Control-Allow-Origin": "*",
-            "content-type": "application/json",
-            Accept: "application/json"
-        };
-
-        Request.sendNotification(data);
-    }
-
-    async componentDidMount() {
-        let data = await Request.getAllTrucks(this.state.id);
-    
-    
-        console.log("Gey user Data");
-        console.log(data);
-    
-        this.setState({
-          name: data.name,
-          id: data.id,
-        });
-    }
-
-    handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
-    }
-
-
-    render() {
-        const { selectedOption, message } = this.state;
-        const classes = makeStyles();
-
-        let submitButton;
-        if(true) {
-            submitButton = <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-=======
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
@@ -136,7 +84,6 @@ class SendNotificationForm extends React.Component {
             <Select
               native
               //   onChange={this.onSelectChange}
->>>>>>> 6436abc9259fa290f059ce5f0efa9f3d21933d0b
             >
               <option aria-label="None"/>
               {this.state.trucks.map((val, i) => (

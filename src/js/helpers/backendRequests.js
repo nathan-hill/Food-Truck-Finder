@@ -22,6 +22,22 @@ export function getAllUsers() {
     });
 }
 
+export function getUnreadNotifications(i) {
+  return axios({
+    method: "GET",
+    url: constants.backend_url + "message/getUnreadMessagesbyUserID",
+    params: { id : i },
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+}
+
 export async function getUserByID(i) {
   return await axios({
     method: "GET",

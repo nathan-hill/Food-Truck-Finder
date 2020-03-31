@@ -29,9 +29,11 @@ import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import axios from "axios";
+import * as Request from "./../helpers/backendRequests";
 
 // change size of expanded sidebar
 const drawerWidth = 600;
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -147,10 +149,12 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
     mainList = GuestListItems;
   }
 
-  
+  let numNotifications = 0;
   let logOutButton;
   let logInButton;
   if (props.auth.isAuthenticated) {
+    //function call to determine number of unread notifications
+    let numNotifications = Request.getUnreadNotifications(props.auth.id);
     logOutButton = (
       <Button
         type="submit"
@@ -218,7 +222,7 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
           </form>
           
           <IconButton color="inherit" href = "#/Notifications">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={numNotifications} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
