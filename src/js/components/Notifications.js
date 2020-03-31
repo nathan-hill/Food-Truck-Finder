@@ -2,7 +2,7 @@ import React from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from 'material-table';
 
-import AddBox from '@material-ui/icons/AddBox';
+import AlarmOffIcon from '@material-ui/icons/AlarmOff';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -22,6 +22,7 @@ import {connect} from "react-redux";
 
 const tableIcons = {
 
+    AlarmOff: forwardRef((props, ref) => <AlarmOffIcon {...props} ref={ref}/>),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
@@ -44,10 +45,6 @@ var constants = require("./../helpers/constants");
 
 class NotificationTable extends React.Component {
     
-    handleClick(props){
-        //database call to mark notification as read
-        //number of unread used for badge on dashboard icon
-    }
 
     constructor(props) {
         super(props);
@@ -55,10 +52,6 @@ class NotificationTable extends React.Component {
         //may need to rename fields to match data returns
         this.state = {
             columns: [
-                {title: 'Mark As', 
-                id: 'mark-as-button',
-                render: ({row}) => (<button onClick={(e) => this.handleClick(row, e)}>Mark as Read</button>)},
-                {title: 'Current Status', field: 'isRead'},
                 {title: 'Date', field: 'sentTime'},
                 {title: 'Food Truck', field: 'sender'},
                 {title: 'Message', field: 'text'},
@@ -74,7 +67,7 @@ class NotificationTable extends React.Component {
             params: {
                 id: this.props.auth.user.sub
             }
-        }).then(res => {
+    }).then(res => {
             this.setState({data: res.data})
             console.log(this.state.data)
         });

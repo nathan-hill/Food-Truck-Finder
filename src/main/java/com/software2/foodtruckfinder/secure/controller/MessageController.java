@@ -8,6 +8,7 @@ import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.service.Email;
 import com.software2.foodtruckfinder.secure.service.UPreferenceService;
+import org.elasticsearch.search.aggregations.metrics.InternalHDRPercentiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
@@ -90,6 +93,19 @@ public class MessageController {
         return new ResponseEntity<List<Message>>(UPreferenceService.iteratorToList(_mRepository.findByIsReadFalseAndReceiver(id).iterator()), HttpStatus.OK);
     }
 
+    @GetMapping(path="/getNumberUnreadByID")
+    public @ResponseBody
+    int getNumberUnread(@RequestBody Long id) {
+        Iterable<Message> messages = _mRepository.findByUser(id);
+        int count = 0;
+        for(Message m : messages ){
+            if(!m.getRead()){
+                count = count+1;
+            }
+        }
+        count = 4;
+        return count;
+    }
 
     @GetMapping(path = "/")
     public @ResponseBody
@@ -114,6 +130,22 @@ public class MessageController {
         m.forEach(System.out::println);
         return m;
     }
+
+
+
+    @GetMapping(path = "/getUnreadMessagesbyUserID")
+    public @ResponseBody
+    int findUnreadByUserId(Long user_id){
+        Iterable<Message> messIt = _mRepository.findByUser(user_id);
+        int count = 0;
+        for (Message m : messIt ){
+            if(!m.getRead()){
+                count = count + 1;
+            }
+        }
+        return count;
+    }
+
 
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
