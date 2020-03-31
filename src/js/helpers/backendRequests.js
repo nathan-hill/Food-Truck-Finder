@@ -148,8 +148,8 @@ export async function getPreferredTrucks(id, lon, lat) {
 export async function sendNotification(data){
   return await axios({
     method: "POST",
-    url: constants.backend_url + "sendNotification/",
-    params:{data:data},
+    url: constants.backend_url + "message/sendToAllByTruckId",
+    data: data,
     headers: request_headers
   })
     .then(function(response) {

@@ -1,10 +1,12 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 
-import com.software2.foodtruckfinder.secure.model.Message;
-import com.software2.foodtruckfinder.secure.model.Subscription;
+import com.software2.foodtruckfinder.secure.model.*;
 import com.software2.foodtruckfinder.secure.repository.MessageRepository;
 import com.software2.foodtruckfinder.secure.repository.SubscriptionRepository;
+import com.software2.foodtruckfinder.secure.repository.TruckRepository;
+import com.software2.foodtruckfinder.secure.repository.UserRepository;
+import com.software2.foodtruckfinder.secure.service.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,17 +14,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+
 @CrossOrigin
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/v/message") // This means URL's start with /demo (after Application path this is assigned to
 public class MessageController {
     @Autowired
-    private MessageRepository mRepository;
+    private MessageRepository _mRepository;
     @Autowired
-    private SubscriptionRepository subRepository;
+    private SubscriptionRepository _subRepository;
+    @Autowired
+    private UserRepository _userRepository;
+    @Autowired
+    private TruckRepository _truckRepository;
 
     public MessageController(MessageRepository mr) {
-        this.mRepository = mr;
+        this._mRepository = mr;
     }
 
     @PostMapping(path = "/add")
@@ -31,41 +39,52 @@ public class MessageController {
         Message n = new Message();
         n = m.clone();
 
-        for (Message mess : mRepository.findAll()) {
+        for (Message mess : _mRepository.findAll()) {
             if (mess.getId().equals(n.getId())) {
                 return ResponseEntity.status(400).build();
             }
         }
 
-        Message generatedM = mRepository.save(n);
+        Message generatedM = _mRepository.save(n);
         return new ResponseEntity<Message>(generatedM, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/sendToAllByTruckSubscription")
+    @PostMapping(path = "/sendToAllByTruckId")
     public @ResponseBody
-    void addNewMessageBySubscription(@RequestBody Message m, Long truckid) throws CloneNotSupportedException {
+    void addNewMessageBySubscription(@RequestBody NotificationRequest n) throws CloneNotSupportedException {
 
-        for(Subscription s : subRepository.findReviewsByTruckId(truckid)){
-            Message n = new Message();
-            n = m.clone();
-            n.setReceiver(s.getUid());
-            Message generatedM = mRepository.save(n);
+        System.out.println(n.toString());
+
+        //for each of the trucks to send the message to
+        for (Long recipient : n.getTo()) {
+            //get all of the people subscribed to that truck.
+            Iterable<Subscription> subscriptions_for_truck = _subRepository.findByTruckId(recipient);
+            for (Subscription s : subscriptions_for_truck) {
+                //send them a message
+                Truck from = _truckRepository.getOne(recipient);
+                User to = _userRepository.getOne(s.getId());
+
+                Email e = new Email(to.getEmail(), from.getName(), n.message);
+
+                //save a message to them.
+                _mRepository.save(new Message(from.getId(), to.getId(), n.getMessage(), new Timestamp(System.currentTimeMillis()), "Notification", false));
+            }
+
         }
     }
-
 
 
     @GetMapping(path = "/")
     public @ResponseBody
     Iterable<Message> getAllMessages() {
         // This returns a JSON or XML with the users
-        return mRepository.findAll();
+        return _mRepository.findAll();
     }
 
     @DeleteMapping(path = "/delete")
     public @ResponseBody
     Boolean deleteAllMessages() {
-        mRepository.deleteAll();
+        _mRepository.deleteAll();
         return true;
     }
 
@@ -73,21 +92,19 @@ public class MessageController {
     @GetMapping(path = "/getMessagesbyUserID")
     public @ResponseBody
     Iterable<Message> findMesssagesByUserId(Long user_id) {
-        return mRepository.findByUser(user_id);
+        return _mRepository.findByUser(user_id);
     }
-
-
 
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Message> updateMessage(@RequestBody Message m) throws CloneNotSupportedException {
 
-        if (mRepository.existsById(m.getId())) {
+        if (_mRepository.existsById(m.getId())) {
             Message n = new Message();
             n = m.clone();
 
-            Message generatedM = mRepository.save(n);
+            Message generatedM = _mRepository.save(n);
             return new ResponseEntity<Message>(generatedM, HttpStatus.OK);
         } else {
             return null;
