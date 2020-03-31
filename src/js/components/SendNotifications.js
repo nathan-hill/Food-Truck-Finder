@@ -1,5 +1,5 @@
 import React from "react";
-import Select from "react-select";
+import Select from "@material-ui/core/Select";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -88,7 +88,7 @@ class SendNotificationForm extends React.Component {
               <option aria-label="None"/>
               <option>here</option>
               {this.state.trucks.map((val, i) => (
-                <option>{val.name}</option>
+                <option key={val.id}>{val.name}</option>
               ))}
             </Select>
 
