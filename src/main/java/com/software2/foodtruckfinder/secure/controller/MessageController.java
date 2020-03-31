@@ -108,8 +108,11 @@ public class MessageController {
     //should be all you need to get all messages that are associated with a user
     @GetMapping(path = "/getMessagesbyUserID")
     public @ResponseBody
-    Iterable<Message> findMesssagesByUserId(Long user_id) {
-        return _mRepository.findByUser(user_id);
+    Iterable<Message> findMesssagesByUserId(@RequestParam("id") Long id) {
+        System.out.println(id);
+        Iterable<Message> m =_mRepository.findByReceiver(id);
+        m.forEach(System.out::println);
+        return m;
     }
 
 
