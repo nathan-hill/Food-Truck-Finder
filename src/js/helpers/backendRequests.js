@@ -23,6 +23,7 @@ export function getAllUsers() {
 }
 
 export function getUnreadNotifications(i) {
+  //return 5     //for testing
   return axios({
     method: "GET",
     url: constants.backend_url + "message/getUnreadMessagesbyUserID",

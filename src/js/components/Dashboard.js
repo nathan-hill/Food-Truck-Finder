@@ -154,7 +154,7 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
   let logInButton;
   if (props.auth.isAuthenticated) {
     //function call to determine number of unread notifications
-    let numNotifications = Request.getUnreadNotifications(props.auth.id);
+    numNotifications = Request.getUnreadNotifications(props.auth.id);
     logOutButton = (
       <Button
         type="submit"
