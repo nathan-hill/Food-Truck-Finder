@@ -13,6 +13,7 @@ import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
+import TruckTable from "../components/newTruckTable";
 
 export class TestRouting extends React.Component {
   render() {
@@ -182,7 +183,7 @@ export class Table extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckTable />
+        <TruckTable />
         <Button href="#/SendNotifications">
           Send Notification
         </Button>
