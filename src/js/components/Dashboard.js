@@ -28,11 +28,6 @@ import { connect } from "react-redux";
 import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-<<<<<<< HEAD
-import axios from "axios";
-import * as Request from "./../helpers/backendRequests";
-=======
->>>>>>> master
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -157,8 +152,8 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
   let logInButton;
   if (props.auth.isAuthenticated) {
     //function call to determine number of unread notifications
-    numNotifications = Request.getUnreadNotifications(props.auth.id);
-    logOutButton = (
+    numNotifications = 1
+        logOutButton = (
       <Button
         type="submit"
         variant="contained"
