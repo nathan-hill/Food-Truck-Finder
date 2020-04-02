@@ -8,6 +8,9 @@ import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FoodTruckControllerTest {
-
+    @Autowired
     FoodTruckController ftc;
     private ArrayList<Truck> db = new ArrayList<>();
 
@@ -114,15 +117,15 @@ public class FoodTruckControllerTest {
     }
 
 
-    @DisplayName("getAllTrucks Test")
-    @Test
-    void getAllTest(){
-        assertNotNull(ftc.getAllTrucks());
-    }
-
-    @DisplayName("deleteAllTrucks Test")
-    @Test
-    void deleteAllTest(){
-        assertTrue(ftc.deleteAllTrucks());
-    }
+//    @DisplayName("getAllTrucks Test")
+//    @Test
+//    void getAllTest(){
+//        assertNotNull(ftc.getAllTrucks());
+//    }
+//
+//    @DisplayName("deleteAllTrucks Test")
+//    @Test
+//    void deleteAllTest(){
+//        assertTrue(ftc.deleteAllTrucks());
+//    }
 }
