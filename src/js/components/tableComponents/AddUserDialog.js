@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles';
 
 import AddIcon from '@material-ui/icons/Add'
 import Button from '@material-ui/core/Button'
@@ -12,19 +13,35 @@ import PropTypes from 'prop-types'
 import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+//import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
-const initialUser = {
-  firstName: '',
-  lastName: '',
-  age: 0,
-  visits: 0,
-  status: 'single',
-  progress: 0,
+const initialTruck = {
+  foodTruckName: '',
+  schedule: '',
+  cost: 0,
+  foodType: 0,
+  Menu: 'single',
   subRows: undefined,
 }
 
-const AddUserDialog = props => {
-  const [user, setUser] = useState(initialUser)
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+
+const AddTruckDialog = (props) => {
+  const classes = useStyles();
+  const [truck, setTruck] = useState(initialTruck)
   const { addUserHandler } = props
   const [open, setOpen] = React.useState(false)
 
@@ -50,13 +67,13 @@ const AddUserDialog = props => {
   }
 
   const handleAdd = event => {
-    addUserHandler(user)
-    setUser(initialUser)
+    addUserHandler(truck)
+    setTruck(initialTruck)
     switchState.addMultiple ? setOpen(true) : setOpen(false)
   }
 
   const handleChange = name => ({ target: { value } }) => {
-    setUser({ ...user, [name]: value })
+    setTruck({ ...truck, [name]: value })
   }
 
   return (
@@ -71,58 +88,72 @@ const AddUserDialog = props => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add User</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add Truck</DialogTitle>
         <DialogContent>
-          <DialogContentText>Demo add item to react table.</DialogContentText>
+          <DialogContentText>Fill In Truck Details.</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            label="First Name"
+            label="Food Truck Name"
             type="text"
             fullWidth
-            value={user.firstName}
-            onChange={handleChange('firstName')}
+            value={truck.foodTruckName}
+            onChange={handleChange('foodTruckName')}
           />
           <TextField
             margin="dense"
-            label="Last Name"
+            label="Schedule"
             type="text"
             fullWidth
-            value={user.lastName}
-            onChange={handleChange('lastName')}
+            value={truck.schedule}
+            onChange={handleChange('schedule')}
           />
+          <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="age-native-helper">Cost</InputLabel>
+          <NativeSelect
+              costValue={truck.cost}
+              onChange={handleChange}
+              inputProps={{
+                name: 'cost',
+                id: 'cost',
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option costValue={1}>$</option>
+              <option costValue={2}>$$</option>
+              <option costValue={3}>$$$</option>
+              <option costValue={4}>$$$$</option>
+            </NativeSelect>
+            <FormHelperText>Rate How Expensive Your Truck Is</FormHelperText>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="age-native-helper">Food Type</InputLabel>
+          <NativeSelect
+              foodValue={truck.foodType}
+              onChange={handleChange}
+              inputProps={{
+                name: 'foodType',
+                id: 'foodType',
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option foodValue={'Mexican'}>Mexican</option>
+              <option foodValue={'American'}>American</option>
+              <option foodValue={'Italian'}>Italian</option>
+              <option foodValue={'Chinese'}>Chinese</option>
+              <option foodValue={'Vietnamese'}>Vietnamese</option>
+            </NativeSelect>
+            <FormHelperText>What Type of Food is Served</FormHelperText>
+          </FormControl>
           <TextField
             margin="dense"
-            label="Age"
-            type="number"
-            fullWidth
-            value={user.age}
-            onChange={handleChange('age')}
-          />
-          <TextField
-            margin="dense"
-            label="Visits"
-            type="number"
-            fullWidth
-            value={user.visits}
-            onChange={handleChange('visits')}
-          />
-          <TextField
-            margin="dense"
-            label="Status"
+            label="Menu"
             type="text"
             fullWidth
-            value={user.status}
-            onChange={handleChange('status')}
+            value={truck.menu}
+            onChange={handleChange('menu')}
           />
-          <TextField
-            margin="dense"
-            label="Profile Progress"
-            type="number"
-            fullWidth
-            value={user.progress}
-            onChange={handleChange('progress')}
-          />
+          
         </DialogContent>
         <DialogActions>
           <Tooltip title="Add multiple">
@@ -145,8 +176,8 @@ const AddUserDialog = props => {
   )
 }
 
-AddUserDialog.propTypes = {
-  addUserHandler: PropTypes.func.isRequired,
+AddTruckDialog.propTypes = {
+  addTruckHandler: PropTypes.func.isRequired,
 }
 
-export default AddUserDialog
+export default AddTruckDialog

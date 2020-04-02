@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Checkbox from '@material-ui/core/Checkbox'
 import MaUTable from '@material-ui/core/Table'
@@ -13,6 +13,10 @@ import TablePaginationActions from './TablePaginationActions'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import TableToolbar from './TableToolbar'
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputLabel from '@material-ui/core/InputLabel';
 import {
   useGlobalFilter,
   usePagination,
@@ -20,6 +24,8 @@ import {
   useSortBy,
   useTable,
 } from 'react-table'
+
+
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -92,6 +98,15 @@ EditableCell.propTypes = {
   updateMyData: PropTypes.func.isRequired,
 }
 
+const initialTruck = {
+  foodTruckName: '',
+  schedule: '',
+  cost: 0,
+  foodType: 0,
+  Menu: 'single',
+  subRows: undefined,
+}
+
 // Set our editable cell renderer as the default Cell renderer
 const defaultColumn = {
   Cell: EditableCell,
@@ -103,7 +118,9 @@ const EnhancedTable = ({
   setData,
   updateMyData,
   skipPageReset,
-}) => {
+})  => {
+  const [user, setUser] = useState(initialTruck)
+  // const { addTruckHandler } = props
   const {
     getTableProps,
     headerGroups,
@@ -152,6 +169,39 @@ const EnhancedTable = ({
           Cell: ({ row }) => (
             <div>
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        {
+          id: 'test',
+         
+          Header: () => (
+            <div>
+              test
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <FormControl >
+            <InputLabel htmlFor="age-native-helper">Cost</InputLabel>
+            <NativeSelect
+                costValue={user.cost}
+                //onChange={addTruckHandler}
+                inputProps={{
+                  name: 'cost',
+                  id: 'cost',
+                }}
+              >
+              <option aria-label="None" costvalue="" />
+              <option costValue={1}>$</option>
+              <option costValue={2}>$$</option>
+              <option costValue={3}>$$$</option>
+              <option costValue={4}>$$$$</option>
+            </NativeSelect>
+            <FormHelperText>Rate How Expensive Your Truck Is</FormHelperText>
+          </FormControl>
             </div>
           ),
         },

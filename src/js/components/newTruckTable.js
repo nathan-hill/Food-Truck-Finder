@@ -8,34 +8,31 @@ const FoodTruckTable = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'First Name',
-        accessor: 'firstName',
+        Header: 'Food Truck Name',
+        accessor: 'foodTruckName',
       },
       {
-        Header: 'Last Name',
-        accessor: 'lastName',
+        Header: 'Schedule',
+        accessor: 'schedule',
       },
       {
-        Header: 'Age',
-        accessor: 'age',
+        Header: 'Cost',
+        accessor: 'cost',
       },
       {
-        Header: 'Visits',
-        accessor: 'visits',
+        Header: 'Food Type',
+        accessor: 'foodType',
       },
       {
-        Header: 'Status',
-        accessor: 'status',
+        Header: 'Menu',
+        accessor: 'menu',
       },
-      {
-        Header: 'Profile Progress',
-        accessor: 'progress',
-      },
+      
     ],
     []
   )
 
-  const [data, setData] = React.useState(React.useMemo(() => makeData(20), []))
+  const [data, setData] = React.useState(React.useMemo(() => makeData(5), []))
   const [skipPageReset, setSkipPageReset] = React.useState(false)
 
   // We need to keep the table from resetting the pageIndex when we

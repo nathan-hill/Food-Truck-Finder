@@ -8,20 +8,14 @@ const range = len => {
   return arr
 }
 
-const newPerson = () => {
+const newTruck = () => {
   const statusChance = Math.random()
   return {
-    firstName: namor.generate({ words: 1, numbers: 0 }),
-    lastName: namor.generate({ words: 1, numbers: 0 }),
-    age: Math.floor(Math.random() * 30),
-    visits: Math.floor(Math.random() * 100),
-    progress: Math.floor(Math.random() * 100),
-    status:
-      statusChance > 0.66
-        ? 'relationship'
-        : statusChance > 0.33
-        ? 'complicated'
-        : 'single',
+    foodTruckName: namor.generate({ words: 1, numbers: 0 }),
+    schedule: namor.generate({ words: 1, numbers: 0 }),
+    cost: Math.floor(Math.random() * 30),
+    foodType: Math.floor(Math.random() * 100),
+    menu: Math.floor(Math.random() * 100),
   }
 }
 
@@ -30,7 +24,7 @@ export default function makeData(...lens) {
     const len = lens[depth]
     return range(len).map(d => {
       return {
-        ...newPerson(),
+        ...newTruck(),
         subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
       }
     })
