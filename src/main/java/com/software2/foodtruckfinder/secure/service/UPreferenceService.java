@@ -194,11 +194,11 @@ public class UPreferenceService {
         return day;
     }
 
-    private List<Truck> iteratorToList(Iterator<Truck> i) {
-        List<Truck> res = new ArrayList<>();
+    public static <T> List<T> iteratorToList(Iterator<T> i) {
+        List<T> res = new ArrayList<>();
 
-        for (Iterator<Truck> it = i; it.hasNext(); ) {
-            Truck t = it.next();
+        for (Iterator<T> it = i; it.hasNext(); ) {
+            T t = it.next();
             res.add(t);
         }
         return res;

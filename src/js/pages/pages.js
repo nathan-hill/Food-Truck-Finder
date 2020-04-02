@@ -9,6 +9,9 @@ import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
+import NotificationTable from "./../components/Notifications";
+import SendNotificationForm from "./../components/SendNotifications";
+import Button from "@material-ui/core/Button";
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
 
 export class TestRouting extends React.Component {
@@ -21,9 +24,6 @@ export class TestRouting extends React.Component {
             <Link to="/Request">Request from DB</Link>
           </li>
           <li>
-            <Link to="/loginpage"> Log In </Link>
-          </li>
-          <li>
             <Link to="/Dashboard">Dashboard</Link>
           </li>
           <li>
@@ -34,6 +34,9 @@ export class TestRouting extends React.Component {
           </li>
           <li>
             <Link to="/create_account">Create Account</Link>
+          </li>
+          <li>
+            <Link to="/SendNotifications">send Notification</Link>
           </li>
           <li>
             <Link to="/UserProfile">UserProfile</Link>
@@ -180,6 +183,9 @@ export class Table extends React.Component {
       <div>
         <Link to="/">Back</Link>
         <FoodTruckTable />
+        <Button href="#/SendNotifications">
+          Send Notification
+        </Button>
       </div>
     );
   }
@@ -212,6 +218,44 @@ export class UserProfile extends React.Component {
     );
   }
 
+}
+
+export class Notifications extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Back</Link>
+        <NotificationTable />
+      </div>
+    );
+  }
+}
+
+export class SendNotification extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Dashboard</Link>
+        <SendNotificationForm />
+      </div>
+    );
+  }
 }
 
 export class OwnerProfile extends React.Component {

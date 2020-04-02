@@ -324,14 +324,14 @@ class customerSettings extends React.Component {
           >
             <InputLabel htmlFor="foodtype-native">Food Type</InputLabel>
             <CheckBoxList
-              foodList={[
+              options={[
                 "Mexican",
                 "American",
                 "Italian",
                 "Chinese",
                 "Vietnamese"
               ]}
-              likes={this.state.likes}
+              selected={this.state.likes}
               disabled={this.state.isDisabled}
               onChange={this.onCheckBoxChange}
             />

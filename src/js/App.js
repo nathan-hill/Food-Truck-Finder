@@ -12,6 +12,8 @@ export default class App extends Component {
             <Route exact path="/create_account" component={Pages.CreateAccount} />
             <Route exact path="/Request" component={Pages.DatabaseListing} />
             <Route exact path="/loginpage" component={Pages.Login} />
+            <Route exact path="/Notifications" component={Pages.Notifications} />
+            <Route exact path="/SendNotifications" component={Pages.SendNotification} />
             <Route exact path="/Profile" component={Pages.UserProfile} />
             <Route exact path="/TestRouting" component={Pages.TestRouting} />
             <Route exact path="/FoodTruckTable" component={Pages.Table} />

@@ -22,6 +22,7 @@ import {
   secondaryListItems
 } from "./listItems";
 import SimpleMap from "./SimpleMap";
+ 
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { logout } from "../actions/login";
@@ -30,6 +31,7 @@ import PropTypes from "prop-types";
 
 // change size of expanded sidebar
 const drawerWidth = 600;
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -120,6 +122,9 @@ function Dashboard(props) {
       ? "Guest"
       : localStorage.getItem("role")
   );
+
+//const [dropdownOpen, setDropdownOpen] = useState(false);
+  //const toggle = () => setDropdownOpen(prevState => !prevState);
   console.log("the user role is " + role);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -142,10 +147,13 @@ function Dashboard(props) {
     mainList = GuestListItems;
   }
 
+  let numNotifications = 0;
   let logOutButton;
   let logInButton;
   if (props.auth.isAuthenticated) {
-    logOutButton = (
+    //function call to determine number of unread notifications
+    numNotifications = 1
+        logOutButton = (
       <Button
         type="submit"
         variant="contained"
@@ -194,7 +202,7 @@ function Dashboard(props) {
           >
             Wheels With Meals: {role}
           </Typography>
-
+       
           <form
             className={classes.form}
             noValidate
@@ -210,9 +218,9 @@ function Dashboard(props) {
           >
             {logOutButton}
           </form>
-
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+          
+          <IconButton color="inherit" href = "#/Notifications">
+            <Badge badgeContent={numNotifications} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -239,6 +247,7 @@ function Dashboard(props) {
           {/* </Link> */}
         </List>
       </Drawer>
+
       {/* <main className={classes.content}> */}
       {/* <div className={classes.appBarSpacer} /> */}
       {/* <Container maxWidth="lg" className={classes.container}></Container> */}

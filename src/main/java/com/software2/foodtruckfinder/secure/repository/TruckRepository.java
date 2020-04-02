@@ -1,10 +1,7 @@
 package com.software2.foodtruckfinder.secure.repository;
 
 import com.software2.foodtruckfinder.secure.model.Truck;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +9,9 @@ import java.util.Optional;
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface TruckRepository extends CrudRepository<Truck, Integer> {
+public interface TruckRepository extends JpaRepository<Truck, Long> {
+
+
 
     boolean existsById(Long id);
 

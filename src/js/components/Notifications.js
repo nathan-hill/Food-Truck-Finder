@@ -2,7 +2,7 @@ import React from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from 'material-table';
 
-import AddBox from '@material-ui/icons/AddBox';
+import AlarmOffIcon from '@material-ui/icons/AlarmOff';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -17,13 +17,12 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import AddAlertIcon from '@material-ui/icons/AddAlert';
 import axios from "axios";
 import {connect} from "react-redux";
 
 const tableIcons = {
-    Alert: forwardRef((props, ref) => <AddAlertIcon {...props} ref={ref}/>),
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
+
+    AlarmOff: forwardRef((props, ref) => <AlarmOffIcon {...props} ref={ref}/>),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
@@ -44,30 +43,32 @@ const tableIcons = {
 
 var constants = require("./../helpers/constants");
 
-class MaterialTableDemo extends React.Component {
+class NotificationTable extends React.Component {
+    
 
     constructor(props) {
         super(props);
 
+        //may need to rename fields to match data returns
         this.state = {
             columns: [
-                {title: 'Food Truck Name', field: 'name'},
-                {title: 'Schedule', field: 'schedule'},
-                {title: 'Description', field: 'description'},
-                {title: 'Menu', field: 'menu'},
-                {title: 'Route', field: 'route'},
-                
+                {title: 'Date', field: 'sentTime'},
+                {title: 'Food Truck', field: 'truckName'},
+                {title: 'Food Truck ID', field: 'sender'},
+                {title: 'Message', field: 'text'},
             ], data:[],
         }
     }
 
+    //fill with list from database
+
     componentDidMount = () => {
         console.log("ID: ", this.props.auth.user.sub);
-        axios.get(constants.backend_url + "trucks/findTrucksByownerID", {
+        axios.get(constants.backend_url + "message/getMessagesbyUserID", {
             params: {
-                l: this.props.auth.user.sub
+                id: this.props.auth.user.sub
             }
-        }).then(res => {
+    }).then(res => {
             this.setState({data: res.data})
             console.log(this.state.data)
         });
@@ -77,50 +78,10 @@ class MaterialTableDemo extends React.Component {
         return (
             <MaterialTable
                 icons={tableIcons}
-                title="Food Truck Table"
+                title="Notifications"
                 columns={this.state.columns}
                 data={this.state.data}
                 editable={{
-                    // add method
-                    onRowAdd: newData =>
-                        new Promise(resolve => {
-                            setTimeout(() => {
-                                resolve();
-                                this.setState(prevState => {
-                                    // sets the table to current state
-                                    const data = [...prevState.data];
-
-                                    // adds a new data point to the table
-                                    data.push(newData);
-
-
-                                    return {...prevState, data};
-                                });
-                            }, 600);
-                        }),
-                    onRowUpdate: (newData, oldData) =>
-                        new Promise(resolve => {
-                            setTimeout(() => {
-                                resolve();
-                                if (oldData) {
-                                    this.setState(prevState => {
-                                        // sets the table to current state
-                                        const data = [...prevState.data];
-
-                                        // updates the table position
-                                        data[data.indexOf(oldData)] = newData;
-                                        return {...prevState, data};
-                                    });
-                                }
-                            }, 600);
-
-                            console.log("NEW DATA: ");
-                            console.log(newData);
-
-                            axios.put(constants.backend_url + "trucks/updateByTruck",newData).then(res => {
-                                console.log(res);
-                            })
-                        }),
                     onRowDelete: oldData =>
                         new Promise(resolve => {
                             setTimeout(() => {
@@ -136,8 +97,7 @@ class MaterialTableDemo extends React.Component {
                             }, 600);
                         }),
                 }}
-            >
-            </MaterialTable>
+            />
         );
     }
 }
@@ -146,4 +106,4 @@ const mapStateToProps = state => ({
     auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(MaterialTableDemo);
+export default connect(mapStateToProps, null)(NotificationTable);

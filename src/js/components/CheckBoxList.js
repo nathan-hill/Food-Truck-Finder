@@ -18,7 +18,9 @@ export default function CheckboxList(props) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
 
-  for (let i = 0; i < props.likes.size; i++) {
+  let size = props.selected || 0;
+
+  for (let i = 0; i < size.size ; i++) {
     setChecked(checked.push(props.liked[i].charAt(0) + props.liked[i].slice[1].toLowerCase()));
   }
 
@@ -51,7 +53,7 @@ export default function CheckboxList(props) {
 
   return (
     <List className={classes.root}>
-      {props.foodList.map(value => {
+      {props.options.map(value => {
         const labelId = `checkbox-list-label-${value}`;
 
         return (
