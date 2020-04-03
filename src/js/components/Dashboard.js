@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -123,8 +123,8 @@ function Dashboard(props) {
       : localStorage.getItem("role")
   );
 
-const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen(prevState => !prevState);
+//const [dropdownOpen, setDropdownOpen] = useState(false);
+  //const toggle = () => setDropdownOpen(prevState => !prevState);
   console.log("the user role is " + role);
   const handleDrawerOpen = () => {
     setOpen(true);
