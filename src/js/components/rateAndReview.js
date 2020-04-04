@@ -3,7 +3,8 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import ReviewForm from './ReviewForm'
+import SubscribeButton from './SubscribeButton';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,31 +17,32 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FormComponent() {
     const classes = useStyles();
-    const [value, setValue] = React.useState('Write a Review');
+    const [textValue, setTextValue] = React.useState('Write a Review');
+    const [starValue, setStarValue] = React.useState(1);
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        setStarValue(event.target.value);
     };
+    
 
     return (
-        <div>
+        <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+        }}>
             <Box component="fieldset" mb={3} borderColor="transparent">
                 <Typography component="legend">Review This Food Truck</Typography>
-                <Rating name="pristine" value={value} onChange={(event, newValue) => {
-                    setValue(newValue);
+                <Rating name="pristine" value={starValue} onChange={(event, newValue) => {
+                    setStarValue(newValue);
                 }} />
-                <form className={classes.root} noValidate autoComplete="off">
-                <TextField
-                    id="outlined-multiline-flexible"
-                    label="Review"
-                    multiline
-                    rowsMax="4"
-                    value={value}
-                    onChange={handleChange}
-                    variant="outlined"
-                />
-                </form>
+                <ReviewForm/>
+                <br/>
+                <SubscribeButton/>
             </Box>
+            
         </div>
+        
+        
     );
 }
