@@ -166,7 +166,7 @@ public class UPreferenceService {
         return sortedMap;
     }
 
-    private String getDayOfWeek(int value) {
+    public static String getDayOfWeek(int value) {
         String day = "";
         switch (value) {
             case 1:
@@ -191,6 +191,36 @@ public class UPreferenceService {
                 day = "SATURDAY";
                 break;
         }
+        return day;
+    }
+    public static int dayOfWeekToInt(String value) {
+        int day;
+        switch (value) {
+            case "SUNDAY":
+                day = 1;
+                break;
+            case "MONDAY":
+                day = 2;
+                break;
+            case "TUESDAY":
+                day = 3;
+                break;
+            case "WEDNESDAY":
+                day = 4;
+                break;
+            case "THURSDAY":
+                day = 5;
+                break;
+            case "FRIDAY":
+                day = 6;
+                break;
+            case "SATURDAY":
+                day = 7;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + value);
+        }
+        System.out.println(day);
         return day;
     }
 
