@@ -116,6 +116,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function onTruckClick(truck){
+  console.log(truck)
+}
+
 function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -249,7 +253,7 @@ function Dashboard(props) {
           {/* </Link> */}
         </List>
       </Drawer>
-      <SimpleMap trucks={trucks}>
+      <SimpleMap trucks={trucks} onTruckClick={onTruckClick}>
       </SimpleMap>
     </div>
   );

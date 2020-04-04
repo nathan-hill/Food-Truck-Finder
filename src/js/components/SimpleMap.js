@@ -25,7 +25,7 @@ export class SimpleMap extends Component {
   }
 
   onClick(truckData){
-    console.log(truckData)
+    this.props.onTruckClick(truckData);
   }
 
   render() {
