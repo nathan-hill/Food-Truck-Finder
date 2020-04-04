@@ -112,6 +112,23 @@ export async function getAllTrucks() {
     });
 }
 
+export async function getTrucksForToday() {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "schedule/getTrucksForToday",
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error) {
+      console.log(error);
+      return error;
+    });
+
+}
+
 export async function getUserSettings(id){
   return await axios({
     method: "GET",
