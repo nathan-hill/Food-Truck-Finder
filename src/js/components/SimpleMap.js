@@ -4,10 +4,6 @@ import GoogleMap from "google-map-react";
 import { geolocated } from "react-geolocated";
 import MapIcon from "./MapIcon";
 import BeenhereIcon from "@material-ui/icons/Beenhere";
-import Tooltip from "@material-ui/core/Tooltip";
-
-import { K_CIRCLE_SIZE, K_STICK_SIZE } from "./MapIconStyles";
-import shouldPureComponentUpdate from "react-pure-render/function";
 
 export class SimpleMap extends Component {
   constructor(props){
@@ -31,7 +27,7 @@ export class SimpleMap extends Component {
   render() {
     console.log(this.props.trucks);
     this.props.trucks.map(x => {
-      console.log(x.longitude + " " + x.latitude);
+      return console.log(x.longitude + " " + x.latitude);
     });
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>

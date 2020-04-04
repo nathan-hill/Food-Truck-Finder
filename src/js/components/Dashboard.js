@@ -28,7 +28,6 @@ import { connect } from "react-redux";
 import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import * as Request from './../helpers/backendRequests'
 
 // change size of expanded sidebar
