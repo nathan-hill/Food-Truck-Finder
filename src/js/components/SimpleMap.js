@@ -8,7 +8,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import { K_CIRCLE_SIZE, K_STICK_SIZE } from "./MapIconStyles";
 import shouldPureComponentUpdate from "react-pure-render/function";
-import { Typography } from "@material-ui/core";
 
 export class SimpleMap extends Component {
   constructor(props){
@@ -53,14 +52,12 @@ export class SimpleMap extends Component {
               <MapIcon onMouseOver={() => {this.onHover(x)}} onClick={() => {this.onClick(x)}} key={i} truckData={x} lat={x.latitude} lng={x.longitude} />
             );
           })}
-          <Tooltip title={<React.Fragment><Typography>Me</Typography></React.Fragment>}>
 
           <BeenhereIcon
             color="secondary"
             lat={this.props.coords.latitude}
             lng={this.props.coords.longitude}
           />
-          </Tooltip>
         </GoogleMap>
       </div>
     ) : (
