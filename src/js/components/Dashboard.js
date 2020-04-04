@@ -116,7 +116,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-async function Dashboard(props) {
+function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [trucks, setTrucks] = React.useState([]);
@@ -249,8 +249,7 @@ async function Dashboard(props) {
           {/* </Link> */}
         </List>
       </Drawer>
-      <SimpleMap>
-        {trucks.map((truck) =>{return<LocalShippingIcon lat={truck.latitude} lng={truck.longitude} text={truck.name}/>})}
+      <SimpleMap trucks={trucks}>
       </SimpleMap>
     </div>
   );
