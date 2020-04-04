@@ -28,6 +28,8 @@ import { connect } from "react-redux";
 import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import * as Request from './../helpers/backendRequests'
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -114,29 +116,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Dashboard(props) {
+async function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [trucks, setTrucks] = React.useState([]);
   const [role] = React.useState(
     typeof localStorage.getItem("role") === undefined || localStorage.getItem("role") === "undefined" || localStorage.getItem("role") === "null"
       ? "Guest"
       : localStorage.getItem("role")
   );
 
-//const [dropdownOpen, setDropdownOpen] = useState(false);
-  //const toggle = () => setDropdownOpen(prevState => !prevState);
-  console.log("the user role is " + role);
+  React.useEffect(() => {
+    Request.getTrucksForToday().then((x) => {setTrucks(x)}); // <-- this is an async function to an axios request
+},[]);
+
+
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  //const userState = this.state.user;
-
-  //const userState = 'customer';
   let mainList;
 
   if (role === "owner") {
@@ -247,12 +249,9 @@ function Dashboard(props) {
           {/* </Link> */}
         </List>
       </Drawer>
-
-      {/* <main className={classes.content}> */}
-      {/* <div className={classes.appBarSpacer} /> */}
-      {/* <Container maxWidth="lg" className={classes.container}></Container> */}
-      {/* </main> */}
-      <SimpleMap/>
+      <SimpleMap>
+        {trucks.map((truck) =>{return<LocalShippingIcon lat={truck.latitude} lng={truck.longitude} text={truck.name}/>})}
+      </SimpleMap>
     </div>
   );
 }

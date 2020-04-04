@@ -112,8 +112,8 @@ export async function getAllTrucks() {
     });
 }
 
-export async function getTrucksForToday() {
-  return await axios({
+export function getTrucksForToday() {
+  return axios({
     method: "GET",
     url: constants.backend_url + "schedule/getTrucksForToday",
     headers: request_headers

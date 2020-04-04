@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import GoogleMapReact from "google-map-react";
 import { geolocated } from "react-geolocated";
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 export class SimpleMap extends Component {
   render() {
@@ -18,7 +19,11 @@ export class SimpleMap extends Component {
             this.props.coords.longitude
           ]}
           defaultZoom={15}
-        ></GoogleMapReact>
+        >
+          {this.props.children}
+          <LocalShippingIcon lat={this.props.coords.latitude} lng={this.props.coords.longitude}
+          text="My Marker" />
+        </GoogleMapReact>
       </div>
     ) : (
       <div>Getting the location data&hellip; </div>
