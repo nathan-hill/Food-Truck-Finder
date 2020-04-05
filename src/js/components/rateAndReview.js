@@ -2,7 +2,6 @@ import React from 'react'
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import {connect} from "react-redux";
 import * as Request from './../helpers/backendRequests'
@@ -10,29 +9,18 @@ import * as Request from './../helpers/backendRequests'
 var constants = require("./../helpers/constants");
 
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-        width: '25ch',
-      },
-    },
-  }));
-
 function FormComponent() {
-    const classes = useStyles();
+    const [truck, setTruck] = React.useState();
     const [textValue, setTextValue] = React.useState('Write a Review');
     const [starValue, setStarValue] = React.useState(1);
     const [subscribeValue, setSubscribeValue] = React.useState(true);
-    const [isDisabled, setIsDisabled] = React.useState(false);
+    
+    //mark get the truckID somehow
 
-    // get truck from Database
-    const [role] = React.useState(
-        // typeof localStorage.getItem("role") === undefined || localStorage.getItem("role") === "undefined" || localStorage.getItem("role") === "null"
-        //   ? "Guest"
-        //   : localStorage.getItem("role")
-    );
+    React.useEffect(() => {
+        Request.findByTruckID().then((x) => {setTruck(x)}); // <-- this is an async function to an axios request
+    },[]);
+    
 
     const handleChange = (event) => {
         setStarValue(event.target.value);
@@ -47,18 +35,16 @@ function FormComponent() {
         event.preventDefault();
         
         console.log("Submit Review");
-        setIsDisabled(true);
-        console.log(isDisabled);
 
         //load data
-        
+        let data;
 
         console.log("Printing the body of form update");
         //console.log(data);
         // axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
         //     console.log(res);
         // });
-        setIsDisabled(false);
+        
     };
     
     
