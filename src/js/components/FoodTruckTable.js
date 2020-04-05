@@ -17,10 +17,12 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import AddAlertIcon from '@material-ui/icons/AddAlert';
 import axios from "axios";
 import {connect} from "react-redux";
 
 const tableIcons = {
+    Alert: forwardRef((props, ref) => <AddAlertIcon {...props} ref={ref}/>),
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
@@ -43,6 +45,7 @@ const tableIcons = {
 var constants = require("./../helpers/constants");
 
 class MaterialTableDemo extends React.Component {
+
     constructor(props) {
         super(props);
 

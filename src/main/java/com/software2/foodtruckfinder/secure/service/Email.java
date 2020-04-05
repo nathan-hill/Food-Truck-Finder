@@ -31,12 +31,12 @@ public class Email {
         try {
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject(sub);
+            message.setSubject("You have an update from " + sub);
             message.setText(msg);
             //send message
             Transport.send(message);
-            System.out.println("message sent successfully");
-        } catch (MessagingException e) {
+            System.out.println("message sent successfully to " + to + " msg:" + msg);
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

@@ -153,4 +153,13 @@ public class Message {
 
         return newClone;
     }
+
+    public Message(@NotBlank String truckName, @NotBlank Long sender, @NotBlank Long receiver, @NotBlank @Size(max = 1000) String text, @NotBlank Timestamp sentTime, @NotBlank String subject, @NotBlank Boolean isRead) {
+        this.truckName = truckName;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.text = text;
+        this.sentTime = sentTime;
+        this.isRead = isRead;
+    }
 }

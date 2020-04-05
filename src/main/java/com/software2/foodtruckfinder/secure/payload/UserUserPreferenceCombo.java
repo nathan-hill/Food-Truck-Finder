@@ -1,4 +1,7 @@
-package com.software2.foodtruckfinder.secure.model;
+package com.software2.foodtruckfinder.secure.payload;
+
+import com.software2.foodtruckfinder.secure.model.User;
+import com.software2.foodtruckfinder.secure.model.UserPreferences;
 
 public class UserUserPreferenceCombo {
     public User user;

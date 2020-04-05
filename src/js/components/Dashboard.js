@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -28,9 +28,11 @@ import { connect } from "react-redux";
 import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
+import * as Request from './../helpers/backendRequests'
 
 // change size of expanded sidebar
 const drawerWidth = 600;
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -113,29 +115,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function onTruckClick(truck){
+  console.log(truck)
+}
+
 function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [trucks, setTrucks] = React.useState([]);
   const [role] = React.useState(
     typeof localStorage.getItem("role") === undefined || localStorage.getItem("role") === "undefined" || localStorage.getItem("role") === "null"
       ? "Guest"
       : localStorage.getItem("role")
   );
 
-const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen(prevState => !prevState);
-  console.log("the user role is " + role);
+  React.useEffect(() => {
+    Request.getTrucksForToday().then((x) => {setTrucks(x)}); // <-- this is an async function to an axios request
+},[]);
+
+
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  //const userState = this.state.user;
-
-  //const userState = 'customer';
   let mainList;
 
   if (role === "owner") {
@@ -146,11 +152,13 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
     mainList = GuestListItems;
   }
 
-  
+  let numNotifications = 0;
   let logOutButton;
   let logInButton;
   if (props.auth.isAuthenticated) {
-    logOutButton = (
+    //function call to determine number of unread notifications
+    numNotifications = 1
+        logOutButton = (
       <Button
         type="submit"
         variant="contained"
@@ -217,7 +225,7 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
           </form>
           
           <IconButton color="inherit" href = "#/Notifications">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={numNotifications} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -244,12 +252,8 @@ const [dropdownOpen, setDropdownOpen] = useState(false);
           {/* </Link> */}
         </List>
       </Drawer>
-
-      {/* <main className={classes.content}> */}
-      {/* <div className={classes.appBarSpacer} /> */}
-      {/* <Container maxWidth="lg" className={classes.container}></Container> */}
-      {/* </main> */}
-      <SimpleMap/>
+      <SimpleMap trucks={trucks} onTruckClick={onTruckClick}>
+      </SimpleMap>
     </div>
   );
 }

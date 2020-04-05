@@ -1,15 +1,18 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Schedule;
+import com.software2.foodtruckfinder.secure.repository.TruckLocation;
 import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
+import com.software2.foodtruckfinder.secure.service.UPreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -17,10 +20,10 @@ import java.util.List;
 @RequestMapping(path = "/v/schedule")
 public class ScheduleController {
     @Autowired
-    private ScheduleRepository scheduleRepository;
+    private ScheduleRepository _scheduleRepository;
 
     public ScheduleController(ScheduleRepository sr) {
-        this.scheduleRepository = sr;
+        this._scheduleRepository = sr;
     }
 
     @PostMapping(path = "/add")
@@ -34,7 +37,7 @@ public class ScheduleController {
 
             System.out.println(s.toString() + "\n" + temp.toString());
 
-            generated.add(scheduleRepository.save(temp));
+            generated.add(_scheduleRepository.save(temp));
         }
 
         return new ResponseEntity<Schedule[]>(
@@ -44,33 +47,33 @@ public class ScheduleController {
     @DeleteMapping(path = "/delete")
     public @ResponseBody
     Boolean deleteAllSchedules() {
-        scheduleRepository.deleteAll();
+        _scheduleRepository.deleteAll();
         return true;
     }
 
     @GetMapping(path = "/getScheduleByID")
     public @ResponseBody
     List<Schedule> findScheduleByID(Integer id){
-        return scheduleRepository.findByTruckID(id);
+        return _scheduleRepository.findByTruckID(id);
     }
 
     @GetMapping(path = "/getSingleScheduleByID")
     public @ResponseBody
     Schedule findSingleScheduleByID(Long id) {
-        return scheduleRepository.findByid(id);
+        return _scheduleRepository.findByid(id);
     }
 
     @PostMapping(path = "/update")
     public @ResponseBody
     ResponseEntity<Schedule[]> updateSchedule(@RequestBody Schedule[] days) throws CloneNotSupportedException {
-        if(scheduleRepository.existsById(days[0].getId())) {
+        if(_scheduleRepository.existsById(days[0].getId())) {
             List<Schedule> generated = new ArrayList<>();
 
             Schedule temp = new Schedule();
             for (Schedule s : days) {
                 temp = s.clone();
 
-                generated.add(scheduleRepository.save(temp));
+                generated.add(_scheduleRepository.save(temp));
             }
 
             return new ResponseEntity<Schedule[]>(
@@ -81,5 +84,12 @@ public class ScheduleController {
         }
     }
 
+    @GetMapping(path="/getTrucksForToday")
+    public @ResponseBody
+    List<TruckLocation> getTrucksForToday(){
+        SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
+        List<TruckLocation> schedule = _scheduleRepository.getTrucksForToday(UPreferenceService.dayOfWeekToInt(simpleDateformat.format(new Date()).toUpperCase()));
 
+        return schedule;
+    }
 }

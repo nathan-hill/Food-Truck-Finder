@@ -22,6 +22,25 @@ export function getAllUsers() {
     });
 }
 
+export function getUnreadNotifications(i) {
+  //return 1    //for testing
+  return(axios({
+    method: "GET",
+    url: constants.backend_url + "message/getUnreadMessagesByUserS",
+    params: { id : i },
+    headers: request_headers
+  })
+    .then(response => {
+      console.log(response.data);
+      this.responseData = response.data;
+      return response.data;
+    })
+    .catch(function(error){
+      console.log(error);
+    })).length;
+  
+}
+
 export async function getUserByID(i) {
   return await axios({
     method: "GET",
@@ -94,20 +113,26 @@ export async function getAllTrucks() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export async function getUserPreferences(id) {
   return await axios({
+=======
+export function getTrucksForToday() {
+  return axios({
+>>>>>>> ddc2ca05c3b941224bdd412fda1aca72b699f4f9
     method: "GET",
-    url: constants.backend_url + "upref/getUPreferencesByID",
-    params: { id: id }
+    url: constants.backend_url + "schedule/getTrucksForToday",
+    headers: request_headers
   })
-    .then(function(res) {
-      console.log(res.data);
-      return res.data;
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
     })
-    .catch(function(e) {
-      console.log(e);
-      return e;
+    .catch(function(error) {
+      console.log(error);
+      return error;
     });
+
 }
 
 export async function getUserSettings(id){
@@ -138,6 +163,7 @@ export async function getPreferredTrucks(id, lon, lat) {
       lon: lon,
       lat: lat
     },
+<<<<<<< HEAD
 =======
 export async function sendNotification(data){
   return await axios({
@@ -145,6 +171,8 @@ export async function sendNotification(data){
     url: constants.backend_url + "sendNotification/",
     params:{data:data},
 >>>>>>> 1e77dfbb109633ba20bf8ab54489518a192161f6
+=======
+>>>>>>> ddc2ca05c3b941224bdd412fda1aca72b699f4f9
     headers: request_headers
   })
     .then(function(response) {
@@ -155,6 +183,25 @@ export async function sendNotification(data){
       console.log(error);
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+}
+
+export async function sendNotification(data){
+  return await axios({
+    method: "POST",
+    url: constants.backend_url + "message/sendToAllByTruckId",
+    data: data,
+    headers: request_headers
+  })
+    .then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+>>>>>>> ddc2ca05c3b941224bdd412fda1aca72b699f4f9
 }
 
 
@@ -174,6 +221,9 @@ export async function getUPById(id) {
       return error;
     });
 }
+<<<<<<< HEAD
 =======
 }
 >>>>>>> 1e77dfbb109633ba20bf8ab54489518a192161f6
+=======
+>>>>>>> ddc2ca05c3b941224bdd412fda1aca72b699f4f9

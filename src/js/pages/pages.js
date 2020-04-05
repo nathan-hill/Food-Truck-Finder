@@ -10,12 +10,19 @@ import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
 =======
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 >>>>>>> 1e77dfbb109633ba20bf8ab54489518a192161f6
+=======
+import NotificationTable from "./../components/Notifications";
+import SendNotificationForm from "./../components/SendNotifications";
+import Button from "@material-ui/core/Button";
+import FoodTruckPreferences from "../components/FoodTruckPreferences";
+>>>>>>> ddc2ca05c3b941224bdd412fda1aca72b699f4f9
 
 export class TestRouting extends React.Component {
   render() {
@@ -37,6 +44,9 @@ export class TestRouting extends React.Component {
           </li>
           <li>
             <Link to="/create_account">Create Account</Link>
+          </li>
+          <li>
+            <Link to="/SendNotifications">send Notification</Link>
           </li>
           <li>
             <Link to="/UserProfile">UserProfile</Link>
