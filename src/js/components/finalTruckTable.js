@@ -1,122 +1,210 @@
-import React, { useState } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Select from '@material-ui/core/Select';
+import React from "react";
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputBase from '@material-ui/core/InputBase';
 
-import MenuItem from '@material-ui/core/MenuItem';
-import Input from '@material-ui/core/Input';
-import Chip from '@material-ui/core/Chip';
-import {
-  DataTypeProvider,
-  EditingState,
-} from '@devexpress/dx-react-grid';
-import {
-  Grid,
-  Table,
-  TableHeaderRow,
-  TableEditRow,
-  TableEditColumn,
-} from '@devexpress/dx-react-grid-material-ui';
 
-import {
-  generateRows,
-  globalSalesValues,
-} from './demo-data/generator';
+const BootstrapInput = withStyles((theme) => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}))(InputBase);
 
-export default () => {
-  const getRowId = row => row.id;
-  const [costState, setCost] = React.useState('$');
-  
 
-const costChange = (event) =>{
-  costState=event.target.value;
+
+class finalTruckTable extends React.Component {
+  state = {
+    rows: [
+      {
+        foodTruckName: "test",
+        schedule: "425",
+        cost: "1",
+        foodType: "american",
+        menu: "yeet"
+      },
+      {
+        foodTruckName: "othertest",
+        schedule: "123",
+        cost: "4",
+        foodType: "chinese",
+        menu: "yote"
+      }
+    ]
+  };
+  handleChange = idx => e => {
+    const { name, value } = e.target;
+    const rows = [...this.state.rows];
+    rows[idx] = {
+      [name]: value
+    };
+    this.setState({
+      rows
+    });
+  };
+  handleAddRow = () => {
+    const item = {
+      foodTruckName: "",
+      schedule: "",
+      cost: ""
+    };
+    this.setState({
+      rows: [...this.state.rows, item]
+    });
+  };
+  handleRemoveRow = () => {
+    this.setState({
+      rows: this.state.rows.slice(0, -1)
+    });
+  };
+  handleRemoveSpecificRow = idx => () => {
+    const rows = [...this.state.rows];
+    rows.splice(idx, 1);
+    this.setState({ rows });
+  };
+  render() {
+    const classes = makeStyles();
+    return (
+      
+        <div className="container">
+          <div className="row clearfix">
+            <div className="col-md-12 column">
+              <table
+                className="table table-bordered table-hover"
+                id="tab_logic"
+              >
+                <thead>
+                  <tr>
+                    <th className="text-center"> ID </th>
+                    <th className="text-center"> Food Truck Name </th>
+                    <th className="text-center"> Schedule </th>
+                    <th className="text-center"> Cost </th>
+                    <th className="text-center"> Food Type </th>
+                    <th className="text-center"> Menu </th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.rows.map((item, idx) => (
+                    <tr id="addr0" key={idx}>
+                      <td>{idx}</td>
+                      <td>
+                        <input
+                          type="text"
+                          name="name"
+                          value={this.state.rows[idx].foodTruckName}
+                          onChange={this.handleChange(idx)}
+                          className="form-control"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          name="mobile"
+                          value={this.state.rows[idx].schedule}
+                          onChange={this.handleChange(idx)}
+                          className="form-control"
+                        />
+                      </td>
+                      <td>
+                      <FormControl className={classes.margin}>
+                        <InputLabel htmlFor="Food-Type">select Cost</InputLabel>
+                        <NativeSelect
+                          id="costSelect"
+                          value={this.state.rows[idx].cost}
+                          onChange={this.handleChange(idx)}
+                          input={<BootstrapInput />}
+                        >
+                          <option aria-label="None" value="" />
+                          <option value={"1"}>$</option>
+                          <option value={"2"}>$$</option>
+                          <option value={"3"}>$$$</option>
+                          <option value={"4"}>$$$$</option>
+                        </NativeSelect>
+                      </FormControl>
+                      </td>
+                      <td>
+                      <FormControl className={classes.margin}>
+                        <InputLabel htmlFor="Food-Type">select food type</InputLabel>
+                        <NativeSelect
+                          id="foodTypeSelect"
+                          value={this.state.rows[idx].foodType}
+                          onChange={this.handleChange(idx)}
+                          input={<BootstrapInput />}
+                        >
+                          <option aria-label="None" value="" />
+                          <option value={"american"}>American</option>
+                          <option value={"chinese"}>Chinese</option>
+                          <option value={"vietnamese"}>Vietnamese</option>
+                        </NativeSelect>
+                      </FormControl>
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          name="mobile"
+                          value={this.state.rows[idx].menu}
+                          onChange={this.handleChange(idx)}
+                          className="form-control"
+                        />
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-outline-danger btn-sm"
+                          onClick={this.handleRemoveSpecificRow(idx)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button onClick={this.handleAddRow} className="btn btn-primary">
+                Add Row
+              </button>
+              <button
+                onClick={this.handleRemoveRow}
+                className="btn btn-danger float-right"
+              >
+                Delete Last Row
+              </button>
+            </div>
+          </div>
+        </div>
+      
+    );
+  }
 }
 
-const CostFormatter = ({ value}) => value;
-
-const CostEditor = ({ costState, costChange}) => (
-        <Select
-          input={<Input />}
-          labelId="costSelect"
-          id="cost"
-          value={costState}
-          onChange={costChange}
-          style={{ width: '100%' }}
-        >
-          <MenuItem value={'$'}>$</MenuItem>
-          <MenuItem value={'$$'}>$$</MenuItem>
-          <MenuItem value={'$$$'}>$$$</MenuItem>
-          <MenuItem value={'$$$$'}>$$$$</MenuItem>
-        </Select>
-        
-);
-
-const CostTypeProvider = props => (
-  <DataTypeProvider
-    formatterComponent={CostFormatter}
-    editorComponent={CostEditor}
-    {...props}
-  />
-);
-
-
-  const [columns] = useState([
-    { name: 'foodTruckName', title: 'Food Truck Name' },
-    { name: 'schedule', title: 'Schedule' },
-    { name: 'cost', title: 'Cost' },
-    { name: 'foodType', title: 'Food Type' },
-    { name: 'menu', title: 'Menu' },
-  ]);
-  const [rows, setRows] = useState(generateRows({
-    columnValues: { id: ({ index }) => index, ...globalSalesValues },
-    length: 8,
-  }));
-  const [costColumns] = useState(['cost']);
-
-  const commitChanges = ({ added, changed, deleted }) => {
-    let changedRows;
-    if (added) {
-      const startingAddedId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
-      changedRows = [
-        ...rows,
-        ...added.map((row, index) => ({
-          id: startingAddedId + index,
-          ...row,
-        })),
-      ];
-    }
-    if (changed) {
-      changedRows = rows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
-    }
-    if (deleted) {
-      const deletedSet = new Set(deleted);
-      changedRows = rows.filter(row => !deletedSet.has(row.id));
-    }
-    setRows(changedRows);
-  };
-
-  return (
-    <Paper>
-      <Grid
-        rows={rows}
-        columns={columns}
-        getRowId={getRowId}
-      >
-        <CostTypeProvider
-          for={costColumns}
-        />
-        <EditingState
-          onCommitChanges={commitChanges}
-          defaultEditingRowIds={[0]}
-        />
-        <Table />
-        <TableHeaderRow />
-        <TableEditRow />
-        <TableEditColumn
-          showAddCommand
-          showEditCommand
-          showDeleteCommand
-        />
-      </Grid>
-    </Paper>
-  );
-};
+export default finalTruckTable;
