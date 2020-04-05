@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 class ReviewForm extends React.Component {
     constructor(props) {
       super(props);
@@ -16,7 +17,7 @@ class ReviewForm extends React.Component {
     }
   
     handleSubmit(event) {
-      //alert('An essay was submitted: ' + this.state.value);
+      //alert('A review was submitted: ' + this.state.value);
       event.preventDefault();
     }
   
@@ -31,5 +32,9 @@ class ReviewForm extends React.Component {
       );
     }
   }
+
+  const mapStateToProps = state => ({
+    auth: state.auth,
+});
 
 export default ReviewForm;

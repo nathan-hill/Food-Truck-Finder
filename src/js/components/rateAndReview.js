@@ -5,6 +5,13 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import ReviewForm from './ReviewForm'
 import SubscribeButton from './SubscribeButton';
+import axios from "axios";
+import {connect} from "react-redux";
+import * as Request from './../helpers/backendRequests'
+
+var constants = require("./../helpers/constants");
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function FormComponent() {
+function FormComponent() {
     const classes = useStyles();
     const [textValue, setTextValue] = React.useState('Write a Review');
     const [starValue, setStarValue] = React.useState(1);
@@ -24,6 +31,12 @@ export default function FormComponent() {
         setStarValue(event.target.value);
     };
     
+    // get truck from Database
+    const [role] = React.useState(
+        // typeof localStorage.getItem("role") === undefined || localStorage.getItem("role") === "undefined" || localStorage.getItem("role") === "null"
+        //   ? "Guest"
+        //   : localStorage.getItem("role")
+    );
 
     return (
         <div style={{
@@ -46,3 +59,9 @@ export default function FormComponent() {
         
     );
 }
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps, null)(FormComponent);
