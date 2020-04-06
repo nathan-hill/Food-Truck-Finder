@@ -2,7 +2,6 @@ import React from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from 'material-table';
 
-import AlarmOffIcon from '@material-ui/icons/AlarmOff';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -19,10 +18,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
 import {connect} from "react-redux";
+import * as Request from "./../helpers/backendRequests";
 
 const tableIcons = {
-
-    AlarmOff: forwardRef((props, ref) => <AlarmOffIcon {...props} ref={ref}/>),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
@@ -77,6 +75,17 @@ class NotificationTable extends React.Component {
     render() {
         return (
             <MaterialTable
+                actions={[
+                    rowData => ({
+                        icon: Check,
+                        tooltip: 'Mark as Read',
+                        onClick: (rowData) => {
+                            Request.markMessageRead(rowData.id);
+                        }, 
+                        disabled: rowData.isRead,
+                        hidden: rowData.isRead,
+                    })
+                ]}
                 icons={tableIcons}
                 title="Notifications"
                 columns={this.state.columns}
@@ -97,6 +106,7 @@ class NotificationTable extends React.Component {
                             }, 600);
                         }),
                 }}
+
             />
         );
     }

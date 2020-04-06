@@ -88,6 +88,13 @@ public class MessageController {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
+    @PostMapping(path="/markMessageAsRead")
+    public ResponseEntity<?> markMessageAsRead(@RequestBody Long id){
+        _mRepository.markMessageAsRead(id);
+
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
     @GetMapping(path="/getUnreadMessagesByUser")
     public ResponseEntity<?> getUnreadMessages(@RequestBody Long id){
         return new ResponseEntity<List<Message>>(UPreferenceService.iteratorToList(_mRepository.findByIsReadFalseAndReceiver(id).iterator()), HttpStatus.OK);
