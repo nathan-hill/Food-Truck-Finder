@@ -245,15 +245,15 @@ class customerSettings extends React.Component {
           >
             <Typography gutterBottom>Maximum distance (mi)</Typography>
             <Slider
-              defaultValue={30}
+              defaultValue={5}
               value={this.state.proximity}
               getAriaValueText={this.valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
-              step={1}
+              step={.01}
               marks
-              min={1}
-              max={30}
+              min={0}
+              max={10}
               disabled={this.state.isDisabled}
               onChange={this.onSliderChange}
             />
