@@ -57,62 +57,67 @@ const BootstrapInput = withStyles((theme) => ({
 var constants = require("./../helpers/constants");
 
 class finalTruckTable extends React.Component {
-  state = {
-    data: [
-      {
-      foodTruckName: "test",
-      cost: "1",
-      foodType: "american",
-      menu: "test"
-
-      },
-    ],
-    schedule:[
-      {
-        monOpenClosed: "",
-        monStartTime: "",
-        monEndTime: "",
-        monLat: "",
-        monLon: "",
+  constructor(props){
+    super(props)
+    this.state = {
+      id: props.auth.user.sub,
+      data: [
+        {
+        foodTruckName: "",
+        cost: "",
+        foodType: "",
+        menu: ""
   
-        tueOpenClosed: "",
-        tueStartTime: "",
-        tueEndTime: "",
-        tueLat: "",
-        tueLon: "",
+        },
+      ],
+      schedule:[
+        {
+          monOpenClosed: "",
+          monStartTime: "",
+          monEndTime: "",
+          monLat: "",
+          monLon: "",
+    
+          tueOpenClosed: "",
+          tueStartTime: "",
+          tueEndTime: "",
+          tueLat: "",
+          tueLon: "",
+    
+          wedOpenClosed: "",
+          wedStartTime: "",
+          wedEndTime: "",
+          wedLat: "",
+          wedLon: "",
+    
+          thuOpenClosed: "",
+          thuStartTime: "",
+          thuEndTime: "",
+          thuLat: "",
+          thuLon: "",
+    
+          friOpenClosed: "",
+          friStartTime: "",
+          friEndTime: "",
+          friLat: "",
+          friLon: "",
+    
+          satOpenClosed: "",
+          satStartTime: "",
+          satEndTime: "",
+          satLat: "",
+          satLon: "",
+    
+          sunOpenClosed: "",
+          sunStartTime: "",
+          sunEndTime: "",
+          sunLat: "",
+          sunLon: "",
+        },
+      ]
+    };
+  }
   
-        wedOpenClosed: "",
-        wedStartTime: "",
-        wedEndTime: "",
-        wedLat: "",
-        wedLon: "",
-  
-        thuOpenClosed: "",
-        thuStartTime: "",
-        thuEndTime: "",
-        thuLat: "",
-        thuLon: "",
-  
-        friOpenClosed: "",
-        friStartTime: "",
-        friEndTime: "",
-        friLat: "",
-        friLon: "",
-  
-        satOpenClosed: "",
-        satStartTime: "",
-        satEndTime: "",
-        satLat: "",
-        satLon: "",
-  
-        sunOpenClosed: "",
-        sunStartTime: "",
-        sunEndTime: "",
-        sunLat: "",
-        sunLon: "",
-      },
-    ]
-  };
 
   componentDidMount = () => {
     // console.log("ID: ", this.props.auth.user.sub);
@@ -239,7 +244,8 @@ class finalTruckTable extends React.Component {
     console.log(this.state);
 
     let udata = {
-      
+      id: this.state.id,
+
     };
 
     let uschedule =  {
@@ -256,9 +262,9 @@ class finalTruckTable extends React.Component {
     console.log("Printing the body of form update");
     console.log(data);
 
-    // axios.put(constants.backend_url + "users/update", data).then(res => {
-    //   console.log(res);
-    // });
+    axios.put(constants.backend_url + "truck/update", data).then(res => {
+      console.log(res);
+    });
     this.setState({ isDisabled: true });
   }
 
@@ -274,9 +280,8 @@ class finalTruckTable extends React.Component {
       }}>
           <div className="row clearfix">
             <div className="col-md-12 column">
-              <table
-                className="table table-bordered table-hover"
-                id="tab_logic"
+              <table table-bordered table-hover
+                id="foodTruckTable"
                 bordercolor="green"
               >
                 <thead>
