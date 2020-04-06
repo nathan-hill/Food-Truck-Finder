@@ -2,6 +2,7 @@ package com.software2.foodtruckfinder.secure.controller;
 
 
 import com.software2.foodtruckfinder.secure.model.*;
+import com.software2.foodtruckfinder.secure.payload.TruckDistance;
 import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
@@ -99,9 +100,9 @@ public class UPreferenceController {
     //added should return list of dislikes whatever that is
     @GetMapping(path = "/getPreferred")
     public @ResponseBody
-    ResponseEntity<List<Truck>> findTruckPreferences(@RequestParam("id") Long id, @RequestParam("lon") Double lon, @RequestParam("lat") Double lat) {
-        List<Truck> trucks = upService.getPrioritizedTrucks(id, lon, lat);
-        return new ResponseEntity<List<Truck>>(trucks, (trucks.size() == 0 ? (HttpStatus.BAD_REQUEST) : (HttpStatus.OK)));
+    ResponseEntity<ArrayList<TruckDistance>> findTruckPreferences(@RequestParam("id") Long id, @RequestParam("lon") Double lat, @RequestParam("lat") Double lon) throws Exception {
+        ArrayList<TruckDistance> trucks = upService.getPrioritizedTrucks(id, lon, lat);
+        return new ResponseEntity<>(trucks, (trucks.size() == 0 ? (HttpStatus.BAD_REQUEST) : (HttpStatus.OK)));
     }
 
 }

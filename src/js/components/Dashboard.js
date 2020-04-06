@@ -247,13 +247,12 @@ function Dashboard(props) {
         <List>{mainList}</List>
         <Divider />
         <List component="nav">
-          {/* <Link to="/TestRouting" passhref> */}
           {secondaryListItems}
-          {/* </Link> */}
         </List>
       </Drawer>
-      <SimpleMap trucks={trucks} onTruckClick={onTruckClick}>
-      </SimpleMap>
+      <SimpleMap trucks={trucks} onTruckClick={onTruckClick}/>
+      {/* <InteractiveMap/> */}
+
     </div>
   );
 }

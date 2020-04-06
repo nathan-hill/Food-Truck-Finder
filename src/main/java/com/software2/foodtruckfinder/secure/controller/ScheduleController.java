@@ -1,9 +1,9 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Schedule;
+import com.software2.foodtruckfinder.secure.payload.Rankings;
 import com.software2.foodtruckfinder.secure.repository.TruckLocation;
 import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
-import com.software2.foodtruckfinder.secure.service.UPreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,7 +88,7 @@ public class ScheduleController {
     public @ResponseBody
     List<TruckLocation> getTrucksForToday(){
         SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
-        List<TruckLocation> schedule = _scheduleRepository.getTrucksForToday(UPreferenceService.dayOfWeekToInt(simpleDateformat.format(new Date()).toUpperCase()));
+        List<TruckLocation> schedule = _scheduleRepository.getTrucksForToday(Rankings.dayOfWeekToInt(simpleDateformat.format(new Date()).toUpperCase()));
 
         return schedule;
     }

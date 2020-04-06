@@ -14,7 +14,7 @@ function RenderTableHead(props) {
     const colNames = props.cols;
 
     const elements = colNames.map((colName) =>
-      <TableCell key={colName}>{colName}</TableCell>
+      <TableCell key={colName}>{colName.toUpperCase()}</TableCell>
     );
     
     return (
@@ -38,7 +38,6 @@ function RenderTableBody(props) {
     let arry = [];
 
     for (let i = 0; i < props.rows.length; i++){
-      console.log(r[i]);
       const row = Object.values(props.rows[i]);
       const elements = row.map((data) =>
       <TableCell key={data}>{data}</TableCell>
