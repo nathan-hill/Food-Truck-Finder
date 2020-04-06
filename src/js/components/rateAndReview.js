@@ -18,7 +18,7 @@ function FormComponent() {
     //mark get the truckID somehow
 
     React.useEffect(() => {
-        Request.findByTruckID().then((x) => {setTruck(x)}); // <-- this is an async function to an axios request
+        //Request.findByTruckID().then((x) => {setTruck(x)}); // <-- this is an async function to an axios request
     },[]);
     
 
@@ -37,13 +37,17 @@ function FormComponent() {
         console.log("Submit Review");
 
         //load data
-        let data;
-
+        let data = {
+            // TODO: truckid:
+            userID: props.auth.user.sub,
+            description: textValue,
+            rating: starValue
+        };
         console.log("Printing the body of form update");
         //console.log(data);
-        // axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
-        //     console.log(res);
-        // });
+        axios.put(constants.backend_url + "review/add", data).then(res => {
+             console.log(res);
+        });
         
     };
     

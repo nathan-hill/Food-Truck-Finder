@@ -150,7 +150,7 @@ export async function getUserSettings(id){
 export async function getPreferredTrucks(id, lon, lat) {
   console.log("making request for preferred trucks")
   console.log(id + " " + lon + " " + lat);
-  return await axios({
+  return axios({
     method: "GET",
     url: constants.backend_url + "upref/getPreferred",
     params: {
@@ -158,24 +158,8 @@ export async function getPreferredTrucks(id, lon, lat) {
       lon: lon,
       lat: lat
     }
-  })
+  });
 }
-
-export async function sendNotification(data){
-      return await axios({
-        method: "POST",
-        url: constants.backend_url + "message/sendToAllByTruckId",
-        data: data,
-        headers: request_headers
-      })
-        .then(function(response) {
-          console.log(response.data);
-          return response.data;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      }
 
 export async function sendNotification(data){
   return await axios({
