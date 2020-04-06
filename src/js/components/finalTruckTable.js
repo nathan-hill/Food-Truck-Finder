@@ -5,6 +5,8 @@ import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import axios from "axios";
+import {connect} from "react-redux";
 
 import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField';
@@ -52,101 +54,124 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-
+var constants = require("./../helpers/constants");
 
 class finalTruckTable extends React.Component {
   state = {
-    rows: [
+    data: [
       {
-        foodTruckName: "",
+      foodTruckName: "test",
+      cost: "1",
+      foodType: "american",
+      menu: "test"
 
-      monOpenClosed: "",
-      monStartTime: "",
-      monEndTime: "",
-      monLat: "",
-      monLon: "",
-
-      tueOpenClosed: "",
-      tueStartTime: "",
-      tueEndTime: "",
-      tueLat: "",
-      tueLon: "",
-
-      wedOpenClosed: "",
-      wedStartTime: "",
-      wedEndTime: "",
-      wedLat: "",
-      wedLon: "",
-
-      thuOpenClosed: "",
-      thuStartTime: "",
-      thuEndTime: "",
-      thuLat: "",
-      thuLon: "",
-
-      friOpenClosed: "",
-      friStartTime: "",
-      friEndTime: "",
-      friLat: "",
-      friLon: "",
-
-      satOpenClosed: "",
-      satStartTime: "",
-      satEndTime: "",
-      satLat: "",
-      satLon: "",
-
-      sunOpenClosed: "",
-      sunStartTime: "",
-      sunEndTime: "",
-      sunLat: "",
-      sunLon: "",
-        
-      cost: "",
-      foodType: "",
-      menu: ""
-
+      },
+    ],
+    schedule:[
+      {
+        monOpenClosed: "",
+        monStartTime: "",
+        monEndTime: "",
+        monLat: "",
+        monLon: "",
+  
+        tueOpenClosed: "",
+        tueStartTime: "",
+        tueEndTime: "",
+        tueLat: "",
+        tueLon: "",
+  
+        wedOpenClosed: "",
+        wedStartTime: "",
+        wedEndTime: "",
+        wedLat: "",
+        wedLon: "",
+  
+        thuOpenClosed: "",
+        thuStartTime: "",
+        thuEndTime: "",
+        thuLat: "",
+        thuLon: "",
+  
+        friOpenClosed: "",
+        friStartTime: "",
+        friEndTime: "",
+        friLat: "",
+        friLon: "",
+  
+        satOpenClosed: "",
+        satStartTime: "",
+        satEndTime: "",
+        satLat: "",
+        satLon: "",
+  
+        sunOpenClosed: "",
+        sunStartTime: "",
+        sunEndTime: "",
+        sunLat: "",
+        sunLon: "",
       },
     ]
   };
 
-  async componentDidMount() {
-    let userData = await Request.getUserByID(this.state.id);
-    let preferences = await Request.getUPById(this.state.id);
-
-    console.log("Gey user Data");
-    console.log(userData);
-
-    this.setState({
-      name: userData.name,
-      username: userData.username,
-      email: userData.email
-    });
-    this.setState({
-      proximity: preferences.proximity,
-      price: preferences.price,
-      likes: preferences.likes
-    });
+  componentDidMount = () => {
+    // console.log("ID: ", this.props.auth.user.sub);
+    // axios.get(constants.backend_url + "trucks/findTrucksByownerID", {
+    //     params: {
+    //         l: this.props.auth.user.sub
+    //     }
+    // }).then(res => {
+    //     this.setState({data: res.data})
+    //     console.log(this.state.data)
+    // });
+    // axios.get(constants.backend_url + "schedule/getScheduleByID", {
+    //   params: {
+    //       l: this.props.auth.user.sub
+    //   }
+    // }).then(res => {
+    //     this.setState({schedule: res.data})
+    //     console.log(this.state.schedule)
+    // });
   }
 
-  handleChange = idx => e => {
+
+  handleTruckChange = idx => e => {
     
     const { name, value } = e.target;
-    const rows = [...this.state.rows];
+    const data = [...this.state.data];
     
-    rows[idx] = {
+    data[idx] = {
       [name]: value
     };
     this.setState({
-      rows
+      data
+    });
+  };
+
+  handleScheduleChange = idx => e => {
+    
+    const { name, value } = e.target;
+    const schedule = [...this.state.schedule];
+    
+    schedule[idx] = {
+      [name]: value
+    };
+    this.setState({
+      schedule
     });
   };
 
 
   handleAddRow = () => {
-    const item = {
+    const truckItem = {
       foodTruckName: "",
+      cost: "",
+      foodType: "",
+      menu: ""
 
+    };
+
+    const truckSchedule = {
       monOpenClosed: "",
       monStartTime: "",
       monEndTime: "",
@@ -188,27 +213,22 @@ class finalTruckTable extends React.Component {
       sunEndTime: "",
       sunLat: "",
       sunLon: "",
-        
-      cost: "",
-      foodType: "",
-      menu: ""
-
     };
+
     this.setState({
-      rows: [...this.state.rows, item]
+      data: [...this.state.data, truckItem],
+      schedule: [...this.state.schedule, truckSchedule]
     });
   };
 
-  handleRemoveRow = () => {
-    this.setState({
-      rows: this.state.rows.slice(0, -1)
-    });
-  };
 
   handleRemoveSpecificRow = idx => () => {
-    const rows = [...this.state.rows];
-    rows.splice(idx, 1);
-    this.setState({ rows });
+    const data = [...this.state.data];
+    const schedule = [...this.state.schedule];
+    data.splice(idx, 1);
+    schedule.splice(idx, 1);
+    this.setState({ data });
+    this.setState({ schedule });
   };
 
   onSubmit(e) {
@@ -226,7 +246,7 @@ class finalTruckTable extends React.Component {
 
     };
     
-    let data = { truck: udata, schedule: upref };
+    let data = { truck: udata, schedule: uschedule };
     data.headers = {
       "Access-Control-Allow-Origin": "*",
       "content-type": "application/json",
@@ -271,15 +291,15 @@ class finalTruckTable extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.rows.map((item, idx) => (
+                  {this.state.data.map((item, idx) => (
                     <tr id="addr0" key={idx} >
                       <td>{idx}</td>
                       <td>
                         <input
                           type="text"
                           name="name"
-                          value={this.state.rows[idx].foodTruckName}
-                          onChange={this.handleChange(idx)}
+                          value={this.state.data[idx].foodTruckName}
+                          onChange={this.handleTruckChange(idx)}
                           className="form-control"
                         />
                       </td>
@@ -293,8 +313,8 @@ class finalTruckTable extends React.Component {
                                   <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                   <NativeSelect
                                     id="costSelect"
-                                    value={this.state.rows[idx].monOpenClosed}
-                                    onChange={this.handleChange(idx)}
+                                    value={this.state.schedule[idx].monOpenClosed}
+                                    onChange={this.handleScheduleChange(idx)}
                                     input={<BootstrapInput />}
                                   >
                                     <option aria-label="None" value="" />
@@ -308,8 +328,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="Start Time"
                                   type="time"
-                                  value={this.state.rows[idx].monStartTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].monStartTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -321,8 +341,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="End Time"
                                   type="time"
-                                  value={this.state.rows[idx].monEndTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].monEndTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -336,8 +356,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].monLat}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].monLat}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -348,8 +368,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].monLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].monLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -364,8 +384,8 @@ class finalTruckTable extends React.Component {
                                   <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                   <NativeSelect
                                     id="costSelect"
-                                    value={this.state.rows[idx].tueOpenClosed}
-                                    onChange={this.handleChange(idx)}
+                                    value={this.state.schedule[idx].tueOpenClosed}
+                                    onChange={this.handleScheduleChange(idx)}
                                     input={<BootstrapInput />}
                                   >
                                     <option aria-label="None" value="" />
@@ -379,8 +399,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="Start Time"
                                   type="time"
-                                  value={this.state.rows[idx].tueStartTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].tueStartTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -392,8 +412,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="End Time"
                                   type="time"
-                                  value={this.state.rows[idx].tueEndTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].tueEndTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -407,8 +427,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].tueLat}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].tueLat}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -419,8 +439,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].tueLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].tueLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -435,8 +455,8 @@ class finalTruckTable extends React.Component {
                                   <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                   <NativeSelect
                                     id="costSelect"
-                                    value={this.state.rows[idx].wedOpenClosed}
-                                    onChange={this.handleChange(idx)}
+                                    value={this.state.schedule[idx].wedOpenClosed}
+                                    onChange={this.handleScheduleChange(idx)}
                                     input={<BootstrapInput />}
                                   >
                                     <option aria-label="None" value="" />
@@ -450,8 +470,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="Start Time"
                                   type="time"
-                                  value={this.state.rows[idx].wedStartTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].wedStartTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -463,8 +483,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="End Time"
                                   type="time"
-                                  value={this.state.rows[idx].wedEndTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].wedEndTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -478,8 +498,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].wedLat}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].wedLat}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -490,8 +510,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].wedLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].wedLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -506,8 +526,8 @@ class finalTruckTable extends React.Component {
                                   <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                   <NativeSelect
                                     id="costSelect"
-                                    value={this.state.rows[idx].thuOpenClosed}
-                                    onChange={this.handleChange(idx)}
+                                    value={this.state.schedule[idx].thuOpenClosed}
+                                    onChange={this.handleScheduleChange(idx)}
                                     input={<BootstrapInput />}
                                   >
                                     <option aria-label="None" value="" />
@@ -521,8 +541,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="Start Time"
                                   type="time"
-                                  value={this.state.rows[idx].thuStartTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].thuStartTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -534,8 +554,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="End Time"
                                   type="time"
-                                  value={this.state.rows[idx].thuEndTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].thuEndTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -549,8 +569,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].thuLat}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].thuLat}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -561,8 +581,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].thuLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].thuLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -577,8 +597,8 @@ class finalTruckTable extends React.Component {
                                   <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                   <NativeSelect
                                     id="costSelect"
-                                    value={this.state.rows[idx].friOpenClosed}
-                                    onChange={this.handleChange(idx)}
+                                    value={this.state.schedule[idx].friOpenClosed}
+                                    onChange={this.handleScheduleChange(idx)}
                                     input={<BootstrapInput />}
                                   >
                                     <option aria-label="None" value="" />
@@ -592,8 +612,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="Start Time"
                                   type="time"
-                                  value={this.state.rows[idx].friStartTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].friStartTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -605,8 +625,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="End Time"
                                   type="time"
-                                  value={this.state.rows[idx].friEndTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].friEndTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -620,8 +640,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].friLat}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].friLat}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -632,8 +652,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].friLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].friLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -648,8 +668,8 @@ class finalTruckTable extends React.Component {
                                   <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                   <NativeSelect
                                     id="costSelect"
-                                    value={this.state.rows[idx].satOpenClosed}
-                                    onChange={this.handleChange(idx)}
+                                    value={this.state.schedule[idx].satOpenClosed}
+                                    onChange={this.handleScheduleChange(idx)}
                                     input={<BootstrapInput />}
                                   >
                                     <option aria-label="None" value="" />
@@ -663,8 +683,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="Start Time"
                                   type="time"
-                                  value={this.state.rows[idx].satStartTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].satStartTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -676,8 +696,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="End Time"
                                   type="time"
-                                  value={this.state.rows[idx].satEndTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].satEndTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -691,8 +711,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].satLat}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].satLat}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -703,8 +723,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].satLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].satLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -719,8 +739,8 @@ class finalTruckTable extends React.Component {
                                   <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                   <NativeSelect
                                     id="costSelect"
-                                    value={this.state.rows[idx].sunOpenClosed}
-                                    onChange={this.handleChange(idx)}
+                                    value={this.state.schedule[idx].sunOpenClosed}
+                                    onChange={this.handleScheduleChange(idx)}
                                     input={<BootstrapInput />}
                                   >
                                     <option aria-label="None" value="" />
@@ -734,8 +754,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="Start Time"
                                   type="time"
-                                  value={this.state.rows[idx].sunStartTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].sunStartTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -747,8 +767,8 @@ class finalTruckTable extends React.Component {
                                   id="time"
                                   label="End Time"
                                   type="time"
-                                  value={this.state.rows[idx].sunEndTime}
-                                  onChange={this.handleChange(idx)}
+                                  value={this.state.schedule[idx].sunEndTime}
+                                  onChange={this.handleScheduleChange(idx)}
                                   className={classes.textField}
                                   InputLabelProps={{
                                     shrink: true,
@@ -762,8 +782,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].sunLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].sunLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -774,8 +794,8 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].sunLon}
-                                      onChange={this.handleChange(idx)}
+                                      value={this.state.schedule[idx].sunLon}
+                                      onChange={this.handleScheduleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
                                     />
@@ -791,8 +811,8 @@ class finalTruckTable extends React.Component {
                         <InputLabel htmlFor="Food-Type">select Cost</InputLabel>
                         <NativeSelect
                           id="costSelect"
-                          value={this.state.rows[idx].cost}
-                          onChange={this.handleChange(idx)}
+                          value={this.state.data[idx].cost}
+                          onChange={this.handleTruckChange(idx)}
                           input={<BootstrapInput />}
                         >
                           <option aria-label="None" value="" />
@@ -808,8 +828,8 @@ class finalTruckTable extends React.Component {
                         <InputLabel htmlFor="Food-Type">select food type</InputLabel>
                         <NativeSelect
                           id="foodTypeSelect"
-                          value={this.state.rows[idx].foodType}
-                          onChange={this.handleChange(idx)}
+                          value={this.state.data[idx].foodType}
+                          onChange={this.handleTruckChange(idx)}
                           input={<BootstrapInput />}
                         >
                           <option aria-label="None" value="" />
@@ -823,8 +843,8 @@ class finalTruckTable extends React.Component {
                         <input
                           type="text"
                           name="mobile"
-                          value={this.state.rows[idx].menu}
-                          onChange={this.handleChange(idx)}
+                          value={this.state.data[idx].menu}
+                          onChange={this.handleTruckChange(idx)}
                           className="form-control"
                         />
                       </td>
@@ -840,11 +860,13 @@ class finalTruckTable extends React.Component {
                   ))}
                 </tbody>
               </table>
+              <br/>
               <button onClick={this.handleAddRow} className="btn btn-primary" >
                 Add Row
               </button>
               
             </div>
+            <br/>
             <button onClick={this.onSubmit} className="btn btn-primary">
                 Submit 
               </button>
@@ -854,5 +876,8 @@ class finalTruckTable extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
 
-export default finalTruckTable;
+export default connect(mapStateToProps, null)(finalTruckTable);
