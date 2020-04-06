@@ -18,7 +18,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     boolean existsById(Long id);
 
-    List<Schedule> findByTruckID(Integer truckID);
+    List<Schedule> findByTruckID(Long truckID);
 
     @Query(value = "select * from truck t, " +
             "(select  day, end_time, latitude, longitude, start_time, " +
