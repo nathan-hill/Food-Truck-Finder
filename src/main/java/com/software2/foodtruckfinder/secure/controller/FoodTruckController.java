@@ -28,7 +28,6 @@ public class FoodTruckController {
     ResponseEntity<Truck> addNewTruck(@RequestBody Truck newTruck) {
         Truck n = new Truck();
         n.setName(newTruck.getName());
-        n.setSchedule(newTruck.getSchedule());
         n.setDescription(newTruck.getDescription());
         n.setOwnerID(newTruck.getOwnerID());
         n.setMenu(newTruck.getMenu());
@@ -81,7 +80,6 @@ public class FoodTruckController {
             newT.setDescription(tdets.getDescription());
             newT.setMenu(tdets.getMenu());
             newT.setName(tdets.getName());
-            newT.setSchedule(tdets.getSchedule());
             newT.setOwnerID(tdets.getOwnerID());
 
             Truck generatedTruck = truckRepository.save(newT);

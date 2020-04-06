@@ -18,8 +18,10 @@ public class Schedule {
 
     @NotNull
     private long truckID;
+
     @NotNull
     private Integer day;
+
     private boolean isOpen;
     private LocalTime startTime;
     private LocalTime endTime;
