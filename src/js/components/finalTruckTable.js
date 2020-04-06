@@ -59,23 +59,53 @@ class finalTruckTable extends React.Component {
     rows: [
       {
         foodTruckName: "test",
+
         monOpenClosed: "0",
         monStartTime: "09:00",
         monEndTime: "11:00",
-        monLat: "0",
-        monLon: "0",
-        schedule: "425",
+        monLat: "5",
+        monLon: "5",
+
+        tueOpenClosed: "0",
+        tueStartTime: "09:00",
+        tueEndTime: "11:00",
+        tueLat: "5",
+        tueLon: "5",
+
+        wedOpenClosed: "0",
+        wedStartTime: "09:00",
+        wedEndTime: "11:00",
+        wedLat: "5",
+        wedLon: "5",
+
+        thuOpenClosed: "0",
+        thuStartTime: "09:00",
+        thuEndTime: "11:00",
+        thuLat: "5",
+        thuLon: "5",
+
+        friOpenClosed: "0",
+        friStartTime: "09:00",
+        friEndTime: "11:00",
+        friLat: "5",
+        friLon: "5",
+
+        satOpenClosed: "0",
+        satStartTime: "09:00",
+        satEndTime: "11:00",
+        satLat: "5",
+        satLon: "5",
+
+        sunOpenClosed: "0",
+        sunStartTime: "09:00",
+        sunEndTime: "11:00",
+        sunLat: "5",
+        sunLon: "5",
+        
         cost: "1",
         foodType: "american",
         menu: "yeet"
       },
-      {
-        foodTruckName: "othertest",
-        schedule: "123",
-        cost: "4",
-        foodType: "chinese",
-        menu: "yote"
-      }
     ]
   };
 
@@ -96,9 +126,53 @@ class finalTruckTable extends React.Component {
   handleAddRow = () => {
     const item = {
       foodTruckName: "",
-      schedule: "",
-      cost: "",
-      foodType: "",
+
+        monOpenClosed: "",
+        monStartTime: "",
+        monEndTime: "",
+        monLat: "",
+        monLon: "",
+
+        tueOpenClosed: "",
+        tueStartTime: "",
+        tueEndTime: "",
+        tueLat: "",
+        tueLon: "",
+
+        wedOpenClosed: "",
+        wedStartTime: "",
+        wedEndTime: "",
+        wedLat: "",
+        wedLon: "",
+
+        thuOpenClosed: "",
+        thuStartTime: "",
+        thuEndTime: "",
+        thuLat: "",
+        thuLon: "",
+
+        friOpenClosed: "",
+        friStartTime: "",
+        friEndTime: "",
+        friLat: "",
+        friLon: "",
+
+        satOpenClosed: "",
+        satStartTime: "",
+        satEndTime: "",
+        satLat: "",
+        satLon: "",
+
+        sunOpenClosed: "",
+        sunStartTime: "",
+        sunEndTime: "",
+        sunLat: "",
+        sunLon: "",
+        
+        cost: "",
+        foodType: "",
+        menu: ""
+
     };
     this.setState({
       rows: [...this.state.rows, item]
@@ -121,7 +195,11 @@ class finalTruckTable extends React.Component {
     
     return (
       
-        <div className="container" display='inline-block'>
+        <div className="container" style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+      }}>
           <div className="row clearfix">
             <div className="col-md-12 column">
               <table
@@ -218,7 +296,7 @@ class finalTruckTable extends React.Component {
                                     <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
                                     <OutlinedInput
                                       id="outlined-adornment-amount"
-                                      value={this.state.rows[idx].monLat}
+                                      value={this.state.rows[idx].monLon}
                                       onChange={this.handleChange(idx)}
                                       startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
                                       labelWidth={30}
@@ -229,22 +307,429 @@ class finalTruckTable extends React.Component {
                             </tr>
                             <tr>
                               <td>Tuesday</td>
-
+                              <td>
+                                <FormControl className={classes.margin}>
+                                  <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                  <NativeSelect
+                                    id="costSelect"
+                                    value={this.state.rows[idx].tueOpenClosed}
+                                    onChange={this.handleChange(idx)}
+                                    input={<BootstrapInput />}
+                                  >
+                                    <option aria-label="None" value="" />
+                                    <option value={"0"}>Open</option>
+                                    <option value={"1"}>Closed</option>
+                                  </NativeSelect>
+                                </FormControl>
+                              </td>
+                              <td>
+                                <TextField
+                                  id="time"
+                                  label="Start Time"
+                                  type="time"
+                                  value={this.state.rows[idx].tueStartTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                              <TextField
+                                  id="time"
+                                  label="End Time"
+                                  type="time"
+                                  value={this.state.rows[idx].tueEndTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                  Location
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].tueLat}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].tueLon}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                              </td>
                             </tr>
                             <tr>
                               <td>Wednesday</td>
+                              <td>
+                                <FormControl className={classes.margin}>
+                                  <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                  <NativeSelect
+                                    id="costSelect"
+                                    value={this.state.rows[idx].wedOpenClosed}
+                                    onChange={this.handleChange(idx)}
+                                    input={<BootstrapInput />}
+                                  >
+                                    <option aria-label="None" value="" />
+                                    <option value={"0"}>Open</option>
+                                    <option value={"1"}>Closed</option>
+                                  </NativeSelect>
+                                </FormControl>
+                              </td>
+                              <td>
+                                <TextField
+                                  id="time"
+                                  label="Start Time"
+                                  type="time"
+                                  value={this.state.rows[idx].wedStartTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                              <TextField
+                                  id="time"
+                                  label="End Time"
+                                  type="time"
+                                  value={this.state.rows[idx].wedEndTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                  Location
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].wedLat}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].wedLon}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                              </td>
                             </tr>
                             <tr>
                               <td>Thursday</td>
+                              <td>
+                                <FormControl className={classes.margin}>
+                                  <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                  <NativeSelect
+                                    id="costSelect"
+                                    value={this.state.rows[idx].thuOpenClosed}
+                                    onChange={this.handleChange(idx)}
+                                    input={<BootstrapInput />}
+                                  >
+                                    <option aria-label="None" value="" />
+                                    <option value={"0"}>Open</option>
+                                    <option value={"1"}>Closed</option>
+                                  </NativeSelect>
+                                </FormControl>
+                              </td>
+                              <td>
+                                <TextField
+                                  id="time"
+                                  label="Start Time"
+                                  type="time"
+                                  value={this.state.rows[idx].thuStartTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                              <TextField
+                                  id="time"
+                                  label="End Time"
+                                  type="time"
+                                  value={this.state.rows[idx].thuEndTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                  Location
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].thuLat}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].thuLon}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                              </td>
                             </tr>
                             <tr>
                               <td>Friday</td>
+                              <td>
+                                <FormControl className={classes.margin}>
+                                  <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                  <NativeSelect
+                                    id="costSelect"
+                                    value={this.state.rows[idx].friOpenClosed}
+                                    onChange={this.handleChange(idx)}
+                                    input={<BootstrapInput />}
+                                  >
+                                    <option aria-label="None" value="" />
+                                    <option value={"0"}>Open</option>
+                                    <option value={"1"}>Closed</option>
+                                  </NativeSelect>
+                                </FormControl>
+                              </td>
+                              <td>
+                                <TextField
+                                  id="time"
+                                  label="Start Time"
+                                  type="time"
+                                  value={this.state.rows[idx].friStartTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                              <TextField
+                                  id="time"
+                                  label="End Time"
+                                  type="time"
+                                  value={this.state.rows[idx].friEndTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                  Location
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].friLat}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].friLon}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                              </td>
                             </tr>
                             <tr>
                               <td>Saturday</td>
+                              <td>
+                                <FormControl className={classes.margin}>
+                                  <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                  <NativeSelect
+                                    id="costSelect"
+                                    value={this.state.rows[idx].satOpenClosed}
+                                    onChange={this.handleChange(idx)}
+                                    input={<BootstrapInput />}
+                                  >
+                                    <option aria-label="None" value="" />
+                                    <option value={"0"}>Open</option>
+                                    <option value={"1"}>Closed</option>
+                                  </NativeSelect>
+                                </FormControl>
+                              </td>
+                              <td>
+                                <TextField
+                                  id="time"
+                                  label="Start Time"
+                                  type="time"
+                                  value={this.state.rows[idx].satStartTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                              <TextField
+                                  id="time"
+                                  label="End Time"
+                                  type="time"
+                                  value={this.state.rows[idx].satEndTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                  Location
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].satLat}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].satLon}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                              </td>
                             </tr>
                             <tr>
                               <td>Sunday</td>
+                              <td>
+                                <FormControl className={classes.margin}>
+                                  <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                  <NativeSelect
+                                    id="costSelect"
+                                    value={this.state.rows[idx].sunOpenClosed}
+                                    onChange={this.handleChange(idx)}
+                                    input={<BootstrapInput />}
+                                  >
+                                    <option aria-label="None" value="" />
+                                    <option value={"0"}>Open</option>
+                                    <option value={"1"}>Closed</option>
+                                  </NativeSelect>
+                                </FormControl>
+                              </td>
+                              <td>
+                                <TextField
+                                  id="time"
+                                  label="Start Time"
+                                  type="time"
+                                  value={this.state.rows[idx].sunStartTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                              <TextField
+                                  id="time"
+                                  label="End Time"
+                                  type="time"
+                                  value={this.state.rows[idx].sunEndTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                  Location
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].sunLon}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].sunLon}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                              </td>
                             </tr>
                           </tbody>
                         </table> 
@@ -303,7 +788,7 @@ class finalTruckTable extends React.Component {
                   ))}
                 </tbody>
               </table>
-              <button onClick={this.handleAddRow} className="btn btn-primary">
+              <button onClick={this.handleAddRow} className="btn btn-primary" >
                 Add Row
               </button>
               
