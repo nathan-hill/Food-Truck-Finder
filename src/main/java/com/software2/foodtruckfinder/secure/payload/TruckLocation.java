@@ -1,9 +1,11 @@
 package com.software2.foodtruckfinder.secure.payload;
 
 import com.software2.foodtruckfinder.secure.model.Cost;
+import com.software2.foodtruckfinder.secure.model.Truck;
 import com.sun.istack.NotNull;
 
 import java.time.LocalTime;
+import java.util.LinkedHashMap;
 
 public class TruckLocation {
     int id;
@@ -43,6 +45,7 @@ public class TruckLocation {
         this.truckid = truckid;
         this.is_open = is_open;
     }
+
 
     public int getId() {
         return id;

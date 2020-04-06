@@ -41,7 +41,7 @@ export class SimpleMap extends Component {
             this.props.coords.latitude,
             this.props.coords.longitude
           ]}
-          defaultZoom={1}
+          defaultZoom={15}
         >
           {this.props.trucks.map((x, i) => {
             return (
