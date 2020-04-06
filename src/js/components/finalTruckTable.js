@@ -3,14 +3,25 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import InputBase from '@material-ui/core/InputBase';
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
+import InputBase from '@material-ui/core/InputBase';
+import TextField from '@material-ui/core/TextField';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
     'label + &': {
       marginTop: theme.spacing(3),
     },
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+  margin: {
+    margin: theme.spacing(1)
   },
   input: {
     borderRadius: 4,
@@ -48,6 +59,11 @@ class finalTruckTable extends React.Component {
     rows: [
       {
         foodTruckName: "test",
+        monOpenClosed: "0",
+        monStartTime: "09:00",
+        monEndTime: "11:00",
+        monLat: "0",
+        monLon: "0",
         schedule: "425",
         cost: "1",
         foodType: "american",
@@ -62,9 +78,12 @@ class finalTruckTable extends React.Component {
       }
     ]
   };
+
   handleChange = idx => e => {
+    
     const { name, value } = e.target;
     const rows = [...this.state.rows];
+    
     rows[idx] = {
       [name]: value
     };
@@ -72,16 +91,20 @@ class finalTruckTable extends React.Component {
       rows
     });
   };
+
+
   handleAddRow = () => {
     const item = {
       foodTruckName: "",
       schedule: "",
-      cost: ""
+      cost: "",
+      foodType: "",
     };
     this.setState({
       rows: [...this.state.rows, item]
     });
   };
+
   handleRemoveRow = () => {
     this.setState({
       rows: this.state.rows.slice(0, -1)
@@ -92,16 +115,19 @@ class finalTruckTable extends React.Component {
     rows.splice(idx, 1);
     this.setState({ rows });
   };
+
   render() {
     const classes = makeStyles();
+    
     return (
       
-        <div className="container">
+        <div className="container" display='inline-block'>
           <div className="row clearfix">
             <div className="col-md-12 column">
               <table
                 className="table table-bordered table-hover"
                 id="tab_logic"
+                bordercolor="green"
               >
                 <thead>
                   <tr>
@@ -116,7 +142,7 @@ class finalTruckTable extends React.Component {
                 </thead>
                 <tbody>
                   {this.state.rows.map((item, idx) => (
-                    <tr id="addr0" key={idx}>
+                    <tr id="addr0" key={idx} >
                       <td>{idx}</td>
                       <td>
                         <input
@@ -128,13 +154,100 @@ class finalTruckTable extends React.Component {
                         />
                       </td>
                       <td>
-                        <input
-                          type="text"
-                          name="mobile"
-                          value={this.state.rows[idx].schedule}
-                          onChange={this.handleChange(idx)}
-                          className="form-control"
-                        />
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>Monday</td>
+                              <td>
+                                <FormControl className={classes.margin}>
+                                  <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                  <NativeSelect
+                                    id="costSelect"
+                                    value={this.state.rows[idx].monOpenClosed}
+                                    onChange={this.handleChange(idx)}
+                                    input={<BootstrapInput />}
+                                  >
+                                    <option aria-label="None" value="" />
+                                    <option value={"0"}>Open</option>
+                                    <option value={"1"}>Closed</option>
+                                  </NativeSelect>
+                                </FormControl>
+                              </td>
+                              <td>
+                                <TextField
+                                  id="time"
+                                  label="Start Time"
+                                  type="time"
+                                  value={this.state.rows[idx].monStartTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                              <TextField
+                                  id="time"
+                                  label="End Time"
+                                  type="time"
+                                  value={this.state.rows[idx].monEndTime}
+                                  onChange={this.handleChange(idx)}
+                                  className={classes.textField}
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                />
+                              </td>
+                              <td>
+                                  Location
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].monLat}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">lat:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                                  <td>
+                                  <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-amount">Longitude</InputLabel>
+                                    <OutlinedInput
+                                      id="outlined-adornment-amount"
+                                      value={this.state.rows[idx].monLat}
+                                      onChange={this.handleChange(idx)}
+                                      startAdornment={<InputAdornment position="start">Lon:</InputAdornment>}
+                                      labelWidth={30}
+                                    />
+                                  </FormControl>
+                                  </td>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Tuesday</td>
+
+                            </tr>
+                            <tr>
+                              <td>Wednesday</td>
+                            </tr>
+                            <tr>
+                              <td>Thursday</td>
+                            </tr>
+                            <tr>
+                              <td>Friday</td>
+                            </tr>
+                            <tr>
+                              <td>Saturday</td>
+                            </tr>
+                            <tr>
+                              <td>Sunday</td>
+                            </tr>
+                          </tbody>
+                        </table> 
                       </td>
                       <td>
                       <FormControl className={classes.margin}>
@@ -193,13 +306,11 @@ class finalTruckTable extends React.Component {
               <button onClick={this.handleAddRow} className="btn btn-primary">
                 Add Row
               </button>
-              <button
-                onClick={this.handleRemoveRow}
-                className="btn btn-danger float-right"
-              >
-                Delete Last Row
-              </button>
+              
             </div>
+            <button onClick={this.submitTable} className="btn btn-primary">
+                Submit 
+              </button>
           </div>
         </div>
       
