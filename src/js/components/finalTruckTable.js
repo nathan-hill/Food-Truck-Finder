@@ -58,56 +58,76 @@ class finalTruckTable extends React.Component {
   state = {
     rows: [
       {
-        foodTruckName: "test",
+        foodTruckName: "",
 
-        monOpenClosed: "0",
-        monStartTime: "09:00",
-        monEndTime: "11:00",
-        monLat: "5",
-        monLon: "5",
+      monOpenClosed: "",
+      monStartTime: "",
+      monEndTime: "",
+      monLat: "",
+      monLon: "",
 
-        tueOpenClosed: "0",
-        tueStartTime: "09:00",
-        tueEndTime: "11:00",
-        tueLat: "5",
-        tueLon: "5",
+      tueOpenClosed: "",
+      tueStartTime: "",
+      tueEndTime: "",
+      tueLat: "",
+      tueLon: "",
 
-        wedOpenClosed: "0",
-        wedStartTime: "09:00",
-        wedEndTime: "11:00",
-        wedLat: "5",
-        wedLon: "5",
+      wedOpenClosed: "",
+      wedStartTime: "",
+      wedEndTime: "",
+      wedLat: "",
+      wedLon: "",
 
-        thuOpenClosed: "0",
-        thuStartTime: "09:00",
-        thuEndTime: "11:00",
-        thuLat: "5",
-        thuLon: "5",
+      thuOpenClosed: "",
+      thuStartTime: "",
+      thuEndTime: "",
+      thuLat: "",
+      thuLon: "",
 
-        friOpenClosed: "0",
-        friStartTime: "09:00",
-        friEndTime: "11:00",
-        friLat: "5",
-        friLon: "5",
+      friOpenClosed: "",
+      friStartTime: "",
+      friEndTime: "",
+      friLat: "",
+      friLon: "",
 
-        satOpenClosed: "0",
-        satStartTime: "09:00",
-        satEndTime: "11:00",
-        satLat: "5",
-        satLon: "5",
+      satOpenClosed: "",
+      satStartTime: "",
+      satEndTime: "",
+      satLat: "",
+      satLon: "",
 
-        sunOpenClosed: "0",
-        sunStartTime: "09:00",
-        sunEndTime: "11:00",
-        sunLat: "5",
-        sunLon: "5",
+      sunOpenClosed: "",
+      sunStartTime: "",
+      sunEndTime: "",
+      sunLat: "",
+      sunLon: "",
         
-        cost: "1",
-        foodType: "american",
-        menu: "yeet"
+      cost: "",
+      foodType: "",
+      menu: ""
+
       },
     ]
   };
+
+  async componentDidMount() {
+    let userData = await Request.getUserByID(this.state.id);
+    let preferences = await Request.getUPById(this.state.id);
+
+    console.log("Gey user Data");
+    console.log(userData);
+
+    this.setState({
+      name: userData.name,
+      username: userData.username,
+      email: userData.email
+    });
+    this.setState({
+      proximity: preferences.proximity,
+      price: preferences.price,
+      likes: preferences.likes
+    });
+  }
 
   handleChange = idx => e => {
     
@@ -127,51 +147,51 @@ class finalTruckTable extends React.Component {
     const item = {
       foodTruckName: "",
 
-        monOpenClosed: "",
-        monStartTime: "",
-        monEndTime: "",
-        monLat: "",
-        monLon: "",
+      monOpenClosed: "",
+      monStartTime: "",
+      monEndTime: "",
+      monLat: "",
+      monLon: "",
 
-        tueOpenClosed: "",
-        tueStartTime: "",
-        tueEndTime: "",
-        tueLat: "",
-        tueLon: "",
+      tueOpenClosed: "",
+      tueStartTime: "",
+      tueEndTime: "",
+      tueLat: "",
+      tueLon: "",
 
-        wedOpenClosed: "",
-        wedStartTime: "",
-        wedEndTime: "",
-        wedLat: "",
-        wedLon: "",
+      wedOpenClosed: "",
+      wedStartTime: "",
+      wedEndTime: "",
+      wedLat: "",
+      wedLon: "",
 
-        thuOpenClosed: "",
-        thuStartTime: "",
-        thuEndTime: "",
-        thuLat: "",
-        thuLon: "",
+      thuOpenClosed: "",
+      thuStartTime: "",
+      thuEndTime: "",
+      thuLat: "",
+      thuLon: "",
 
-        friOpenClosed: "",
-        friStartTime: "",
-        friEndTime: "",
-        friLat: "",
-        friLon: "",
+      friOpenClosed: "",
+      friStartTime: "",
+      friEndTime: "",
+      friLat: "",
+      friLon: "",
 
-        satOpenClosed: "",
-        satStartTime: "",
-        satEndTime: "",
-        satLat: "",
-        satLon: "",
+      satOpenClosed: "",
+      satStartTime: "",
+      satEndTime: "",
+      satLat: "",
+      satLon: "",
 
-        sunOpenClosed: "",
-        sunStartTime: "",
-        sunEndTime: "",
-        sunLat: "",
-        sunLon: "",
+      sunOpenClosed: "",
+      sunStartTime: "",
+      sunEndTime: "",
+      sunLat: "",
+      sunLon: "",
         
-        cost: "",
-        foodType: "",
-        menu: ""
+      cost: "",
+      foodType: "",
+      menu: ""
 
     };
     this.setState({
@@ -184,11 +204,43 @@ class finalTruckTable extends React.Component {
       rows: this.state.rows.slice(0, -1)
     });
   };
+
   handleRemoveSpecificRow = idx => () => {
     const rows = [...this.state.rows];
     rows.splice(idx, 1);
     this.setState({ rows });
   };
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    console.log("Submit form");
+    this.setState({ isDisabled: true });
+    console.log(this.state);
+
+    let udata = {
+      
+    };
+
+    let uschedule =  {
+
+    };
+    
+    let data = { truck: udata, schedule: upref };
+    data.headers = {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+      Accept: "application/json"
+    };
+
+    console.log("Printing the body of form update");
+    console.log(data);
+
+    // axios.put(constants.backend_url + "users/update", data).then(res => {
+    //   console.log(res);
+    // });
+    this.setState({ isDisabled: true });
+  }
 
   render() {
     const classes = makeStyles();
@@ -793,7 +845,7 @@ class finalTruckTable extends React.Component {
               </button>
               
             </div>
-            <button onClick={this.submitTable} className="btn btn-primary">
+            <button onClick={this.onSubmit} className="btn btn-primary">
                 Submit 
               </button>
           </div>
