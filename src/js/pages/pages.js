@@ -13,7 +13,8 @@ import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
-import TruckTable from "../components/finalTruckTable";
+// import TruckTable from "../components/finalTruckTable";
+import TruckTable from "../components/NewFoodTruckTable";
 
 export class TestRouting extends React.Component {
   render() {

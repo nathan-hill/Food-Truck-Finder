@@ -349,7 +349,6 @@ class finalTruckTable extends React.Component {
                                 />
                               </td>
                               <td>
-                                  Location
                                   <td>
                                   <FormControl fullWidth className={classes.margin} variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-amount">Latitude</InputLabel>
