@@ -22,7 +22,28 @@ public class Truck {
     @NotNull
     private String type;
     @NotNull
-    private Cost cost;
+    private Integer cost;
+
+    public Truck(Truck t) {
+        this.id = t.getId();
+        this.Name = t.getName();
+        this.Schedule = t.getSchedule();
+        this.Description = t.getDescription();
+        this.Menu = t.getMenu();
+        this.ownerID = t.getOwnerID();
+        this.type = t.getType();
+        this.cost = t.getCost();
+    }
+
+    public Truck getMe(){
+        return this;
+    }
+
+    public Double getZero(){
+        return 0.0;
+    }
+
+    public Truck(){}
 
     public void setId(Long id) {
         this.id = id;
@@ -52,7 +73,7 @@ public class Truck {
         this.type = type;
     }
 
-    public void setCost(Cost cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 
@@ -85,6 +106,20 @@ public class Truck {
     }
 
     public Integer getCost() {
-        return cost.ordinal();
+        return cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Truck{" +
+                "id=" + id +
+                ", Name='" + Name + '\'' +
+                ", Schedule='" + Schedule + '\'' +
+                ", Description='" + Description + '\'' +
+                ", Menu='" + Menu + '\'' +
+                ", ownerID=" + ownerID +
+                ", type='" + type + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }
