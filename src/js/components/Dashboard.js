@@ -115,9 +115,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/*
 function onTruckClick(truck){
-  console.log(truck)
+  console.log(truck);
 }
+*/
 
 function Dashboard(props) {
   const classes = useStyles();
@@ -133,7 +135,12 @@ function Dashboard(props) {
     Request.getTrucksForToday().then((x) => {setTrucks(x)}); // <-- this is an async function to an axios request
 },[]);
 
-
+  const onTruckClick = (truck) => {
+    if(true) { // TODO: check if logged in
+      localStorage.setItem("clickedTruck",JSON.stringify(truck));
+      props.history.push("/rateAndReview")
+    }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);

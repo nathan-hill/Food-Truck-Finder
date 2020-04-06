@@ -9,13 +9,13 @@ import * as Request from './../helpers/backendRequests'
 var constants = require("./../helpers/constants");
 
 
-function FormComponent() {
-    const [truck, setTruck] = React.useState();
+function FormComponent(props) {
+    //const [truck, setTruck] = React.useState();
     const [textValue, setTextValue] = React.useState('Write a Review');
     const [starValue, setStarValue] = React.useState(1);
     const [subscribeValue, setSubscribeValue] = React.useState(true);
-    
-    //mark get the truckID somehow
+
+    let truck = JSON.parse(localStorage.getItem("clickedTruck"));
 
     React.useEffect(() => {
         //Request.findByTruckID().then((x) => {setTruck(x)}); // <-- this is an async function to an axios request
@@ -30,22 +30,21 @@ function FormComponent() {
         setSubscribeValue(!subscribeValue);
     };
 
-    const handleSubmit = (event) => {
-        
-        event.preventDefault();
-        
+    const handleSubmit = () => {
         console.log("Submit Review");
+        console.log(truck);
+
 
         //load data
         let data = {
-            // TODO: truckid:
+            truckid: truck.id,
             userID: props.auth.user.sub,
             description: textValue,
             rating: starValue
         };
         console.log("Printing the body of form update");
-        //console.log(data);
-        axios.put(constants.backend_url + "review/add", data).then(res => {
+        console.log(data);
+        axios.post(constants.backend_url + "review/add", data).then(res => {
              console.log(res);
         });
         
@@ -68,10 +67,9 @@ function FormComponent() {
                 <form  style={{ width: "50%"}}>
                     <label>
                         <textarea value={textValue} onChange={(event, newValue) => {
-                    setTextValue(newValue);
-                    
-                }}
-                style={{ width: "300px", height: "200px"}}/>
+                            setTextValue(newValue);
+                        }}
+                        style={{ width: "300px", height: "200px"}}/>
                     </label>
                 </form>
                 <br/>
@@ -81,7 +79,12 @@ function FormComponent() {
                     </button>
                 </form>
                 <br/>
-                <input type="submit" value="Submit" onSubmit={handleSubmit}/>
+                <form>
+                    <button onClick={handleSubmit}>
+                        Submit
+                    </button>
+                </form>
+
             </Box>
             
         </div>
