@@ -146,6 +146,22 @@ public class MessageController {
         return count;
     }
 
+    @PutMapping(value = "/makeMessageRead", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Message> updateMessageAsRead(@RequestBody Message m) throws CloneNotSupportedException {
+
+        if (_mRepository.existsById(m.getId())) {
+            Message n = new Message();
+            m.setRead(true);
+            n = m.clone();
+            
+
+            Message generatedM = _mRepository.save(n);
+            return new ResponseEntity<Message>(generatedM, HttpStatus.OK);
+        } else {
+            return null;
+        }
+    }
 
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
