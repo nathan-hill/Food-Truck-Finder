@@ -1,5 +1,6 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.Message;
 import com.software2.foodtruckfinder.secure.model.Schedule;
 import com.software2.foodtruckfinder.secure.payload.Rankings;
 import com.software2.foodtruckfinder.secure.repository.TruckLocation;
@@ -28,20 +29,19 @@ public class ScheduleController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity<Schedule[]> addNewSchedule(@RequestBody Schedule[] days) throws CloneNotSupportedException {
+    ResponseEntity<Schedule> addNewSchedule(@RequestBody Schedule sc) throws CloneNotSupportedException {
         List<Schedule> generated = new ArrayList<>();
 
         Schedule temp = new Schedule();
-        for (Schedule s : days) {
-            temp = s.clone();
-
-            System.out.println(s.toString() + "\n" + temp.toString());
-
-            generated.add(_scheduleRepository.save(temp));
+        temp = sc.clone();
+        for (Schedule s : _scheduleRepository.findAll()) {
+            if (s.getId().equals(temp.getId())) {
+                return ResponseEntity.status(400).build();
+            }
         }
 
-        return new ResponseEntity<Schedule[]>(
-                generated.toArray(new Schedule[generated.size()]), HttpStatus.OK);
+        Schedule generatedS = _scheduleRepository.save(temp);
+        return new ResponseEntity<Schedule>(generatedS, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete")
@@ -51,33 +51,32 @@ public class ScheduleController {
         return true;
     }
 
-    @GetMapping(path = "/getScheduleByID")
+    @DeleteMapping(path = "/remove")
     public @ResponseBody
-    List<Schedule> findScheduleByID(Long id){
-        return _scheduleRepository.findByTruckID(id);
+    Boolean removeFromDB(Long schedid) {
+        _scheduleRepository.deleteById(schedid);
+        return true;
     }
 
-    @GetMapping(path = "/getSingleScheduleByID")
+    @GetMapping(path = "/getScheduleByID")
     public @ResponseBody
-    Schedule findSingleScheduleByID(Long id) {
+    Schedule findScheduleByID(Long id) {
         return _scheduleRepository.findByid(id);
     }
 
     @PostMapping(path = "/update")
     public @ResponseBody
-    ResponseEntity<Schedule[]> updateSchedule(@RequestBody Schedule[] days) throws CloneNotSupportedException {
-        if(_scheduleRepository.existsById(days[0].getId())) {
+    ResponseEntity<Schedule> updateSchedule(@RequestBody Schedule days) throws CloneNotSupportedException {
+        if(_scheduleRepository.existsById(days.getId())) {
             List<Schedule> generated = new ArrayList<>();
 
             Schedule temp = new Schedule();
-            for (Schedule s : days) {
-                temp = s.clone();
+            temp = days.clone();
 
-                generated.add(_scheduleRepository.save(temp));
-            }
-
-            return new ResponseEntity<Schedule[]>(
-                    generated.toArray(new Schedule[generated.size()]), HttpStatus.OK);
+            removeFromDB(days.getId());
+            generated.add(_scheduleRepository.save(temp));
+            Schedule generatedS = _scheduleRepository.save(temp);
+            return new ResponseEntity<Schedule>(generatedS, HttpStatus.OK);
         }
         else {
             return null;
