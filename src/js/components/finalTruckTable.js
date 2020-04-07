@@ -63,6 +63,7 @@ class finalTruckTable extends React.Component {
       id: props.auth.user.sub,
       data: [
         {
+        truckID: "",
         foodTruckName: "",
         cost: "",
         foodType: "",
@@ -123,15 +124,16 @@ class finalTruckTable extends React.Component {
     // console.log("ID: ", this.props.auth.user.sub);
     // axios.get(constants.backend_url + "trucks/findTrucksByownerID", {
     //     params: {
-    //         l: this.props.auth.user.sub
+    //       l: this.props.auth.user.sub
     //     }
     // }).then(res => {
     //     this.setState({data: res.data})
     //     console.log(this.state.data)
     // });
+
     // axios.get(constants.backend_url + "schedule/getScheduleByID", {
     //   params: {
-    //       l: this.props.auth.user.sub
+    //       l: this.props.user.sub
     //   }
     // }).then(res => {
     //     this.setState({schedule: res.data})
@@ -169,6 +171,7 @@ class finalTruckTable extends React.Component {
 
   handleAddRow = () => {
     const truckItem = {
+      truckID: "",
       foodTruckName: "",
       cost: "",
       foodType: "",

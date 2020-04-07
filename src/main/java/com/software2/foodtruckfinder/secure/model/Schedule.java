@@ -20,22 +20,60 @@ public class Schedule {
     private long truckID;
     @NotNull
     private Integer day;
-    private boolean isOpen;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private Double longitude;
-    private Double latitude;
-    public boolean isOpen() {
-        return isOpen;
+    private boolean monOpen;
+    private LocalTime monStartTime;
+    private LocalTime monEndTime;
+    private Double monLongitude;
+    private Double monLatitude;
+
+    private boolean tueOpen;
+    private LocalTime tueStartTime;
+    private LocalTime tueEndTime;
+    private Double tueLongitude;
+    private Double tueLatitude;
+
+    private boolean wedOpen;
+    private LocalTime wedStartTime;
+    private LocalTime wedEndTime;
+    private Double wedLongitude;
+    private Double wedLatitude;
+
+    private boolean thuOpen;
+    private LocalTime thuStartTime;
+    private LocalTime thuEndTime;
+    private Double thuLongitude;
+    private Double thuLatitude;
+
+    private boolean friOpen;
+    private LocalTime friStartTime;
+    private LocalTime friEndTime;
+    private Double friLongitude;
+    private Double friLatitude;
+
+    private boolean satOpen;
+    private LocalTime satStartTime;
+    private LocalTime satEndTime;
+    private Double satLongitude;
+    private Double satLatitude;
+
+    private boolean sunOpen;
+    private LocalTime sunStartTime;
+    private LocalTime sunEndTime;
+    private Double sunLongitude;
+    private Double sunLatitude;
+
+
+    public boolean monOpen() {
+        return monOpen;
     }
 
-    public void setOpen(boolean open) {
-        isOpen = open;
-        if(isOpen == false){
-            setEndTime(null);
-            setStartTime(null);
-            setLatitude(null);
-            setLongitude(null);
+    public void setMonOpen(boolean open) {
+        monOpen = open;
+        if(monOpen == false){
+            setMonEndTime(null);
+            setMonStartTime(null);
+            setMonLatitude(null);
+            setMonLongitude(null);
         }
     }
 
@@ -45,20 +83,20 @@ public class Schedule {
     public long getTruckID() {
         return truckID;
     }
-    public Integer getDay() {
-        return day;
+    // public Integer getDay() {
+    //     return day;
+    // }
+    public LocalTime getMonStartTime() {
+        return monStartTime;
     }
-    public LocalTime getStartTime() {
-        return startTime;
+    public LocalTime getMonEndTime() {
+        return monEndTime;
     }
-    public LocalTime getEndTime() {
-        return endTime;
+    public Double getMonLongitude() {
+        return monLongitude;
     }
-    public Double getLongitude() {
-        return longitude;
-    }
-    public Double getLatitude() {
-        return latitude;
+    public Double getMonLatitude() {
+        return monLatitude;
     }
     public void setId(Long id) {
         this.id = id;
@@ -66,44 +104,44 @@ public class Schedule {
     public void setTruckID(long truckID) {
         this.truckID = truckID;
     }
-    public void setDay(Integer day) {
-        this.day = day;
+    // public void setDay(Integer day) {
+    //     this.day = day;
+    // }
+    public void setMonStartTime(LocalTime startTime) {
+        this.monStartTime = startTime;
     }
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
+    public void setMonEndTime(LocalTime endTime) {
+        this.monEndTime = endTime;
     }
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
+    public void setMonLongitude(Double longitude) {
+        this.monLongitude = longitude;
     }
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public void setMonLatitude(Double latitude) {
+        this.monLatitude = latitude;
     }
     @Override
     public String toString() {
         return "Schedule{" +
                 "id=" + id +
                 ", truckID=" + truckID +
-                ", day=" + day +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
+                // ", day=" + day +
+                ", monStartTime=" + monStartTime +
+                ", monEndTime=" + monEndTime +
+                ", monLongitude=" + monLongitude +
+                ", monLatitude=" + monLatitude +
                 '}';
     }
 
     @Override
     public Schedule clone() throws CloneNotSupportedException {
         Schedule newClone = new Schedule();
-        newClone.setLatitude(this.getLatitude());
-        newClone.setLongitude(this.getLongitude());
-        newClone.setOpen(this.isOpen());
+        newClone.setMonLatitude(this.getMonLatitude());
+        newClone.setMonLongitude(this.getMonLongitude());
+        newClone.setMonOpen(this.monOpen());
         newClone.setId(this.getId());
-        newClone.setDay(this.getDay());
-        newClone.setEndTime(this.getEndTime());
-        newClone.setStartTime(this.getStartTime());
+        // newClone.setDay(this.getDay());
+        newClone.setMonEndTime(this.getMonEndTime());
+        newClone.setMonStartTime(this.getMonStartTime());
         newClone.setTruckID(this.getTruckID());
 
         return newClone;
