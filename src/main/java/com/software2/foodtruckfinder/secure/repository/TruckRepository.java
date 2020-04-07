@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface TruckRepository extends JpaRepository<Truck, Long> {
 
 
-
     boolean existsById(Long id);
 
     List<Truck> findByTypeIn(List<String> type);

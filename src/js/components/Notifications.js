@@ -74,15 +74,14 @@ class NotificationTable extends React.Component {
     render() {
         return (
             <MaterialTable
-                
                 actions={[ 
                     rowData => ({
                         icon: Check,
                         tooltip: 'Mark as Read',
+                        disabled: rowData.isRead,  //this isn't working
                         onClick: (event, rowData) => Request.markMessageRead(rowData.id),
-                        disabled: rowData.isRead,
-                        hidden: rowData.isRead,
-                      }),
+                    
+                    }),
                     // {
                     //     icon: Check,
                     //     tooltip: 'Mark as Read',

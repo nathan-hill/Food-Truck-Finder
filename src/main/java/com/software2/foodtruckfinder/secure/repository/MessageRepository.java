@@ -14,22 +14,13 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
     @Modifying(flushAutomatically = true)
     @Transactional
-<<<<<<< HEAD
-    @Query("update Message set isRead = true where id = :mid")
-    void markAllAsRead(Long mid);
-=======
     @Query("update Message set isRead = true where receiver = id and isRead = false")
     void markAllAsRead(Long id);
->>>>>>> bfbbd696ec6d9b565622935e21517eb97dc1fc4c
 
     @Modifying(flushAutomatically = true)
     @Transactional
     @Query("update Message set isRead = true where id = :mid")
-    void markMessageAsRead(Long mid);
-<<<<<<< HEAD
-
-=======
->>>>>>> bfbbd696ec6d9b565622935e21517eb97dc1fc4c
+    void markMessageAsRead(@Param("mid") Long mid);
 
     List<Message> findByReceiver( Long uid );
 

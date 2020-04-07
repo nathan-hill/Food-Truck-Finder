@@ -11,6 +11,7 @@ import com.software2.foodtruckfinder.secure.service.UPreferenceService;
 import org.elasticsearch.search.aggregations.metrics.InternalHDRPercentiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -91,11 +92,8 @@ public class MessageController {
     }
 
     @PostMapping(path="/markMessageAsRead")
-<<<<<<< HEAD
-    public ResponseEntity<?> markMessageAsRead(@RequestBody Long id){
-=======
-    public ResponseEntity<?> markMessageAsRead(@RequestParam("id") Long id){
->>>>>>> bfbbd696ec6d9b565622935e21517eb97dc1fc4c
+    public ResponseEntity<?> markMessageAsRead(@Param("id") Long id){
+        System.out.println(id);
         _mRepository.markMessageAsRead(id);
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -146,20 +144,6 @@ public class MessageController {
             return null;
         }
     }
-
-    @GetMapping(path = "/getUnreadMessagesbyUserID")
-    public @ResponseBody
-    int findUnreadByUserId(Long user_id){
-        Iterable<Message> messIt = _mRepository.findByReceiver(user_id);
-        int count = 0;
-        for (Message m : messIt ){
-            if(!m.getRead()){
-                count = count + 1;
-            }
-        }
-        return count;
-    }
-
 
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
