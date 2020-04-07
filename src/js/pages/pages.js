@@ -9,24 +9,12 @@ import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
-=======
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
->>>>>>> 1e77dfbb109633ba20bf8ab54489518a192161f6
-=======
-import NotificationTable from "./../components/Notifications";
-import SendNotificationForm from "./../components/SendNotifications";
-import Button from "@material-ui/core/Button";
-import FoodTruckPreferences from "../components/FoodTruckPreferences";
-<<<<<<< HEAD
->>>>>>> ddc2ca05c3b941224bdd412fda1aca72b699f4f9
-=======
 import TruckTable from "../components/finalTruckTable";
->>>>>>> 87d9225837c32c79302007800fdbf877b4205767
+
 
 export class TestRouting extends React.Component {
   render() {

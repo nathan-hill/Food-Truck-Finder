@@ -131,13 +131,15 @@ class finalTruckTable extends React.Component {
     //     console.log(this.state.data)
     // });
 
+
     // axios.get(constants.backend_url + "schedule/getScheduleByID", {
     //   params: {
+            // food truck id from 
     //       l: this.props.user.sub
     //   }
     // }).then(res => {
     //     this.setState({schedule: res.data})
-    //     console.log(this.state.schedule)
+    //     console.log(this.state .schedule)
     // });
   }
 
@@ -252,7 +254,7 @@ class finalTruckTable extends React.Component {
     };
 
     let uschedule =  {
-
+        
     };
     
     let data = { truck: udata, schedule: uschedule };
