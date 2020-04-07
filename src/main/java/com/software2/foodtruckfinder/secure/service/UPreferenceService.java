@@ -1,9 +1,8 @@
 package com.software2.foodtruckfinder.secure.service;
 
-import com.software2.foodtruckfinder.secure.model.MapUtil;
-import com.software2.foodtruckfinder.secure.model.Schedule;
-import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
+import com.software2.foodtruckfinder.secure.payload.Rankings;
+import com.software2.foodtruckfinder.secure.payload.TruckDistance;
 import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
@@ -22,121 +21,105 @@ public class UPreferenceService {
     @Autowired
     private TruckRepository _truckRepo;
 
-    public List<Truck> getPrioritizedTrucks(Long id, Double lon, Double lat) {
+    public ArrayList<TruckDistance> getPrioritizedTrucks(Long id, Double lon, Double lat) throws Exception {
         //the result will be kept in a map of the truck and its ranking
         Map<Long, Double> ranking = new LinkedHashMap<>();
 
-        //the list of values we are going to normalize
-        Map<Long, Double> distances = prioritizeDistance(id, lon, lat);
-        Map<Long, Double> prices = prioritizePrice(id);
-        Map<Long, Double> ratings = prioritizeRating(id);
-        Map<Long, Double> matchType = prioritizeType(id);
+        ArrayList<TruckDistance> truckDistance = new Rankings(id, lat, lon)
+                .init(_truckRepo, _uprefrepo, _schedrepo)
+                .prioritizeDate()
+                .prioritizeDistance()
+                .prioritizePrice()
+                .prioritizeType()
+                .getResult();
 
-        /*********************************
-         * TODO: we can add ratings later
-         *******************************/
+        return truckDistance;
+    }
 
-        if (prices.size() == 0 || distances.size() == 0) {
-            System.err.println("there is not data in the db");
-            return new ArrayList<Truck>();
-        }
-
-        prices = normalizeMap(prices);
-        distances = normalizeMap(distances);
-        distances = MapUtil.sortByValue(distances);
-
-        for(Map.Entry<Long, Double> e: distances.entrySet()){
-//            System.err.println(e.getKey() + " " + e.getValue());
-            ranking.put(e.getKey(), distances.get(e.getKey()) + (3 * prices.get(e.getKey())));
-        }
-
-//        for (Map.Entry<Long, Double> e : prices.entrySet()) {
-//            System.err.println(distances.get(e.getKey()) + " " + e.getValue());
-//            ranking.put(e.getKey(), distances.get(e.getKey()) + e.getValue() /*+ ratings.get(e.getKey())*/);
+//    private List<TruckDistance> genTruckDistanceList(ArrayList<Truck> resultTruckSet, ArrayList<Double> values) {
+//        ArrayList<TruckDistance> result = new ArrayList<>();
+//        for (int i = 0; i < resultTruckSet.size(); i++) {
+//            result.add(new TruckDistance(resultTruckSet.get(i), values.get(i)));
 //        }
-
-        Map<Long, Double> sorted_results = new LinkedHashMap<>(MapUtil.sortByValue(ranking));
-
-        sorted_results.entrySet().forEach(System.err::println);
-
-        return getTrucksMatchingIds(sorted_results.keySet());
-    }
-
-    private List<Truck> getTrucksMatchingIds(Collection<Long> values) {
-        List<Truck> dbList = iteratorToList(_truckRepo.findAll().iterator());
-
-        List<Truck> res = new ArrayList<>();
-
-        for (Long d : values) {
-            for (Truck t : dbList) {
-                if (d.equals(t.getId())) {
-                    res.add(t);
-                }
-            }
-        }
-        return res;
-    }
-
-    private Map<Long, Double> prioritizeType(Long id) {
-        return null;
-    }
-
-    /*
-    Only returns trucks that have a schedule for today.
-    Returns a map of truck ids to their respective distance
-     */
-    public Map<Long, Double> prioritizeDistance(Long id, Double lon, Double lat) {
-        Map<Long, Double> distance_ranking = new HashMap<>();
-
-        List<Schedule> sched = _schedrepo.findAll();
-
-        System.err.println(getToday());
-        //only look at schedules that pertain to today
-        sched.removeIf(s -> !s.getDay().equals(getToday()));
-
-        //get a list of the distances between here and the current location of the truck
-        for (int j = 0; j < (long) sched.size(); j++) {
-            distance_ranking.put(sched.get(j).getTruckID(), distance(sched.get(j).getLatitude(), sched.get(j).getLongitude(), lat, lon));
-        }
-
-        return distance_ranking;
-    }
-
-
-    public Map<Long, Double> prioritizePrice(Long id) {
-        Map<Long, Double> prices = new HashMap<>();
-        Iterable<Truck> truckList = _truckRepo.findAll();
-
-        UserPreferences pref = createUserPreferencesIfNotExists(id);
-
-        //Get a list of the prices for each of the trucks
-        for (Truck t : truckList) {
-            Double price = (double) Math.abs(pref.getPrice() - t.getCost());
-            prices.put(t.getId(), price);
-        }
-
-        return prices;
-    }
-
-    private UserPreferences createUserPreferencesIfNotExists(Long id) {
-        Optional<UserPreferences> up = _uprefrepo.findById(id);
-        if (up.isEmpty()) {
-            UserPreferences assignedPreference = new UserPreferences();
-            assignedPreference.setProximity(30.0);
-            assignedPreference.setPrice(0);
-            assignedPreference.setId(id);
-            assignedPreference = _uprefrepo.save(assignedPreference);
-            return assignedPreference;
-        }
-        return up.get();
-    }
+//
+//        return result;
+//    }
+//
+//    private ArrayList<Truck> getTrucksMatchingIds(Collection<Long> values) {
+//        List<Truck> dbList = iteratorToList(_truckRepo.findAll().iterator());
+//
+//        List<Truck> res = new ArrayList<>();
+//
+//        for (Long d : values) {
+//            for (Truck t : dbList) {
+//                if (d.equals(t.getId())) {
+//                    res.add(t);
+//                }
+//            }
+//        }
+//        return (ArrayList<Truck>) res;
+//    }
+//
+//    private Map<Long, Double> prioritizeType(Long id, UserPreferences upref) {
+//        Map<Long, Double> typeRating = new HashMap<>();
+//
+//        List<Truck> matchingTypeTrucks = new ArrayList<>(_truckRepo.findByTypeIn(upref.getLikes()));
+//        matchingTypeTrucks.forEach(x -> typeRating.put(x.getId(), 0.5));
+//
+//        for (Map.Entry<Long, Double> longDoubleEntry : typeRating.entrySet()) {
+//            System.out.println(longDoubleEntry);
+//        }
+//
+//        return typeRating;
+//    }
+//
+//    /*
+//    Only returns trucks that have a schedule for today.
+//    Returns a map of truck ids to their respective distance
+//     */
+//    public Map<Long, Double> prioritizeDistance(Long id, Double lon, Double lat, UserPreferences upref) {
+//        Map<Long, Double> distance_ranking = new HashMap<>();
+//
+//        List<Schedule> sched = _schedrepo.findAll();
+//
+//        System.err.println(getToday());
+//        //only look at schedules that pertain to today
+//        sched.removeIf(s -> !s.getDay().equals(getToday()));
+//
+//        //get a list of the distances between here and the current location of the truck
+//        for (int j = 0; j < (long) sched.size(); j++) {
+//            double distance = distance(sched.get(j).getLatitude(), sched.get(j).getLongitude(), lat, lon);
+//
+//            if (distance < upref.getProximity()) {
+//                System.out.println(sched.get(j).getTruckID() + " -> " + distance);
+//                distance_ranking.put(sched.get(j).getTruckID(), distance);
+//            }
+//        }
+//
+//        return distance_ranking;
+//    }
+//
+//
+//    public Map<Long, Double> prioritizePrice(UserPreferences pref) {
+//        Map<Long, Double> prices = new HashMap<>();
+//        Iterable<Truck> truckList = _truckRepo.findAll();
+//
+//
+//        //Get a list of the prices for each of the trucks
+//        for (Truck t : truckList) {
+//            Double price = (double) Math.abs(pref.getPrice() - t.getCost());
+//            prices.put(t.getId(), price);
+//        }
+//
+//        return prices;
+//    }
 
     private int getToday() {
         //1 is sunday 7 is saturday
         return Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK);
     }
 
-    public Map<Long, Double> prioritizeRating(Long id) {
+    public Map<Long, Double> prioritizeRating(Long id, UserPreferences upref) {
         //retrieve all relevant data to the preference computation
         Optional<UserPreferences> pref = _uprefrepo.findById(id);
         //List<Schedule> sched = scheduleRepository.findAll().stream().filter(x -> x.getDay().equals(getDayOfWeek(Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK)))).collect(Collectors.toList());
@@ -144,50 +127,32 @@ public class UPreferenceService {
         return new HashMap<Long, Double>();
     }
 
-    private Double distance(Double x1, Double y1, Double x2, Double y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2.0) + Math.pow(y2 - y1, 2.0));
-    }
 
-    public Map<Long, Double> normalizeMap(Map<Long, Double> sortedMap) {
-        sortedMap = MapUtil.sortByValue(sortedMap);
-        //Double minSet = Collections.min(sortedMap.values());
-        Double maxSet = Collections.max(sortedMap.values());
-        double ratio = 1.0/maxSet;
 
-        sortedMap.replaceAll((k, v) -> v * ratio);
-//        for (Map.Entry<Long, Double> pair : sortedMap.entrySet()) {
-//            double numerator  = ((Double) pair.getValue() - minSet) * (maxNorm - minNorm);
-//            double deniminator = (maxSet - minSet) == 0? maxSet - minSet + 0.0001 : maxSet - minSet;
-//            double val = numerator / deniminator;
-//            pair.setValue(val);
-//            //it.remove(); // avoids a ConcurrentModificationException
-//        }
 
-        return sortedMap;
-    }
 
-    private String getDayOfWeek(int value) {
+    public static String getDayOfWeek(int value) {
         String day = "";
         switch (value) {
-            case 1:
+            case 7:
                 day = "SUNDAY";
                 break;
-            case 2:
+            case 1:
                 day = "MONDAY";
                 break;
-            case 3:
+            case 2:
                 day = "TUESDAY";
                 break;
-            case 4:
+            case 3:
                 day = "WEDNESDAY";
                 break;
-            case 5:
+            case 4:
                 day = "THURSDAY";
                 break;
-            case 6:
+            case 5:
                 day = "FRIDAY";
                 break;
-            case 7:
+            case 6:
                 day = "SATURDAY";
                 break;
         }

@@ -13,7 +13,7 @@ public class UserPreferences {
     @NotNull
     private Long id;
     @ElementCollection
-    private List<Preference> likes;
+    private List<String> likes;
     @Column(columnDefinition = "numeric(3,1) default 30")
     private Double proximity;
     @NotNull
@@ -33,7 +33,7 @@ public class UserPreferences {
         return id;
     }
 
-    public List<Preference> getLikes() {
+    public List<String> getLikes() {
         return likes;
     }
 
@@ -49,7 +49,7 @@ public class UserPreferences {
         this.id = id;
     }
 
-    public void setLikes(List<Preference> likes) {
+    public void setLikes(List<String> likes) {
         this.likes = likes;
     }
 
