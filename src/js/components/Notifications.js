@@ -92,7 +92,6 @@ class NotificationTable extends React.Component {
                 title="Notifications"
                 columns={this.state.columns}
                 data={this.state.data}
-
             />
         );
     }
