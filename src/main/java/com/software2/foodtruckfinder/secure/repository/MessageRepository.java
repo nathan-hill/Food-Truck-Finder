@@ -19,7 +19,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Modifying(flushAutomatically = true)
     @Transactional
-    @Query("update Message set isRead = true where id = mid")
+    @Query("update Message set isRead = true where id = :mid")
     void markMessageAsRead(Long mid);
 
     List<Message> findByReceiver( Long uid );

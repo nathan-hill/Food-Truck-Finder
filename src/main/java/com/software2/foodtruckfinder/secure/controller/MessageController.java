@@ -89,7 +89,7 @@ public class MessageController {
     }
 
     @PostMapping(path="/markMessageAsRead")
-    public ResponseEntity<?> markMessageAsRead(@RequestBody Long id){
+    public ResponseEntity<?> markMessageAsRead(@RequestParam("id") Long id){
         _mRepository.markMessageAsRead(id);
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
