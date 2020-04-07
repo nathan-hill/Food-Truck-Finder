@@ -184,9 +184,16 @@ export class Table extends React.Component {
       <div>
         <Link to="/">Back</Link>
         <TruckTable />
-        <Button href="#/SendNotifications">
-          Send Notification
-        </Button>
+        <div className="container" style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+          <Button href="#/SendNotifications">
+            Send Notification
+          </Button>
+        </div>
+        
       </div>
     );
   }

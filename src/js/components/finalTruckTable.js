@@ -64,52 +64,52 @@ class finalTruckTable extends React.Component {
       data: [
         {
         truckID: "",
-        foodTruckName: "",
-        cost: "",
-        foodType: "",
-        menu: ""
+        foodTruckName: "Test Truck",
+        cost: "3",
+        foodType: "american",
+        menu: "Delicous"
   
         },
       ],
       schedule:[
         {
-          monOpenClosed: "",
-          monStartTime: "",
-          monEndTime: "",
-          monLat: "",
-          monLon: "",
+          monOpenClosed: "1",
+          monStartTime: "09:00",
+          monEndTime: "18:00",
+          monLat: "20.20",
+          monLon: "17.76",
     
-          tueOpenClosed: "",
+          tueOpenClosed: "0",
           tueStartTime: "",
           tueEndTime: "",
           tueLat: "",
           tueLon: "",
     
-          wedOpenClosed: "",
+          wedOpenClosed: "0",
           wedStartTime: "",
           wedEndTime: "",
           wedLat: "",
           wedLon: "",
     
-          thuOpenClosed: "",
+          thuOpenClosed: "1",
           thuStartTime: "",
           thuEndTime: "",
           thuLat: "",
           thuLon: "",
     
-          friOpenClosed: "",
+          friOpenClosed: "1",
           friStartTime: "",
           friEndTime: "",
           friLat: "",
           friLon: "",
     
-          satOpenClosed: "",
+          satOpenClosed: "1",
           satStartTime: "",
           satEndTime: "",
           satLat: "",
           satLon: "",
     
-          sunOpenClosed: "",
+          sunOpenClosed: "1",
           sunStartTime: "",
           sunEndTime: "",
           sunLat: "",
@@ -131,13 +131,15 @@ class finalTruckTable extends React.Component {
     //     console.log(this.state.data)
     // });
 
+
     // axios.get(constants.backend_url + "schedule/getScheduleByID", {
     //   params: {
+            // food truck id from 
     //       l: this.props.user.sub
     //   }
     // }).then(res => {
     //     this.setState({schedule: res.data})
-    //     console.log(this.state.schedule)
+    //     console.log(this.state .schedule)
     // });
   }
 
@@ -289,7 +291,7 @@ class finalTruckTable extends React.Component {
               >
                 <thead>
                   <tr>
-                    <th className="text-center"> ID </th>
+                    {/* <th className="text-center"> ID </th> */}
                     <th className="text-center"> Food Truck Name </th>
                     <th className="text-center"> Schedule </th>
                     <th className="text-center"> Cost </th>
@@ -301,7 +303,7 @@ class finalTruckTable extends React.Component {
                 <tbody>
                   {this.state.data.map((item, idx) => (
                     <tr id="addr0" key={idx} >
-                      <td>{idx}</td>
+                      {/* <td>{idx}</td> */}
                       <td>
                         <input
                           type="text"
