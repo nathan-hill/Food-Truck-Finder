@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
+    Iterable<Subscription> findSubscriptionsByUid(Long uid);
 
     Iterable<Subscription> findByTruckId(Long truckID);
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {func} from "prop-types";
 var constants = require("./../helpers/constants");
 
 const request_headers = {
@@ -193,4 +194,47 @@ export async function getUPById(id) {
       console.log(error);
       return error;
     });
+}
+
+export async function getSubscriptionsByUserID(uid) {
+  return  await axios({
+    method: "GET",
+    url: constants.backend_url + "subscription/getSubscriptionsByUserID",
+    params: {uid},
+    headers: request_headers
+  }).then(function (response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+    return error;
+  });
+}
+
+export async function addSubscription(subscription) {
+  return await axios({
+    method: "POST",
+    url: constants.backend_url + "subscription/add",
+    data: subscription,
+    headers: request_headers
+  }).then(function(response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
+export async function unsubscribe(sub_id) {
+  return await axios({
+    method: "POST",
+    url: constants.backend_url + "subscription/unsubscribe",
+    params: {sub_id},
+    headers: request_headers
+  }).then(function(response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
 }

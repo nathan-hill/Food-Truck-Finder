@@ -8,18 +8,40 @@ import * as Request from './../helpers/backendRequests'
 
 var constants = require("./../helpers/constants");
 
-function getInitialSubValue(props) {
+async function getInitialSubValue(props,truck) {
     let userid = props.auth.user.sub;
+
+    let subscriptionsData = await Request.getSubscriptionsByUserID(userid);
+    console.log("SUBS DATA!");
+    console.log(subscriptionsData);
+    console.log(truck);
+
+        for(let subscription in subscriptionsData) {
+            if(subscription.uid === props.auth.user.sub && subscription.truckid === truck.id) {
+                console.log("TRUCK FOUND!");
+                return  true;
+            } else {
+                console.log("SUBSCRIPTION: ");
+                console.log(subscription);
+            }
+        }
+
+    return false;
 }
 
 function FormComponent(props) {
     //const [truck, setTruck] = React.useState();
     const [textValue, setTextValue] = React.useState("");
     const [starValue, setStarValue] = React.useState(1);
-    const [subscribeValue, setSubscribeValue] = React.useState(true);
-
     let truck = JSON.parse(localStorage.getItem("clickedTruck"));
-    
+
+    let initSub = null;
+    getInitialSubValue(props,truck).then(result => {
+       initSub = result;
+    });
+
+    const [subscribeValue, setSubscribeValue] = React.useState(initSub);
+
 
     const handleChange = (event) => {
         setStarValue(event.target.value);
@@ -31,9 +53,38 @@ function FormComponent(props) {
         setTextValue(event.target.value);
     }
 
-    const handleClick = () => {
-        setSubscribeValue(!subscribeValue);
-    };
+    async function handleClick()  {
+        if(subscribeValue) {
+            //unsubscribe
+            let userid = props.auth.user.sub;
+
+            let subscriptionsData = await Request.getSubscriptionsByUserID(userid);
+
+            if(subscriptionsData) {
+                for(let subscription in subscriptionsData) {
+                    if(subscription.uid === props.auth.user.sub && subscription.truckid === truck.id) {
+                        Request.unsubscribe(subscription.id).then(result => {
+                            setSubscribeValue(false);
+                        }).catch(error => {
+
+                        });
+
+                        break;
+                    }
+                }
+            }
+        } else {
+            //subscribe
+            let data = {
+                uid: props.auth.user.sub,
+                truckId: truck.id
+            };
+
+            Request.addSubscription(data).then(response => {
+                setSubscribeValue(true);
+            });
+        }
+    }
 
     const handleSubmit = () => {
         console.log("Submit Review");
@@ -79,7 +130,7 @@ function FormComponent(props) {
                 <br/>
                 <form>
                     <button onClick={handleClick}>
-                        {subscribeValue ? 'Subscribe To This Truck' : 'Subscribed'}
+                        {!subscribeValue ? 'Subscribe To This Truck' : 'Subscribed'}
                     </button>
                 </form>
                 <br/>

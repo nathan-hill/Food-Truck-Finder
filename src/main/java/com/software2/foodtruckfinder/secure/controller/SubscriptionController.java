@@ -80,6 +80,12 @@ public class SubscriptionController {
         return subRepository.findSubscriptionById(id);
     }
 
+    @GetMapping(path = "/getSubscriptionsByUserID")
+    public @ResponseBody
+    Iterable<Subscription> findSubscriptionsByUserID(Long uid) {
+        return subRepository.findSubscriptionsByUid(uid);
+    }
+
     @PutMapping(value = "update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Subscription> updateSubscription(@RequestBody Subscription s) {
