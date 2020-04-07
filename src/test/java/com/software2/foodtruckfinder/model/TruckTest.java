@@ -1,4 +1,4 @@
-package com.software2.foodtruckfinder;
+package com.software2.foodtruckfinder.model;
 
 import com.software2.foodtruckfinder.secure.model.Truck;
 import org.junit.jupiter.api.BeforeEach;
