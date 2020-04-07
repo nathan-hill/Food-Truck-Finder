@@ -8,6 +8,9 @@ import * as Request from './../helpers/backendRequests'
 
 var constants = require("./../helpers/constants");
 
+function getInitialSubValue(props) {
+    let userid = props.auth.user.sub;
+}
 
 function FormComponent(props) {
     //const [truck, setTruck] = React.useState();
