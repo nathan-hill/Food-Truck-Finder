@@ -14,21 +14,23 @@ function getInitialSubValue(props) {
 
 function FormComponent(props) {
     //const [truck, setTruck] = React.useState();
-    const [textValue, setTextValue] = React.useState('Write a Review');
+    const [textValue, setTextValue] = React.useState("");
     const [starValue, setStarValue] = React.useState(1);
     const [subscribeValue, setSubscribeValue] = React.useState(true);
 
     let truck = JSON.parse(localStorage.getItem("clickedTruck"));
-
-    React.useEffect(() => {
-        //Request.findByTruckID().then((x) => {setTruck(x)}); // <-- this is an async function to an axios request
-    },[]);
     
 
     const handleChange = (event) => {
         setStarValue(event.target.value);
-        setTextValue(event.target.value);
+        
     };
+
+    const handleTextChange = (event) => {
+        alert(event.target.value);
+        setTextValue(event.target.value);
+    }
+
     const handleClick = () => {
         setSubscribeValue(!subscribeValue);
     };
@@ -47,6 +49,7 @@ function FormComponent(props) {
         };
         console.log("Printing the body of form update");
         console.log(data);
+        alert(textValue);
         axios.post(constants.backend_url + "review/add", data).then(res => {
              console.log(res);
         });
@@ -69,9 +72,7 @@ function FormComponent(props) {
                 }} />
                 <form  style={{ width: "50%"}}>
                     <label>
-                        <textarea value={textValue} onChange={(event, newValue) => {
-                            setTextValue(newValue);
-                        }}
+                        <textarea value={textValue} onChange={event => setTextValue(event.target.value)}
                         style={{ width: "300px", height: "200px"}}/>
                     </label>
                 </form>
