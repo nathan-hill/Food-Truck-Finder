@@ -118,6 +118,14 @@ public class MessageController {
         return true;
     }
 
+    @PostMapping(path = "/deleteMessage")
+    public @ResponseBody
+    Boolean deleteMessage(@RequestParam("id") Long i){
+        System.out.println(i);
+        _mRepository.deleteMessage(i);
+        return true;
+    }
+
     //should be all you need to get all messages that are associated with a user
     @GetMapping(path = "/getMessagesbyUserID")
     public @ResponseBody
@@ -160,4 +168,6 @@ public class MessageController {
             return null;
         }
     }
+
+
 }

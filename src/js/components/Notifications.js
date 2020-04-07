@@ -82,16 +82,11 @@ class NotificationTable extends React.Component {
                         onClick: (event, rowData) => Request.markMessageRead(rowData.id),
                     
                     }),
-                    // {
-                    //     icon: Check,
-                    //     tooltip: 'Mark as Read',
-                    //     onClick: (e, rowData) => {
-                    //         console.log(rowData)
-                    //         Request.markMessageRead(rowData.id);
-                    //     }, 
-                        // disabled: rowData.isRead,
-                        // hidden: rowData.isRead,
-                // }
+                    rowData=> ({
+                        icon: Edit,
+                        tooltip: 'Delete',
+                        onClick: (event, rowData) => Request.deleteMessage(rowData.id),
+                    }),
             ]}
                 icons={tableIcons}
                 title="Notifications"
@@ -106,6 +101,7 @@ class NotificationTable extends React.Component {
                                     // sets the table to current state
                                     const data = [...prevState.data];
 
+                                    Request.deleteMessage(data.indexOf(oldData).id);
                                     // deletes a data point form the table
                                     data.splice(data.indexOf(oldData), 1);
                                     return {...prevState, data};

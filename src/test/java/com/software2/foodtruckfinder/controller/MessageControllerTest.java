@@ -34,6 +34,9 @@ public class MessageControllerTest {
             }
 
             @Override
+            public void deleteMessage(Long id){}
+
+            @Override
             public void markMessageAsRead(Long mid) {
 
             }

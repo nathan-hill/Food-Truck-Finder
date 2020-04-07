@@ -19,6 +19,12 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Modifying(flushAutomatically = true)
     @Transactional
+    @Query("delete from Message where id = :mid")
+    void deleteMessage(@Param("mid") Long mid);
+
+
+    @Modifying(flushAutomatically = true)
+    @Transactional
     @Query("update Message set isRead = true where id = :mid")
     void markMessageAsRead(@Param("mid") Long mid);
 
