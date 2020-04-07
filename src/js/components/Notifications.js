@@ -46,7 +46,6 @@ class NotificationTable extends React.Component {
 
     constructor(props) {
         super(props);
-
         //may need to rename fields to match data returns
         this.state = {
             columns: [
@@ -75,15 +74,26 @@ class NotificationTable extends React.Component {
     render() {
         return (
             <MaterialTable
-                actions={[
+                
+                actions={[ 
                     rowData => ({
                         icon: Check,
                         tooltip: 'Mark as Read',
                         onClick: (event, rowData) => Request.markMessageRead(rowData.id),
+                        disabled: rowData.isRead,
                         hidden: rowData.isRead,
-
-                    }),
-                ]}
+                      }),
+                    // {
+                    //     icon: Check,
+                    //     tooltip: 'Mark as Read',
+                    //     onClick: (e, rowData) => {
+                    //         console.log(rowData)
+                    //         Request.markMessageRead(rowData.id);
+                    //     }, 
+                        // disabled: rowData.isRead,
+                        // hidden: rowData.isRead,
+                // }
+            ]}
                 icons={tableIcons}
                 title="Notifications"
                 columns={this.state.columns}
