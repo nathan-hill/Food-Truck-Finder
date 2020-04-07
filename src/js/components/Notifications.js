@@ -2,7 +2,6 @@ import React from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from 'material-table';
 
-import AlarmOffIcon from '@material-ui/icons/AlarmOff';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
@@ -19,10 +18,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
 import {connect} from "react-redux";
+import * as Request from './../helpers/backendRequests'
 
 const tableIcons = {
-
-    AlarmOff: forwardRef((props, ref) => <AlarmOffIcon {...props} ref={ref}/>),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
@@ -48,7 +46,6 @@ class NotificationTable extends React.Component {
 
     constructor(props) {
         super(props);
-
         //may need to rename fields to match data returns
         this.state = {
             columns: [
@@ -77,26 +74,25 @@ class NotificationTable extends React.Component {
     render() {
         return (
             <MaterialTable
+                actions={[ 
+                    rowData => ({
+                        icon: Check,
+                        tooltip: 'Mark as Read',
+                        disabled: rowData.isRead,  //this isn't working
+                        onClick: (event, rowData) => Request.markMessageRead(rowData.id),
+                    
+                    }),
+                    rowData=> ({
+                        icon: DeleteOutline,
+                        tooltip: 'Delete',
+                        onClick: (event, rowData) => Request.deleteMessage(rowData.id),
+                    }),
+            ]}
                 icons={tableIcons}
                 title="Notifications"
                 columns={this.state.columns}
                 data={this.state.data}
-                editable={{
-                    onRowDelete: oldData =>
-                        new Promise(resolve => {
-                            setTimeout(() => {
-                                resolve();
-                                this.setState(prevState => {
-                                    // sets the table to current state
-                                    const data = [...prevState.data];
 
-                                    // deletes a data point form the table
-                                    data.splice(data.indexOf(oldData), 1);
-                                    return {...prevState, data};
-                                });
-                            }, 600);
-                        }),
-                }}
             />
         );
     }

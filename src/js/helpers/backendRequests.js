@@ -22,6 +22,46 @@ export function getAllUsers() {
     });
 }
 
+export function markMessageRead(i) {
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "message/markMessageAsRead",
+    params: { id: i },
+    headers: request_headers
+  };
+  console.log(request);
+
+  return axios(request)
+    .then(function(response){
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+  
+}
+
+export function deleteMessage(i) {
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "message/deleteMessage",
+    params: { id: i },
+    headers: request_headers
+  };
+  console.log(request);
+
+  return axios(request)
+    .then(function(response){
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+  
+}
+
 export function getUnreadNotifications(i) {
   //return 1    //for testing
   return(axios({
@@ -40,6 +80,7 @@ export function getUnreadNotifications(i) {
     })).length;
   
 }
+
 
 export async function getUserByID(i) {
   return await axios({

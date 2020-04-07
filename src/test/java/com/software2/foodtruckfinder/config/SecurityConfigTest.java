@@ -57,4 +57,5 @@ public class SecurityConfigTest {
         assertNotNull(sc.passwordEncoder());
     }
 
+
 }
