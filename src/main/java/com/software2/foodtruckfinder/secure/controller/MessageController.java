@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -81,7 +82,7 @@ public class MessageController {
     }
 
     @PostMapping(path="/markAllAsRead")
-    public ResponseEntity<?> markAllMessagesAsRead(@RequestBody Long id){
+    public ResponseEntity<?> markAllMessagesAsRead(@RequestParam("id)") Long id){
 
         _mRepository.markAllAsRead(id);
 
@@ -138,7 +139,22 @@ public class MessageController {
         return m;
     }
 
+    @PutMapping(value = "/makeMessageRead", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Message> updateMessageAsRead(@RequestParam Message m) throws CloneNotSupportedException {
 
+        if (_mRepository.existsById(m.getId())) {
+            Message n = new Message();
+            m.setRead(true);
+            n = m.clone();
+
+
+            Message generatedM = _mRepository.save(n);
+            return new ResponseEntity<Message>(generatedM, HttpStatus.OK);
+        } else {
+            return null;
+        }
+    }
 
     @GetMapping(path = "/getUnreadMessagesbyUserID")
     public @ResponseBody

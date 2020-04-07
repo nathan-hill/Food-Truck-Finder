@@ -18,7 +18,6 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
 import {connect} from "react-redux";
-import * as Request from "./../helpers/backendRequests";
 
 const tableIcons = {
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
