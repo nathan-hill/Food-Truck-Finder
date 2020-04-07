@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,31 +83,23 @@ public class MessageController {
     }
 
     @PostMapping(path="/markAllAsRead")
-    public ResponseEntity<?> markAllMessagesAsRead(@RequestParam("id)") Long id){
+    public ResponseEntity<?> markAllMessagesAsRead(@RequestParam("id") Long id){
 
         _mRepository.markAllAsRead(id);
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
+    @PostMapping(path="/markMessageAsRead")
+    public ResponseEntity<?> markMessageAsRead(@RequestBody Long id){
+        _mRepository.markMessageAsRead(id);
+
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
 
     @GetMapping(path="/getUnreadMessagesByUser")
     public ResponseEntity<?> getUnreadMessages(@RequestBody Long id){
         return new ResponseEntity<List<Message>>(UPreferenceService.iteratorToList(_mRepository.findByIsReadFalseAndReceiver(id).iterator()), HttpStatus.OK);
-    }
-
-    @GetMapping(path="/getNumberUnreadByID")
-    public @ResponseBody
-    int getNumberUnread(@RequestBody Long id) {
-        Iterable<Message> messages = _mRepository.findByReceiver(id);
-        int count = 0;
-        for(Message m : messages ){
-            if(!m.getRead()){
-                count = count+1;
-            }
-        }
-        System.out.println(count);
-        return count;
     }
 
     @GetMapping(path = "/")

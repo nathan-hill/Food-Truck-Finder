@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class DateAuditTest {
 
     private DateAudit da;
@@ -22,8 +25,23 @@ public class DateAuditTest {
     }
 
     @Test
-    @DisplayName("getCreatedAt test")
-    void getCreatedAtTest(){
-        System.out.println(da.getCreatedAt());
+    void Test(){
+        assertNotNull(da);
+    }
+
+    @Test
+    void setCreatedAtTest(){
+        Instant in = Instant.now();
+        da.setCreatedAt(in);
+
+        assertEquals(in, da.getCreatedAt());
+    }
+
+    @Test
+    void setUpdatedAtTest(){
+        Instant in = Instant.now();
+        da.setUpdatedAt(in);
+
+        assertEquals(in, da.getUpdatedAt());
     }
 }

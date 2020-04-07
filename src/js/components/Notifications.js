@@ -18,6 +18,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
 import {connect} from "react-redux";
+import * as Request from './../helpers/backendRequests'
 
 const tableIcons = {
     Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
@@ -78,19 +79,10 @@ class NotificationTable extends React.Component {
                     rowData => ({
                         icon: Check,
                         tooltip: 'Mark as Read',
+                        onClick: (event, rowData) => Request.markMessageRead(rowData.id),
                         hidden: rowData.isRead,
-                        onClick: (rowData) => {
-                            let _id = rowData.id
-                            //backend call to change message isRead to true
-                            axios.post(constants.backend_url + "message/markAllAsRead", {
-                                params: {
-                                    id: _id
-                                }
-                            }).then(res => {
-                                console.log(res);
-                              });
-                            },
-                    })
+
+                    }),
                 ]}
                 icons={tableIcons}
                 title="Notifications"
