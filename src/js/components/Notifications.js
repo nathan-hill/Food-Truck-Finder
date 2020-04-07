@@ -83,7 +83,7 @@ class NotificationTable extends React.Component {
                     
                     }),
                     rowData=> ({
-                        icon: Edit,
+                        icon: DeleteOutline,
                         tooltip: 'Delete',
                         onClick: (event, rowData) => Request.deleteMessage(rowData.id),
                     }),
@@ -92,23 +92,6 @@ class NotificationTable extends React.Component {
                 title="Notifications"
                 columns={this.state.columns}
                 data={this.state.data}
-                editable={{
-                    onRowDelete: oldData =>
-                        new Promise(resolve => {
-                            setTimeout(() => {
-                                resolve();
-                                this.setState(prevState => {
-                                    // sets the table to current state
-                                    const data = [...prevState.data];
-
-                                    Request.deleteMessage(data.indexOf(oldData).id);
-                                    // deletes a data point form the table
-                                    data.splice(data.indexOf(oldData), 1);
-                                    return {...prevState, data};
-                                });
-                            }, 600);
-                        }),
-                }}
 
             />
         );
