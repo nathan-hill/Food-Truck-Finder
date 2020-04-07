@@ -14,8 +14,19 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
     @Modifying(flushAutomatically = true)
     @Transactional
-    @Query("update Message set isRead = true where receiver = :id and isRead = false")
-    void markAllAsRead(@Param("id") Long id);
+    @Query("update Message set isRead = true where receiver = id and isRead = false")
+    void markAllAsRead(Long id);
+
+    @Modifying(flushAutomatically = true)
+    @Transactional
+    @Query("delete from Message where id = :mid")
+    void deleteMessage(@Param("mid") Long mid);
+
+
+    @Modifying(flushAutomatically = true)
+    @Transactional
+    @Query("update Message set isRead = true where id = :mid")
+    void markMessageAsRead(@Param("mid") Long mid);
 
     List<Message> findByReceiver( Long uid );
 
