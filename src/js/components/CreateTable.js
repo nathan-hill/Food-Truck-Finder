@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 function RenderTableHead(props) {
   
   console.disableRedBox = true;
-  console.log(props.cols);
+  // console.log(props.cols);
   if (props.cols.length <= 0) {
     return (
       <TableCell>""</TableCell>
@@ -27,14 +27,14 @@ function RenderTableHead(props) {
 
 function RenderTableBody(props) {
   console.disableRedBox = true;
-  console.log(props.rows);
+  // console.log(props.rows);
   if (props.rows.length <= 0) {
     return (
       <TableCell>""</TableCell>
     );
   } else {
     const r = props.rows;
-    console.log(r);
+    // console.log(r);
     let arry = [];
 
     for (let i = 0; i < props.rows.length; i++){
@@ -80,17 +80,17 @@ const StatsTable = observer(class StatsTable extends React.Component {
     )
   }
   componentDidMount(){
-    console.log("MOUNTED STATS TABLE");
-    console.log(this.props);
+    // console.log("MOUNTED STATS TABLE");
+    // console.log(this.props);
 
     this.setState({cols: this.props.cols, rows: this.props.rows});
-    console.log(this.state);
+    // console.log(this.state);
   }
   
 });
 
 export default function CreateTable(props){
-  console.log("in create table: " + props.cols);
+  // console.log("in create table: " + props.cols);
   if (props.cols !== undefined && props.cols.length > 0){
     return (
       <StatsTable rows={props.rows} cols={props.cols}/>

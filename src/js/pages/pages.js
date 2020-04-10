@@ -13,7 +13,7 @@ import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
-
+import Dashboard2 from '../components/Dashboard2'
 export class TestRouting extends React.Component {
   render() {
     return (
@@ -73,18 +73,18 @@ export class CreateAccount extends React.Component {
       type: e.target.elements.type.value
     };
 
-    console.log(user);
+    // console.log(user);
 
     var status = await Request.postNewUser(user);
 
-    console.log("The status is");
-    console.log(status.message)
+    // console.log("The status is");
+    // console.log(status.message)
 
     this.setState({ status: status.message });
   };
 
   render() {
-    console.log("redering the page as " + this.state.status);
+    // console.log("redering the page as " + this.state.status);
     return (
       <div>
         <SignUp
@@ -108,7 +108,7 @@ export class DatabaseListing extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("Mounted");
+    // console.log("Mounted");
     var users = await Request.getAllTrucks();
 
     this.setState({ trucks: users });
@@ -123,7 +123,7 @@ export class DatabaseListing extends React.Component {
 
     //this.setState({users: this.state.users.push()});
 
-    console.log(truck);
+    // console.log(truck);
 
     return Request.postNewTruck(truck);
   };
@@ -304,7 +304,8 @@ export class Home extends React.Component {
   render() {
     return (
       <div>
-        <Dashboard />
+        {/* <Dashboard /> */}
+        <Dashboard2/>
       </div>
     );
   }

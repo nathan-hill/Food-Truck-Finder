@@ -30,8 +30,8 @@ class SendNotificationForm extends React.Component {
   }
 
   handleToggle(value) {
-    console.log("value sent from CB");
-    console.log(value);
+    // console.log("value sent from CB");
+    // console.log(value);
     let currentIndex = -1;
     for (let i = 0; i < this.state.checked.length; i++) {
       if (this.state.checked[i].id === value.id) {
@@ -40,7 +40,7 @@ class SendNotificationForm extends React.Component {
     }
     const newChecked = [...this.state.checked];
 
-    console.log(newChecked);
+    // console.log(newChecked);
 
     if (currentIndex === -1) {
       newChecked.push(value);
@@ -48,14 +48,14 @@ class SendNotificationForm extends React.Component {
       newChecked.splice(currentIndex, 1);
     }
 
-    console.log("after adding");
-    console.log(newChecked);
+    // console.log("after adding");
+    // console.log(newChecked);
 
     this.setState({ checked: newChecked });
   }
 
   onCheckBoxChange(vals) {
-    console.log(vals);
+    // console.log(vals);
     this.setState({ selectedTrucks: vals });
   }
 
@@ -66,7 +66,7 @@ class SendNotificationForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log("sending message");
+    // console.log("sending message");
 
     let data = {
       to: this.state.checked.map(e => {
@@ -81,8 +81,8 @@ class SendNotificationForm extends React.Component {
   async componentDidMount() {
     let data = await Request.getAllTrucks(this.state.id);
 
-    console.log("Get user Data");
-    console.log(data);
+    // console.log("Get user Data");
+    // console.log(data);
 
     /******************************
      * This was the problem

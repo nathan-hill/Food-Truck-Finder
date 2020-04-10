@@ -17,7 +17,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 var constants = require("./../helpers/constants");
 
-class customerSettings extends React.Component {
+class UserSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,8 +47,8 @@ class customerSettings extends React.Component {
     let userData = await Request.getUserByID(this.state.id);
     let preferences = await Request.getUPById(this.state.id);
 
-    console.log("Gey user Data");
-    console.log(userData);
+    // console.log("Gey user Data");
+    // console.log(userData);
 
     this.setState({
       name: userData.name,
@@ -63,36 +63,36 @@ class customerSettings extends React.Component {
   }
 
   onChange(e) {
-    console.log(e);
+    // console.log(e);
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   onRadioChange(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({ price: Number(e.target.value) });
   }
 
   onSliderChange(e, val) {
-    console.log(val);
+    // console.log(val);
     this.setState({ proximity: Number(val) });
   }
 
   onCheckBoxChange(vals) {
-    console.log(vals);
+    // console.log(vals);
     for (let i = 0; i < vals.length; i++) {
       vals[i] = vals[i].toUpperCase();
     }
-    console.log(vals);
+    // console.log(vals);
     this.setState({ likes: vals });
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    console.log("Submit form");
+    // console.log("Submit form");
     this.setState({ isDisabled: true });
-    console.log(this.state);
+    // console.log(this.state);
 
     let udata = {
       id: this.state.id,
@@ -115,11 +115,11 @@ class customerSettings extends React.Component {
       Accept: "application/json"
     };
 
-    console.log("Printing the body of form update");
-    console.log(data);
+    // console.log("Printing the body of form update");
+    // console.log(data);
 
     axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
-      console.log(res);
+      // console.log(res);
     });
     this.setState({ isDisabled: true });
   }
@@ -134,7 +134,7 @@ class customerSettings extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
 
     let submitButton;
     if (!this.state.isDisabled) {
@@ -348,4 +348,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(customerSettings);
+export default connect(mapStateToProps, null)(UserSettings);

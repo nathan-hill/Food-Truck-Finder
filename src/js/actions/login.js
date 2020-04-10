@@ -29,8 +29,6 @@ export function login(data) {
 
   data.usernameOrEmail = data.username;
 
-  console.log(data);
-
   return dispatch => {
     return axios
       .post(constants.backend_url + "api/auth/signin", data)
@@ -40,15 +38,11 @@ export function login(data) {
         localStorage.setItem("jwtToken", token);
         setAuthorizationToken(token);
 
-        console.log(decodedToken);
-
         let userRole = "";
         userRole = await Request.getUserByID(decodedToken.sub)
         .then(function(r) {
           return r.type;
         });
-
-        console.log(userRole);
 
         localStorage.setItem("role", userRole);
         dispatch(setCurrentUser(jwtDecode(token)));

@@ -24,16 +24,12 @@ export default function CheckboxList(props) {
     setChecked(checked.push(props.liked[i].charAt(0) + props.liked[i].slice[1].toLowerCase()));
   }
 
-  console.log("props liked values")
-  console.log(props.liked)
 
   const handleToggle = value => () => {
     if (!props.disabled) {
       const currentIndex = checked.indexOf(value.toUpperCase());
       const newChecked = [...checked];
 
-      console.log("before adding");
-      console.log(newChecked);
 
       if (currentIndex === -1) {
         newChecked.push(value.toUpperCase());
@@ -41,15 +37,10 @@ export default function CheckboxList(props) {
         newChecked.splice(currentIndex, 1);
       }
 
-      console.log("after adding");
-      console.log(newChecked);
-
       setChecked(newChecked);
       props.onChange(newChecked);
     }
   };
-
-  console.log(checked);
 
   return (
     <List className={classes.root}>

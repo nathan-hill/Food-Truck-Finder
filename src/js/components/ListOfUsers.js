@@ -20,7 +20,7 @@ export class ListOfUsers extends Component {
   }
 
      async componentDidMount() {
-         console.log("Mounted")
+        //  console.log("Mounted")
        var users = await Request.getAllUsers();
 
        this.setState({ users: users });
