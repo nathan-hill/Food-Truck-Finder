@@ -253,7 +253,7 @@ function Dashboard2() {
         {componentDrawerRender}
         {/* <DrawerDecider state={componentDrawerRender} /> */}
       </Drawer>
-      {/* <SimpleMap trucks={trucks} onTruckClick={onTruckClick} /> */}
+      <SimpleMap trucks={trucks} onTruckClick={onTruckClick} />
     </div>
   );
 }
