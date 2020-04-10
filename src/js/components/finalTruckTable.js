@@ -134,7 +134,7 @@ class finalTruckTable extends React.Component {
         console.log(this.state.data)
     });
     // loop through each truck to get its schedule
-    this.state.data.map((item, idx) => {
+    this.state.data.forEach((item, idx) => {
       // get the schedule
       axios.get(constants.backend_url + "schedule/getScheduleDTOByID", {
         params: {
