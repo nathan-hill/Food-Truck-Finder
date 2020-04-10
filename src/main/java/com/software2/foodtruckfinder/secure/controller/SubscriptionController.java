@@ -29,6 +29,8 @@ public class SubscriptionController {
     @PostMapping(path = "/add")
     public @ResponseBody
     ResponseEntity<Subscription> addNewSubscription(@RequestBody Subscription os) {
+        System.out.println("Got new subscription request with truckId: " + os.getTruckid());
+
         Subscription n = new Subscription();
         n.setId(os.getId());
         n.setTruckid(os.getTruckid());

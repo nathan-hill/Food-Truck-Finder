@@ -80,6 +80,9 @@ function FormComponent(props) {
                 truckId: truck.id
             };
 
+            console.log("Sending a subscribe request:");
+            console.log(data);
+
             Request.addSubscription(data).then(response => {
                 setSubscribeValue(true);
             });
