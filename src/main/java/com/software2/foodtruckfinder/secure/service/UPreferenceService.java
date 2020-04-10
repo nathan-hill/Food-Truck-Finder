@@ -23,17 +23,19 @@ public class UPreferenceService {
 
     public ArrayList<TruckDistance> getPrioritizedTrucks(Long id, Double lon, Double lat) throws Exception {
         //the result will be kept in a map of the truck and its ranking
-        Map<Long, Double> ranking = new LinkedHashMap<>();
+        return RecommendedStore.getStoredPreferred(id, lat, lon, _truckRepo, _uprefrepo, _schedrepo);
 
-        ArrayList<TruckDistance> truckDistance = new Rankings(id, lat, lon)
-                .init(_truckRepo, _uprefrepo, _schedrepo)
-                .prioritizeDate()
-                .prioritizeDistance()
-                .prioritizePrice()
-                .prioritizeType()
-                .getResult();
-
-        return truckDistance;
+//        Map<Long, Double> ranking = new LinkedHashMap<>();
+//
+//        ArrayList<TruckDistance> truckDistance = new Rankings(id, lat, lon)
+//                .init(_truckRepo, _uprefrepo, _schedrepo)
+//                .prioritizeDate()
+//                .prioritizeDistance()
+//                .prioritizePrice()
+//                .prioritizeType()
+//                .getResult();
+//
+//        return truckDistance;
     }
 
 //    private List<TruckDistance> genTruckDistanceList(ArrayList<Truck> resultTruckSet, ArrayList<Double> values) {
