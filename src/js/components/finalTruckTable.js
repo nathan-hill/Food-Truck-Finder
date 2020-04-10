@@ -134,7 +134,7 @@ class finalTruckTable extends React.Component {
         console.log(this.state.data)
     });
     // loop through each truck to get its schedule
-    this.state.data.map((idx) => {
+    this.state.data.map((item, idx) => {
       // get the schedule
       axios.get(constants.backend_url + "schedule/getScheduleDTOByID", {
         params: {
@@ -299,7 +299,7 @@ class finalTruckTable extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.data.map((item, idx) => (
+                  {this.state.data.map((idx) => (
                     <tr id="addr0" key={idx} >
                       
                       <td>
