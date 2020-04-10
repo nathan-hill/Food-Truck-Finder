@@ -78,20 +78,31 @@ class NotificationTable extends React.Component {
                     rowData => ({
                         icon: Check,
                         tooltip: 'Mark as Read',
-                        disabled: rowData.isRead,  //this isn't working
+                        hidden: rowData.isRead,  //this isn't working
                         onClick: (event, rowData) => Request.markMessageRead(rowData.id),
-                    
                     }),
-                    rowData=> ({
-                        icon: DeleteOutline,
-                        tooltip: 'Delete',
-                        onClick: (event, rowData) => Request.deleteMessage(rowData.id),
-                    }),
-            ]}
+                ]}
                 icons={tableIcons}
                 title="Notifications"
                 columns={this.state.columns}
                 data={this.state.data}
+                editable={{
+                    onRowDelete: oldData =>
+                    new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve();
+                            this.setState(prevState => {
+                                // sets the table to current state
+                                const data = [...prevState.data];
+
+                                // deletes a data point form the table
+                                Request.deleteMessage(oldData.id);
+                                data.splice(data.indexOf(oldData), 1);
+                                return {...prevState, data};
+                            });
+                        }, 600);
+                    }),
+                }}
             />
         );
     }
