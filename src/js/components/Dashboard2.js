@@ -154,7 +154,8 @@ function Dashboard2(props) {
         className={classes.submit}
         onClick={() => {
           props.logout();
-          setRole(null);
+          setRole("guest");
+          setMainList(genList("guest"))
         }}
       >
         LOG OUT
