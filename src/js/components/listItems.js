@@ -13,6 +13,9 @@ import { Link } from "react-router-dom";
 import UserSettings from "./UserSettings";
 import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from '@material-ui/icons/Settings';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import FoodTruckPreferences from "./FoodTruckPreferences";
 
 export const GuestListItems = (setComponentDrawer) => {
   return (
@@ -27,7 +30,8 @@ export const GuestListItems = (setComponentDrawer) => {
   );
 };
 
-export const CustomerListItems = (
+export const CustomerListItems = (setDrawerComponent) => {
+  return (
   <div>
     <ListItem button onClick={() => {console.log("Looking for search component customer")}}>
         <ListItemIcon>
@@ -35,17 +39,29 @@ export const CustomerListItems = (
         </ListItemIcon>
         <ListItemText primary="Search" />
       </ListItem>
-    <ListItem button onClick={() => {console.log("Looking for user settings component customer")}}>
+    <ListItem button onClick={() => { return setDrawerComponent(<UserSettings/>)}}>
         <ListItemIcon>
           <SettingsIcon/>
         </ListItemIcon>
         <ListItemText primary="User Settings"/>
       </ListItem>
-   
+      <ListItem button onClick={() => { console.log("looking for review component")}}>
+        <ListItemIcon>
+          <RateReviewIcon/>
+        </ListItemIcon>
+        <ListItemText primary="My Reviews"/>
+      </ListItem>
+      <ListItem button onClick={() => { return setDrawerComponent(<FoodTruckPreferences/>)}}>
+        <ListItemIcon>
+          <ThumbUpIcon/>
+        </ListItemIcon>
+        <ListItemText primary="Suggested"/>
+      </ListItem>
   </div>
-);
+  );
+}
 
-export const OwnerListItems = (
+export const OwnerListItems = (setDrawerComponent) => (
   <div>
     <ListItem button>
       <ListItemIcon>

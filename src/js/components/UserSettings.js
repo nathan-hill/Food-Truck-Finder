@@ -30,7 +30,7 @@ class UserSettings extends React.Component {
       isDisabled: true,
       proximity: -1,
       price: 1,
-      likes: []
+      likes: [],
     };
     this.priceArray = ["$", "$$", "$$$", "$$$$"];
 
@@ -53,12 +53,12 @@ class UserSettings extends React.Component {
     this.setState({
       name: userData.name,
       username: userData.username,
-      email: userData.email
+      email: userData.email,
     });
     this.setState({
       proximity: preferences.proximity,
       price: preferences.price,
-      likes: preferences.likes
+      likes: preferences.likes,
     });
   }
 
@@ -100,27 +100,29 @@ class UserSettings extends React.Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      type: this.state.type
+      type: this.state.type,
     };
     let upref = {
       id: this.state.id,
       proximity: this.state.proximity,
       price: this.state.price,
-      likes: this.state.likes
+      likes: this.state.likes,
     };
     let data = { user: udata, preferences: upref };
     data.headers = {
       "Access-Control-Allow-Origin": "*",
       "content-type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
     };
 
     // console.log("Printing the body of form update");
     // console.log(data);
 
-    axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
-      // console.log(res);
-    });
+    axios
+      .put(constants.backend_url + "users/updateByUser", data)
+      .then((res) => {
+        // console.log(res);
+      });
     this.setState({ isDisabled: true });
   }
 
@@ -170,100 +172,100 @@ class UserSettings extends React.Component {
     }
 
     return (
-      //   <Container component="main" maxWidth="xs">
-      <Grid container styles={{ flexGrow: 1 }}>
-        <Grid item xs={12}>
-          {/* <div className={classes.paper} > */}
-          {/* <form
+        // {/* // <Container component="main" maxWidth="xs"> */}
+        <Grid container styles={{ flexGrow: 1 }}>
+          <Grid item xs={12}>
+            {/* <div className={classes.paper} > */}
+            {/* <form
           // className={classes.form}
           noValidate
           onSubmit={this.onEditSubmit}
         > */}
-          {editCancelButton}
-          {/* </form> */}
-        </Grid>
+            {editCancelButton}
+            {/* </form> */}
+          </Grid>
 
-        {/* <form
+          {/* <form
           //   className={classes.form}
           noValidate
           onSubmit={this.onSubmit}
         > */}
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            onChange={this.onChange}
-            value={this.state.name}
-            disabled={this.state.isDisabled}
-            autoFocus
-          />
-        </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              onChange={this.onChange}
+              value={this.state.name}
+              disabled={this.state.isDisabled}
+              autoFocus
+            />
+          </Grid>
 
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            onChange={this.onChange}
-            value={this.state.username} //username not defined error when I try to change it
-            disabled={this.state.isDisabled}
-            autoFocus
-          />
-        </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              onChange={this.onChange}
+              value={this.state.username} //username not defined error when I try to change it
+              disabled={this.state.isDisabled}
+              autoFocus
+            />
+          </Grid>
 
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            onChange={this.onChange}
-            value={this.state.email} //email not defined error as well
-            disabled={this.state.isDisabled}
-            autoFocus
-          />
-        </Grid>
-        {/* <PreferenceDialog onChange={this.onChange} disabled={isDisabled} /> */}
-        {/* <formdd
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              onChange={this.onChange}
+              value={this.state.email} //email not defined error as well
+              disabled={this.state.isDisabled}
+              autoFocus
+            />
+          </Grid>
+          {/* <PreferenceDialog onChange={this.onChange} disabled={isDisabled} /> */}
+          {/* <formdd
               //   className={classes.container}
               > */}
-        <Grid item xs={12}>
-          <Paper
-          //   className={classes.paper}
-          >
-            <Typography gutterBottom>Maximum distance (mi)</Typography>
-            <Slider
-              defaultValue={5}
-              value={this.state.proximity}
-              getAriaValueText={this.valuetext}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={.01}
-              marks
-              min={0}
-              max={10}
-              disabled={this.state.isDisabled}
-              onChange={this.onSliderChange}
-            />
-          </Paper>
-        </Grid>
+          <Grid item xs={12}>
+            <Paper
+            //   className={classes.paper}
+            >
+              <Typography gutterBottom>Maximum distance (mi)</Typography>
+              <Slider
+                defaultValue={5}
+                value={this.state.proximity}
+                getAriaValueText={this.valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={0.01}
+                marks
+                min={0}
+                max={10}
+                disabled={this.state.isDisabled}
+                onChange={this.onSliderChange}
+              />
+            </Paper>
+          </Grid>
 
-        <Grid item xs={12} alignContent={"center"}>
-          <Paper styles={{ textAlign: "center", color: "gray" }}>
-            {/* <InputLabel htmlFor="price-native">Price</InputLabel> */}
-            {/* <Select
+          <Grid item xs={12} alignContent={"center"}>
+            <Paper styles={{ textAlign: "center", color: "gray" }}>
+              {/* <InputLabel htmlFor="price-native">Price</InputLabel> */}
+              {/* <Select
               native
               // defaultValue={label}
               onChange={this.onSelectChange}
@@ -276,76 +278,76 @@ class UserSettings extends React.Component {
               {this.priceArray.map((val, i) => <option value={i+1} key={i}>{val}</option>)}
 
             </Select> */}
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Select Pice</FormLabel>
-              <RadioGroup
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Select Pice</FormLabel>
+                <RadioGroup
+                  disabled={this.state.isDisabled}
+                  onChange={this.onRadioChange}
+                  row
+                  aria-label="position"
+                  name="position"
+                  defaultValue="top"
+                >
+                  <FormControlLabel
+                    disabled={this.state.isDisabled}
+                    value="0"
+                    control={<Radio color="primary" />}
+                    label="$"
+                    labelPlacement="top"
+                  />
+                  <FormControlLabel
+                    disabled={this.state.isDisabled}
+                    value="1"
+                    control={<Radio color="primary" />}
+                    label="$$"
+                    labelPlacement="top"
+                  />
+                  <FormControlLabel
+                    disabled={this.state.isDisabled}
+                    value="2"
+                    control={<Radio color="primary" />}
+                    label="$$$"
+                    labelPlacement="top"
+                  />
+                  <FormControlLabel
+                    disabled={this.state.isDisabled}
+                    value="3"
+                    control={<Radio color="primary" />}
+                    label="$$$$"
+                    labelPlacement="top"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Paper>
+          </Grid>
+          <Grid item xs>
+            <Paper
+            //   className={classes.paper}
+            >
+              <InputLabel htmlFor="foodtype-native">Food Type</InputLabel>
+              <CheckBoxList
+                options={[
+                  "Mexican",
+                  "American",
+                  "Italian",
+                  "Chinese",
+                  "Vietnamese",
+                ]}
+                selected={this.state.likes}
                 disabled={this.state.isDisabled}
-                onChange={this.onRadioChange}
-                row
-                aria-label="position"
-                name="position"
-                defaultValue="top"
-              >
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="0"
-                  control={<Radio color="primary" />}
-                  label="$"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="1"
-                  control={<Radio color="primary" />}
-                  label="$$"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="2"
-                  control={<Radio color="primary" />}
-                  label="$$$"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="3"
-                  control={<Radio color="primary" />}
-                  label="$$$$"
-                  labelPlacement="top"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Paper>
+                onChange={this.onCheckBoxChange}
+              />
+            </Paper>
+          </Grid>
+          {submitButton}
+          {/* </form> */}
         </Grid>
-        <Grid item xs>
-          <Paper
-          //   className={classes.paper}
-          >
-            <InputLabel htmlFor="foodtype-native">Food Type</InputLabel>
-            <CheckBoxList
-              options={[
-                "Mexican",
-                "American",
-                "Italian",
-                "Chinese",
-                "Vietnamese"
-              ]}
-              selected={this.state.likes}
-              disabled={this.state.isDisabled}
-              onChange={this.onCheckBoxChange}
-            />
-          </Paper>
-        </Grid>
-        {submitButton}
-        {/* </form> */}
-      </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, null)(UserSettings);

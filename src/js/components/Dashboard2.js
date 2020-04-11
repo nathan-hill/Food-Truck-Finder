@@ -22,6 +22,7 @@ import LoginPage from "./LoginPage";
 import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import SimpleMap from './SimpleMap'
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 
@@ -225,7 +226,7 @@ function Dashboard2(props) {
       return GuestListItems(handleSelectionDrawerClick);
     } else if (role === "customer") {
       console.log(role + " = " + "customer")
-      return CustomerListItems;
+      return CustomerListItems(handleSelectionDrawerClick);
     } else {
       console.log(role + " = " + "owner")
       return OwnerListItems;
@@ -320,7 +321,7 @@ function Dashboard2(props) {
         {componentDrawerRender}
         {/* <DrawerDecider state={componentDrawerRender} /> */}
       </Drawer>
-      {/* <SimpleMap trucks={trucks} onTruckClick={onTruckClick} /> */}
+      <SimpleMap trucks={trucks} onTruckClick={onTruckClick} />
     </div>
   );
 }

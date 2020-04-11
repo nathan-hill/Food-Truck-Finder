@@ -48,7 +48,7 @@ class FoodTruckPreferences extends React.Component {
       delete edited[i].id;
       delete edited[i].schedule;
       delete edited[i].score;
-      
+      delete edited[i].ownerID; 
     }
 
     // console.log("preferred trucks");
