@@ -8,7 +8,7 @@ import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
-import CustomerSettings from "./../components/UserSettings";
+import UserSettings from "./../components/UserSettings";
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
@@ -213,7 +213,7 @@ export class UserProfile extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <CustomerSettings />
+        <UserSettings />
       </div>
     );
   }
@@ -258,25 +258,25 @@ export class SendNotification extends React.Component {
   }
 }
 
-export class OwnerProfile extends React.Component {
-  constructor(props) {
-    super(props);
+// export class OwnerProfile extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      redirect: ""
-    };
-  }
+//     this.state = {
+//       redirect: ""
+//     };
+//   }
 
-  render() {
-    return (
-      <div>
-        <Link to="/">Back</Link>
-        <CustomerSettings />
-        <FoodTruckTable />
-      </div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div>
+//         <Link to="/">Back</Link>
+//         <CustomerSettings />
+//         <FoodTruckTable />
+//       </div>
+//     );
+//   }
+// }
 
 export class CustPreferences extends React.Component {
   constructor(props) {

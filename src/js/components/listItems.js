@@ -10,45 +10,16 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { Link } from "react-router-dom";
-import UserSettings from './UserSettings'
-
+import UserSettings from "./UserSettings";
+import SearchIcon from "@material-ui/icons/Search";
 export const GuestListItems = (setComponentDrawer) => {
   return (
     <div>
-      <ListItem
-        button
-        onClick={() => {
-          setComponentDrawer(<UserSettings/>);
-        }}
-      >
+      <ListItem button onClick={() => {console.log("Looking for search component")}}>
         <ListItemIcon>
-          <DashboardIcon />
+          <SearchIcon />
         </ListItemIcon>
-        <ListItemText primary="Settings" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Food Trucks" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Subscriptions" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Ratings/Reviews" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Settings" />
+        <ListItemText primary="Search" />
       </ListItem>
     </div>
   );
@@ -58,7 +29,7 @@ export const CustomerListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <DashboardIcon />
+        <SearchIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>

@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { login } from "../actions/login";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -23,22 +24,31 @@ class LoginPage extends React.Component {
       username: "",
       password: "",
       errors: {},
-      isLoading: false
+      isLoading: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.handleLoadingBar = this.handleLoadingBar.bind(this);
   }
 
   onSubmit(e) {
     e.preventDefault();
 
     this.setState({ isLoading: true });
-    this.props.login(this.state).then(
-      //console.log("finished"),
-      res => this.props.history.push("/"),
-      err => this.setState({ errors: {}, isLoading: false })
-    );
+    this.props.login(this.state, this.handleLoadingBar).then((retState) => {
+      if(retState === null){
+        this.props.callback(false);
+      }else {
+        this.props.callback(true);
+      }
+      
+    });
+  }
+
+  handleLoadingBar(b) {
+    console.log("the bar is being handled " + b);
+    this.setState({ isLoading: b });
   }
 
   onChange(e) {
@@ -49,6 +59,14 @@ class LoginPage extends React.Component {
   render() {
     const { errors, username, password, isLoading } = this.state;
     const classes = makeStyles();
+
+    let loadBar;
+    if (this.state.isLoading) {
+      loadBar = (
+        <LinearProgress disabled={this.state.isLoading} variant="query" />
+      );
+    }
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -102,6 +120,7 @@ class LoginPage extends React.Component {
             >
               Sign In
             </Button>
+            {loadBar}
             <Grid container>
               <Grid item xs>
                 <Link to="/">Forgot password?</Link>
@@ -119,29 +138,29 @@ class LoginPage extends React.Component {
   }
 }
 
-// const useStyles = makeStyles(theme => ({
-//   paper: {
-//     marginTop: theme.spacing(8),
-//     display: "flex",
-//     flexDirection: "column",
-//     alignItems: "center"
-//   },
-//   avatar: {
-//     margin: theme.spacing(1),
-//     backgroundColor: theme.palette.secondary.main
-//   },
-//   form: {
-//     width: "100%", // Fix IE 11 issue.
-//     marginTop: theme.spacing(1)
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2)
-//   }
-// }));
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 LoginPage.propTypes = {
   login: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { login })(withRouter(LoginPage));

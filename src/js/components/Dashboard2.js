@@ -12,24 +12,17 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import SimpleMap from "./SimpleMap";
-import DrawerDecider from "./DrawerDecider";
-import {
-  GuestListItems,
-  CustomerListItems,
-  OwnerListItems,
-  secondaryListItems,
-} from "./listItems";
+import * as Request from "./../helpers/backendRequests";
+import { GuestListItems, CustomerListItems, OwnerListItems } from "./listItems";
 import { connect } from "react-redux";
 import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-
+import LoginPage from "./LoginPage";
+import Button from "@material-ui/core/Button";
+import Badge from "@material-ui/core/Badge";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 
@@ -44,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+  },
+  title: {
+    flexGrow: 1,
   },
   appBarShift: {
     marginLeft: selectionDrawerWidth,
@@ -120,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Dashboard2() {
+function Dashboard2(props) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -138,9 +134,56 @@ function Dashboard2() {
           localStorage.getItem("role").slice(1)
   );
 
-  console.log("Current state is " + localStorage.getItem("role"));
-
   const [trucks, setTrucks] = React.useState([]);
+
+  React.useEffect(() => {
+    Request.getTrucksForToday().then((x) => {
+      setTrucks(x);
+    }); // <-- this is an async function to an axios request
+  }, []);
+
+  let numNotifications = 0;
+  let logButton;
+  if (props.auth.isAuthenticated) {
+    //function call to determine number of unread notifications
+    numNotifications = 0;
+    logButton = (
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        className={classes.submit}
+        onClick={() => {
+          props.logout();
+        }}
+      >
+        LOG OUT
+      </Button>
+    );
+  } else {
+    logButton = (
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        className={classes.submit}
+        onClick={() => {
+          handleSelectionDrawerClick(
+            <LoginPage callback={handleLoginCallback} />
+          );
+        }}
+      >
+        LOG IN
+      </Button>
+    );
+  }
+  const handleLoginCallback = (val) => {
+    if (val) {
+      handleCloseComponentDrawer();
+    } else {
+      //do nothing
+    }
+  };
 
   const handleOpenSelectionDrawer = () => {
     setOpenSelection(true);
@@ -165,8 +208,8 @@ function Dashboard2() {
     handleOpenComponentDrawer(true);
   };
 
-  const onTruckClick = () => {
-    console.log("clicked");
+  const onTruckClick = (truck) => {
+    console.log(truck);
   };
 
   const [mainList, setMainList] = React.useState((role) => {
@@ -200,9 +243,21 @@ function Dashboard2() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          >
             Meals With Wheels : {role}
           </Typography>
+          {logButton}
+          <IconButton color="inherit" href="#/Notifications">
+            <Badge badgeContent={numNotifications} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer

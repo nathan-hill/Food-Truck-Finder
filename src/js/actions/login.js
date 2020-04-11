@@ -8,44 +8,50 @@ var constants = require("./../helpers/constants");
 export function setCurrentUser(user) {
   return {
     type: SET_CURRENT_USER,
-    user
+    user,
   };
 }
 
 export function logout() {
-  return dispatch => {
+  return (dispatch) => {
     localStorage.removeItem("jwtToken");
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
   };
 }
 
-export function login(data) {
+export function login(data, callback) {
+  callback(true);
   data.headers = {
     "Access-Control-Allow-Origin": "*",
     "content-type": "application/json",
-    Accept: "application/json"
+    Accept: "application/json",
   };
 
   data.usernameOrEmail = data.username;
 
-  return dispatch => {
+  return (dispatch) => {
     return axios
       .post(constants.backend_url + "api/auth/signin", data)
-      .then(async res => {
+      .then(async (res) => {
         const token = res.data.accessToken;
         let decodedToken = jwtDecode(token);
         localStorage.setItem("jwtToken", token);
         setAuthorizationToken(token);
 
         let userRole = "";
-        userRole = await Request.getUserByID(decodedToken.sub)
-        .then(function(r) {
+        userRole = await Request.getUserByID(decodedToken.sub).then(function (
+          r
+        ) {
           return r.type;
-        });
+        }).catch((e) => {callback(false)});
 
         localStorage.setItem("role", userRole);
         dispatch(setCurrentUser(jwtDecode(token)));
+      })
+      .catch((e) => {
+          callback(false);
+          return null
       });
   };
 }
