@@ -23,6 +23,8 @@ import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SimpleMap from './SimpleMap'
+import Notifications from './Notifications'
+
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 
@@ -268,7 +270,7 @@ function Dashboard2(props) {
             Meals With Wheels : {role.charAt(0).toUpperCase() + role.slice(1)}
           </Typography>
           {logButton}
-          <IconButton color="inherit" href="#/Notifications">
+          <IconButton color="inherit" onClick={() => {handleSelectionDrawerClick(<Notifications/>)}}>
             <Badge badgeContent={numNotifications} color="secondary">
               <NotificationsIcon />
             </Badge>
