@@ -128,7 +128,7 @@ function Dashboard2(props) {
     typeof localStorage.getItem("role") === undefined ||
       localStorage.getItem("role") === "undefined" ||
       localStorage.getItem("role") === null
-      ? "Guest"
+      ? "guest"
       : localStorage.getItem("role")
   );
 
@@ -153,7 +153,7 @@ function Dashboard2(props) {
         className={classes.submit}
         onClick={() => {
           props.logout();
-          setRole("Guest");
+          setRole(null);
         }}
       >
         LOG OUT
@@ -182,6 +182,7 @@ function Dashboard2(props) {
     if (val !== false) {
       handleCloseComponentDrawer();
       setRole(val.type);
+      setMainList(genList(val.type))
       console.log("the current role is " + role + " from " + val.type);
     } else {
       //do nothing
@@ -217,21 +218,25 @@ function Dashboard2(props) {
     console.log(truck);
   };
 
-  const [mainList, setMainList] = React.useState((role) => {
-    console.log("role in list maker");
+  const genList = (role) => {
     console.log(role);
-    if (role === undefined || role === null) {
+    if (role === undefined || role === null || role === "guest") {
+      console.log(role + " = " + "guest")
       return GuestListItems(handleSelectionDrawerClick);
     } else if (role === "customer") {
+      console.log(role + " = " + "customer")
       return CustomerListItems;
     } else {
+      console.log(role + " = " + "owner")
       return OwnerListItems;
     }
-  });
+  }
+
+  const [mainList, setMainList] = React.useState(genList(role));
+    
 
   return (
     <div className={classes.root}>
-      {console.log("RENDERING")}
       <CssBaseline />
       <AppBar
         position="fixed"
