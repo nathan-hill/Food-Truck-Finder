@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import { HashRouter, Route } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import * as Pages from "./pages/pages";
+import { amber, green } from "@material-ui/core/colors";
+
+const baylorTheme = createMuiTheme({
+  palette: {
+    primary: green,
+    secondary: amber,
+  },
+});
 
 export default class App extends Component {
   render() {
