@@ -12,10 +12,12 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { Link } from "react-router-dom";
 import UserSettings from "./UserSettings";
 import SearchIcon from "@material-ui/icons/Search";
+import SettingsIcon from '@material-ui/icons/Settings';
+
 export const GuestListItems = (setComponentDrawer) => {
   return (
     <div>
-      <ListItem button onClick={() => {console.log("Looking for search component")}}>
+      <ListItem button onClick={() => {console.log("Looking for search component guest")}}>
         <ListItemIcon>
           <SearchIcon />
         </ListItemIcon>
@@ -27,43 +29,19 @@ export const GuestListItems = (setComponentDrawer) => {
 
 export const CustomerListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <SearchIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Food Trucks" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Subscriptions" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Ratings/Reviews" />
-    </ListItem>
-    <ListItem button to="/customerPreferences" component={Link}>
-      >
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Preferences" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customer Settings" />
-    </ListItem>
+    <ListItem button onClick={() => {console.log("Looking for search component customer")}}>
+        <ListItemIcon>
+          <SearchIcon />
+        </ListItemIcon>
+        <ListItemText primary="Search" />
+      </ListItem>
+    <ListItem button onClick={() => {console.log("Looking for user settings component customer")}}>
+        <ListItemIcon>
+          <SettingsIcon/>
+        </ListItemIcon>
+        <ListItemText primary="User Settings"/>
+      </ListItem>
+   
   </div>
 );
 

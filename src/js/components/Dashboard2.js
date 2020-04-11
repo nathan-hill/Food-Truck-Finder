@@ -12,7 +12,6 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import SimpleMap from "./SimpleMap";
 import * as Request from "./../helpers/backendRequests";
 import { GuestListItems, CustomerListItems, OwnerListItems } from "./listItems";
 import { connect } from "react-redux";
@@ -130,8 +129,7 @@ function Dashboard2(props) {
       localStorage.getItem("role") === "undefined" ||
       localStorage.getItem("role") === null
       ? "Guest"
-      : localStorage.getItem("role").toUpperCase() +
-          localStorage.getItem("role").slice(1)
+      : localStorage.getItem("role")
   );
 
   const [trucks, setTrucks] = React.useState([]);
@@ -139,7 +137,7 @@ function Dashboard2(props) {
   React.useEffect(() => {
     Request.getTrucksForToday().then((x) => {
       setTrucks(x);
-    }); // <-- this is an async function to an axios request
+    });
   }, []);
 
   let numNotifications = 0;
@@ -155,6 +153,7 @@ function Dashboard2(props) {
         className={classes.submit}
         onClick={() => {
           props.logout();
+          setRole("Guest");
         }}
       >
         LOG OUT
@@ -178,11 +177,17 @@ function Dashboard2(props) {
     );
   }
   const handleLoginCallback = (val) => {
-    if (val) {
+    console.log("start login callback");
+    console.log(val);
+    if (val !== false) {
       handleCloseComponentDrawer();
+      setRole(val.type);
+      console.log("the current role is " + role + " from " + val.type);
     } else {
       //do nothing
+      console.log("SOMETHING HAS GONE WRONG");
     }
+    console.log("end login callback");
   };
 
   const handleOpenSelectionDrawer = () => {
@@ -203,7 +208,7 @@ function Dashboard2(props) {
   };
 
   const handleSelectionDrawerClick = (component) => {
-    console.log(component);
+    // console.log(component);
     setComponentDrawerRender(component);
     handleOpenComponentDrawer(true);
   };
@@ -213,17 +218,20 @@ function Dashboard2(props) {
   };
 
   const [mainList, setMainList] = React.useState((role) => {
-    if (role === "owner") {
-      return OwnerListItems;
+    console.log("role in list maker");
+    console.log(role);
+    if (role === undefined || role === null) {
+      return GuestListItems(handleSelectionDrawerClick);
     } else if (role === "customer") {
       return CustomerListItems;
     } else {
-      return GuestListItems(handleSelectionDrawerClick);
+      return OwnerListItems;
     }
   });
 
   return (
     <div className={classes.root}>
+      {console.log("RENDERING")}
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -250,7 +258,7 @@ function Dashboard2(props) {
             noWrap
             className={classes.title}
           >
-            Meals With Wheels : {role}
+            Meals With Wheels : {role.charAt(0).toUpperCase() + role.slice(1)}
           </Typography>
           {logButton}
           <IconButton color="inherit" href="#/Notifications">
@@ -288,7 +296,6 @@ function Dashboard2(props) {
       <Drawer
         variant="temporary"
         open={openComponent}
-        transitionDuration={"1000"}
         ModalProps={{
           onBackdropClick: () => {
             setOpenComponent(false);
@@ -308,7 +315,7 @@ function Dashboard2(props) {
         {componentDrawerRender}
         {/* <DrawerDecider state={componentDrawerRender} /> */}
       </Drawer>
-      <SimpleMap trucks={trucks} onTruckClick={onTruckClick} />
+      {/* <SimpleMap trucks={trucks} onTruckClick={onTruckClick} /> */}
     </div>
   );
 }

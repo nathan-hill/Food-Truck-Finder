@@ -25,6 +25,7 @@ class LoginPage extends React.Component {
       password: "",
       errors: {},
       isLoading: false,
+      failed: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -40,15 +41,14 @@ class LoginPage extends React.Component {
       if(retState === null){
         this.props.callback(false);
       }else {
-        this.props.callback(true);
+        this.props.callback(retState);
       }
-      
     });
   }
 
   handleLoadingBar(b) {
-    console.log("the bar is being handled " + b);
-    this.setState({ isLoading: b });
+    // console.log("the bar is being handled " + b);
+    this.setState({ isLoading: b, failed:true});
   }
 
   onChange(e) {
@@ -66,6 +66,8 @@ class LoginPage extends React.Component {
         <LinearProgress disabled={this.state.isLoading} variant="query" />
       );
     }
+
+    let failMessage = (this.state.failed?<Typography color='red'>Invalid UserName or Password</Typography>: <div></div>);
 
     return (
       <Container component="main" maxWidth="xs">
@@ -121,6 +123,7 @@ class LoginPage extends React.Component {
               Sign In
             </Button>
             {loadBar}
+            {failMessage}
             <Grid container>
               <Grid item xs>
                 <Link to="/">Forgot password?</Link>

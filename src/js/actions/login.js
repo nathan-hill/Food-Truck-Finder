@@ -17,6 +17,7 @@ export function logout() {
     localStorage.removeItem("jwtToken");
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
+    localStorage.removeItem("role");
   };
 }
 
@@ -39,19 +40,22 @@ export function login(data, callback) {
         localStorage.setItem("jwtToken", token);
         setAuthorizationToken(token);
 
-        let userRole = "";
-        userRole = await Request.getUserByID(decodedToken.sub).then(function (
-          r
-        ) {
-          return r.type;
-        }).catch((e) => {callback(false)});
+        let user = "";
+        user = await Request.getUserByID(decodedToken.sub)
+          .then(function (r) {
+            return r;
+          })
+          .catch((e) => {
+            callback(false);
+          });
 
-        localStorage.setItem("role", userRole);
+        localStorage.setItem("role", user.type);
         dispatch(setCurrentUser(jwtDecode(token)));
+        return user
       })
       .catch((e) => {
-          callback(false);
-          return null
+        callback(false);
+        return null;
       });
   };
 }

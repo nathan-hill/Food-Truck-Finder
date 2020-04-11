@@ -45,7 +45,7 @@ export class SimpleMap extends Component {
         >
           {this.props.trucks.map((x, i) => {
             return (
-              <MapIcon onMouseOver={() => {this.onHover(x)}} onClick={() => {this.onClick(x)}} key={i} truckData={x} lat={x.latitude} lng={x.longitude} />
+              <MapIcon onClick={() => {this.onClick(x)}} key={i} truckData={x} lat={x.latitude} lng={x.longitude} />
             );
           })}
 
