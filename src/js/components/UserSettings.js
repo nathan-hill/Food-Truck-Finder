@@ -26,6 +26,8 @@ class customerSettings extends React.Component {
       username: "",
       email: "",
       password: "",
+      currentPassword: "",
+      newPassword: "",
       type: "",
       isDisabled: true,
       proximity: -1,
@@ -43,24 +45,26 @@ class customerSettings extends React.Component {
     this.valuetext = this.valuetext.bind(this);
   }
 
-  async componentDidMount() {
-    let userData = await Request.getUserByID(this.state.id);
-    let preferences = await Request.getUPById(this.state.id);
+  // async componentDidMount() {
+  //   let userData = await Request.getUserByID(this.state.id);
+  //   let preferences = await Request.getUPById(this.state.id);
 
-    console.log("Gey user Data");
-    console.log(userData);
+  //   console.log("Gey user Data");
+  //   console.log(userData);
 
-    this.setState({
-      name: userData.name,
-      username: userData.username,
-      email: userData.email
-    });
-    this.setState({
-      proximity: preferences.proximity,
-      price: preferences.price,
-      likes: preferences.likes
-    });
-  }
+  //   this.setState({
+  //     name: userData.name,
+  //     username: userData.username,
+  //     email: userData.email,
+  //     currentPassword: userData.password,
+  //     newPassword: ""
+  //   });
+  //   this.setState({
+  //     proximity: preferences.proximity,
+  //     price: preferences.price,
+  //     likes: preferences.likes
+  //   });
+  // }
 
   onChange(e) {
     console.log(e);
@@ -93,6 +97,7 @@ class customerSettings extends React.Component {
     console.log("Submit form");
     this.setState({ isDisabled: true });
     console.log(this.state);
+    
 
     let udata = {
       id: this.state.id,
@@ -121,6 +126,33 @@ class customerSettings extends React.Component {
     axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
       console.log(res);
     });
+
+    const request_headers = {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+      Accept: "application/json"
+    };
+    if(this.state.currentPassword === this.state.password){
+      if(this.state.newPassword !== ""){
+        this.state.password = this.state.newPassword;
+        this.state.currentPassword = this.state.password;
+        axios({
+          method: "POST",
+          url: constants.backend_url + "users/replacePassword",
+          data: {password: this.state.currentPassword, uname: this.state.username},
+          headers: request_headers
+        })
+          .then(function(response){
+            console.log(response.data);
+            return response.data;
+          })
+          .catch(function(error){
+            console.log(error);
+          })
+        alert("password was changed");
+      }
+    }
+
     this.setState({ isDisabled: true });
   }
 
@@ -169,25 +201,18 @@ class customerSettings extends React.Component {
       );
     }
 
+    
+
     return (
       //   <Container component="main" maxWidth="xs">
       <Grid container styles={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          {/* <div className={classes.paper} > */}
-          {/* <form
-          // className={classes.form}
-          noValidate
-          onSubmit={this.onEditSubmit}
-        > */}
+          
           {editCancelButton}
-          {/* </form> */}
+          
         </Grid>
 
-        {/* <form
-          //   className={classes.form}
-          noValidate
-          onSubmit={this.onSubmit}
-        > */}
+       
         <Grid item xs={12}>
           <TextField
             variant="outlined"
@@ -235,10 +260,37 @@ class customerSettings extends React.Component {
             autoFocus
           />
         </Grid>
-        {/* <PreferenceDialog onChange={this.onChange} disabled={isDisabled} /> */}
-        {/* <formdd
-              //   className={classes.container}
-              > */}
+          
+        <Grid item xs={12}>
+          Must enter current password to change password
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="currentPassword"
+            label="Current Password"
+            name="currentPassword"
+            onChange={this.onChange}
+            value={this.state.currentPassword} 
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="newPassword"
+            label="Enter New Password"
+            name="newPassword"
+            onChange={this.onChange}
+            value={this.state.newPassword} 
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+        </Grid>
+        
         <Grid item xs={12}>
           <Paper
           //   className={classes.paper}
@@ -262,22 +314,9 @@ class customerSettings extends React.Component {
 
         <Grid item xs={12} alignContent={"center"}>
           <Paper styles={{ textAlign: "center", color: "gray" }}>
-            {/* <InputLabel htmlFor="price-native">Price</InputLabel> */}
-            {/* <Select
-              native
-              // defaultValue={label}
-              onChange={this.onSelectChange}
-              input={<Input id="price-native" />}
-              disabled={this.state.isDisabled}
-              defaultValue={this.priceArray[this.state.price]}
-            >
-
-              <option aria-label="None" priceValue="" />
-              {this.priceArray.map((val, i) => <option value={i+1} key={i}>{val}</option>)}
-
-            </Select> */}
+            
             <FormControl component="fieldset">
-              <FormLabel component="legend">Select Pice</FormLabel>
+              <FormLabel component="legend">Select Price</FormLabel>
               <RadioGroup
                 disabled={this.state.isDisabled}
                 onChange={this.onRadioChange}
@@ -319,9 +358,7 @@ class customerSettings extends React.Component {
           </Paper>
         </Grid>
         <Grid item xs>
-          <Paper
-          //   className={classes.paper}
-          >
+          <Paper>
             <InputLabel htmlFor="foodtype-native">Food Type</InputLabel>
             <CheckBoxList
               options={[
@@ -337,9 +374,11 @@ class customerSettings extends React.Component {
             />
           </Paper>
         </Grid>
+        
         {submitButton}
-        {/* </form> */}
+        
       </Grid>
+      
     );
   }
 }
