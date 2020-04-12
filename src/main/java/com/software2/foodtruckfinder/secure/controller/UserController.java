@@ -73,7 +73,7 @@ public class UserController {
         String s;
         s = passwordEncoder.encode(password);
         userRepository.setNewPassword(s, uname);
-        
+
         return true;
     }
 

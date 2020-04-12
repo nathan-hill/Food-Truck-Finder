@@ -14,13 +14,13 @@ public class Truck {
     @NotNull
     private String Description;
     @NotNull
-    private String Menu;
-    @NotNull
     private Long ownerID;
     @NotNull
     private String type;
     @NotNull
     private Integer cost;
+    @Lob
+    private String Menu;
 
     public Truck(Truck t) {
         this.id = t.getId();
