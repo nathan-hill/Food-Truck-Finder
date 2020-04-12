@@ -26,6 +26,8 @@ class UserSettings extends React.Component {
       username: "",
       email: "",
       password: "",
+      currentPassword: "",
+      newPassword: "",
       type: "",
       isDisabled: true,
       proximity: -1,
@@ -54,6 +56,8 @@ class UserSettings extends React.Component {
       name: userData.name,
       username: userData.username,
       email: userData.email,
+      currentPassword: userData.password,
+      newPassword: ""
     });
     this.setState({
       proximity: preferences.proximity,
@@ -92,7 +96,8 @@ class UserSettings extends React.Component {
 
     // console.log("Submit form");
     this.setState({ isDisabled: true });
-    // console.log(this.state);
+    console.log(this.state);
+    
 
     let udata = {
       id: this.state.id,
@@ -118,11 +123,37 @@ class UserSettings extends React.Component {
     // console.log("Printing the body of form update");
     // console.log(data);
 
-    axios
-      .put(constants.backend_url + "users/updateByUser", data)
-      .then((res) => {
-        // console.log(res);
-      });
+    axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
+      console.log(res);
+    });
+
+    const request_headers = {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+      Accept: "application/json"
+    };
+    if(this.state.currentPassword === this.state.password){
+      if(this.state.newPassword !== ""){
+        this.setState({password: this.state.newPassword});
+        this.setState({currentPassword: this.state.password});
+        
+        axios({
+          method: "POST",
+          url: constants.backend_url + "users/replacePassword",
+          data: {password: this.state.currentPassword, uname: this.state.username},
+          headers: request_headers
+        })
+          .then(function(response){
+            console.log(response.data);
+            return response.data;
+          })
+          .catch(function(error){
+            console.log(error);
+          })
+        alert("password was changed");
+      }
+    }
+
     this.setState({ isDisabled: true });
   }
 
@@ -171,40 +202,33 @@ class UserSettings extends React.Component {
       );
     }
 
-    return (
-        // {/* // <Container component="main" maxWidth="xs"> */}
-        <Grid container styles={{ flexGrow: 1 }}>
-          <Grid item xs={12}>
-            {/* <div className={classes.paper} > */}
-            {/* <form
-          // className={classes.form}
-          noValidate
-          onSubmit={this.onEditSubmit}
-        > */}
-            {editCancelButton}
-            {/* </form> */}
-          </Grid>
+    
 
-          {/* <form
-          //   className={classes.form}
-          noValidate
-          onSubmit={this.onSubmit}
-        > */}
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              name="name"
-              onChange={this.onChange}
-              value={this.state.name}
-              disabled={this.state.isDisabled}
-              autoFocus
-            />
-          </Grid>
+    return (
+      //   <Container component="main" maxWidth="xs">
+      <Grid container styles={{ flexGrow: 1 }}>
+        <Grid item xs={12}>
+          
+          {editCancelButton}
+          
+        </Grid>
+
+       
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            onChange={this.onChange}
+            value={this.state.name}
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+        </Grid>
 
           <Grid item xs={12}>
             <TextField
@@ -222,118 +246,79 @@ class UserSettings extends React.Component {
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              onChange={this.onChange}
-              value={this.state.email} //email not defined error as well
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            onChange={this.onChange}
+            value={this.state.email} //email not defined error as well
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+        </Grid>
+          
+        <Grid item xs={12}>
+          Must enter current password to change password
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="currentPassword"
+            label="Current Password"
+            name="currentPassword"
+            onChange={this.onChange}
+            value={this.state.currentPassword} 
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="newPassword"
+            label="Enter New Password"
+            name="newPassword"
+            onChange={this.onChange}
+            value={this.state.newPassword} 
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+        </Grid>
+        
+        <Grid item xs={12}>
+          <Paper
+          //   className={classes.paper}
+          >
+            <Typography gutterBottom>Maximum distance (mi)</Typography>
+            <Slider
+              defaultValue={5}
+              value={this.state.proximity}
+              getAriaValueText={this.valuetext}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              step={.01}
+              marks
+              min={0}
+              max={10}
               disabled={this.state.isDisabled}
-              autoFocus
+              onChange={this.onSliderChange}
             />
-          </Grid>
-          {/* <PreferenceDialog onChange={this.onChange} disabled={isDisabled} /> */}
-          {/* <formdd
-              //   className={classes.container}
-              > */}
-          <Grid item xs={12}>
-            <Paper
-            //   className={classes.paper}
-            >
-              <Typography gutterBottom>Maximum distance (mi)</Typography>
-              <Slider
-                defaultValue={5}
-                value={this.state.proximity}
-                getAriaValueText={this.valuetext}
-                aria-labelledby="discrete-slider"
-                valueLabelDisplay="auto"
-                step={0.01}
-                marks
-                min={0}
-                max={10}
-                disabled={this.state.isDisabled}
-                onChange={this.onSliderChange}
-              />
-            </Paper>
-          </Grid>
+          </Paper>
+        </Grid>
 
-          <Grid item xs={12} alignContent={"center"}>
-            <Paper styles={{ textAlign: "center", color: "gray" }}>
-              {/* <InputLabel htmlFor="price-native">Price</InputLabel> */}
-              {/* <Select
-              native
-              // defaultValue={label}
-              onChange={this.onSelectChange}
-              input={<Input id="price-native" />}
-              disabled={this.state.isDisabled}
-              defaultValue={this.priceArray[this.state.price]}
-            >
-
-              <option aria-label="None" priceValue="" />
-              {this.priceArray.map((val, i) => <option value={i+1} key={i}>{val}</option>)}
-
-            </Select> */}
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Select Pice</FormLabel>
-                <RadioGroup
-                  disabled={this.state.isDisabled}
-                  onChange={this.onRadioChange}
-                  row
-                  aria-label="position"
-                  name="position"
-                  defaultValue="top"
-                >
-                  <FormControlLabel
-                    disabled={this.state.isDisabled}
-                    value="0"
-                    control={<Radio color="primary" />}
-                    label="$"
-                    labelPlacement="top"
-                  />
-                  <FormControlLabel
-                    disabled={this.state.isDisabled}
-                    value="1"
-                    control={<Radio color="primary" />}
-                    label="$$"
-                    labelPlacement="top"
-                  />
-                  <FormControlLabel
-                    disabled={this.state.isDisabled}
-                    value="2"
-                    control={<Radio color="primary" />}
-                    label="$$$"
-                    labelPlacement="top"
-                  />
-                  <FormControlLabel
-                    disabled={this.state.isDisabled}
-                    value="3"
-                    control={<Radio color="primary" />}
-                    label="$$$$"
-                    labelPlacement="top"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Paper>
-          </Grid>
-          <Grid item xs>
-            <Paper
-            //   className={classes.paper}
-            >
-              <InputLabel htmlFor="foodtype-native">Food Type</InputLabel>
-              <CheckBoxList
-                options={[
-                  "Mexican",
-                  "American",
-                  "Italian",
-                  "Chinese",
-                  "Vietnamese",
-                ]}
-                selected={this.state.likes}
+        <Grid item xs={12} alignContent={"center"}>
+          <Paper styles={{ textAlign: "center", color: "gray" }}>
+            
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Select Price</FormLabel>
+              <RadioGroup
                 disabled={this.state.isDisabled}
                 onChange={this.onCheckBoxChange}
               />
@@ -342,6 +327,28 @@ class UserSettings extends React.Component {
           {submitButton}
           {/* </form> */}
         </Grid>
+        <Grid item xs>
+          <Paper>
+            <InputLabel htmlFor="foodtype-native">Food Type</InputLabel>
+            <CheckBoxList
+              options={[
+                "Mexican",
+                "American",
+                "Italian",
+                "Chinese",
+                "Vietnamese"
+              ]}
+              selected={this.state.likes}
+              disabled={this.state.isDisabled}
+              onChange={this.onCheckBoxChange}
+            />
+          </Paper>
+        </Grid>
+        
+        {submitButton}
+        
+      </Grid>
+      
     );
   }
 }

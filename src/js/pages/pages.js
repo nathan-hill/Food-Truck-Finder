@@ -14,6 +14,9 @@ import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
 import Dashboard2 from '../components/Dashboard2'
+import TruckTable from "../components/finalTruckTable";
+
+
 export class TestRouting extends React.Component {
   render() {
     return (
@@ -182,7 +185,7 @@ export class Table extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckTable />
+        <TruckTable />
         <Button href="#/SendNotifications">
           Send Notification
         </Button>

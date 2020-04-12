@@ -44,9 +44,6 @@ public class TruckDistance implements Comparable {
         return t.getName();
     }
 
-    public String getSchedule() {
-        return t.getSchedule();
-    }
 
     public String getDescription() {
         return t.getDescription();

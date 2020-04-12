@@ -3,6 +3,7 @@ package com.software2.foodtruckfinder.secure.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Truck {
@@ -12,31 +13,24 @@ public class Truck {
     @NotNull
     private String Name;
     @NotNull
-    private String Schedule;
-    @NotNull
     private String Description;
-    @NotNull
-    private String Menu;
     @NotNull
     private Long ownerID;
     @NotNull
     private String type;
     @NotNull
     private Integer cost;
+    @NotNull
+    private String Menu;
 
     public Truck(Truck t) {
         this.id = t.getId();
         this.Name = t.getName();
-        this.Schedule = t.getSchedule();
         this.Description = t.getDescription();
         this.Menu = t.getMenu();
         this.ownerID = t.getOwnerID();
         this.type = t.getType();
         this.cost = t.getCost();
-    }
-
-    public Truck getMe(){
-        return this;
     }
 
     public Double getZero(){
@@ -51,10 +45,6 @@ public class Truck {
 
     public void setName(String name) {
         Name = name;
-    }
-
-    public void setSchedule(String schedule) {
-        Schedule = schedule;
     }
 
     public void setDescription(String description) {
@@ -85,10 +75,6 @@ public class Truck {
         return Name;
     }
 
-    public String getSchedule() {
-        return Schedule;
-    }
-
     public String getDescription() {
         return Description;
     }
@@ -114,7 +100,6 @@ public class Truck {
         return "Truck{" +
                 "id=" + id +
                 ", Name='" + Name + '\'' +
-                ", Schedule='" + Schedule + '\'' +
                 ", Description='" + Description + '\'' +
                 ", Menu='" + Menu + '\'' +
                 ", ownerID=" + ownerID +
