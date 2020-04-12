@@ -9,10 +9,12 @@ import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
 import FoodTruckTable from "./../components/FoodTruckTable";
 import CustomerSettings from "./../components/UserSettings";
+import FoodTruckPreferences from "../components/FoodTruckPreferences";
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
-import FoodTruckPreferences from "../components/FoodTruckPreferences";
+import TruckTable from "../components/finalTruckTable";
+
 
 export class TestRouting extends React.Component {
   render() {
@@ -182,7 +184,7 @@ export class Table extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckTable />
+        <TruckTable />
         <Button href="#/SendNotifications">
           Send Notification
         </Button>

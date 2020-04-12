@@ -153,6 +153,7 @@ export async function getAllTrucks() {
     });
 }
 
+
 export function getTrucksForToday() {
   return axios({
     method: "GET",
@@ -207,6 +208,7 @@ export async function getPreferredTrucks(id, lon, lat) {
     .catch(function(error) {
       console.log(error);
     });
+
 }
 
 export async function sendNotification(data){
@@ -223,6 +225,7 @@ export async function sendNotification(data){
     .catch(function(error) {
       console.log(error);
     });
+
 }
 
 
@@ -242,3 +245,6 @@ export async function getUPById(id) {
       return error;
     });
 }
+
+
+

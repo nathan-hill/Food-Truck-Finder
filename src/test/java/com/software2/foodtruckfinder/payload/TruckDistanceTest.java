@@ -17,7 +17,7 @@ public class TruckDistanceTest {
         Truck t = new Truck();
         t.setId(1234l);
         t.setName("my truck");
-        t.setSchedule("mwf");
+
         t.setType("mexican");
         t.setDescription("tacos and street corn");
         t.setMenu("tacos and corn");
@@ -32,7 +32,7 @@ public class TruckDistanceTest {
         assertAll(
                 ()->assertEquals(1234l, td.getId()),
                 ()->assertEquals("my truck", td.getName()),
-                ()->assertEquals("mwf", td.getSchedule()),
+
                 ()->assertEquals("mexican", td.getType()),
                 ()->assertEquals("tacos and street corn", td.getDescription()),
                 ()->assertEquals("tacos and corn", td.getMenu()),
