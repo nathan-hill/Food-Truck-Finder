@@ -57,11 +57,7 @@ class UserSettings extends React.Component {
       username: userData.username,
       email: userData.email,
       currentPassword: userData.password,
-<<<<<<< HEAD
-      newPassword: "",
-=======
       newPassword: ""
->>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
     });
     this.setState({
       proximity: preferences.proximity,
@@ -100,12 +96,8 @@ class UserSettings extends React.Component {
 
     // console.log("Submit form");
     this.setState({ isDisabled: true });
-<<<<<<< HEAD
-    // console.log(this.state);
-=======
     console.log(this.state);
     
->>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
 
     let udata = {
       id: this.state.id,
@@ -131,17 +123,9 @@ class UserSettings extends React.Component {
     // console.log("Printing the body of form update");
     // console.log(data);
 
-<<<<<<< HEAD
-    axios
-      .put(constants.backend_url + "users/updateByUser", data)
-      .then((res) => {
-        console.log(res);
-      });
-=======
     axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
       console.log(res);
     });
->>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
 
     const request_headers = {
       "Access-Control-Allow-Origin": "*",
@@ -360,10 +344,7 @@ class UserSettings extends React.Component {
 
         {submitButton}
       </Grid>
-<<<<<<< HEAD
-=======
       
->>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
     );
   }
 }
