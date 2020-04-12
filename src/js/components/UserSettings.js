@@ -45,26 +45,26 @@ class customerSettings extends React.Component {
     this.valuetext = this.valuetext.bind(this);
   }
 
-  // async componentDidMount() {
-  //   let userData = await Request.getUserByID(this.state.id);
-  //   let preferences = await Request.getUPById(this.state.id);
+  async componentDidMount() {
+    let userData = await Request.getUserByID(this.state.id);
+    let preferences = await Request.getUPById(this.state.id);
 
-  //   console.log("Gey user Data");
-  //   console.log(userData);
+    console.log("Gey user Data");
+    console.log(userData);
 
-  //   this.setState({
-  //     name: userData.name,
-  //     username: userData.username,
-  //     email: userData.email,
-  //     currentPassword: userData.password,
-  //     newPassword: ""
-  //   });
-  //   this.setState({
-  //     proximity: preferences.proximity,
-  //     price: preferences.price,
-  //     likes: preferences.likes
-  //   });
-  // }
+    this.setState({
+      name: userData.name,
+      username: userData.username,
+      email: userData.email,
+      currentPassword: userData.password,
+      newPassword: ""
+    });
+    this.setState({
+      proximity: preferences.proximity,
+      price: preferences.price,
+      likes: preferences.likes
+    });
+  }
 
   onChange(e) {
     console.log(e);
@@ -134,8 +134,9 @@ class customerSettings extends React.Component {
     };
     if(this.state.currentPassword === this.state.password){
       if(this.state.newPassword !== ""){
-        this.state.password = this.state.newPassword;
-        this.state.currentPassword = this.state.password;
+        this.setState({password: this.state.newPassword});
+        this.setState({currentPassword: this.state.password});
+        
         axios({
           method: "POST",
           url: constants.backend_url + "users/replacePassword",
