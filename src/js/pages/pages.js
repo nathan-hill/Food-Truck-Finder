@@ -11,7 +11,7 @@ import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 import TruckTable from "../components/finalTruckTable";
-
+import Dashboard2 from '../components/Dashboard2'
 export class TestRouting extends React.Component {
   render() {
     return (
@@ -205,7 +205,7 @@ export class UserProfile extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <UserSettings />
+        {/* <UserSettings /> */}
       </div>
     );
   }

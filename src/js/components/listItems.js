@@ -19,7 +19,7 @@ import FoodTruckPreferences from "./FoodTruckPreferences";
 import LocalShippongIcon from '@material-ui/icons/LocalShipping'
 import SendIcon from '@material-ui/icons/Send';
 import SendNotifications from './SendNotifications'
-
+import FinalTruckTable from './finalTruckTable'
 export const GuestListItems = (setComponentDrawer) => {
   return (
     <div>
@@ -102,7 +102,7 @@ export const OwnerListItems = (setDrawerComponent) => (
       </ListItemIcon>
       <ListItemText primary="Search" />
     </ListItem>
-    <ListItem button onClick={() => {console.log("Looking for food truck table")}}>
+    <ListItem button onClick={() => {return setDrawerComponent(<FinalTruckTable/>)}}>
       <ListItemIcon>
         <LocalShippongIcon/>
       </ListItemIcon>
