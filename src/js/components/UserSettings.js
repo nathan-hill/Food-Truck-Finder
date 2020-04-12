@@ -57,7 +57,11 @@ class UserSettings extends React.Component {
       username: userData.username,
       email: userData.email,
       currentPassword: userData.password,
+<<<<<<< HEAD
       newPassword: "",
+=======
+      newPassword: ""
+>>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
     });
     this.setState({
       proximity: preferences.proximity,
@@ -96,7 +100,12 @@ class UserSettings extends React.Component {
 
     // console.log("Submit form");
     this.setState({ isDisabled: true });
+<<<<<<< HEAD
     // console.log(this.state);
+=======
+    console.log(this.state);
+    
+>>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
 
     let udata = {
       id: this.state.id,
@@ -122,11 +131,17 @@ class UserSettings extends React.Component {
     // console.log("Printing the body of form update");
     // console.log(data);
 
+<<<<<<< HEAD
     axios
       .put(constants.backend_url + "users/updateByUser", data)
       .then((res) => {
         console.log(res);
       });
+=======
+    axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
+      console.log(res);
+    });
+>>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
 
     const request_headers = {
       "Access-Control-Allow-Origin": "*",
@@ -292,88 +307,38 @@ class UserSettings extends React.Component {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography gutterBottom>Maximum distance (mi)</Typography>
-          <Slider
-            defaultValue={5}
-            value={this.state.proximity}
-            getAriaValueText={this.valuetext}
-            aria-labelledby="discrete-slider"
-            valueLabelDisplay="auto"
-            step={0.01}
-            marks
-            min={0}
-            max={10}
-            disabled={this.state.isDisabled}
-            autoFocus
-          />
-          {/* <PreferenceDialog onChange={this.onChange} disabled={isDisabled} /> */}
-          {/* <formdd
-              //   className={classes.container}
-              > */}
-          <Grid item xs={12}>
-            <Paper
-            //   className={classes.paper}
-            >
-              <Typography gutterBottom>Maximum distance (mi)</Typography>
-              <Slider
-                defaultValue={5}
-                value={this.state.proximity}
-                getAriaValueText={this.valuetext}
-                aria-labelledby="discrete-slider"
-                valueLabelDisplay="auto"
-                step={0.01}
-                marks
-                min={0}
-                max={10}
-                disabled={this.state.isDisabled}
-                onChange={this.onSliderChange}
-              />
-            </Paper>
-          </Grid>
+          <Paper
+          //   className={classes.paper}
+          >
+            <Typography gutterBottom>Maximum distance (mi)</Typography>
+            <Slider
+              defaultValue={5}
+              value={this.state.proximity}
+              getAriaValueText={this.valuetext}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              step={.01}
+              marks
+              min={0}
+              max={10}
+              disabled={this.state.isDisabled}
+              onChange={this.onSliderChange}
+            />
+          </Paper>
         </Grid>
+
         <Grid item xs={12} alignContent={"center"}>
           <Paper styles={{ textAlign: "center", color: "gray" }}>
             <FormControl component="fieldset">
               <FormLabel component="legend">Select Price</FormLabel>
               <RadioGroup
                 disabled={this.state.isDisabled}
-                onChange={this.onRadioChange}
-                row
-                aria-label="position"
-                name="position"
-                defaultValue="top"
-              >
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="0"
-                  control={<Radio color="primary" />}
-                  label="$"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="1"
-                  control={<Radio color="primary" />}
-                  label="$$"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="2"
-                  control={<Radio color="primary" />}
-                  label="$$$"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  disabled={this.state.isDisabled}
-                  value="3"
-                  control={<Radio color="primary" />}
-                  label="$$$$"
-                  labelPlacement="top"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Paper>
+                onChange={this.onCheckBoxChange}
+              />
+            </Paper>
+          </Grid>
+          {submitButton}
+          {/* </form> */}
         </Grid>
         <Grid item xs>
           <Paper>
@@ -395,6 +360,10 @@ class UserSettings extends React.Component {
 
         {submitButton}
       </Grid>
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 3990ab9ad92e38d7fbe48433439cdf0e6e7dbc2f
     );
   }
 }

@@ -6,12 +6,16 @@ import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
-import FoodTruckPreferences from "../components/FoodTruckPreferences";
+import FoodTruckTable from "./../components/FoodTruckTable";
+import UserSettings from "./../components/UserSettings";
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
-import TruckTable from "../components/finalTruckTable";
+import FoodTruckPreferences from "../components/FoodTruckPreferences";
 import Dashboard2 from '../components/Dashboard2'
+import TruckTable from "../components/finalTruckTable";
+
+
 export class TestRouting extends React.Component {
   render() {
     return (
