@@ -6,8 +6,12 @@ import { amber, green } from "@material-ui/core/colors";
 
 const baylorTheme = createMuiTheme({
   palette: {
-    primary: green,
-    secondary: amber,
+    primary: {
+      main: '#1b5e20',
+    },
+    secondary: {
+      main: '#ffc107',
+    },
   },
 });
 
