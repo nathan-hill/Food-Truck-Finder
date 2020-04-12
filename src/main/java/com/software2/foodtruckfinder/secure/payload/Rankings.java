@@ -80,7 +80,10 @@ public class Rankings {
 
         this.today = dayOfWeekToInt(new SimpleDateFormat("EEEE").format(new Date()).toUpperCase());
 
-        this.rankings = new LinkedHashMap<>(this.truckList.stream().collect(Collectors.toMap(Truck::getMe, Truck::getZero)));
+        this.rankings = new LinkedHashMap<>();
+        for(Truck val: this.truckList){
+            this.rankings.put(val, 0.0);
+        }
 
         if (this.truckList.stream().count() < 1 || this.schedules.stream().count() < 1) {
             System.err.println("There is not enough information in the database;");

@@ -1,19 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
-import FoodTruckTable from "./../components/FoodTruckTable";
-import UserSettings from "./../components/UserSettings";
+import FoodTruckPreferences from "../components/FoodTruckPreferences";
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
-import FoodTruckPreferences from "../components/FoodTruckPreferences";
-import Dashboard2 from '../components/Dashboard2'
+import TruckTable from "../components/finalTruckTable";
+
 export class TestRouting extends React.Component {
   render() {
     return (
@@ -44,7 +42,6 @@ export class TestRouting extends React.Component {
           <li>
             <Link to="/FoodTruckPreference">Recommended Food Trucks</Link>
           </li>
-
         </ul>
       </div>
     );
@@ -56,21 +53,23 @@ export class CreateAccount extends React.Component {
     super(props);
 
     this.state = {
-      status: ""
+      status: "",
     };
 
     this.sendFormDataPostNewUser = this.sendFormDataPostNewUser.bind(this);
   }
 
-  sendFormDataPostNewUser = async function(e) {
+  sendFormDataPostNewUser = async function (e) {
     e.preventDefault();
     const user = {
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
       name:
-        e.target.elements.firstName.value + ' ' + e.target.elements.lastName.value,
+        e.target.elements.firstName.value +
+        " " +
+        e.target.elements.lastName.value,
       username: e.target.elements.username.value,
-      type: e.target.elements.type.value
+      type: e.target.elements.type.value,
     };
 
     // console.log(user);
@@ -101,7 +100,7 @@ export class DatabaseListing extends React.Component {
     super(props);
 
     this.state = {
-      trucks: []
+      trucks: [],
     };
 
     this.sendFormDataPostNewUser = this.sendFormDataPostNewTruck.bind(this);
@@ -114,11 +113,11 @@ export class DatabaseListing extends React.Component {
     this.setState({ trucks: users });
   }
 
-  sendFormDataPostNewTruck = function(e) {
+  sendFormDataPostNewTruck = function (e) {
     e.preventDefault();
     const truck = {
       name: e.target.elements.name.value,
-      schedule: e.target.elements.schedule.value
+      schedule: e.target.elements.schedule.value,
     };
 
     //this.setState({users: this.state.users.push()});
@@ -145,25 +144,20 @@ export class DatabaseListing extends React.Component {
   }
 }
 
-
-
 export class Login extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
-
   }
 
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <LoginPage
-          redirect={this.state.redirect}
-        />
+        <LoginPage redirect={this.state.redirect} />
       </div>
     );
   }
@@ -174,7 +168,7 @@ export class Table extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -182,10 +176,8 @@ export class Table extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckTable />
-        <Button href="#/SendNotifications">
-          Send Notification
-        </Button>
+        <TruckTable />
+        <Button href="#/SendNotifications">Send Notification</Button>
       </div>
     );
   }
@@ -193,11 +185,11 @@ export class Table extends React.Component {
 
 export class TruckDetails extends React.Component {
   render() {
-      return(
-        <div>
-          <FoodTruckDetails/>
-        </div>
-      );
+    return (
+      <div>
+        <FoodTruckDetails />
+      </div>
+    );
   }
 }
 export class UserProfile extends React.Component {
@@ -205,7 +197,7 @@ export class UserProfile extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -217,7 +209,6 @@ export class UserProfile extends React.Component {
       </div>
     );
   }
-
 }
 
 export class Notifications extends React.Component {
@@ -225,7 +216,7 @@ export class Notifications extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -244,7 +235,7 @@ export class SendNotification extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -283,7 +274,7 @@ export class CustPreferences extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -291,21 +282,18 @@ export class CustPreferences extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckPreferences/>
+        <FoodTruckPreferences />
       </div>
     );
   }
-
 }
-
-
 
 export class Home extends React.Component {
   render() {
     return (
       <div>
         {/* <Dashboard /> */}
-        <Dashboard2/>
+        <Dashboard2 />
       </div>
     );
   }

@@ -58,6 +58,13 @@ public class SubscriptionController {
         return true;
     }
 
+    @DeleteMapping(path = "/unsubscribe")
+    public @ResponseBody
+    Boolean unSubscribe(Long subscriptionid) {
+        subRepository.deleteById(subscriptionid);
+        return true;
+    }
+
     @GetMapping(path = "/getAllByTruck")
     public @ResponseBody
     Iterable<Subscription> getAllSubscription(Long truckid) {
