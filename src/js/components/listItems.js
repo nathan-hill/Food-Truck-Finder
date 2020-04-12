@@ -12,15 +12,23 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { Link } from "react-router-dom";
 import UserSettings from "./UserSettings";
 import SearchIcon from "@material-ui/icons/Search";
-import SettingsIcon from '@material-ui/icons/Settings';
-import RateReviewIcon from '@material-ui/icons/RateReview';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import SettingsIcon from "@material-ui/icons/Settings";
+import RateReviewIcon from "@material-ui/icons/RateReview";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import FoodTruckPreferences from "./FoodTruckPreferences";
+import LocalShippongIcon from '@material-ui/icons/LocalShipping'
+import SendIcon from '@material-ui/icons/Send';
+import SendNotifications from './SendNotifications'
 
 export const GuestListItems = (setComponentDrawer) => {
   return (
     <div>
-      <ListItem button onClick={() => {console.log("Looking for search component guest")}}>
+      <ListItem
+        button
+        onClick={() => {
+          console.log("Looking for search component guest");
+        }}
+      >
         <ListItemIcon>
           <SearchIcon />
         </ListItemIcon>
@@ -32,52 +40,77 @@ export const GuestListItems = (setComponentDrawer) => {
 
 export const CustomerListItems = (setDrawerComponent) => {
   return (
-  <div>
-    <ListItem button onClick={() => {console.log("Looking for search component customer")}}>
+    <div>
+      <ListItem
+        button
+        onClick={() => {
+          console.log("Looking for search component customer");
+        }}
+      >
         <ListItemIcon>
           <SearchIcon />
         </ListItemIcon>
         <ListItemText primary="Search" />
       </ListItem>
-    <ListItem button onClick={() => { return setDrawerComponent(<UserSettings/>)}}>
+      <ListItem
+        button
+        onClick={() => {
+          return setDrawerComponent(<UserSettings />);
+        }}
+      >
         <ListItemIcon>
-          <SettingsIcon/>
+          <SettingsIcon />
         </ListItemIcon>
-        <ListItemText primary="User Settings"/>
+        <ListItemText primary="User Settings" />
       </ListItem>
-      <ListItem button onClick={() => { console.log("looking for review component")}}>
+      <ListItem
+        button
+        onClick={() => {
+          console.log("looking for review component");
+        }}
+      >
         <ListItemIcon>
-          <RateReviewIcon/>
+          <RateReviewIcon />
         </ListItemIcon>
-        <ListItemText primary="My Reviews"/>
+        <ListItemText primary="My Reviews" />
       </ListItem>
-      <ListItem button onClick={() => { return setDrawerComponent(<FoodTruckPreferences/>)}}>
+      <ListItem
+        button
+        onClick={() => {
+          return setDrawerComponent(<FoodTruckPreferences />);
+        }}
+      >
         <ListItemIcon>
-          <ThumbUpIcon/>
+          <ThumbUpIcon />
         </ListItemIcon>
-        <ListItemText primary="Suggested"/>
+        <ListItemText primary="Suggested" />
       </ListItem>
-  </div>
+    </div>
   );
-}
+};
 
 export const OwnerListItems = (setDrawerComponent) => (
   <div>
-    <ListItem button>
+    <ListItem
+      button
+      onClick={() => {
+        console.log("Looking for search component customer");
+      }}
+    >
       <ListItemIcon>
-        <DashboardIcon />
+        <SearchIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Search" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={() => {console.log("Looking for food truck table")}}>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <LocalShippongIcon/>
       </ListItemIcon>
       <ListItemText primary="My Food Trucks" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={() => {return setDrawerComponent(<SendNotifications/>)}}>
       <ListItemIcon>
-        <PeopleIcon />
+        <SendIcon/>
       </ListItemIcon>
       <ListItemText primary="Send Notifications" />
     </ListItem>
@@ -85,61 +118,7 @@ export const OwnerListItems = (setDrawerComponent) => (
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="View Ratings/Reviews" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Owner Settings" />
-    </ListItem>
-  </div>
-);
-
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Raw Components</ListSubheader>
-    <ListItem button to="/" component={Link}>
-      >
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/" />
-    </ListItem>
-    <ListItem button to="/Request" component={Link}>
-      >
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/Request" />
-    </ListItem>
-    <ListItem button to="/loginpage" component={Link}>
-      >
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/loginpage" />
-    </ListItem>
-    <ListItem button to="/TestRouting" component={Link}>
-      >
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/TestRouting" />
-    </ListItem>
-    <ListItem button to="/Table" component={Link}>
-      >
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="/Table" />
-    </ListItem>
-    <ListItem button to="/customerPreferences" component={Link}>
-      >
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers_Preferences" />
+      <ListItemText primary="View Reviews" />
     </ListItem>
   </div>
 );

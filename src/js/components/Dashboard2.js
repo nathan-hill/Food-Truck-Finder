@@ -232,7 +232,7 @@ function Dashboard2(props) {
       return CustomerListItems(handleSelectionDrawerClick);
     } else {
       console.log(role + " = " + "owner")
-      return OwnerListItems;
+      return OwnerListItems(handleSelectionDrawerClick);
     }
   }
 
