@@ -299,7 +299,7 @@ class finalTruckTable extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.data.map((idx) => (
+                  {this.state.data.map((val, idx) => (
                     <tr id="addr0" key={idx} >
                       
                       <td>

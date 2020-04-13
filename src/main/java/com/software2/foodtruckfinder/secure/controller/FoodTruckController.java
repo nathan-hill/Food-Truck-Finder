@@ -64,10 +64,11 @@ public class FoodTruckController {
         return truckRepository.findById(integer);
     }
 
-    @GetMapping(path = "findTrucksByownerID")
+    @GetMapping(path = "findTrucksByOwnerID")
     public @ResponseBody
-    List<Truck> findTrucksByOwnerID(long l){
-        return truckRepository.findTrucksByOwnerID(l);
+    List<Truck> findTrucksByOwnerID(@RequestParam("id") long id){
+
+        return truckRepository.findTrucksByOwnerID(id);
     }
 
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)
