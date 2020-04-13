@@ -66,8 +66,8 @@ public class FoodTruckController {
 
     @GetMapping(path = "findTrucksByownerID")
     public @ResponseBody
-    List<Truck> findTrucksByOwnerID(long l){
-        return truckRepository.findTrucksByOwnerID(l);
+    List<Truck> findTrucksByOwnerID(long ownerID){
+        return truckRepository.findTrucksByOwnerID(ownerID);
     }
 
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)
