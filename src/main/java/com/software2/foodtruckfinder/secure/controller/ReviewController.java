@@ -74,6 +74,12 @@ public class ReviewController {
         return revRepository.findAll();
     }
 
+    @GetMapping(path = "/getReviewsByTruckId")
+    public @ResponseBody
+    List<Review> getReviewsByTruckId(@RequestParam Long truckid) {
+        return revRepository.findReviewsByTruckid(truckid);
+    }
+
     @DeleteMapping(path = "/delete")
     public @ResponseBody
     Boolean deleteAllReviews() {

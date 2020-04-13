@@ -211,11 +211,11 @@ export async function getSubscriptionsByUserID(uid) {
   });
 }
 
-export async function addSubscription(subscription) {
+export async function addSubscription(uid, truckId) {
   return await axios({
     method: "POST",
     url: constants.backend_url + "subscription/add",
-    data: subscription,
+    params: {uid, truckId},
     headers: request_headers
   }).then(function(response) {
     console.log(response.data);
@@ -236,5 +236,20 @@ export async function unsubscribe(sub_id) {
     return response.data;
   }).catch(function(error) {
     console.log(error);
+  });
+}
+
+export async function findReviewsByTruckID(truckID) {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "review/getReviewsByTruckID",
+    params: {truckID},
+    headers: request_headers
+  }).then(function (response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+    return error;
   });
 }

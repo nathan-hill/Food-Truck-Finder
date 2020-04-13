@@ -42,16 +42,19 @@ function FormComponent(props) {
 
     const [subscribeValue, setSubscribeValue] = React.useState(initSub);
 
+    let isLoggedIn = props.auth.user.sub;
+    if(isLoggedIn) {
+        console.log("LOGGED IN!!!!!!");
+    }
 
     const handleChange = (event) => {
         setStarValue(event.target.value);
-        
     };
 
     const handleTextChange = (event) => {
-        alert(event.target.value);
         setTextValue(event.target.value);
     }
+
 
     async function handleClick()  {
         if(subscribeValue) {
@@ -83,7 +86,7 @@ function FormComponent(props) {
             console.log("Sending a subscribe request:");
             console.log(data);
 
-            Request.addSubscription(data).then(response => {
+            Request.addSubscription(props.auth.user.sub, truck.id).then(response => {
                 setSubscribeValue(true);
             });
         }
@@ -103,11 +106,9 @@ function FormComponent(props) {
         };
         console.log("Printing the body of form update");
         console.log(data);
-        alert(textValue);
         axios.post(constants.backend_url + "review/add", data).then(res => {
              console.log(res);
         });
-        
     };
     
     

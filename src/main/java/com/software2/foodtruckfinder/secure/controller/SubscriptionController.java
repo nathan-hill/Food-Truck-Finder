@@ -28,19 +28,10 @@ public class SubscriptionController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity<Subscription> addNewSubscription(@RequestBody Subscription os) {
-        System.out.println("Got new subscription request with truckId: " + os.getTruckid());
-
+    ResponseEntity<Subscription> addNewSubscription(@RequestParam("uid") Long uid, @RequestParam("truckId") Long truckId) {
         Subscription n = new Subscription();
-        n.setId(os.getId());
-        n.setTruckid(os.getTruckid());
-        n.setUid(os.getUid());
-
-        for (Subscription sP : subRepository.findAll()) {
-            if (sP.getId().equals(os.getId())) {
-                return ResponseEntity.status(400).build();
-            }
-        }
+        n.setUid(uid);
+        n.setTruckid(truckId);
 
         Subscription generatedS = subRepository.save(n);
         return new ResponseEntity<Subscription>(generatedS, HttpStatus.OK);

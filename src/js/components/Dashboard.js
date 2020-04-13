@@ -138,7 +138,7 @@ function Dashboard(props) {
   const onTruckClick = (truck) => {
     if(true) { // TODO: check if logged in
       localStorage.setItem("clickedTruck",JSON.stringify(truck));
-      props.history.push("/rateAndReview")
+      props.history.push("/FoodTruckDetails")
     }
   };
 

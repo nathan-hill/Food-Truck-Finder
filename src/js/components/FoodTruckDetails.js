@@ -1,11 +1,9 @@
 
 import React from "react";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import {connect} from "react-redux";
 import axios from "axios";
-var constants = require('./../helpers/constants')
+import {Container} from "@material-ui/core";
+import * as Request from "../helpers/backendRequests";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -19,151 +17,36 @@ class FoodTruckDetails extends React.Component {
             isDisabled: true,
         };
 
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onEditSubmit = this.onEditSubmit.bind(this);
-
-        console.log("TRYING TO DO A GET NOW!!!")
-        axios.get( constants.backend_url + "trucks/findTruckByID", {
-            params: {
-                integer: this.state.id
-            }
-        }).then(res => {
-            console.log(res);
-            this.setState(res.data);
-        });
-    }
-
-    onChange(e) {
-        this.setState({[e.target.name]: e.target.value});
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        let data = {
-            id: this.state.id,
-            name: this.state.name,
-            schedule: this.state.schedule,
-            description: this.state.description,
-            menu: this.state.menu,
-            ownerID: this.state.ownerID,
-        }
-        data.headers = {
-            "Access-Control-Allow-Origin": "*",
-            "content-type": "application/json",
-            Accept: "application/json"
-        };
-
-        axios.put(constants.backend_url + "v/trucks/updateByTruck",data).then(res => {
-            console.log(res);
-        })
-    }
-
-    onEditSubmit(e) {
-        e.preventDefault();
-        this.setState({isDisabled: !this.state.isDisabled})
+        let truck = JSON.parse(localStorage.getItem("clickedTruck"));
+        this.state = truck;
     }
 
     render() {
-        const { name, schedule, description, menu, isDisabled } = this.state;
-        const classes = makeStyles();
+        let reviews;
+        Request.findReviewsByTruckID(this.state.id).then(result => {
+            console.log(result);
+            reviews = result;
+        });
 
-        let submitButton;
-        if(!isDisabled) {
-            submitButton = <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-            >
-                Submit
-            </Button>
-        }
+        return(
+          <Container component="main" maxWidth="xs">
+              <h2>
+                  {this.state.name}
+              </h2>
+              <h3>
+                  {this.state.description}
+              </h3>
+              <h4>
+                  {reviews}
+              </h4>
 
-        let editCancelButton;
-        if(true) { //temp until client side verifies that this is the Owner account
-            editCancelButton= <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-            >
-                {isDisabled ? "Edit" : "Cancel"}
-            </Button>
-        }
-
-        return (
-            <Container component="main" maxWidth="xs">
-                <div className={classes.paper}>
-                    <form className={classes.form} noValidate onSubmit={this.onEditSubmit}>
-                        {editCancelButton}
-                    </form>
-
-                    <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="name"
-                            label="Food Truck Name"
-                            name="name"
-                            onChange={this.onChange}
-                            value={name}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
-
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="schedule"
-                            label="Current Schedule"
-                            name="schedule"
-                            onChange={this.onChange}
-                            value={schedule}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
-
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="description"
-                            label="Description"
-                            name="description"
-                            onChange={this.onChange}
-                            value={description}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
-
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="menu"
-                            label="Current Menu"
-                            name="menu"
-                            onChange={this.onChange}
-                            value={menu}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
-                        {submitButton}
-                   </form>
-                </div>
-            </Container>
+          </Container>
         );
     }
 }
 
-export default FoodTruckDetails;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(FoodTruckDetails);
