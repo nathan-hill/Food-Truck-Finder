@@ -92,9 +92,15 @@ public class ReviewController {
         return true;
     }
 
-    @DeleteMapping(path = "/getReviewsByUser")
+    @GetMapping(path = "/getReviewsByUser")
     public @ResponseBody
     List<Review> getReviewsByUser(Long uid) {
         return revRepository.findReviewsByUserID(uid);
+    }
+
+    @GetMapping(path = "/getReviewsByFT")
+    public @ResponseBody
+    List<Review> getReviewsByFT(Long ftid) {
+        return revRepository.findReviewsByTruckid(ftid);
     }
 }

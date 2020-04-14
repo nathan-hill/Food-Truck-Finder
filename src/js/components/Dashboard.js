@@ -21,7 +21,6 @@ import {
   GuestListItems,
   CustomerListItems,
   OwnerListItems,
-  secondaryListItems
 } from "./listItems";
 import SimpleMap from "./SimpleMap";
  
@@ -175,7 +174,7 @@ function Dashboard(props) {
   let logInButton;
   if (props.auth.isAuthenticated) {
     //function call to determine number of unread notifications
-    numNotifications = 1
+    numNotifications = 0
         logOutButton = (
       <Button
         type="submit"
@@ -272,10 +271,6 @@ function Dashboard(props) {
         </div>
         <Divider />
         <List>{mainList}</List>
-        <Divider />
-        <List component="nav">
-          {secondaryListItems}
-        </List>
       </Drawer>
       <SimpleMap trucks={trucks} onTruckClick={onTruckClick}/>
       {/* <InteractiveMap/> */}

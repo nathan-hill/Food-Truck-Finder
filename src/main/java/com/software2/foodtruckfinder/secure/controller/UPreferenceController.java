@@ -104,5 +104,4 @@ public class UPreferenceController {
         ArrayList<TruckDistance> trucks = upService.getPrioritizedTrucks(id, lon, lat);
         return new ResponseEntity<>(trucks, (trucks.size() == 0 ? (HttpStatus.BAD_REQUEST) : (HttpStatus.OK)));
     }
-
 }

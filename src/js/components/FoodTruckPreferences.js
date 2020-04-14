@@ -26,7 +26,7 @@ class FoodTruckPreferences extends React.Component {
       },
     }));
 
-    console.log(this.state);
+    // console.log(this.state);
 
     let preferred = await Requests.getPreferredTrucks(
       this.props.auth.user.sub,
@@ -48,11 +48,11 @@ class FoodTruckPreferences extends React.Component {
       delete edited[i].id;
       delete edited[i].schedule;
       delete edited[i].score;
-      
+      delete edited[i].ownerID; 
     }
 
-    console.log("preferred trucks");
-    console.log(edited);
+    // console.log("preferred trucks");
+    // console.log(edited);
     this.setState({
       generalData: edited,
       generalCols: Object.keys(edited[0]),

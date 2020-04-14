@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Dashboard from "./../components/Dashboard";
 import SignUp from "../components/SignUp";
 import { TwoFieldForm } from "../components/TwoFieldForm";
 import LoginPage from "../components/LoginPage";
@@ -14,6 +13,8 @@ import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
 import FormComponent from "../components/rateAndReview";
+import Dashboard2 from '../components/Dashboard2'
+import TruckTable from "../components/finalTruckTable";
 
 export class TestRouting extends React.Component {
   render() {
@@ -48,7 +49,6 @@ export class TestRouting extends React.Component {
           <li>
             <Link to="/rateAndReview">Rate and Review Food Truck Form</Link>
           </li>
-
         </ul>
       </div>
     );
@@ -60,35 +60,37 @@ export class CreateAccount extends React.Component {
     super(props);
 
     this.state = {
-      status: ""
+      status: "",
     };
 
     this.sendFormDataPostNewUser = this.sendFormDataPostNewUser.bind(this);
   }
 
-  sendFormDataPostNewUser = async function(e) {
+  sendFormDataPostNewUser = async function (e) {
     e.preventDefault();
     const user = {
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
       name:
-        e.target.elements.firstName.value + ' ' + e.target.elements.lastName.value,
+        e.target.elements.firstName.value +
+        " " +
+        e.target.elements.lastName.value,
       username: e.target.elements.username.value,
-      type: e.target.elements.type.value
+      type: e.target.elements.type.value,
     };
 
-    console.log(user);
+    // console.log(user);
 
     var status = await Request.postNewUser(user);
 
-    console.log("The status is");
-    console.log(status.message)
+    // console.log("The status is");
+    // console.log(status.message)
 
     this.setState({ status: status.message });
   };
 
   render() {
-    console.log("redering the page as " + this.state.status);
+    // console.log("redering the page as " + this.state.status);
     return (
       <div>
         <SignUp
@@ -105,29 +107,29 @@ export class DatabaseListing extends React.Component {
     super(props);
 
     this.state = {
-      trucks: []
+      trucks: [],
     };
 
     this.sendFormDataPostNewUser = this.sendFormDataPostNewTruck.bind(this);
   }
 
   async componentDidMount() {
-    console.log("Mounted");
+    // console.log("Mounted");
     var users = await Request.getAllTrucks();
 
     this.setState({ trucks: users });
   }
 
-  sendFormDataPostNewTruck = function(e) {
+  sendFormDataPostNewTruck = function (e) {
     e.preventDefault();
     const truck = {
       name: e.target.elements.name.value,
-      schedule: e.target.elements.schedule.value
+      schedule: e.target.elements.schedule.value,
     };
 
     //this.setState({users: this.state.users.push()});
 
-    console.log(truck);
+    // console.log(truck);
 
     return Request.postNewTruck(truck);
   };
@@ -149,25 +151,20 @@ export class DatabaseListing extends React.Component {
   }
 }
 
-
-
 export class Login extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
-
   }
 
   render() {
     return (
       <div>
         <Link to="/">Back</Link>
-        <LoginPage
-          redirect={this.state.redirect}
-        />
+        <LoginPage redirect={this.state.redirect} />
       </div>
     );
   }
@@ -178,7 +175,7 @@ export class Table extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -186,10 +183,8 @@ export class Table extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckTable />
-        <Button href="#/SendNotifications">
-          Send Notification
-        </Button>
+        <TruckTable />
+        <Button href="#/SendNotifications">Send Notification</Button>
       </div>
     );
   }
@@ -211,7 +206,7 @@ export class UserProfile extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -219,11 +214,10 @@ export class UserProfile extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <CustomerSettings />
+        {/* <UserSettings /> */}
       </div>
     );
   }
-
 }
 
 export class Notifications extends React.Component {
@@ -231,7 +225,7 @@ export class Notifications extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -250,7 +244,7 @@ export class SendNotification extends React.Component {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -264,32 +258,32 @@ export class SendNotification extends React.Component {
   }
 }
 
-export class OwnerProfile extends React.Component {
-  constructor(props) {
-    super(props);
+// export class OwnerProfile extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      redirect: ""
-    };
-  }
+//     this.state = {
+//       redirect: ""
+//     };
+//   }
 
-  render() {
-    return (
-      <div>
-        <Link to="/">Back</Link>
-        <CustomerSettings />
-        <FoodTruckTable />
-      </div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div>
+//         <Link to="/">Back</Link>
+//         <CustomerSettings />
+//         <FoodTruckTable />
+//       </div>
+//     );
+//   }
+// }
 
 export class CustPreferences extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      redirect: ""
+      redirect: "",
     };
   }
 
@@ -297,20 +291,18 @@ export class CustPreferences extends React.Component {
     return (
       <div>
         <Link to="/">Back</Link>
-        <FoodTruckPreferences/>
+        <FoodTruckPreferences />
       </div>
     );
   }
-
 }
-
-
 
 export class Home extends React.Component {
   render() {
     return (
       <div>
-        <Dashboard />
+        {/* <Dashboard /> */}
+        <Dashboard2 />
       </div>
     );
   }

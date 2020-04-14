@@ -19,7 +19,7 @@ export class InteractiveMap extends Component {
   }
 
   onClick(e) {
-    console.log(e);
+    // console.log(e);
     this.setState({ location: { lat: e.lat, lng: e.lng } });
     // this.props.onClick(e);
   }

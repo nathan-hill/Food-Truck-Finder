@@ -98,4 +98,11 @@ public class UserTest {
                 ", type='Type" + "\'}"
                 , user.toString());
     }
+
+    @Test
+    @DisplayName("Type test")
+    void typeTest(){
+        user.setType("Customer");
+        assertEquals("Customer", user.getType());
+    }
 }

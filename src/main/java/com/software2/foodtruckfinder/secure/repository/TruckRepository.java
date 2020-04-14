@@ -12,13 +12,12 @@ import java.util.Optional;
 public interface TruckRepository extends JpaRepository<Truck, Long> {
 
 
-
     boolean existsById(Long id);
 
     List<Truck> findByTypeIn(List<String> type);
 
     Optional<Truck> findById(Integer in);
 
-    List<Truck> findTrucksByOwnerID(long userId);
+    List<Truck> findTrucksByOwnerID(long ownerID);
 
 }

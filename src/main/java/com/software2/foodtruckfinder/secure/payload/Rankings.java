@@ -80,7 +80,10 @@ public class Rankings {
 
         this.today = dayOfWeekToInt(new SimpleDateFormat("EEEE").format(new Date()).toUpperCase());
 
-        this.rankings = new LinkedHashMap<>(this.truckList.stream().collect(Collectors.toMap(Truck::getMe, Truck::getZero)));
+        this.rankings = new LinkedHashMap<>();
+        for(Truck val: this.truckList){
+            this.rankings.put(val, 0.0);
+        }
 
         if (this.truckList.stream().count() < 1 || this.schedules.stream().count() < 1) {
             System.err.println("There is not enough information in the database;");
@@ -100,7 +103,7 @@ public class Rankings {
                 // there is a schedule for this truck
             }else{
                 //there is no schedule for this truck
-                System.out.println("removed" + t.getName());
+                //System.out.println("removed" + t.getName());
                 this.truckList.remove(t);
             }
         }
@@ -111,12 +114,12 @@ public class Rankings {
     public Rankings prioritizeDistance() {
         Map<Truck, Double> distanceRanking = new HashMap<>();
 
-        System.out.println(this.latitude + " " + this.longitude);
+        //System.out.println(this.latitude + " " + this.longitude);
 
         for (Schedule s : this.schedules) {
             Double distance = distance(s.getLatitude(), s.getLongitude(), this.latitude, this.longitude);
             this.userPref.getProximity();
-            System.out.println(s.toString() + " -> " + distance);
+            //System.out.println(s.toString() + " -> " + distance);
 
             distanceRanking.put(getTruckFromId(s.getTruckID()), Math.abs(distance - this.userPref.getProximity()));
             this.truckDistances.put(getTruckFromId(s.getTruckID()), distance);
@@ -207,8 +210,8 @@ public class Rankings {
     public ArrayList<TruckDistance> getResult() {
         this.rankings = MapUtil.sortByValue(this.rankings);
 
-        System.out.println("Sorted by rank");
-        this.rankings.entrySet().stream().forEach(System.out::println);
+        //System.out.println("Sorted by rank");
+        //this.rankings.entrySet().stream().forEach(System.out::println);
 
         return new ArrayList<TruckDistance>(TruckDistance.makeArrayFromMap(this.truckDistances, this.rankings));
     }

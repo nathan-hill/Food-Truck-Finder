@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,14 +34,19 @@ public class FoodTruckController {
         n.setOwnerID(newTruck.getOwnerID());
         n.setMenu(newTruck.getMenu());
 
-        for (Truck truck: truckRepository.findAll()) {
-            if(truck.getName().equals(newTruck.getName())){
-                return ResponseEntity.status(400).build();
+        if(n.getName() == null ||n.getDescription() == null || n.getOwnerID() == null){
+            // do nothing
+            return new ResponseEntity<>(new Truck(), HttpStatus.BAD_REQUEST);
+        }else{
+            for (Truck truck: truckRepository.findAll()) {
+                if(truck.getName().equals(newTruck.getName())){
+                    return ResponseEntity.status(400).build();
+                }
             }
-        }
 
-        Truck generatedTruck = truckRepository.save(n);
-        return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
+            Truck generatedTruck = truckRepository.save(n);
+            return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
+        }
     }
 
     @GetMapping(path = "")
@@ -62,10 +69,10 @@ public class FoodTruckController {
         return truckRepository.findById(integer);
     }
 
-    @GetMapping(path = "findTrucksByownerID")
+    @GetMapping(path = "findTrucksByOwnerID")
     public @ResponseBody
-    List<Truck> findTrucksByOwnerID(long l){
-        return truckRepository.findTrucksByOwnerID(l);
+    List<Truck> findTrucksByOwnerID(@RequestParam("id") long id){
+        return truckRepository.findTrucksByOwnerID(id);
     }
 
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,5 +95,30 @@ public class FoodTruckController {
             return null;
         }
     }
+
+
+//    @PostMapping("/uploadMenu")
+//    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+//        DBFile dbFile = dbFileStorageService.storeFile(file);
+//
+//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                .path("/downloadFile/")
+//                .path(dbFile.getId())
+//                .toUriString();
+//
+//        return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri,
+//                file.getContentType(), file.getSize());
+//    }
+//
+//    @GetMapping("/downloadFile/{fileId}")
+//    public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) {
+//        // Load file from database
+//        DBFile dbFile = dbFileStorageService.getFile(fileId);
+//
+//        return ResponseEntity.ok()
+//                .contentType(MediaType.parseMediaType(dbFile.getFileType()))
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
+//                .body(new ByteArrayResource(dbFile.getData()));
+//    }
 
 }

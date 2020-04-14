@@ -3,6 +3,7 @@ package com.software2.foodtruckfinder.secure.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Truck {
@@ -14,13 +15,13 @@ public class Truck {
     @NotNull
     private String Description;
     @NotNull
-    private String Menu;
-    @NotNull
     private Long ownerID;
     @NotNull
     private String type;
     @NotNull
     private Integer cost;
+    @NotNull
+    private String Menu;
 
     public Truck(Truck t) {
         this.id = t.getId();
@@ -30,10 +31,6 @@ public class Truck {
         this.ownerID = t.getOwnerID();
         this.type = t.getType();
         this.cost = t.getCost();
-    }
-
-    public Truck getMe(){
-        return this;
     }
 
     public Double getZero(){

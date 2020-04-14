@@ -11,9 +11,11 @@ import com.software2.foodtruckfinder.secure.service.UPreferenceService;
 import org.elasticsearch.search.aggregations.metrics.InternalHDRPercentiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -81,9 +84,17 @@ public class MessageController {
     }
 
     @PostMapping(path="/markAllAsRead")
-    public ResponseEntity<?> markAllMessagesAsRead(@RequestBody Long id){
+    public ResponseEntity<?> markAllMessagesAsRead(@RequestParam("id") Long id){
 
         _mRepository.markAllAsRead(id);
+
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
+    @PostMapping(path="/markMessageAsRead")
+    public ResponseEntity<?> markMessageAsRead(@Param("id") Long id){
+        System.out.println(id);
+        _mRepository.markMessageAsRead(id);
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
@@ -91,20 +102,6 @@ public class MessageController {
     @GetMapping(path="/getUnreadMessagesByUser")
     public ResponseEntity<?> getUnreadMessages(@RequestBody Long id){
         return new ResponseEntity<List<Message>>(UPreferenceService.iteratorToList(_mRepository.findByIsReadFalseAndReceiver(id).iterator()), HttpStatus.OK);
-    }
-
-    @GetMapping(path="/getNumberUnreadByID")
-    public @ResponseBody
-    int getNumberUnread(@RequestBody Long id) {
-        Iterable<Message> messages = _mRepository.findByReceiver(id);
-        int count = 0;
-        for(Message m : messages ){
-            if(!m.getRead()){
-                count = count+1;
-            }
-        }
-        System.out.println(count);
-        return count;
     }
 
     @GetMapping(path = "/")
@@ -121,6 +118,14 @@ public class MessageController {
         return true;
     }
 
+    @PostMapping(path = "/deleteMessage")
+    public @ResponseBody
+    Boolean deleteMessage(@RequestParam("id") Long i){
+        System.out.println(i);
+        _mRepository.deleteMessage(i);
+        return true;
+    }
+
     //should be all you need to get all messages that are associated with a user
     @GetMapping(path = "/getMessagesbyUserID")
     public @ResponseBody
@@ -129,21 +134,6 @@ public class MessageController {
         Iterable<Message> m =_mRepository.findByReceiver(id);
         m.forEach(System.out::println);
         return m;
-    }
-
-
-
-    @GetMapping(path = "/getUnreadMessagesbyUserID")
-    public @ResponseBody
-    int findUnreadByUserId(Long user_id){
-        Iterable<Message> messIt = _mRepository.findByReceiver(user_id);
-        int count = 0;
-        for (Message m : messIt ){
-            if(!m.getRead()){
-                count = count + 1;
-            }
-        }
-        return count;
     }
 
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -160,4 +150,6 @@ public class MessageController {
             return null;
         }
     }
+
+
 }
