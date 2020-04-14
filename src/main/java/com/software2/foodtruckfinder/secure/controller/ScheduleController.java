@@ -78,6 +78,10 @@ public class ScheduleController {
     @GetMapping(path = "/getScheduleByID")
     public @ResponseBody
     List<Schedule> findScheduleByID(Long id){
+        List<Schedule> generated = findScheduleByID(id);
+        for(int i = 0; i < generated.size(); i ++){
+            System.out.println(generated.get(i).toString());
+        }
         return _scheduleRepository.findByTruckID(id);
     }
 

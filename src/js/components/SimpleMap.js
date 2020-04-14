@@ -25,9 +25,9 @@ export class SimpleMap extends Component {
   }
 
   render() {
-    console.log(this.props.trucks);
+    // console.log(this.props.trucks);
     // this.props.trucks.map(x => {
-    //   return console.log(x.longitude + " " + x.latitude);
+    //   // return console.log(x.longitude + " " + x.latitude);
     // });
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
@@ -45,7 +45,7 @@ export class SimpleMap extends Component {
         >
           {this.props.trucks.map((x, i) => {
             return (
-              <MapIcon onMouseOver={() => {this.onHover(x)}} onClick={() => {this.onClick(x)}} key={i} truckData={x} lat={x.latitude} lng={x.longitude} />
+              <MapIcon onClick={() => {this.onClick(x)}} key={i} truckData={x} lat={x.latitude} lng={x.longitude} />
             );
           })}
 

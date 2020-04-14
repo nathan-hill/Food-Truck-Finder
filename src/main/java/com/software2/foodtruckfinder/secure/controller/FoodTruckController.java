@@ -34,14 +34,19 @@ public class FoodTruckController {
         n.setOwnerID(newTruck.getOwnerID());
         n.setMenu(newTruck.getMenu());
 
-        for (Truck truck: truckRepository.findAll()) {
-            if(truck.getName().equals(newTruck.getName())){
-                return ResponseEntity.status(400).build();
+        if(n.getName() == null ||n.getDescription() == null || n.getOwnerID() == null){
+            // do nothing
+            return new ResponseEntity<>(new Truck(), HttpStatus.BAD_REQUEST);
+        }else{
+            for (Truck truck: truckRepository.findAll()) {
+                if(truck.getName().equals(newTruck.getName())){
+                    return ResponseEntity.status(400).build();
+                }
             }
-        }
 
-        Truck generatedTruck = truckRepository.save(n);
-        return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
+            Truck generatedTruck = truckRepository.save(n);
+            return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
+        }
     }
 
     @GetMapping(path = "")
@@ -67,7 +72,6 @@ public class FoodTruckController {
     @GetMapping(path = "findTrucksByOwnerID")
     public @ResponseBody
     List<Truck> findTrucksByOwnerID(@RequestParam("id") long id){
-
         return truckRepository.findTrucksByOwnerID(id);
     }
 
