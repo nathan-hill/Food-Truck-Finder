@@ -28,7 +28,15 @@ public class ReviewController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity<Review> addReview(@RequestParam("userID") Long userID, @RequestParam("rating") Integer rating, @RequestParam("description") String description, @RequestParam("truckid") Long truckid) {
+    ResponseEntity<Review> addReview(@RequestParam("userID") Long userID, @RequestParam("rating") Integer rating,
+                                     @RequestParam("description") String description, @RequestParam("truckid") Long truckid) {
+        System.out.println("GOT REVIEW:");
+        System.out.println(userID);
+        System.out.println(rating);
+        System.out.println(description);
+        System.out.println(truckid);
+
+
         Review n = new Review();
         n.setUserID(userID);
         n.setRating(rating);

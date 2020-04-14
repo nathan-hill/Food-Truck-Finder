@@ -12,11 +12,9 @@ public class Review implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
     @NotNull
     private Long truckid;
 
-    @Id
     @NotNull
     private Long userID;
 
