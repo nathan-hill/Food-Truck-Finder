@@ -219,8 +219,8 @@ export async function sendNotification(data) {
     });
 }
 
-export function findTrucksByOwnerID(id) {
-  return axios({
+export async function findTrucksByOwnerID(id) {
+  return await axios({
     method: "GET",
     url: constants.backend_url + "trucks/findTrucksByOwnerID",
     params: { id: id },
@@ -236,8 +236,8 @@ export function findTrucksByOwnerID(id) {
     });
 }
 
-export function getScheduleDTOByID(id, callback) {
-  axios({
+export async function getScheduleDTOByID(id) {
+  return await axios({
     method: "GET",
     url: constants.backend_url + "schedule/getScheduleDTOByID",
     params: { id: id },
@@ -247,10 +247,10 @@ export function getScheduleDTOByID(id, callback) {
       console.log(response.data);
       return response.data;
     })
-    .then((data) => {
-      console.log(data.data);
-      callback(data.data);
-    })
+    // .then((data) => {
+    //   console.log(data.data);
+    //   callback(data.data);
+    // })
     .catch(function (error) {
       console.log(error);
       return error;

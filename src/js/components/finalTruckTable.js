@@ -64,85 +64,80 @@ class FinalTruckTable extends React.Component {
       ownerTruckID: props.auth.user.sub,
 
       data: [
-        {
-          ownerID: props.auth.user.sub,
-          id: "",
-          name: "",
-          cost: "",
-          type: "",
-          menu: "",
-        },
+        // {
+        //   ownerID: props.auth.user.sub,
+        //   id: "",
+        //   name: "",
+        //   cost: "",
+        //   type: "",
+        //   menu: "",
+        // },
       ],
       schedule: [
-        {
-          monOpen: "",
-          monStartTime: "",
-          monEndTime: "",
-          monLatitude: "",
-          monLongitude: "",
+        // {
+        //   monOpen: "",
+        //   monStartTime: "",
+        //   monEndTime: "",
+        //   monLatitude: "",
+        //   monLongitude: "",
 
-          tueOpen: "",
-          tueStartTime: "",
-          tueEndTime: "",
-          tueLatitude: "",
-          tueLongitude: "",
+        //   tueOpen: "",
+        //   tueStartTime: "",
+        //   tueEndTime: "",
+        //   tueLatitude: "",
+        //   tueLongitude: "",
 
-          wedOpen: "",
-          wedStartTime: "",
-          wedEndTime: "",
-          wedLatitude: "",
-          wedLongitude: "",
+        //   wedOpen: "",
+        //   wedStartTime: "",
+        //   wedEndTime: "",
+        //   wedLatitude: "",
+        //   wedLongitude: "",
 
-          thuOpen: "",
-          thuStartTime: "",
-          thuEndTime: "",
-          thuLatitude: "",
-          thuLongitude: "",
+        //   thuOpen: "",
+        //   thuStartTime: "",
+        //   thuEndTime: "",
+        //   thuLatitude: "",
+        //   thuLongitude: "",
 
-          friOpen: "",
-          friStartTime: "",
-          friEndTime: "",
-          friLatitude: "",
-          friLongitude: "",
+        //   friOpen: "",
+        //   friStartTime: "",
+        //   friEndTime: "",
+        //   friLatitude: "",
+        //   friLongitude: "",
 
-          satOpen: "",
-          satStartTime: "",
-          satEndTime: "",
-          satLatitude: "",
-          satLongitude: "",
+        //   satOpen: "",
+        //   satStartTime: "",
+        //   satEndTime: "",
+        //   satLatitude: "",
+        //   satLongitude: "",
 
-          sunOpen: "",
-          sunStartTime: "",
-          sunEndTime: "",
-          sunLatitude: "",
-          sunLongitude: "",
-        },
+        //   sunOpen: "",
+        //   sunStartTime: "",
+        //   sunEndTime: "",
+        //   sunLatitude: "",
+        //   sunLongitude: "",
+        // },
       ],
     };
   }
 
-  componentDidMount = () => {
+  async componentDidMount() {
     // get the array of trucks
-    Request.findTrucksByOwnerID(this.props.auth.user.sub).then((truckList) => {
-      this.setState({ data: truckList });
-      console.log("truck list");
-      console.log(truckList);
+    let userData = await Request.findTrucksByOwnerID(this.state.ownerTruckID);
+  
+    const requests = userData.map(truck => Request.getScheduleDTOByID(truck.id));
+  
+    const listOfScheduleData = await Promise.all(requests);
+  
+    this.setState({
+      // depends on if you want to keep original `this.state.schedule`
+  
+      // if you do:
+      schedule: [...this.state.schedule, ...listOfScheduleData],
+      data: userData
       
     });
-
-    // get the array of schedules
-    this.state.data.map((truck) => {
-      let truckSchedule = Request.getScheduleDTOByID(truck.id, (response) => {
-        console.log(truckSchedule);
-        this.setState({
-          schedule: [...this.state.schedule, truckSchedule]
-        });
-        
-      });
-      this.setState({ schedule: this.state.schedule.concat(truckSchedule) });
-      console.log(this.state.schedule);
-    });
-  };
+  }
 
   handleTruckChange = (idx) => (e) => {
     const { name, value } = e.target;
@@ -241,8 +236,7 @@ class FinalTruckTable extends React.Component {
     e.preventDefault();
 
     console.log("Submit form");
-    this.setState({ isDisabled: true });
-    console.log(this.state);
+    
 
     let data = { truck: this.state.data, schedule: this.state.schedule };
     data.headers = {
@@ -257,7 +251,7 @@ class FinalTruckTable extends React.Component {
     axios.put(constants.backend_url + "schedule/", data).then((res) => {
       console.log(res);
     });
-    this.setState({ isDisabled: true });
+    
   }
 
   render() {
@@ -974,10 +968,10 @@ class FinalTruckTable extends React.Component {
                           input={<BootstrapInput />}
                         >
                           <option aria-label="None" value="" />
-                          <option value={"1"}>$</option>
-                          <option value={"2"}>$$</option>
-                          <option value={"3"}>$$$</option>
-                          <option value={"4"}>$$$$</option>
+                          <option value={"0"}>$</option>
+                          <option value={"1"}>$$</option>
+                          <option value={"2"}>$$$</option>
+                          <option value={"3"}>$$$$</option>
                         </NativeSelect>
                       </FormControl>
                     </td>
@@ -996,6 +990,10 @@ class FinalTruckTable extends React.Component {
                           <option value={"AMERICAN"}>American</option>
                           <option value={"CHINESE"}>Chinese</option>
                           <option value={"VIETNAMESE"}>Vietnamese</option>
+                          <option value={"ITALIAN"}>Italian</option>
+                          <option value={"AFRICAN"}>African</option>
+                          <option value={"RUSSIAN"}>Russian</option>
+                          <option value={"MEXICAN"}>Mexican</option>
                         </NativeSelect>
                       </FormControl>
                     </td>
