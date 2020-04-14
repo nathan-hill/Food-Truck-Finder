@@ -56,7 +56,7 @@ class UserSettings extends React.Component {
       name: userData.name,
       username: userData.username,
       email: userData.email,
-      currentPassword: userData.password,
+      currentPassword: "",
       newPassword: ""
     });
     this.setState({
@@ -132,7 +132,7 @@ class UserSettings extends React.Component {
       "content-type": "application/json",
       Accept: "application/json",
     };
-    if (this.state.currentPassword === this.state.password) {
+    //if (this.state.currentPassword === this.state.password) {
       if (this.state.newPassword !== "") {
         this.setState({ password: this.state.newPassword });
         this.setState({ currentPassword: this.state.password });
@@ -155,7 +155,7 @@ class UserSettings extends React.Component {
           });
         alert("password was changed");
       }
-    }
+    //}
 
     this.setState({ isDisabled: true });
   }

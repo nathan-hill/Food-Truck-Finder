@@ -119,6 +119,7 @@ class FinalTruckTable extends React.Component {
         // },
       ],
     };
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   async componentDidMount() {
