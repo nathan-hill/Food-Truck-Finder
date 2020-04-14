@@ -247,10 +247,6 @@ export async function getScheduleDTOByID(id) {
       console.log(response.data);
       return response.data;
     })
-    // .then((data) => {
-    //   console.log(data.data);
-    //   callback(data.data);
-    // })
     .catch(function (error) {
       console.log(error);
       return error;
