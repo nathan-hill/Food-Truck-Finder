@@ -12,6 +12,8 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 
+import ReactSearchBox from "react-search-box";
+
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -29,6 +31,7 @@ import { logout } from "../actions/login";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import * as Request from './../helpers/backendRequests'
+import {forEach} from "react-bootstrap/cjs/ElementChildren";
 
 // change size of expanded sidebar
 const drawerWidth = 600;
@@ -132,7 +135,15 @@ function Dashboard(props) {
   );
 
   React.useEffect(() => {
-    Request.getTrucksForToday().then((x) => {setTrucks(x)}); // <-- this is an async function to an axios request
+    Request.getTrucksForToday().then((x) => {
+      let truck;
+      for(truck of x) {
+        truck.key = truck.name;
+        truck.value = truck.name;
+      }
+
+      setTrucks(x)
+    }); // <-- this is an async function to an axios request
 },[]);
 
   const onTruckClick = (truck) => {
@@ -214,6 +225,15 @@ function Dashboard(props) {
           >
             Wheels With Meals: {role}
           </Typography>
+
+          <ReactSearchBox
+            placeholder="Search"
+            data={trucks}
+            onSelect={selection => {
+              onTruckClick(selection);
+            }}
+            className="asdf"
+          />
        
           <form
             className={classes.form}

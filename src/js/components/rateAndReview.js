@@ -96,19 +96,10 @@ function FormComponent(props) {
         console.log("Submit Review");
         console.log(truck);
 
+        Request.addReview(props.auth.user.sub,starValue,textValue,truck.id).then(res => {
+            console.log(res);
+        })
 
-        //load data
-        let data = {
-            truckid: truck.id,
-            userID: props.auth.user.sub,
-            description: textValue,
-            rating: starValue
-        };
-        console.log("Printing the body of form update");
-        console.log(data);
-        axios.post(constants.backend_url + "review/add", data).then(res => {
-             console.log(res);
-        });
     };
     
     

@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import axios from "axios";
 import {Container} from "@material-ui/core";
 import * as Request from "../helpers/backendRequests";
+import ReactSearchBox from "react-search-box";
+import FormComponent from "./rateAndReview";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -28,6 +30,12 @@ class FoodTruckDetails extends React.Component {
             reviews = result;
         });
 
+        let isLoggedIn = this.props.auth.isAuthenticated;
+        let reviewPanel;
+        if(isLoggedIn) {
+            reviewPanel = <FormComponent/>
+        }
+
         return(
           <Container component="main" maxWidth="xs">
               <h2>
@@ -40,6 +48,7 @@ class FoodTruckDetails extends React.Component {
                   {reviews}
               </h4>
 
+              {reviewPanel}
           </Container>
         );
     }

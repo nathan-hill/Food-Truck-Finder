@@ -28,19 +28,12 @@ public class ReviewController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity<Review> addReview(@RequestBody Review newR) {
+    ResponseEntity<Review> addReview(@RequestParam("userID") Long userID, @RequestParam("rating") Integer rating, @RequestParam("description") String description, @RequestParam("truckid") Long truckid) {
         Review n = new Review();
-        n.setId(newR.getId());
-        n.setUserID(newR.getUserID());
-        n.setRating(newR.getRating());
-        n.setDescription(newR.getDescription());
-        n.setTruckid(newR.getTruckid());
-
-        for (Review uP : revRepository.findAll()) {
-            if (uP.getId().equals(newR.getId())) {
-                return ResponseEntity.status(400).build();
-            }
-        }
+        n.setUserID(userID);
+        n.setRating(rating);
+        n.setDescription(description);
+        n.setTruckid(truckid);
 
         Review generatedRev = revRepository.save(n);
         return new ResponseEntity<Review>(generatedRev, HttpStatus.OK);
@@ -76,7 +69,7 @@ public class ReviewController {
 
     @GetMapping(path = "/getReviewsByTruckId")
     public @ResponseBody
-    List<Review> getReviewsByTruckId(@RequestParam Long truckid) {
+    List<Review> getReviewsByTruckId(Long truckid) {
         return revRepository.findReviewsByTruckid(truckid);
     }
 
