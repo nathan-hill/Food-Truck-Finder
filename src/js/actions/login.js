@@ -55,3 +55,9 @@ export function login(data) {
       });
   };
 }
+
+let initJwtToken = localStorage.getItem("jwtToken")
+if(initJwtToken) {
+    setAuthorizationToken(initJwtToken)
+    setCurrentUser(jwtDecode(initJwtToken));
+}
