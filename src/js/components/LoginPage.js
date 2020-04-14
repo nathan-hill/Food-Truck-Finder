@@ -58,7 +58,7 @@ class LoginPage extends React.Component {
 
   render() {
     const { errors, username, password, isLoading } = this.state;
-    const classes = makeStyles();
+    const classes = useStyles;
 
     let loadBar;
     if (this.state.isLoading) {

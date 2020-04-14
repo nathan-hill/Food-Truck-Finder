@@ -26,9 +26,9 @@ export class SimpleMap extends Component {
 
   render() {
     // console.log(this.props.trucks);
-    this.props.trucks.map(x => {
-      // return console.log(x.longitude + " " + x.latitude);
-    });
+    // this.props.trucks.map(x => {
+    //   // return console.log(x.longitude + " " + x.latitude);
+    // });
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
     ) : !this.props.isGeolocationEnabled ? (

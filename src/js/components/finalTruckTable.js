@@ -257,7 +257,7 @@ class FinalTruckTable extends React.Component {
 
   render() {
     const classes = makeStyles();
-    this.state.schedule.map((val) => {console.log(val)})
+    // this.state.schedule.map((val) => {console.log(val)})
     // return <div></div>
 
     // /*

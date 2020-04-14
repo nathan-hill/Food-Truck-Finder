@@ -225,13 +225,13 @@ function Dashboard2(props) {
   const genList = (role) => {
     console.log(role);
     if (role === undefined || role === null || role === "guest") {
-      console.log(role + " = " + "guest")
+      // console.log(role + " = " + "guest")
       return GuestListItems(handleSelectionDrawerClick);
     } else if (role === "customer") {
-      console.log(role + " = " + "customer")
+      // console.log(role + " = " + "customer")
       return CustomerListItems(handleSelectionDrawerClick);
     } else {
-      console.log(role + " = " + "owner")
+      // console.log(role + " = " + "owner")
       return OwnerListItems(handleSelectionDrawerClick);
     }
   }
