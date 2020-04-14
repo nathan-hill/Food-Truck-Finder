@@ -90,6 +90,6 @@ public class ReviewController {
     @GetMapping(path = "/getReviewsByFT")
     public @ResponseBody
     List<Review> getReviewsByFT(Long ftid) {
-        return revRepository.findReviewsByTruckID(ftid);
+        return revRepository.findReviewsByTruckid(ftid);
     }
 }
