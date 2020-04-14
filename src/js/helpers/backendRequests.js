@@ -254,6 +254,19 @@ export async function findReviewsByTruckID(truckID) {
   });
 }
 
+export async function getAllReviews() {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "review/",
+    headers: request_headers
+  }).then(function(response){
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
 export async function addReview(userID,rating,description,truckid) {
   return await axios({
     method: "POST",

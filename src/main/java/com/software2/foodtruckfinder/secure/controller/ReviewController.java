@@ -78,7 +78,11 @@ public class ReviewController {
     @GetMapping(path = "/getReviewsByTruckId")
     public @ResponseBody
     List<Review> getReviewsByTruckId(Long truckid) {
-        return revRepository.findReviewsByTruckid(truckid);
+        List<Review> result = revRepository.findReviewsByTruckid(truckid);
+
+        System.out.println(result.toString());
+
+        return result;
     }
 
     @DeleteMapping(path = "/delete")

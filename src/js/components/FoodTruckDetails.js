@@ -6,6 +6,7 @@ import {Container} from "@material-ui/core";
 import * as Request from "../helpers/backendRequests";
 import ReactSearchBox from "react-search-box";
 import FormComponent from "./rateAndReview";
+import {Http} from "@material-ui/icons";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -24,11 +25,25 @@ class FoodTruckDetails extends React.Component {
     }
 
     render() {
-        let reviews;
-        Request.findReviewsByTruckID(this.state.id).then(result => {
-            console.log(result);
-            reviews = result;
-        });
+        if(!this.state.reviews) {
+            let reviews = [];
+            console.log("Getting reviews for truck ID: " + this.state.id);
+            Request.getAllReviews().then(result => {
+                let review;
+                for (review of result) {
+                    if (review.truckid === this.state.id) {
+                        reviews.push(review);
+                    }
+                }
+
+                this.setState((state) => {
+                    return {reviews: reviews}
+                });
+            });
+        } else {
+            console.log("REVIEWS IN STATE: ");
+            console.log(this.state.reviews);
+        }
 
         let isLoggedIn = this.props.auth.isAuthenticated;
         let reviewPanel;
@@ -45,7 +60,7 @@ class FoodTruckDetails extends React.Component {
                   {this.state.description}
               </h3>
               <h4>
-                  {reviews}
+                  {this.state.reviews ? JSON.stringify(this.state.reviews) : null}
               </h4>
 
               {reviewPanel}

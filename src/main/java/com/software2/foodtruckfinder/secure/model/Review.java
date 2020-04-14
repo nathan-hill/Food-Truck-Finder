@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@IdClass(Review.class)
 public class Review implements Serializable {
 
     @Id
