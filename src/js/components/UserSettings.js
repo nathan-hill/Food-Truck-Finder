@@ -313,16 +313,48 @@ class UserSettings extends React.Component {
 
         <Grid item xs={12} alignContent={"center"}>
           <Paper styles={{ textAlign: "center", color: "gray" }}>
+            
             <FormControl component="fieldset">
               <FormLabel component="legend">Select Price</FormLabel>
               <RadioGroup
                 disabled={this.state.isDisabled}
-                onChange={this.onCheckBoxChange}
-              />
-            </Paper>
-          </Grid>
-          {submitButton}
-          {/* </form> */}
+                onChange={this.onRadioChange}
+                row
+                aria-label="position"
+                name="position"
+                defaultValue="top"
+              >
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="0"
+                  control={<Radio color="primary" />}
+                  label="$"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="1"
+                  control={<Radio color="primary" />}
+                  label="$$"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="2"
+                  control={<Radio color="primary" />}
+                  label="$$$"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  disabled={this.state.isDisabled}
+                  value="3"
+                  control={<Radio color="primary" />}
+                  label="$$$$"
+                  labelPlacement="top"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Paper>
         </Grid>
         <Grid item xs>
           <Paper>

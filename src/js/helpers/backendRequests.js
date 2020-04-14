@@ -244,9 +244,11 @@ export function getScheduleDTOByID(id, callback) {
     headers: request_headers,
   })
     .then(function (response) {
-      return response;
+      console.log(response.data);
+      return response.data;
     })
     .then((data) => {
+      console.log(data.data);
       callback(data.data);
     })
     .catch(function (error) {

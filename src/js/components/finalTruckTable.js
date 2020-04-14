@@ -67,7 +67,7 @@ class FinalTruckTable extends React.Component {
         {
           ownerID: props.auth.user.sub,
           id: "",
-          Name: "",
+          name: "",
           cost: "",
           type: "",
           menu: "",
@@ -127,13 +127,19 @@ class FinalTruckTable extends React.Component {
       this.setState({ data: truckList });
       console.log("truck list");
       console.log(truckList);
+      
+    });
 
-      truckList.map((truck, i) => {
-        let schedule = Request.getScheduleDTOByID(truck.id, (response) => {
-          this.setState({ schedule: this.state.schedule.concat(response) });
+    // get the array of schedules
+    this.state.data.map((truck) => {
+      let truckSchedule = Request.getScheduleDTOByID(truck.id, (response) => {
+        console.log(truckSchedule);
+        this.setState({
+          schedule: [...this.state.schedule, truckSchedule]
         });
-        // this.setState({ schedule: this.state.schedule.concat(schedule) });
+        
       });
+      this.setState({ schedule: this.state.schedule.concat(truckSchedule) });
       console.log(this.state.schedule);
     });
   };
@@ -166,7 +172,7 @@ class FinalTruckTable extends React.Component {
     const truckItem = {
       ownerID: this.state.ownerTruckID,
       id: "",
-      Name: "",
+      name: "",
       cost: "",
       type: "",
       menu: "",
@@ -288,13 +294,13 @@ class FinalTruckTable extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.data.map((val, idx) => (
+                {this.state.data.map((item, idx) => (
                   <tr id="addr0" key={idx}>
                     <td>
                       <input
                         type="text"
                         name="name"
-                        value={this.state.data[idx].Name}
+                        value={this.state.data[idx].name}
                         onChange={this.handleTruckChange(idx)}
                         className="form-control"
                       />
@@ -987,9 +993,9 @@ class FinalTruckTable extends React.Component {
                           input={<BootstrapInput />}
                         >
                           <option aria-label="None" value="" />
-                          <option value={"american"}>American</option>
-                          <option value={"chinese"}>Chinese</option>
-                          <option value={"vietnamese"}>Vietnamese</option>
+                          <option value={"AMERICAN"}>American</option>
+                          <option value={"CHINESE"}>Chinese</option>
+                          <option value={"VIETNAMESE"}>Vietnamese</option>
                         </NativeSelect>
                       </FormControl>
                     </td>
