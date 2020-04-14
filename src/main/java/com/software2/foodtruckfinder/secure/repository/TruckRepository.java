@@ -18,6 +18,6 @@ public interface TruckRepository extends JpaRepository<Truck, Long> {
 
     Optional<Truck> findById(Integer in);
 
-    List<Truck> findTrucksByOwnerID(long userId);
+    List<Truck> findTrucksByOwnerID(long ownerID);
 
 }
