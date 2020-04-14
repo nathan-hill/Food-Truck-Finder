@@ -6,33 +6,40 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  }
+    // width: "100%",
+    // maxWidth: 360,
+    // backgroundColor: theme.palette.background.paper
+  },
 }));
+
+function findVal(array, val) {
+  console.log("looking for " + val + " in " + array)
+  for (let i = 0; i < array.length; i++) {
+    if (val === array[i]) {
+      console.log("found " + i)
+      return i;
+    }
+  }
+  console.log("not found")
+  return -1;
+}
 
 export default function CheckboxList(props) {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([]);
+  const [checked, setChecked] = React.useState(props.checked);
 
-  let size = props.selected || 0;
+  console.log(props.checked)
 
-  for (let i = 0; i < size.size ; i++) {
-    setChecked(checked.push(props.liked[i].charAt(0) + props.liked[i].slice[1].toLowerCase()));
-  }
-
-
-  const handleToggle = value => () => {
+  const handleToggle = (value) => {
+    console.log("toggling " + value);
     if (!props.disabled) {
-      const currentIndex = checked.indexOf(value.toUpperCase());
+      const currentIndex = checked.indexOf(value);
       const newChecked = [...checked];
 
-
       if (currentIndex === -1) {
-        newChecked.push(value.toUpperCase());
+        newChecked.push(value);
       } else {
         newChecked.splice(currentIndex, 1);
       }
@@ -42,9 +49,11 @@ export default function CheckboxList(props) {
     }
   };
 
+  console.log("## " + props.checked)
+
   return (
     <List className={classes.root}>
-      {props.options.map(value => {
+      {props.options.map((value) => {
         const labelId = `checkbox-list-label-${value}`;
 
         return (
@@ -53,13 +62,15 @@ export default function CheckboxList(props) {
             role={undefined}
             dense
             button
-            onClick={handleToggle(value)}
+            onClick={() => {
+              handleToggle(value);
+            }}
           >
             <ListItemIcon>
               <Checkbox
                 edge="start"
-                checked={checked.indexOf(value.toUpperCase()) !== -1}
-                tabIndex={-1}
+                checked={findVal(checked, value) !== -1}
+                // tabIndex={-1}
                 disableRipple
                 inputProps={{ "aria-labelledby": labelId }}
                 disabled={props.disabled}
