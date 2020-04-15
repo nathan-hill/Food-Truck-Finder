@@ -4,20 +4,20 @@ var constants = require("./../helpers/constants");
 const request_headers = {
   "Access-Control-Allow-Origin": "*",
   "content-type": "application/json",
-  Accept: "application/json"
+  Accept: "application/json",
 };
 
 export function getAllUsers() {
   return axios({
     method: "GET",
     url: constants.backend_url + "users/",
-    headers: request_headers
+    headers: request_headers,
   })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -27,19 +27,18 @@ export function markMessageRead(i) {
     method: "POST",
     url: constants.backend_url + "message/markMessageAsRead",
     params: { id: i },
-    headers: request_headers
+    headers: request_headers,
   };
   console.log(request);
 
   return axios(request)
-    .then(function(response){
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error){
+    .catch(function (error) {
       console.log(error);
     });
-  
 }
 
 export function deleteMessage(i) {
@@ -47,53 +46,50 @@ export function deleteMessage(i) {
     method: "POST",
     url: constants.backend_url + "message/deleteMessage",
     params: { id: i },
-    headers: request_headers
+    headers: request_headers,
   };
   console.log(request);
 
   return axios(request)
-    .then(function(response){
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error){
+    .catch(function (error) {
       console.log(error);
     });
-  
 }
 
 export function getUnreadNotifications(i) {
   //return 1    //for testing
-  return(axios({
+  return axios({
     method: "GET",
     url: constants.backend_url + "message/getUnreadMessagesByUserS",
-    params: { id : i },
-    headers: request_headers
+    params: { id: i },
+    headers: request_headers,
   })
-    .then(response => {
+    .then((response) => {
       console.log(response.data);
       this.responseData = response.data;
       return response.data;
     })
-    .catch(function(error){
+    .catch(function (error) {
       console.log(error);
-    })).length;
-  
+    }).length;
 }
-
 
 export async function getUserByID(i) {
   return await axios({
     method: "GET",
     url: constants.backend_url + "users/getUserByID",
     params: { id: i },
-    headers: request_headers
+    headers: request_headers,
   })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -103,17 +99,17 @@ export async function postNewUser(u) {
     method: "POST",
     url: constants.backend_url + "api/auth/signup",
     data: u,
-    headers: request_headers
+    headers: request_headers,
   };
 
   console.log(request);
 
   return await axios(request)
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -123,17 +119,17 @@ export async function postNewTruck(t) {
     method: "POST",
     url: constants.backend_url + "trucks/add/",
     data: t,
-    headers: request_headers
+    headers: request_headers,
   };
 
   console.log(request);
 
   return await axios(request)
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -142,13 +138,13 @@ export async function getAllTrucks() {
   return await axios({
     method: "GET",
     url: constants.backend_url + "trucks/",
-    headers: request_headers
+    headers: request_headers,
   })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -157,38 +153,36 @@ export function getTrucksForToday() {
   return axios({
     method: "GET",
     url: constants.backend_url + "schedule/getTrucksForToday",
-    headers: request_headers
+    headers: request_headers,
   })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
       return error;
     });
-
 }
 
-export async function getUserSettings(id){
+export async function getUserSettings(id) {
   return await axios({
     method: "GET",
     url: constants.backend_url + "users/getUserByID",
-    params: { id: id }
+    params: { id: id },
   })
-    .then(function(res) {
+    .then(function (res) {
       console.log(res.data);
       return res.data;
     })
-    .catch(function(e) {
+    .catch(function (e) {
       console.log(e);
       return e;
     });
-
 }
 
 export async function getPreferredTrucks(id, lon, lat) {
-  console.log("making request for preferred trucks")
+  console.log("making request for preferred trucks");
   console.log(id + " " + lon + " " + lat);
   return await axios({
     method: "GET",
@@ -196,48 +190,81 @@ export async function getPreferredTrucks(id, lon, lat) {
     params: {
       id: id,
       lon: lon,
-      lat: lat
+      lat: lat,
     },
-    headers: request_headers
+    headers: request_headers,
   })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
 
-export async function sendNotification(data){
+export async function sendNotification(data) {
   return await axios({
     method: "POST",
     url: constants.backend_url + "message/sendToAllByTruckId",
     data: data,
-    headers: request_headers
+    headers: request_headers,
   })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
 
+export async function findTrucksByOwnerID(id) {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "trucks/findTrucksByOwnerID",
+    params: { id: id },
+    headers: request_headers,
+  })
+    .then(function (response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return error;
+    });
+}
+
+export async function getScheduleDTOByID(id) {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "schedule/getScheduleDTOByID",
+    params: { id: id },
+    headers: request_headers,
+  })
+    .then(function (response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return error;
+    });
+}
 
 export async function getUPById(id) {
   return await axios({
     method: "GET",
     url: constants.backend_url + "upref/getUPreferencesByID",
-    params: {id},
-    headers: request_headers
+    params: { id },
+    headers: request_headers,
   })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response.data);
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
       return error;
     });

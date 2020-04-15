@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
@@ -20,6 +21,9 @@ import java.util.Optional;
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/v/users")
 public class UserController {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -57,6 +61,19 @@ public class UserController {
     public @ResponseBody
     Boolean deleteAllUsers() {
         userRepository.deleteAll();
+        return true;
+    }
+
+    @DeleteMapping(path = "/replacePassword")
+    public @ResponseBody
+    // password is the new password
+    // uname is the user to give the new password
+    Boolean replacePassword(String password, Long uname) {
+        // s should be the encoded string that I will use to replace in the db
+        String s;
+        s = passwordEncoder.encode(password);
+        userRepository.setNewPassword(s, uname);
+
         return true;
     }
 

@@ -14,6 +14,10 @@ public class Review implements Serializable {
 
     @Id
     @NotNull
+    private Long truckid;
+
+    @Id
+    @NotNull
     private Long userID;
 
     @NotNull
@@ -21,6 +25,14 @@ public class Review implements Serializable {
 
     @NotNull
     private Integer rating;
+
+    public Long getTruckid() {
+        return truckid;
+    }
+
+    public void setTruckid(Long truckid) {
+        this.truckid = truckid;
+    }
 
     public Long getId() {
         return id;

@@ -49,14 +49,14 @@ export default class SignUp extends React.Component {
 
   changeRBState = (e) => {
 
-    console.log("Im HEr")
+    // console.log("Im HEr")
 
     this.setState({ rbstate: false });
   };
 
   render() {
     const classes = useStyles;
-    console.log(this.state.rbstate);
+    // console.log(this.state.rbstate);
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />

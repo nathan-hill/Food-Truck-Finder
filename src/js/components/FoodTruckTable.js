@@ -62,14 +62,14 @@ class MaterialTableDemo extends React.Component {
     }
 
     componentDidMount = () => {
-        console.log("ID: ", this.props.auth.user.sub);
+        // console.log("ID: ", this.props.auth.user.sub);
         axios.get(constants.backend_url + "trucks/findTrucksByownerID", {
             params: {
                 l: this.props.auth.user.sub
             }
         }).then(res => {
             this.setState({data: res.data})
-            console.log(this.state.data)
+            // console.log(this.state.data)
         });
     }
 
@@ -114,11 +114,11 @@ class MaterialTableDemo extends React.Component {
                                 }
                             }, 600);
 
-                            console.log("NEW DATA: ");
-                            console.log(newData);
+                            // console.log("NEW DATA: ");
+                            // console.log(newData);
 
                             axios.put(constants.backend_url + "trucks/updateByTruck",newData).then(res => {
-                                console.log(res);
+                                // console.log(res);
                             })
                         }),
                     onRowDelete: oldData =>

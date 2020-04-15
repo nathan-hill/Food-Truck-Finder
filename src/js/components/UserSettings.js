@@ -8,16 +8,21 @@ import Slider from "@material-ui/core/Slider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
-import CheckBoxList from "./CheckBoxList";
 import * as Request from "./../helpers/backendRequests";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Checkbox from "@material-ui/core/Checkbox";
+
 var constants = require("./../helpers/constants");
 
-class customerSettings extends React.Component {
+class UserSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,11 +31,13 @@ class customerSettings extends React.Component {
       username: "",
       email: "",
       password: "",
+      currentPassword: "",
+      newPassword: "",
       type: "",
       isDisabled: true,
       proximity: -1,
       price: 1,
-      likes: []
+      likes: [],
     };
     this.priceArray = ["$", "$$", "$$$", "$$$$"];
 
@@ -47,50 +54,62 @@ class customerSettings extends React.Component {
     let userData = await Request.getUserByID(this.state.id);
     let preferences = await Request.getUPById(this.state.id);
 
-    console.log("Gey user Data");
-    console.log(userData);
+    // console.log("Gey user Data");
+    // console.log(userData);
 
     this.setState({
       name: userData.name,
       username: userData.username,
-      email: userData.email
-    });
-    this.setState({
+      email: userData.email,
+      currentPassword: "",
+      newPassword: "",
       proximity: preferences.proximity,
       price: preferences.price,
-      likes: preferences.likes
+      likes: preferences.likes,
     });
   }
 
   onChange(e) {
-    console.log(e);
+    // console.log(e);
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   onRadioChange(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({ price: Number(e.target.value) });
   }
 
   onSliderChange(e, val) {
-    console.log(val);
+    // console.log(val);
     this.setState({ proximity: Number(val) });
   }
 
-  onCheckBoxChange(vals) {
-    console.log(vals);
-    for (let i = 0; i < vals.length; i++) {
-      vals[i] = vals[i].toUpperCase();
+  onCheckBoxChange(value) {
+    console.log("toggling " + value);
+    if (!this.state.isDisabled) {
+      const currentIndex = this.state.likes.indexOf(value);
+      const newChecked = [...this.state.likes];
+
+      if (currentIndex === -1) {
+        newChecked.push(value);
+      } else {
+        newChecked.splice(currentIndex, 1);
+      }
+
+      this.setState({ likes: newChecked });
     }
-    console.log(vals);
-    this.setState({ likes: vals });
+    // console.log(vals);
+    // for (let i = 0; i < vals.length; i++) {
+    // vals[i] = vals[i].toUpperCase();
+    // }
+    // console.log(vals);
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    console.log("Submit form");
+    // console.log("Submit form");
     this.setState({ isDisabled: true });
     console.log(this.state);
 
@@ -100,27 +119,60 @@ class customerSettings extends React.Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      type: this.state.type
+      type: this.state.type,
     };
     let upref = {
       id: this.state.id,
       proximity: this.state.proximity,
       price: this.state.price,
-      likes: this.state.likes
+      likes: this.state.likes,
     };
     let data = { user: udata, preferences: upref };
     data.headers = {
       "Access-Control-Allow-Origin": "*",
       "content-type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
     };
 
-    console.log("Printing the body of form update");
-    console.log(data);
+    // console.log("Printing the body of form update");
+    // console.log(data);
 
-    axios.put(constants.backend_url + "users/updateByUser", data).then(res => {
-      console.log(res);
-    });
+    axios
+      .put(constants.backend_url + "users/updateByUser", data)
+      .then((res) => {
+        console.log(res);
+      });
+
+    const request_headers = {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+      Accept: "application/json",
+    };
+    //if (this.state.currentPassword === this.state.password) {
+    if (this.state.newPassword !== "") {
+      this.setState({ password: this.state.newPassword });
+      this.setState({ currentPassword: this.state.password });
+
+      axios({
+        method: "POST",
+        url: constants.backend_url + "users/replacePassword",
+        data: {
+          password: this.state.currentPassword,
+          uname: this.state.username,
+        },
+        headers: request_headers,
+      })
+        .then(function (response) {
+          console.log(response.data);
+          return response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      alert("password was changed");
+    }
+    //}
+
     this.setState({ isDisabled: true });
   }
 
@@ -134,7 +186,7 @@ class customerSettings extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
 
     let submitButton;
     if (!this.state.isDisabled) {
@@ -173,21 +225,9 @@ class customerSettings extends React.Component {
       //   <Container component="main" maxWidth="xs">
       <Grid container styles={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          {/* <div className={classes.paper} > */}
-          {/* <form
-          // className={classes.form}
-          noValidate
-          onSubmit={this.onEditSubmit}
-        > */}
           {editCancelButton}
-          {/* </form> */}
         </Grid>
 
-        {/* <form
-          //   className={classes.form}
-          noValidate
-          onSubmit={this.onSubmit}
-        > */}
         <Grid item xs={12}>
           <TextField
             variant="outlined"
@@ -235,10 +275,37 @@ class customerSettings extends React.Component {
             autoFocus
           />
         </Grid>
-        {/* <PreferenceDialog onChange={this.onChange} disabled={isDisabled} /> */}
-        {/* <formdd
-              //   className={classes.container}
-              > */}
+
+        <Grid item xs={12}>
+          Must enter current password to change password
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="currentPassword"
+            label="Current Password"
+            name="currentPassword"
+            onChange={this.onChange}
+            value={this.state.currentPassword}
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="newPassword"
+            label="Enter New Password"
+            name="newPassword"
+            onChange={this.onChange}
+            value={this.state.newPassword}
+            disabled={this.state.isDisabled}
+            autoFocus
+          />
+        </Grid>
+
         <Grid item xs={12}>
           <Paper
           //   className={classes.paper}
@@ -250,7 +317,7 @@ class customerSettings extends React.Component {
               getAriaValueText={this.valuetext}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
-              step={.01}
+              step={0.1}
               marks
               min={0}
               max={10}
@@ -262,22 +329,8 @@ class customerSettings extends React.Component {
 
         <Grid item xs={12} alignContent={"center"}>
           <Paper styles={{ textAlign: "center", color: "gray" }}>
-            {/* <InputLabel htmlFor="price-native">Price</InputLabel> */}
-            {/* <Select
-              native
-              // defaultValue={label}
-              onChange={this.onSelectChange}
-              input={<Input id="price-native" />}
-              disabled={this.state.isDisabled}
-              defaultValue={this.priceArray[this.state.price]}
-            >
-
-              <option aria-label="None" priceValue="" />
-              {this.priceArray.map((val, i) => <option value={i+1} key={i}>{val}</option>)}
-
-            </Select> */}
             <FormControl component="fieldset">
-              <FormLabel component="legend">Select Pice</FormLabel>
+              <FormLabel component="legend">Select Price</FormLabel>
               <RadioGroup
                 disabled={this.state.isDisabled}
                 onChange={this.onRadioChange}
@@ -319,33 +372,62 @@ class customerSettings extends React.Component {
           </Paper>
         </Grid>
         <Grid item xs>
-          <Paper
-          //   className={classes.paper}
-          >
+          <Paper>
             <InputLabel htmlFor="foodtype-native">Food Type</InputLabel>
-            <CheckBoxList
+            <List >
+              {["MEXICAN", "AMERICAN", "ITALIAN", "CHINESE", "VIETNAMESE"].map(
+                (value) => {
+                  const labelId = `checkbox-list-label-${value}`;
+
+                  return (
+                    <ListItem
+                      key={value}
+                      role={undefined}
+                      dense
+                      button
+                      onClick={() => {
+                        this.onCheckBoxChange(value);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={this.state.likes.indexOf(value) !== -1}
+                          // tabIndex={-1}
+                          disableRipple
+                          inputProps={{ "aria-labelledby": labelId }}
+                          disabled={this.state.isDisabled}
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={labelId} primary={value} />
+                    </ListItem>
+                  );
+                }
+              )}
+            </List>
+            {/* <CheckBoxList
               options={[
-                "Mexican",
-                "American",
-                "Italian",
-                "Chinese",
-                "Vietnamese"
+                "MEXICAN",
+                "AMERICAN",
+                "ITALIAN",
+                "CHINESE",
+                "VIETNAMESE",
               ]}
-              selected={this.state.likes}
+              checked={this.state.likes}
               disabled={this.state.isDisabled}
               onChange={this.onCheckBoxChange}
-            />
+            /> */}
           </Paper>
         </Grid>
+
         {submitButton}
-        {/* </form> */}
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(customerSettings);
+export default connect(mapStateToProps, null)(UserSettings);

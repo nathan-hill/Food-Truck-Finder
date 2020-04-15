@@ -23,13 +23,13 @@ class FoodTruckDetails extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onEditSubmit = this.onEditSubmit.bind(this);
 
-        console.log("TRYING TO DO A GET NOW!!!")
+        // console.log("TRYING TO DO A GET NOW!!!")
         axios.get( constants.backend_url + "trucks/findTruckByID", {
             params: {
                 integer: this.state.id
             }
         }).then(res => {
-            console.log(res);
+            // console.log(res);
             this.setState(res.data);
         });
     }
@@ -56,7 +56,7 @@ class FoodTruckDetails extends React.Component {
         };
 
         axios.put(constants.backend_url + "v/trucks/updateByTruck",data).then(res => {
-            console.log(res);
+            // console.log(res);
         })
     }
 
