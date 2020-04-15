@@ -117,7 +117,7 @@ public class UPreferenceControllerTest {
 
             @Override
             public Optional<UserPreferences> findById(Long aLong) {
-                return Optional.empty();
+                return new Option;
             }
 
             @Override
