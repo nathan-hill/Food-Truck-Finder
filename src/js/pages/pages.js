@@ -6,8 +6,6 @@ import LoginPage from "../components/LoginPage";
 import * as Request from "../helpers/backendRequests";
 import ListOfUsers from "./../components/ListOfUsers";
 import FoodTruckDetails from "./../components/FoodTruckDetails";
-import FoodTruckTable from "./../components/FoodTruckTable";
-import CustomerSettings from "./../components/UserSettings";
 import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";

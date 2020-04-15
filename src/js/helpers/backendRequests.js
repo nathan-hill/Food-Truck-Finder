@@ -1,5 +1,4 @@
 import axios from "axios";
-import {func} from "prop-types";
 var constants = require("./../helpers/constants");
 
 const request_headers = {

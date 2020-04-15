@@ -2,11 +2,8 @@ import React from 'react'
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import axios from "axios";
 import {connect} from "react-redux";
 import * as Request from './../helpers/backendRequests'
-
-var constants = require("./../helpers/constants");
 
 async function getInitialSubValue(props,truck) {
     let userid = props.auth.user.sub;
@@ -47,6 +44,7 @@ function FormComponent(props) {
         console.log("LOGGED IN!!!!!!");
     }
 
+    /*
     const handleChange = (event) => {
         setStarValue(event.target.value);
     };
@@ -54,6 +52,7 @@ function FormComponent(props) {
     const handleTextChange = (event) => {
         setTextValue(event.target.value);
     }
+     */
 
 
     async function handleClick()  {
@@ -101,9 +100,6 @@ function FormComponent(props) {
         })
 
     };
-    
-    
-    
 
     return (
         <div style={{

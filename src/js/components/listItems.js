@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -13,7 +13,6 @@ import LocalShippongIcon from '@material-ui/icons/LocalShipping'
 import SendIcon from '@material-ui/icons/Send';
 import SendNotifications from './SendNotifications'
 import FinalTruckTable from './finalTruckTable'
-import ReactSearchBox from "react-search-box";
 
 export const GuestListItems = (setComponentDrawer) => {
   return (

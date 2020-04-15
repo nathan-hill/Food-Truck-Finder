@@ -1,12 +1,8 @@
-
 import React from "react";
 import {connect} from "react-redux";
-import axios from "axios";
 import {Container} from "@material-ui/core";
 import * as Request from "../helpers/backendRequests";
-import ReactSearchBox from "react-search-box";
 import FormComponent from "./rateAndReview";
-import {Http} from "@material-ui/icons";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
