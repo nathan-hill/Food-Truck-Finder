@@ -91,7 +91,6 @@ public class ScheduleController {
         List<Schedule> generated = _scheduleRepository.findByTruckID(id);
         System.out.println(generated.stream().count());
         ScheduleDTO d = new ScheduleDTO();
-        System.out.println("Here is the id of schedule DTO " + generated.get(0).getId());
         d.setAll(generated);
         return d;
     }
@@ -106,6 +105,7 @@ public class ScheduleController {
     public @ResponseBody
     ResponseEntity<Schedule[]> updateSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
         if(_scheduleRepository.existsById(days.getId())) {
+            System.out.println("We got in on id " + days.getId());
             List<Schedule> generated = new ArrayList<>();
 
             // this sould remove all entries related to that truck from db
@@ -132,6 +132,7 @@ public class ScheduleController {
                     generated.toArray(new Schedule[generated.size()]), HttpStatus.OK);
         }
         else {
+            System.out.println("We did not get in on id " + days.getId());
             return null;
         }
     }
