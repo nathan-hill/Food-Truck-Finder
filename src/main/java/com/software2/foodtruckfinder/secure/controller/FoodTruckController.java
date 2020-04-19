@@ -1,5 +1,6 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.Schedule;
 import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,13 @@ public class FoodTruckController {
         }else{
             return null;
         }
+    }
+
+    @DeleteMapping(path = "/removeTruck")
+    public @ResponseBody
+    Boolean removeTruck(Long truckid) {
+
+        return true;
     }
 
 

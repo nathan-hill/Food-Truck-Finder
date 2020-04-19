@@ -100,7 +100,7 @@ public class ScheduleController {
         return _scheduleRepository.findByid(id);
     }
 
-    @PostMapping(path = "/update")
+    @PutMapping(path = "/update")
     public @ResponseBody
     ResponseEntity<Schedule[]> updateSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
         if(_scheduleRepository.existsById(days.getId())) {
