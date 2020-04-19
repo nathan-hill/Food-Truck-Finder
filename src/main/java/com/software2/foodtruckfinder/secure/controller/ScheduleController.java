@@ -104,11 +104,12 @@ public class ScheduleController {
     @PutMapping(path = "/update")
     public @ResponseBody
     ResponseEntity<Schedule[]> updateSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
+        System.out.println("We got in the fxn");
         if(_scheduleRepository.existsById(days.getId())) {
             System.out.println("We got in on id " + days.getId());
             List<Schedule> generated = new ArrayList<>();
 
-            // this sould remove all entries related to that truck from db
+            // this should remove all entries related to that truck from db
             removeFromDBviaTruck(days.getTruckID());
 
             Schedule temp = new Schedule();

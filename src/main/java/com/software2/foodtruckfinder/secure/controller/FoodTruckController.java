@@ -100,7 +100,7 @@ public class FoodTruckController {
     @DeleteMapping(path = "/removeTruck")
     public @ResponseBody
     Boolean removeTruck(Long truckid) {
-
+        truckRepository.deleteTruck(truckid);
         return true;
     }
 
