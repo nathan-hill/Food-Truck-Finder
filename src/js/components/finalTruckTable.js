@@ -5,7 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import axios from "axios";
+
 import { connect } from "react-redux";
 import * as Request from "./../helpers/backendRequests";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -56,71 +56,15 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-var constants = require("./../helpers/constants");
-
 class FinalTruckTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       ownerTruckID: props.auth.user.sub,
-
-      data: [
-        // {
-        //   ownerID: props.auth.user.sub,
-        //   id: "",
-        //   name: "",
-        //   cost: "",
-        //   type: "",
-        //   menu: "",
-        // },
-      ],
-      schedule: [
-        // {
-        //   monOpen: "",
-        //   monStartTime: "",
-        //   monEndTime: "",
-        //   monLatitude: "",
-        //   monLongitude: "",
-
-        //   tueOpen: "",
-        //   tueStartTime: "",
-        //   tueEndTime: "",
-        //   tueLatitude: "",
-        //   tueLongitude: "",
-
-        //   wedOpen: "",
-        //   wedStartTime: "",
-        //   wedEndTime: "",
-        //   wedLatitude: "",
-        //   wedLongitude: "",
-
-        //   thuOpen: "",
-        //   thuStartTime: "",
-        //   thuEndTime: "",
-        //   thuLatitude: "",
-        //   thuLongitude: "",
-
-        //   friOpen: "",
-        //   friStartTime: "",
-        //   friEndTime: "",
-        //   friLatitude: "",
-        //   friLongitude: "",
-
-        //   satOpen: "",
-        //   satStartTime: "",
-        //   satEndTime: "",
-        //   satLatitude: "",
-        //   satLongitude: "",
-
-        //   sunOpen: "",
-        //   sunStartTime: "",
-        //   sunEndTime: "",
-        //   sunLatitude: "",
-        //   sunLongitude: "",
-        // },
-      ],
+      data: [],
+      schedule: [],
     };
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = this.onSaveRow.bind(this);
   }
 
   async componentDidMount() {
@@ -176,6 +120,8 @@ class FinalTruckTable extends React.Component {
     };
 
     const truckSchedule = {
+      ownerID: this.state.ownerTruckID,
+      id: "",
       monOpen: "",
       monStartTime: "",
       monEndTime: "",
@@ -223,56 +169,62 @@ class FinalTruckTable extends React.Component {
       data: [...this.state.data, truckItem],
       schedule: [...this.state.schedule, truckSchedule],
     });
+
+    // add new truck into database
+    Request.postNewTruck(truckItem);
+    Request.postNewSchedule(truckSchedule);
   };
 
   handleRemoveSpecificRow = (idx) => () => {
+    //remove the foodtruck from the database
+    Request.deleteTruck(this.state.data[idx].id)
+    Request.deleteSchedule();
+    console.log()
+    
+    // prepare data to be modified
     const data = [...this.state.data];
+
+    // prepare schedule to be modified
     const schedule = [...this.state.schedule];
+
+    // remove the specific truck and schedule from the table
     data.splice(idx, 1);
     schedule.splice(idx, 1);
+
+    // set the data to this new state
     this.setState({ data });
     this.setState({ schedule });
   };
 
-  onSubmit(e) {
-    e.preventDefault();
-
+  onSaveRow(idx) {
     console.log("Submit form");
+    // set data to schedule of truck at index idx
+    let sdata = {schedule: this.state.schedule[idx] };
     
-
-    let sdata = {schedule: this.state.schedule };
-    sdata.headers = {
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "application/json",
-      Accept: "application/json",
-    };
-
-    console.log("Printing the body of form update");
+    // print data for testing purposes
+    console.log("Printing the body of Schedule update");
     console.log(sdata);
 
-    axios.put(constants.backend_url + "schedule/update", sdata).then((res) => {
-      console.log(res);
-    });
-
-    let tdata = {data: this.state.data};
-    tdata.headers = {
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "application/json",
-      Accept: "application/json",
-    };
-    console.log("Printing the body of form update");
-    console.log(tdata);
+    // update the schedule in the data base
+    Request.updateSchedule(sdata);
     
+    // set tdata to the existing food truck at index idx
+    let tdata = {data: this.state.data[idx]};
+    
+    // print data for testing purposes
+    console.log("Printing the body of Truck update");
+    console.log(tdata);
+
+    // update the truck in the database
+    Request.updateTruckByID(tdata); 
   }
+
+  
 
   render() {
     const classes = makeStyles();
-    // this.state.schedule.map((val) => {console.log(val)})
-    // return <div></div>
-
-    // /*
+    
     return (
-      
       <div
         className="container"
         style={{
@@ -1035,6 +987,11 @@ class FinalTruckTable extends React.Component {
                               Remove
                             </button>
                           </td>
+                          <td>
+                          <button onClick={() => this.onSaveRow(idx)} className="btn btn-primary">
+                              Save Row
+                          </button>
+                          </td>
                         </tr>
                       
                     </tbody>
@@ -1050,13 +1007,11 @@ class FinalTruckTable extends React.Component {
             </button>
           </div>
           <br />
-          <button onClick={this.onSubmit} className="btn btn-primary">
-            Submit
-          </button>
+          
         </div>
       </div>
     );
-    // */
+    
   }
 }
 const mapStateToProps = (state) => ({

@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/v/schedule")
+@RequestMapping(path = "/v/schedule/")
 public class ScheduleController {
     @Autowired
     private ScheduleRepository _scheduleRepository;

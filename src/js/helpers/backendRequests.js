@@ -114,25 +114,7 @@ export async function postNewUser(u) {
     });
 }
 
-export async function postNewTruck(t) {
-  const request = {
-    method: "POST",
-    url: constants.backend_url + "trucks/add/",
-    data: t,
-    headers: request_headers,
-  };
 
-  console.log(request);
-
-  return await axios(request)
-    .then(function (response) {
-      console.log(response.data);
-      return response;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
 
 export async function getAllTrucks() {
   return await axios({
@@ -267,5 +249,129 @@ export async function getUPById(id) {
     .catch(function (error) {
       console.log(error);
       return error;
+    });
+}
+
+// currently doesn't work
+export async function updateTruckByID(data){
+  const request = {
+    method: "PUT",
+    url: constants.backend_url + "trucks/updateByTruck",
+    data: data,
+    headers: request_headers,
+  };
+  console.log("PUT: Update truck by ID");
+  console.log(request);
+
+  return await axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+// currently doesn't work
+export async function updateSchedule(data){
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "schedule/update",
+    data: data,
+    headers: request_headers,
+  };
+  console.log("POST: Update Schedule by ID");
+  console.log(request);
+
+  return await axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+// currently doesn't work
+export async function deleteTruck(dt) {
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "trucks/deleteTruckByID",
+    params: { id: dt },
+    headers: request_headers,
+  };
+  console.log(request);
+
+  return axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+// currently doesn't work
+export async function deleteSchedule(dt){
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "schedule/deleteByTruck",
+    params: { id: dt },
+    headers: request_headers,
+  };
+  console.log(request);
+
+  return axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+// currently doesn't work
+export async function postNewTruck(t) {
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "trucks/add",
+    data: t,
+    headers: request_headers,
+  };
+  console.log("POST: new truck");
+  console.log(request);
+
+  return await axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+// currently doesn't work
+export async function postNewSchedule(s) {
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "schedule/add",
+    data: s,
+    headers: request_headers,
+  };
+  console.log("POST: new schedule");
+  console.log(request);
+
+  return await axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
     });
 }
