@@ -19,7 +19,6 @@ import {
   GuestListItems,
   CustomerListItems,
   OwnerListItems,
-  secondaryListItems
 } from "./listItems";
 import SimpleMap from "./SimpleMap";
  
@@ -245,10 +244,6 @@ function Dashboard(props) {
         </div>
         <Divider />
         <List>{mainList}</List>
-        <Divider />
-        <List component="nav">
-          {secondaryListItems}
-        </List>
       </Drawer>
       <SimpleMap trucks={trucks} onTruckClick={onTruckClick}/>
       {/* <InteractiveMap/> */}

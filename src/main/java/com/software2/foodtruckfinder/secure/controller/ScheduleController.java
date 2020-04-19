@@ -87,8 +87,9 @@ public class ScheduleController {
 
     @GetMapping(path = "/getScheduleDTOByID")
     public @ResponseBody
-    ScheduleDTO findScheduleDTOByID(Long id) throws CloneNotSupportedException {
-        List<Schedule> generated = findScheduleByID(id);
+    ScheduleDTO findScheduleDTOByID(@RequestParam("id") Long id) throws CloneNotSupportedException {
+        List<Schedule> generated = _scheduleRepository.findByTruckID(id);
+        System.out.println(generated.stream().count());
         ScheduleDTO d = new ScheduleDTO();
         d.setAll(generated);
         return d;

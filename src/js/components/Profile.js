@@ -12,7 +12,7 @@ import Container from "@material-ui/core/Container";
 
 function consoleTest(e){
   e.preventDefault();
-  console.log("ehllo");
+  // console.log("ehllo");
 };
 
 class Profile extends React.Component {
