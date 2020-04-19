@@ -91,6 +91,7 @@ public class ScheduleController {
         List<Schedule> generated = _scheduleRepository.findByTruckID(id);
         System.out.println(generated.stream().count());
         ScheduleDTO d = new ScheduleDTO();
+        System.out.println("Here is the id of schedule DTO" + generated.get(0).getId());
         d.setAll(generated);
         return d;
     }
