@@ -297,8 +297,8 @@ export async function updateSchedule(data){
 // currently doesn't work
 export async function deleteTruck(dt) {
   const request = {
-    method: "POST",
-    url: constants.backend_url + "trucks/deleteTruckByID",
+    method: "DELETE",
+    url: constants.backend_url + "trucks/removeTruck",
     params: { id: dt },
     headers: request_headers,
   };
@@ -317,8 +317,8 @@ export async function deleteTruck(dt) {
 // currently doesn't work
 export async function deleteSchedule(dt){
   const request = {
-    method: "POST",
-    url: constants.backend_url + "schedule/deleteByTruck",
+    method: "DELETE",
+    url: constants.backend_url + "schedule/removeByTruck",
     params: { id: dt },
     headers: request_headers,
   };
@@ -334,7 +334,7 @@ export async function deleteSchedule(dt){
     });
 }
 
-// currently doesn't work
+
 export async function postNewTruck(t) {
   const request = {
     method: "POST",

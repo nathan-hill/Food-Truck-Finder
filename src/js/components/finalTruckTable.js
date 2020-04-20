@@ -175,15 +175,19 @@ class FinalTruckTable extends React.Component {
     };
 
     // add new truck into database
-    // const truckRequest = Request.postNewTruck(truckItem);
-    // const truckData = Promise.resolve(truckRequest);
+    const truckRequest = Request.postNewTruck(truckItem);
+    const truckData = Promise.resolve(truckRequest);
     
-    // const scheduleRequest = Request.postNewSchedule(truckSchedule);
-    // const scheduleData = Promise.resolve(scheduleRequest);
 
 
-    // truckItem.id = truckData.id;
-    // truckSchedule.id = scheduleData.id;
+    const scheduleRequest = Request.postNewSchedule(truckSchedule);
+    const scheduleData = Promise.resolve(scheduleRequest);
+    
+
+    truckItem.id = truckData.data.id;
+    truckSchedule.id = scheduleData.data[0].id;
+
+    
     this.setState({
       addOpen: false,
       addText: "",
@@ -196,7 +200,7 @@ class FinalTruckTable extends React.Component {
   handleRemoveSpecificRow = (idx) => () => {
     //remove the foodtruck from the database
     Request.deleteTruck(this.state.data[idx].id)
-    Request.deleteSchedule();
+    Request.deleteSchedule(this.state.data[idx].id);
     console.log()
     
     // prepare data to be modified
