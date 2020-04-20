@@ -1,7 +1,9 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.Menu;
 import com.software2.foodtruckfinder.secure.model.Schedule;
 import com.software2.foodtruckfinder.secure.model.Truck;
+import com.software2.foodtruckfinder.secure.repository.MenuRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ public class FoodTruckController {
     @Autowired
     private TruckRepository truckRepository;
 
+    private MenuRepository mRepository;
+
     public FoodTruckController(TruckRepository truckRepository) {
         this.truckRepository = truckRepository;
     }
@@ -33,7 +37,6 @@ public class FoodTruckController {
         n.setName(newTruck.getName());
         n.setDescription(newTruck.getDescription());
         n.setOwnerID(newTruck.getOwnerID());
-        n.setMenu(newTruck.getMenu());
 
         if(n.getName() == null ||n.getDescription() == null || n.getOwnerID() == null){
             // do nothing
@@ -76,6 +79,12 @@ public class FoodTruckController {
         return truckRepository.findTrucksByOwnerID(id);
     }
 
+    @GetMapping(path = "findMenuByTruckID")
+    public @ResponseBody
+    Optional<Menu> findMenuByTruckID(@RequestParam("id") long id){
+        return mRepository.findBytruckid(id);
+    }
+
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Truck> updateTruck(@RequestBody Truck tdets) {
@@ -86,7 +95,6 @@ public class FoodTruckController {
             Truck newT = new Truck();
             newT.setId(tdets.getId());
             newT.setDescription(tdets.getDescription());
-            newT.setMenu(tdets.getMenu());
             newT.setName(tdets.getName());
             newT.setOwnerID(tdets.getOwnerID());
 
@@ -105,28 +113,7 @@ public class FoodTruckController {
     }
 
 
-//    @PostMapping("/uploadMenu")
-//    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-//        DBFile dbFile = dbFileStorageService.storeFile(file);
-//
-//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("/downloadFile/")
-//                .path(dbFile.getId())
-//                .toUriString();
-//
-//        return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri,
-//                file.getContentType(), file.getSize());
-//    }
-//
-//    @GetMapping("/downloadFile/{fileId}")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) {
-//        // Load file from database
-//        DBFile dbFile = dbFileStorageService.getFile(fileId);
-//
-//        return ResponseEntity.ok()
-//                .contentType(MediaType.parseMediaType(dbFile.getFileType()))
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
-//                .body(new ByteArrayResource(dbFile.getData()));
-//    }
+
+
 
 }
