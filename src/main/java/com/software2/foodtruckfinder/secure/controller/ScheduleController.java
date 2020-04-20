@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class ScheduleController {
         this._scheduleRepository = sr;
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<Schedule[]> addNewSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
         List<Schedule> generated = new ArrayList<>();
@@ -65,6 +67,7 @@ public class ScheduleController {
         for(int i = 0; i < 7; i++){
             _scheduleRepository.deleteById(generated.get(i).getId());
         }
+        
         return true;
     }
 
@@ -78,7 +81,7 @@ public class ScheduleController {
     @GetMapping(path = "/getScheduleByID")
     public @ResponseBody
     List<Schedule> findScheduleByID(Long id){
-        List<Schedule> generated = findScheduleByID(id);
+        List<Schedule> generated = _scheduleRepository.findByTruckID(id);
         for(int i = 0; i < generated.size(); i ++){
             System.out.println(generated.get(i).toString());
         }
@@ -102,24 +105,21 @@ public class ScheduleController {
         return _scheduleRepository.findByid(id);
     }
 
-    @PutMapping(path = "/update")
+    @PutMapping(path = "update")
     public @ResponseBody
     ResponseEntity<Schedule[]> updateSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
         System.out.println("We got in the fxn " + days.toString());
         if(_scheduleRepository.existsById(days.getId())) {
             
             List<Schedule> generated = new ArrayList<>();
-            
+            System.out.println("We got in on id " + days.getId() + " with truckID " + days.getTruckID());
             // this should remove all entries related to that truck from db
-            removeFromDBviaTruck(days.getTruckID());
+            this.removeFromDBviaTruck(days.getTruckID());
             
-            
-
             Schedule temp = new Schedule();
             System.out.println("We got in on id " + days.getId() + " with truckID " + days.getTruckID());
             temp = days.cloneMon();
             generated.add(_scheduleRepository.save(temp));
-            System.out.println("We got in on id " + days.getId() + " with truckID " + days.getTruckID());
             temp = days.cloneTues();
             generated.add(_scheduleRepository.save(temp));
             temp = days.cloneW();

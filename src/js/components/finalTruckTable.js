@@ -16,7 +16,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import update from 'immutability-helper';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from "@material-ui/core";
 
 const BootstrapInput = withStyles((theme) => ({
@@ -40,6 +40,8 @@ class FinalTruckTable extends React.Component {
     super(props);
     this.state = {
       open: false,
+      addOpen: false,
+      addText: "",
       ownerTruckID: props.auth.user.sub,
       data: [],
       schedule: [],
@@ -116,11 +118,11 @@ class FinalTruckTable extends React.Component {
     });
   };
 
-  handleAddRow = () => {
+  handleAddRow = (idx) => (e) => {
     const truckItem = {
       ownerID: this.state.ownerTruckID,
       id: "",
-      name: "",
+      name: this.state.addText,
       cost: "",
       type: "",
       menu: "",
@@ -172,14 +174,23 @@ class FinalTruckTable extends React.Component {
       sunLongitude: "",
     };
 
+    // add new truck into database
+    // const truckRequest = Request.postNewTruck(truckItem);
+    // const truckData = Promise.resolve(truckRequest);
+    
+    // const scheduleRequest = Request.postNewSchedule(truckSchedule);
+    // const scheduleData = Promise.resolve(scheduleRequest);
+
+
+    // truckItem.id = truckData.id;
+    // truckSchedule.id = scheduleData.id;
     this.setState({
+      addOpen: false,
+      addText: "",
+
       data: [...this.state.data, truckItem],
       schedule: [...this.state.schedule, truckSchedule],
     });
-
-    // add new truck into database
-    Request.postNewTruck(truckItem);
-    Request.postNewSchedule(truckSchedule);
   };
 
   handleRemoveSpecificRow = (idx) => () => {
@@ -991,9 +1002,35 @@ class FinalTruckTable extends React.Component {
           
             
             <br />
-            <button onClick={this.handleAddRow} className="btn btn-primary">
+            <Button variant="outlined" color="primary" onClick={() => this.setState({addOpen: true})}>
               Add Truck
-            </button>
+            </Button>
+            <Dialog
+              open={this.state.addOpen}
+              onClose={() => this.setState({addOpen: false})}
+            >
+              <DialogTitle>
+                Enter the Name of Your New Food Truck
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText />
+                <TextField value={this.state.addText} onChange={(e) => this.setState({addText: e.target.value})}
+                  autoFocus
+                  margin="dense"
+                  label="Food Truck Name"
+                  type="email"
+                  fullWidth
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => this.setState({addOpen: false})} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={this.handleAddRow()} color="primary">
+                  Add Truck
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
           <br />
           

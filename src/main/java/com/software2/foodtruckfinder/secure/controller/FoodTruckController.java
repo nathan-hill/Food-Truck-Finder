@@ -29,16 +29,20 @@ public class FoodTruckController {
     @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<Truck> addNewTruck(@RequestBody Truck newTruck) {
+        
+        System.out.println(newTruck);
         Truck n = new Truck();
         n.setName(newTruck.getName());
         n.setDescription(newTruck.getDescription());
         n.setOwnerID(newTruck.getOwnerID());
         n.setMenu(newTruck.getMenu());
 
-        if(n.getName() == null ||n.getDescription() == null || n.getOwnerID() == null){
+        if(n.getName() == "" || n.getOwnerID() == null){
             // do nothing
+            System.out.println("test 1");
             return new ResponseEntity<>(new Truck(), HttpStatus.BAD_REQUEST);
         }else{
+            System.out.println("test 2");
             for (Truck truck: truckRepository.findAll()) {
                 if(truck.getName().equals(newTruck.getName())){
                     return ResponseEntity.status(400).build();

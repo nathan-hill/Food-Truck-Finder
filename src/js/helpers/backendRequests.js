@@ -273,7 +273,7 @@ export async function updateTruckByID(data){
     });
 }
 
-// currently doesn't work
+
 export async function updateSchedule(data){
   const request = {
     method: "PUT",
@@ -355,7 +355,7 @@ export async function postNewTruck(t) {
     });
 }
 
-// currently doesn't work
+
 export async function postNewSchedule(s) {
   const request = {
     method: "POST",
