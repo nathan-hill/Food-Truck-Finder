@@ -16,6 +16,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import update from 'immutability-helper';
 import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from "@material-ui/core";
 
 const BootstrapInput = withStyles((theme) => ({
@@ -66,17 +67,42 @@ class FinalTruckTable extends React.Component {
     });
   }
 
-  handleTruckChange = (idx) => (e) => {
-    const { name, value } = e.target;
-    const data = [...this.state.data];
-
-    data[idx] = {
-      [name]: value,
-    };
-    this.setState({
-      data,
+  handleTruckNameChange = (idx) => (e) => {
+    const newTrucks = this.state.data.map((truck, sidx) => {
+      if (idx !== sidx) return truck;
+      return { ...truck, name: e.target.value };
     });
-  };
+    
+    this.setState({ data: newTrucks });
+  }
+
+  handleTruckCostChange = (idx) => (e) => {
+    const newTrucks = this.state.data.map((truck, sidx) => {
+      if (idx !== sidx) return truck;
+      return { ...truck, cost: e.target.value };
+    });
+    
+    this.setState({ data: newTrucks });
+  }
+
+  handleTruckTypeChange = (idx) => (e) => {
+    const newTrucks = this.state.data.map((truck, sidx) => {
+      if (idx !== sidx) return truck;
+      return { ...truck, type: e.target.value };
+    });
+    
+    this.setState({ data: newTrucks });
+  }
+
+  handleTruckMenuChange = (idx) => (e) => {
+    const newTrucks = this.state.data.map((truck, sidx) => {
+      if (idx !== sidx) return truck;
+      return { ...truck, type: e.target.value };
+    });
+    
+    this.setState({ data: newTrucks });
+  }
+
 
   handleScheduleChange = (idx) => (e) => {
     const { name, value } = e.target;
@@ -180,7 +206,7 @@ class FinalTruckTable extends React.Component {
   onSaveRow(idx) {
     console.log("Submit form");
     // set data to schedule of truck at index idx
-    let sdata = {schedule: this.state.schedule[idx] };
+    let sdata = this.state.schedule[idx];
     
     // print data for testing purposes
     console.log("Printing the body of Schedule update");
@@ -190,7 +216,7 @@ class FinalTruckTable extends React.Component {
     Request.updateSchedule(sdata);
     
     // set tdata to the existing food truck at index idx
-    let tdata = {data: this.state.data[idx]};
+    let tdata = this.state.data[idx];
     
     // print data for testing purposes
     console.log("Printing the body of Truck update");
@@ -256,7 +282,7 @@ class FinalTruckTable extends React.Component {
                               type="text"
                               name="name"
                               value={this.state.data[idx].name}
-                              onChange={this.handleTruckChange(idx)}
+                              onChange={this.handleTruckNameChange(idx)}
                               className="form-control"
                             />
                           </td>
@@ -900,7 +926,7 @@ class FinalTruckTable extends React.Component {
                               <NativeSelect
                                 id="costSelect"
                                 value={this.state.data[idx].cost}
-                                onChange={this.handleTruckChange(idx)}
+                                onChange={this.handleTruckCostChange(idx)}
                                 input={<BootstrapInput />}
                               >
                                 <option aria-label="None" value="" />
@@ -919,7 +945,7 @@ class FinalTruckTable extends React.Component {
                               <NativeSelect
                                 id="foodTypeSelect"
                                 value={this.state.data[idx].type}
-                                onChange={this.handleTruckChange(idx)}
+                                onChange={this.handleTruckTypeChange(idx)}
                                 input={<BootstrapInput />}
                               >
                                 <option aria-label="None" value="" />
@@ -938,7 +964,7 @@ class FinalTruckTable extends React.Component {
                               type="text"
                               name="mobile"
                               value={this.state.data[idx].menu}
-                              onChange={this.handleTruckChange(idx)}
+                              onChange={this.handleTruckMenuChange(idx)}
                               className="form-control"
                             />
                           </td>

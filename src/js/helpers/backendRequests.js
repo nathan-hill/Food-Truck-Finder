@@ -252,7 +252,7 @@ export async function getUPById(id) {
     });
 }
 
-// currently doesn't work
+
 export async function updateTruckByID(data){
   const request = {
     method: "PUT",
@@ -260,8 +260,8 @@ export async function updateTruckByID(data){
     data: data,
     headers: request_headers,
   };
-  console.log("PUT: Update truck by ID");
-  console.log(request);
+  // console.log("PUT: Update truck by ID");
+  // console.log(request);
 
   return await axios(request)
     .then(function (response) {
@@ -276,12 +276,12 @@ export async function updateTruckByID(data){
 // currently doesn't work
 export async function updateSchedule(data){
   const request = {
-    method: "POST",
+    method: "PUT",
     url: constants.backend_url + "schedule/update",
     data: data,
     headers: request_headers,
   };
-  console.log("POST: Update Schedule by ID");
+  console.log("PUT: Update Schedule by ID");
   console.log(request);
 
   return await axios(request)
