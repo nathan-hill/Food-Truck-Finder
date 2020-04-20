@@ -20,7 +20,6 @@ public class TruckDistanceTest {
 
         t.setType("mexican");
         t.setDescription("tacos and street corn");
-        t.setMenu("tacos and corn");
         t.setOwnerID(4567l);
         t.setCost(3);
         td = new TruckDistance(t, 1.5, 1.0);
@@ -35,7 +34,6 @@ public class TruckDistanceTest {
 
                 ()->assertEquals("mexican", td.getType()),
                 ()->assertEquals("tacos and street corn", td.getDescription()),
-                ()->assertEquals("tacos and corn", td.getMenu()),
                 ()->assertEquals(4567l, td.getOwnerID()),
                 ()->assertEquals(3, td.getCost())
         );
