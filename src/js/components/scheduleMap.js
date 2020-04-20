@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import GoogleMap from "google-map-react";
 import { geolocated } from "react-geolocated";
-import MapIcon from "./MapIcon";
 import BeenhereIcon from "@material-ui/icons/Beenhere";
 
 export class ScheduleMap extends Component {
