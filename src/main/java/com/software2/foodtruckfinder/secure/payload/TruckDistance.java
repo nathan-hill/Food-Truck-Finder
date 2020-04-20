@@ -48,11 +48,7 @@ public class TruckDistance implements Comparable {
     public String getDescription() {
         return t.getDescription();
     }
-
-    public String getMenu() {
-        return t.getMenu();
-    }
-
+    
     public Long getOwnerID() {
         return t.getOwnerID();
     }
