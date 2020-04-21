@@ -12,6 +12,7 @@ sourceCompatibility = '11'
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'http://repository.aspose.com/repo/'}
 }
 
 dependencies {
@@ -24,6 +25,9 @@ dependencies {
 
 	compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:6.2.4'
 
+	compile 'com.google.cloud:google-cloud-vision:1.99.3'
+	compile "net.sourceforge.tess4j:tess4j:3.2.1"
+	compile "com.aspose:aspose-ocr:17.11"
 
 	compile group: 'com.google.guava', name: 'guava', version: '23.6-jre'
 	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.4.0.RELEASE'

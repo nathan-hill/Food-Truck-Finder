@@ -19,9 +19,9 @@ export class InteractiveMap extends Component {
   }
 
   onClick(e) {
-    // console.log(e);
+    console.log(e);
     this.setState({ location: { lat: e.lat, lng: e.lng } });
-    // this.props.onClick(e);
+    //this.props.onClick(e);
   }
 
   render() {
@@ -33,8 +33,9 @@ export class InteractiveMap extends Component {
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%", overflowX: "hidden" }}>
         <GoogleMap
-          defaultCenter={[this.state.location.lat, this.state.location.lng]}
-          defaultZoom={1}
+          defaultCenter={[ this.props.coords.latitude,
+            this.props.coords.longitude]}
+          defaultZoom={15}
           onClick={this.onClick}
         >
           <LocalShippingIcon
