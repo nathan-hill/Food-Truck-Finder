@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ScheduleControllerTest {
     private ScheduleRepository sr;
     private ScheduleController sc;
-
+  
    @BeforeEach
     void init(){
         sr = new ScheduleRepository() {
@@ -39,13 +39,14 @@ public class ScheduleControllerTest {
             }
 
             @Override
-            public List<TruckLocation> getTrucksForToday(int today) {
-                return new ArrayList<TruckLocation>();
+
+            public List<Schedule> findByTruckID(Integer truckID) {
+                return new ArrayList<Schedule>();
             }
 
             @Override
-            public List<Schedule> findByTruckID(Long id) {
-                return new ArrayList<>();
+            public List<TruckLocation> getTrucksForToday(int today) {
+                return new ArrayList<TruckLocation>();
             }
 
             @Override
@@ -174,15 +175,15 @@ public class ScheduleControllerTest {
         Schedule s = new Schedule();
         Schedule[] arr = new Schedule[]{s};
 
-        assertEquals(HttpStatus.OK, sc.addNewSchedule(new ScheduleDTO()).getStatusCode());
+        assertEquals(HttpStatus.OK, sc.addNewSchedule(arr[0]).getStatusCode());
     }
-
 
     @Test
     @DisplayName("delete test")
     void deleteTest(){
         assertTrue(sc.deleteAllSchedules());
     }
+
 
     /**********************************************
      * This is failing because there is a recursive call in the ScheculeController function
@@ -195,11 +196,13 @@ public class ScheduleControllerTest {
     }
      *****************************************/
 
+
     @Test
     @DisplayName("get single by id test")
     void getSingleByIdTest(){
         assertNotNull(sc.findSingleScheduleByID(123l));
     }
+
 
     /*******************************************************
      * same issue as above
@@ -208,6 +211,8 @@ public class ScheduleControllerTest {
     void updateTest() throws CloneNotSupportedException {
         Schedule s = new Schedule();
         Schedule[] arr = new Schedule[]{s};
+        assertEquals(HttpStatus.OK, sc.updateSchedule(arr[0]).getStatusCode());
+    }
         assertEquals(HttpStatus.OK, sc.updateSchedule(new ScheduleDTO()).getStatusCode());
     }
      ****************************************************/

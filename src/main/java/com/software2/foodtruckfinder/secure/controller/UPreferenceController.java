@@ -83,8 +83,9 @@ public class UPreferenceController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserPreferences> updateUPreferences(@RequestBody UserPreferences up) {
 
-        if (uprefRepository.existsById(up.getId())) {
-            UserPreferences n = new UserPreferences();
+        Optional<UserPreferences> dbCopy = uprefRepository.findById(up.getId());
+        if (!dbCopy.isEmpty()) {
+            UserPreferences n = new UserPreferences(dbCopy.get());
             n.setId(up.getId());
             n.setPrice(up.getPrice());
             n.setProximity(up.getProximity());
