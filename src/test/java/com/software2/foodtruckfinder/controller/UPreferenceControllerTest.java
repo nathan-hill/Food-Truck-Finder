@@ -1,3 +1,4 @@
+
 package com.software2.foodtruckfinder.controller;
 
 import com.software2.foodtruckfinder.secure.controller.UPreferenceController;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -117,7 +119,9 @@ public class UPreferenceControllerTest {
 
             @Override
             public Optional<UserPreferences> findById(Long aLong) {
-                return new Option;
+                UserPreferences up = new UserPreferences();
+                Optional<UserPreferences> upo = Optional.of(up);
+                return upo;
             }
 
             @Override
