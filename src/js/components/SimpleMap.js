@@ -37,6 +37,7 @@ export class SimpleMap extends Component {
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%", overflowX: "hidden" }}>
         <GoogleMap
+        bootstrapURLKeys={{ key:"AIzaSyCE0anFhOri3B98esx3V6i46vfSezirX_k"}}
           defaultCenter={[
             this.props.coords.latitude,
             this.props.coords.longitude

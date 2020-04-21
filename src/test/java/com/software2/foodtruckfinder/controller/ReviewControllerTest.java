@@ -2,6 +2,7 @@ package com.software2.foodtruckfinder.controller;
 
 import com.software2.foodtruckfinder.secure.controller.ReviewController;
 import com.software2.foodtruckfinder.secure.model.Review;
+import com.software2.foodtruckfinder.secure.payload.ReviewAverages;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -148,6 +149,11 @@ public class ReviewControllerTest {
             @Override
             public List<Review> findReviewsByTruckid(Long tid) {
                 return new ArrayList<Review>();
+            }
+
+            @Override
+            public List<ReviewAverages> getReviewAverages() {
+                return null;
             }
 
             @Override
