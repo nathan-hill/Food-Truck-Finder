@@ -159,6 +159,12 @@ public class FoodTruckControllerTest {
             public <S extends Truck> boolean exists(Example<S> example) {
                 return false;
             }
+
+			@Override
+			public void deleteTruck(Long tid) {
+				// TODO Auto-generated method stub
+				
+			}
         };
         fc = new FoodTruckController(tr);
     }
