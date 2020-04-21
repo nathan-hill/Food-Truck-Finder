@@ -26,16 +26,6 @@ public class ReviewControllerTest {
     void init(){
         rr = new ReviewRepository() {
             @Override
-            public List<Review> findReviewsByTruckid(Long tid) {
-                return new ArrayList<Review>();
-            }
-
-            @Override
-            public List<Review> findReviewsByUserID(Long uid) {
-                return new ArrayList<Review>();
-            }
-
-            @Override
             public List<Review> findAll() {
                 return new ArrayList<Review>();
             }
@@ -46,68 +36,13 @@ public class ReviewControllerTest {
             }
 
             @Override
-            public List<Review> findAllById(Iterable<Long> longs) {
-                return null;
-            }
-
-            @Override
-            public <S extends Review> List<S> saveAll(Iterable<S> entities) {
-                return null;
-            }
-
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public <S extends Review> S saveAndFlush(S entity) {
-                return null;
-            }
-
-            @Override
-            public void deleteInBatch(Iterable<Review> entities) {
-
-            }
-
-            @Override
-            public void deleteAllInBatch() {
-
-            }
-
-            @Override
-            public Review getOne(Long aLong) {
-                return null;
-            }
-
-            @Override
-            public <S extends Review> List<S> findAll(Example<S> example) {
-                return null;
-            }
-
-            @Override
-            public <S extends Review> List<S> findAll(Example<S> example, Sort sort) {
-                return null;
-            }
-
-            @Override
             public Page<Review> findAll(Pageable pageable) {
                 return null;
             }
 
             @Override
-            public <S extends Review> S save(S entity) {
+            public List<Review> findAllById(Iterable<Long> longs) {
                 return null;
-            }
-
-            @Override
-            public Optional<Review> findById(Long aLong) {
-                return Optional.empty();
-            }
-
-            @Override
-            public boolean existsById(Long aLong) {
-                return true;
             }
 
             @Override
@@ -136,8 +71,63 @@ public class ReviewControllerTest {
             }
 
             @Override
+            public <S extends Review> S save(S entity) {
+                return null;
+            }
+
+            @Override
+            public <S extends Review> List<S> saveAll(Iterable<S> entities) {
+                return null;
+            }
+
+            @Override
+            public Optional<Review> findById(Long aLong) {
+                return Optional.empty();
+            }
+
+            @Override
+            public boolean existsById(Long aLong) {
+                return true;
+            }
+
+            @Override
+            public void flush() {
+
+            }
+
+            @Override
+            public <S extends Review> S saveAndFlush(S entity) {
+                return null;
+            }
+
+            @Override
+            public void deleteInBatch(Iterable<Review> entities) {
+
+            }
+
+            @Override
+            public void deleteAllInBatch() {
+
+            }
+
+            @Override
+            public Review getOne(Long aLong) {
+                return null;
+            }
+
+            @Override
             public <S extends Review> Optional<S> findOne(Example<S> example) {
                 return Optional.empty();
+            }
+
+            @Override
+            public <S extends Review> List<S> findAll(Example<S> example) {
+                return null;
+            }
+
+            @Override
+            public <S extends Review> List<S> findAll(Example<S> example, Sort sort) {
+                return null;
             }
 
             @Override
@@ -153,6 +143,16 @@ public class ReviewControllerTest {
             @Override
             public <S extends Review> boolean exists(Example<S> example) {
                 return false;
+            }
+
+            @Override
+            public List<Review> findReviewsByTruckid(Long tid) {
+                return new ArrayList<Review>();
+            }
+
+            @Override
+            public List<Review> findReviewsByUserID(Long uid) {
+                return new ArrayList<Review>();
             }
         };
 

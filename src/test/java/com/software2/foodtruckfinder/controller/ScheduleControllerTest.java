@@ -26,146 +26,146 @@ public class ScheduleControllerTest {
     private ScheduleController sc;
 
    @BeforeEach
-    void init(){
-        sr = new ScheduleRepository() {
-            @Override
-            public Schedule findByid(Long id) {
-                return new Schedule();
-            }
+    void init() {
+       sr = new ScheduleRepository() {
+           @Override
+           public List<Schedule> findAll() {
+               return new ArrayList<Schedule>();
+           }
 
-            @Override
-            public boolean existsById(Long id) {
-                return true;
-            }
+           @Override
+           public List<Schedule> findAll(Sort sort) {
+               return null;
+           }
 
-            @Override
-            public List<TruckLocation> getTrucksForToday(int today) {
-                return new ArrayList<TruckLocation>();
-            }
+           @Override
+           public Page<Schedule> findAll(Pageable pageable) {
+               return null;
+           }
 
-            @Override
-            public List<Schedule> findByTruckID(Long id) {
-                return new ArrayList<>();
-            }
+           @Override
+           public List<Schedule> findAllById(Iterable<Long> longs) {
+               return null;
+           }
 
-            @Override
-            public List<Schedule> findAll() {
-                return new ArrayList<Schedule>();
-            }
+           @Override
+           public long count() {
+               return 0;
+           }
 
-            @Override
-            public List<Schedule> findAll(Sort sort) {
-                return null;
-            }
+           @Override
+           public void deleteById(Long aLong) {
 
-            @Override
-            public List<Schedule> findAllById(Iterable<Long> longs) {
-                return null;
-            }
+           }
 
-            @Override
-            public <S extends Schedule> List<S> saveAll(Iterable<S> entities) {
-                return null;
-            }
+           @Override
+           public void delete(Schedule entity) {
 
-            @Override
-            public void flush() {
+           }
 
-            }
+           @Override
+           public void deleteAll(Iterable<? extends Schedule> entities) {
 
-            @Override
-            public <S extends Schedule> S saveAndFlush(S entity) {
-                return null;
-            }
+           }
 
-            @Override
-            public void deleteInBatch(Iterable<Schedule> entities) {
+           @Override
+           public void deleteAll() {
 
-            }
+           }
 
-            @Override
-            public void deleteAllInBatch() {
+           @Override
+           public <S extends Schedule> S save(S entity) {
+               return null;
+           }
 
-            }
+           @Override
+           public <S extends Schedule> List<S> saveAll(Iterable<S> entities) {
+               return null;
+           }
 
-            @Override
-            public Schedule getOne(Long aLong) {
-                return null;
-            }
+           @Override
+           public Optional<Schedule> findById(Long aLong) {
+               return Optional.empty();
+           }
 
-            @Override
-            public <S extends Schedule> List<S> findAll(Example<S> example) {
-                return null;
-            }
+           @Override
+           public void flush() {
 
-            @Override
-            public <S extends Schedule> List<S> findAll(Example<S> example, Sort sort) {
-                return null;
-            }
+           }
 
-            @Override
-            public Page<Schedule> findAll(Pageable pageable) {
-                return null;
-            }
+           @Override
+           public <S extends Schedule> S saveAndFlush(S entity) {
+               return null;
+           }
 
-            @Override
-            public <S extends Schedule> S save(S entity) {
-                return null;
-            }
+           @Override
+           public void deleteInBatch(Iterable<Schedule> entities) {
 
-            @Override
-            public Optional<Schedule> findById(Long aLong) {
-                return Optional.empty();
-            }
+           }
 
-            @Override
-            public long count() {
-                return 0;
-            }
+           @Override
+           public void deleteAllInBatch() {
 
-            @Override
-            public void deleteById(Long aLong) {
+           }
 
-            }
+           @Override
+           public Schedule getOne(Long aLong) {
+               return null;
+           }
 
-            @Override
-            public void delete(Schedule entity) {
+           @Override
+           public <S extends Schedule> Optional<S> findOne(Example<S> example) {
+               return Optional.empty();
+           }
 
-            }
+           @Override
+           public <S extends Schedule> List<S> findAll(Example<S> example) {
+               return null;
+           }
 
-            @Override
-            public void deleteAll(Iterable<? extends Schedule> entities) {
+           @Override
+           public <S extends Schedule> List<S> findAll(Example<S> example, Sort sort) {
+               return null;
+           }
 
-            }
+           @Override
+           public <S extends Schedule> Page<S> findAll(Example<S> example, Pageable pageable) {
+               return null;
+           }
 
-            @Override
-            public void deleteAll() {
+           @Override
+           public <S extends Schedule> long count(Example<S> example) {
+               return 0;
+           }
 
-            }
+           @Override
+           public <S extends Schedule> boolean exists(Example<S> example) {
+               return false;
+           }
 
-            @Override
-            public <S extends Schedule> Optional<S> findOne(Example<S> example) {
-                return Optional.empty();
-            }
+           @Override
+           public Schedule findByid(Long id) {
+               return new Schedule();
+           }
 
-            @Override
-            public <S extends Schedule> Page<S> findAll(Example<S> example, Pageable pageable) {
-                return null;
-            }
+           @Override
+           public boolean existsById(Long id) {
+               return true;
+           }
 
-            @Override
-            public <S extends Schedule> long count(Example<S> example) {
-                return 0;
-            }
+           @Override
+           public List<TruckLocation> getTrucksForToday(int today) {
+               return new ArrayList<TruckLocation>();
+           }
 
-            @Override
-            public <S extends Schedule> boolean exists(Example<S> example) {
-                return false;
-            }
-        };
+           @Override
+           public List<Schedule> findByTruckID(Long id) {
+               return new ArrayList<Schedule>();
+           }
+       };
+       sc = new ScheduleController(sr);
+   }
 
-        sc = new ScheduleController(sr);
-    }
 
 
     @Test
