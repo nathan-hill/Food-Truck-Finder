@@ -208,7 +208,7 @@ export async function findTrucksByOwnerID(id) {
     params: { id: id },
     headers: request_headers,
   })
-    .then(function (response) {
+    .then(response => {
       console.log(response.data);
       return response.data;
     })
@@ -218,17 +218,17 @@ export async function findTrucksByOwnerID(id) {
     });
 }
 
-export async function getScheduleDTOByID(id) {
-  return await axios({
+export function getScheduleDTOByID(id) {
+  return axios({
     method: "GET",
     url: constants.backend_url + "schedule/getScheduleDTOByID",
     params: { id: id },
     headers: request_headers,
   })
-    .then(function (response) {
+    .then(response => {
       console.log(response.data);
       return response.data;
-    })
+    }) 
     .catch(function (error) {
       console.log(error);
       return error;
@@ -294,7 +294,6 @@ export async function updateSchedule(data){
     });
 }
 
-// currently doesn't work
 export async function deleteTruck(dt) {
   const request = {
     method: "DELETE",
