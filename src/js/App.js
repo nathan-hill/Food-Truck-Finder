@@ -22,7 +22,8 @@ export default class App extends Component {
           <HashRouter>
             <div>
               <Route exact path="/" component={Pages.Home} />
-              {/* <Route exact path="/create_account" component={Pages.CreateAccount} />
+              {/*<Route exact path="/UserReviews" component={Pages.UserReveiws} />
+              /* <Route exact path="/create_account" component={Pages.CreateAccount} />
               <Route exact path="/Request" component={Pages.DatabaseListing} />
               <Route exact path="/loginpage" component={Pages.Login} />
               <Route exact path="/Notifications" component={Pages.Notifications} />
