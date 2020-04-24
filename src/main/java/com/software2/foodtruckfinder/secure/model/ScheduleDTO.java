@@ -552,49 +552,49 @@ public class ScheduleDTO {
 
         this.setMonLatitude(s.get(0).getLatitude());
         this.setMonLongitude(s.get(0).getLongitude());
-        this.setMonOpen(s.get(0).isOpen());
+        this.setMonOpen(s.get(0).getOpen());
         this.setMonEndTime(s.get(0).getEndTime());
         this.setMonStartTime(s.get(0).getStartTime());
 
 
         this.setTueLatitude(s.get(1).getLatitude());
         this.setTueLongitude(s.get(1).getLongitude());
-        this.setTueOpen(s.get(1).isOpen());
+        this.setTueOpen(s.get(1).getOpen());
         this.setTueEndTime(s.get(1).getEndTime());
         this.setTueStartTime(s.get(1).getStartTime());
 
 
         this.setWedLatitude(s.get(2).getLatitude());
         this.setWedLongitude(s.get(2).getLongitude());
-        this.setWedOpen(s.get(2).isOpen());
+        this.setWedOpen(s.get(2).getOpen());
         this.setWedEndTime(s.get(2).getEndTime());
         this.setWedStartTime(s.get(2).getStartTime());
 
 
         this.setThuLatitude(s.get(3).getLatitude());
         this.setThuLongitude(s.get(3).getLongitude());
-        this.setThuOpen(s.get(3).isOpen());
+        this.setThuOpen(s.get(3).getOpen());
         this.setThuEndTime(s.get(3).getEndTime());
         this.setThuStartTime(s.get(3).getStartTime());
 
 
         this.setFriLatitude(s.get(4).getLatitude());
         this.setFriLongitude(s.get(4).getLongitude());
-        this.setFriOpen(s.get(4).isOpen());
+        this.setFriOpen(s.get(4).getOpen());
         this.setFriEndTime(s.get(4).getEndTime());
         this.setFriStartTime(s.get(4).getStartTime());
 
 
         this.setSatLatitude(s.get(5).getLatitude());
         this.setSatLongitude(s.get(5).getLongitude());
-        this.setSatOpen(s.get(5).isOpen());
+        this.setSatOpen(s.get(5).getOpen());
         this.setSatEndTime(s.get(5).getEndTime());
         this.setSatStartTime(s.get(5).getStartTime());
 
 
         this.setSunLatitude(s.get(6).getLatitude());
         this.setSunLongitude(s.get(6).getLongitude());
-        this.setSunOpen(s.get(6).isOpen());
+        this.setSunOpen(s.get(6).getOpen());
         this.setSunEndTime(s.get(6).getEndTime());
         this.setSunStartTime(s.get(6).getStartTime());
 

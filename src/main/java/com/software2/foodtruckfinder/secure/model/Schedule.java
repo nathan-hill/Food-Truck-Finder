@@ -25,7 +25,7 @@ public class Schedule {
     private LocalTime endTime;
     private Double longitude;
     private Double latitude;
-    public boolean isOpen() {
+    public boolean getOpen() {
         return isOpen;
     }
 
@@ -99,7 +99,7 @@ public class Schedule {
         Schedule newClone = new Schedule();
         newClone.setLatitude(this.getLatitude());
         newClone.setLongitude(this.getLongitude());
-        newClone.setOpen(this.isOpen());
+        newClone.setOpen(this.getOpen());
         newClone.setId(this.getId());
         newClone.setDay(this.getDay());
         newClone.setEndTime(this.getEndTime());

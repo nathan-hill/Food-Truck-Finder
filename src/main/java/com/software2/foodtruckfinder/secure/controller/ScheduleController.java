@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/v/schedule")
+@RequestMapping(path = "/v/schedule/")
 public class ScheduleController {
     @Autowired
     private ScheduleRepository _scheduleRepository;
@@ -27,7 +29,7 @@ public class ScheduleController {
         this._scheduleRepository = sr;
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<Schedule[]> addNewSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
         List<Schedule> generated = new ArrayList<>();
@@ -65,6 +67,7 @@ public class ScheduleController {
         for(int i = 0; i < 7; i++){
             _scheduleRepository.deleteById(generated.get(i).getId());
         }
+        
         return true;
     }
 
@@ -78,7 +81,7 @@ public class ScheduleController {
     @GetMapping(path = "/getScheduleByID")
     public @ResponseBody
     List<Schedule> findScheduleByID(Long id){
-        List<Schedule> generated = findScheduleByID(id);
+        List<Schedule> generated = _scheduleRepository.findByTruckID(id);
         for(int i = 0; i < generated.size(); i ++){
             System.out.println(generated.get(i).toString());
         }
@@ -91,6 +94,7 @@ public class ScheduleController {
         List<Schedule> generated = _scheduleRepository.findByTruckID(id);
         System.out.println(generated.stream().count());
         ScheduleDTO d = new ScheduleDTO();
+        System.out.println("Here is the id of schedule DTO " + generated.get(0).getId());
         d.setAll(generated);
         return d;
     }
@@ -101,16 +105,19 @@ public class ScheduleController {
         return _scheduleRepository.findByid(id);
     }
 
-    @PostMapping(path = "/update")
+    @PutMapping(path = "update")
     public @ResponseBody
     ResponseEntity<Schedule[]> updateSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
+        System.out.println("We got in the fxn " + days.toString());
         if(_scheduleRepository.existsById(days.getId())) {
+            
             List<Schedule> generated = new ArrayList<>();
-
-            // this sould remove all entries related to that truck from db
-            removeFromDBviaTruck(days.getTruckID());
-
+            System.out.println("We got in on id " + days.getId() + " with truckID " + days.getTruckID());
+            // this should remove all entries related to that truck from db
+            this.removeFromDBviaTruck(days.getTruckID());
+            
             Schedule temp = new Schedule();
+            System.out.println("We got in on id " + days.getId() + " with truckID " + days.getTruckID());
             temp = days.cloneMon();
             generated.add(_scheduleRepository.save(temp));
             temp = days.cloneTues();
@@ -126,11 +133,13 @@ public class ScheduleController {
             temp = days.cloneSu();
             generated.add(_scheduleRepository.save(temp));
 
+            System.out.println(temp.toString());
 
             return new ResponseEntity<Schedule[]>(
                     generated.toArray(new Schedule[generated.size()]), HttpStatus.OK);
         }
         else {
+            System.out.println("We did not get in on id " + days.getId());
             return null;
         }
     }

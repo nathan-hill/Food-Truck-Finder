@@ -1,5 +1,6 @@
 package com.software2.foodtruckfinder.secure.repository;
 
+import com.software2.foodtruckfinder.secure.model.FoodTruckReviewDTO;
 import com.software2.foodtruckfinder.secure.model.Review;
 import com.software2.foodtruckfinder.secure.payload.ReviewAverages;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<ReviewAverages> getReviewAverages();
 
     List<Review> findReviewsByUserID(Long uid);
+
 }
