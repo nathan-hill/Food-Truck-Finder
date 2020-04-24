@@ -69,4 +69,10 @@ public class UserPreferences {
         this.proximity = 15.0;
         this.price = 1;
     }
+    public UserPreferences(UserPreferences up){
+        this.id = up.getId();
+        this.likes = up.getLikes();
+        this.proximity = up.getProximity();
+        this.price = up.getPrice();
+    }
 }

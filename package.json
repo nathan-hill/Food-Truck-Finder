@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@devexpress/dx-react-core": "^2.6.1",
-    "@devexpress/dx-react-grid": "^2.6.1",
-    "@devexpress/dx-react-grid-material-ui": "^2.6.1",
-    "@material-ui/core": "^4.9.10",
+    "@devexpress/dx-react-core": "^2.6.2",
+    "@devexpress/dx-react-grid": "^2.6.2",
+    "@devexpress/dx-react-grid-material-ui": "^2.6.2",
+    "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^3.2.10",
     "@testing-library/jest-dom": "^4.2.4",
@@ -19,7 +19,7 @@
     "formik": "^2.1.4",
     "google-map-react": "^1.1.7",
     "immutability-helper": "^3.0.2",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "lodash": "latest",
     "material-table": "^1.57.2",
@@ -51,7 +51,7 @@
     "use-position": "0.0.6",
     "valid-url": "^1.0.9",
     "validatorjs": "^3.18.1",
-    "yup": "^0.28.3"
+    "yup": "^0.28.4"
   },
   "scripts": {
     "start": "react-scripts start ",

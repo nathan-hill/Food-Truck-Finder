@@ -22,6 +22,16 @@ public class Truck {
     @NotNull
     private Integer cost;
 
+    public Truck(Long id, String name, String description, Long ownerID, String type, Integer cost, String menu) {
+        this.id = id;
+        Name = name;
+        Description = description;
+        this.ownerID = ownerID;
+        this.type = type;
+        this.cost = cost;
+        Menu = menu;
+    }
+
     public Truck(Truck t) {
         this.id = t.getId();
         this.Name = t.getName();

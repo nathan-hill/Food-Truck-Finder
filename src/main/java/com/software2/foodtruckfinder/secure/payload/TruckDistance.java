@@ -9,18 +9,20 @@ public class TruckDistance implements Comparable {
     Double distance;
     Truck t;
     Double score;
+    Double rating;
 
-    public TruckDistance(Truck t, Double distance, Double score) {
+    public TruckDistance(Truck t, Double distance, Double score, Double rating) {
         this.t = new Truck(t);
         this.distance = distance;
         this.score = score;
+        this.rating = rating;
     }
 
-    public static ArrayList<TruckDistance> makeArrayFromMap(LinkedHashMap<Truck, Double> distances, LinkedHashMap<Truck, Double> sortedRankings) {
+    public static ArrayList<TruckDistance> makeArrayFromMap(LinkedHashMap<Truck, Double> distances, LinkedHashMap<Truck, Double> sortedRankings, LinkedHashMap<Truck, Double> avgReviews) {
         ArrayList<TruckDistance> res = new ArrayList<>();
 
         for(Map.Entry<Truck, Double> e: sortedRankings.entrySet()){
-            res.add(new TruckDistance(e.getKey(), distances.get(e.getKey()), e.getValue()));
+            res.add(new TruckDistance(e.getKey(), distances.get(e.getKey()), e.getValue(),  avgReviews.get(e.getKey())));
         }
 
         Collections.sort(res);
@@ -69,6 +71,13 @@ public class TruckDistance implements Comparable {
         this.score = rank;
     }
 
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
 
     @Override
     public int compareTo(Object o) {
