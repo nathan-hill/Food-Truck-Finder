@@ -5,6 +5,8 @@ import com.software2.foodtruckfinder.secure.model.Schedule;
 import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.repository.MenuRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
+import com.software2.foodtruckfinder.secure.service.ImageProcessingAlgo.Tess;
+import com.software2.foodtruckfinder.secure.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,7 +36,7 @@ public class MenuController {
     ResponseEntity<Menu> addNewMenu(@RequestBody Menu newm) {
         Menu n = new Menu();
         n.setId(newm.getId());
-        n.setText(newm.getText());
+        n.setText(new Tess().getWords(newm.getCover()));
         n.setCover(newm.getCover());
         n.setTruckid(newm.getTruckid());
 
@@ -76,12 +78,13 @@ public class MenuController {
             mRepository.deleteById(mdets.getId());
 
             Menu newM = new Menu();
-            newM.setText(mdets.getText());
+            newM.setText(new Tess().getWords(mdets.getCover()));
             newM.setId(mdets.getId());
             newM.setTruckid(mdets.getTruckid());
             newM.setCover(mdets.getCover());
 
             Menu generatedMenu = mRepository.save(newM);
+
             return new ResponseEntity<Menu>(generatedMenu, HttpStatus.OK);
         }else{
             return null;
