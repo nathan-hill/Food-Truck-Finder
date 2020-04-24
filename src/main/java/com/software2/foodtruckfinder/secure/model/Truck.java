@@ -6,9 +6,11 @@ import javax.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Truck {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @NotNull
     private String Name;
     @NotNull
