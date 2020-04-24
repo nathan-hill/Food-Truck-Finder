@@ -29,7 +29,6 @@ public class Truck {
         this.ownerID = ownerID;
         this.type = type;
         this.cost = cost;
-        Menu = menu;
     }
 
     public Truck(Truck t) {

@@ -1,7 +1,6 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Menu;
-import com.software2.foodtruckfinder.secure.model.Schedule;
 import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.repository.MenuRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
@@ -11,8 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -87,6 +84,12 @@ public class FoodTruckController {
     public @ResponseBody
     Optional<Menu> findMenuByTruckID(@RequestParam("id") long id){
         return mRepository.findBytruckid(id);
+    }
+
+    @GetMapping(path = "findNameByTruckID")
+    public @ResponseBody
+    String findNameByTruckID(@RequestParam("id") long id){
+        return truckRepository.findNameBytruckid(id);
     }
 
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)

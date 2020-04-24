@@ -1,9 +1,11 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.FoodTruckReviewDTO;
 import com.software2.foodtruckfinder.secure.model.Review;
 import com.software2.foodtruckfinder.secure.model.Schedule;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
+import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +20,8 @@ import java.util.List;
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/v/review")
 public class ReviewController {
+
+    private TruckRepository truckRepository;
 
     @Autowired
     private ReviewRepository revRepository;
@@ -91,5 +95,24 @@ public class ReviewController {
     public @ResponseBody
     List<Review> getReviewsByFT(Long ftid) {
         return revRepository.findReviewsByTruckid(ftid);
+    }
+
+    @GetMapping(path = "/getReviewsWithName")
+    public @ResponseBody
+    List<FoodTruckReviewDTO> getReviewsByFTName(Long ftid) {
+        List<Review> generated = revRepository.findReviewsByTruckid(ftid);
+        List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
+        for(Review r : generated){
+            String name = truckRepository.findNameBytruckid(r.getId());
+            FoodTruckReviewDTO f = new FoodTruckReviewDTO();
+            f.setDescription(r.getDescription());
+            f.setId(r.getId());
+            f.setName(name);
+            f.setRating(r.getRating());
+            f.setTruckid(r.getTruckid());
+            f.setUserID(r.getUserID());
+            ftlist.add(f);
+        }
+        return ftlist;
     }
 }
