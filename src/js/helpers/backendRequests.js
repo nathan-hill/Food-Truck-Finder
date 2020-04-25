@@ -374,3 +374,26 @@ export async function postNewSchedule(s) {
       console.log(error);
     });
 }
+
+export async function updateMenu(f, dt) {
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "menu/update",
+    params: { 
+      file: f,
+      id: dt 
+    },
+    headers: request_headers,
+  };
+  console.log("POST: update menu");
+  console.log(request);
+
+  return await axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
