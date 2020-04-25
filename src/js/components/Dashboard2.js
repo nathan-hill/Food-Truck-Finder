@@ -278,6 +278,7 @@ function Dashboard2(props) {
         </Toolbar>
       </AppBar>
       <Drawer
+     
         variant="permanent"
         className={clsx(classes.selectionDrawer, {
           [classes.selectionDrawerOpen]: openSelection,

@@ -62,8 +62,10 @@ public class ScheduleController {
     }
     @DeleteMapping(path = "/removeByTruck")
     public @ResponseBody
-    Boolean removeFromDBviaTruck(Long truckid) {
+    Boolean removeFromDBviaTruck(@RequestParam("id") Long truckid) {
+        System.out.println("Test " + truckid);
         List<Schedule> generated = findScheduleByID(truckid);
+        System.out.println("test " + generated.toString());
         for(int i = 0; i < 7; i++){
             _scheduleRepository.deleteById(generated.get(i).getId());
         }
@@ -96,6 +98,7 @@ public class ScheduleController {
         ScheduleDTO d = new ScheduleDTO();
         System.out.println("Here is the id of schedule DTO " + generated.get(0).getId());
         d.setAll(generated);
+        
         return d;
     }
 
