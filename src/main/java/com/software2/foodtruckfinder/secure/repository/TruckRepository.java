@@ -30,4 +30,6 @@ public interface TruckRepository extends JpaRepository<Truck, Long> {
     List<Truck> findTrucksByOwnerID(long ownerID);
 
     String findNameByid(long id);
+
+    Truck findTruckById(Long id);
 }
