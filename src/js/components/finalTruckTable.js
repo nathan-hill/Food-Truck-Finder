@@ -45,6 +45,7 @@ class FinalTruckTable extends React.Component {
       ownerTruckID: props.auth.user.sub,
       data: [],
       schedule: [],
+      menu: ""
     };
     this.onSubmit = this.onSaveRow.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
@@ -98,15 +99,17 @@ class FinalTruckTable extends React.Component {
 
   handleTruckMenuChange = (idx) => (e) => {
     console.log(e.target.files[0]);
-
-    const newTrucks = this.state.data.map((truck, sidx) => {
-      if (idx !== sidx) return truck;
-      return { ...truck, menu: e.target.files[0] };
-    });
     
-    this.setState({ data: newTrucks });
+    this.setState({ menu: e.target.files[0]});
+    
   }
 
+  
+  handleFileUpload = (idx) => () => {
+    const fd = new FormData();
+    fd.append('image', this.state.menu, this.state.menu.name)
+    console.log(fd.toString);
+  }
 
   handleScheduleChange = (idx) => (e) => {
     const target = e.target;
@@ -1034,11 +1037,13 @@ class FinalTruckTable extends React.Component {
                           <td>
                             <input
                               type="file"
-                              name="mobile"
+                              accept=".png,.jpeg"
+                              name="menu"
                               value={this.state.data[idx].menu}
                               onChange={this.handleTruckMenuChange(idx)}
                               className="form-control"
                             />
+                            <button onClick={this.handleFileUpload(idx)}>Upload</button>
                           </td>
                           <td>
                             <button
