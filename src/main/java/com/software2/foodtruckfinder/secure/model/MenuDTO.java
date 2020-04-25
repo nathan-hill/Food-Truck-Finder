@@ -10,14 +10,14 @@ public class MenuDTO {
     private Long ownerID;
     private String type;
     private Integer cost;
-    private String Menutext;
+    private String Menu;
 
-    public String getMenutext() {
-        return Menutext;
+    public String getMenu() {
+        return Menu;
     }
 
-    public void setMenutext(String menutext) {
-        Menutext = menutext;
+    public void setMenu(String menutext) {
+        Menu = menutext;
     }
 
     public void setId(Long id) {

@@ -38,6 +38,7 @@ public class FoodTruckController {
         n.setName(newTruck.getName());
         n.setDescription(newTruck.getDescription());
         n.setOwnerID(newTruck.getOwnerID());
+        n.setMenu(null);
 
         if(n.getName() == "" || n.getOwnerID() == null){
             // do nothing
@@ -79,7 +80,11 @@ public class FoodTruckController {
     @GetMapping(path = "findTrucksByOwnerID")
     public @ResponseBody
     List<Truck> findTrucksByOwnerID(@RequestParam("id") long id){
-        return truckRepository.findTrucksByOwnerID(id);
+        List<Truck> trucks = truckRepository.findTrucksByOwnerID(id);
+        for(Truck t : trucks){
+            t.setMenu(null);
+        }
+        return trucks;
     }
 
     @GetMapping(path = "GetMenuDTOsByTruckID")
@@ -99,7 +104,7 @@ public class FoodTruckController {
         Menu m = mRepository.findBytruckid(id);
         MenuDTO d = new MenuDTO();
         Truck t = truckRepository.findTruckById(id);
-        d.setMenutext(m.getText());
+        d.setMenu(m.getText());
         d.setId(id);
         d.setCost(t.getCost());
         d.setDescription(t.getDescription());

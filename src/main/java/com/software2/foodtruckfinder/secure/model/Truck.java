@@ -22,6 +22,17 @@ public class Truck {
     @NotNull
     private Integer cost;
 
+    private String Menu;
+
+    public String getMenu() {
+        return Menu;
+    }
+
+    public void setMenu(String menutext) {
+        Menu = menutext;
+    }
+
+
     public Truck(Long id, String name, String description, Long ownerID, String type, Integer cost, String menu) {
         this.id = id;
         Name = name;
