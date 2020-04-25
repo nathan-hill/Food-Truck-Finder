@@ -186,6 +186,8 @@ class FinalTruckTable extends React.Component {
     // add new truck into database
     Request.postNewTruck(truckItem)
     .then(response => {
+      console.log("truck");
+      console.log(response);
       console.log(response.data);
       this.setState({
         data: [...this.state.data, response.data]
@@ -196,6 +198,7 @@ class FinalTruckTable extends React.Component {
     Request.postNewSchedule(truckSchedule)
     .then(response => {
       // print the object
+      console.log(response);
       console.log(response.data);
       // set the id returned 
       truckSchedule.id = response.data[0].id;
@@ -217,9 +220,10 @@ class FinalTruckTable extends React.Component {
 
   handleRemoveSpecificRow = (idx) => () => {
     //remove the foodtruck from the database
-    Request.deleteTruck(this.state.data[idx].id)
     Request.deleteSchedule(this.state.data[idx].id);
-    console.log()
+    Request.deleteTruck(this.state.data[idx].id)
+    
+    
     
     // prepare data to be modified
     const data = [...this.state.data];
