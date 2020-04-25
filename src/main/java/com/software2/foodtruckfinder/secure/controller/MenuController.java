@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,26 +34,18 @@ public class MenuController {
 
     @PostMapping(path = "add")
     public @ResponseBody
-    ResponseEntity<Menu> addNewMenu(@RequestBody Menu newm) {
+    ResponseEntity<Menu> addNewMenu(@RequestParam("file") MultipartFile file, @RequestParam("truckid") long truckid) throws IOException {
         Menu n = new Menu();
-        n.setId(newm.getId());
-        n.setText(new Tess().getWords(newm.getCover()));
-        n.setCover(newm.getCover());
-        n.setTruckid(newm.getTruckid());
+        n.setCover(file.getBytes());
+        n.setTruckid(truckid);
+        n.setText(new Tess().getWords(n.getCover()));
 
         if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
             // do nothing
             return new ResponseEntity<Menu>(new Menu(), HttpStatus.BAD_REQUEST);
-        } else {
-            for (Menu m : mRepository.findAll()) {
-                if (m.getId().equals(newm.getId())) {
-                    return ResponseEntity.status(400).build();
-                }
-            }
-
-            Menu generatedM = mRepository.save(n);
-            return new ResponseEntity<Menu>(generatedM, HttpStatus.OK);
         }
+        Menu generatedM = mRepository.save(n);
+        return new ResponseEntity<Menu>(generatedM, HttpStatus.OK);
     }
 
 
