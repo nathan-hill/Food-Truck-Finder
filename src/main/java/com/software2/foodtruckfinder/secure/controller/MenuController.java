@@ -27,7 +27,7 @@ public class MenuController {
 
     @PostMapping(path = "add")
     public @ResponseBody
-    ResponseEntity<Menu> addNewMenu(@RequestParam("file") MultipartFile file, @RequestParam("truckid") long truckid) throws IOException {
+    ResponseEntity<Menu> addNewMenu(@RequestParam MultipartFile file, @RequestParam long truckid) throws IOException {
 
         if(mRepository.existsBytruckid(truckid)){
             ResponseEntity<Menu> response = updateMenu(findByTruckId(truckid));
