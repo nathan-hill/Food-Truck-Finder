@@ -97,9 +97,11 @@ class FinalTruckTable extends React.Component {
   }
 
   handleTruckMenuChange = (idx) => (e) => {
+    console.log(e.target.files[0]);
+
     const newTrucks = this.state.data.map((truck, sidx) => {
       if (idx !== sidx) return truck;
-      return { ...truck, type: e.target.value };
+      return { ...truck, menu: e.target.files[0] };
     });
     
     this.setState({ data: newTrucks });
@@ -133,7 +135,7 @@ class FinalTruckTable extends React.Component {
       name: this.state.addText,
       cost: "",
       type: "",
-      menu: "",
+      menu: null,
     };
 
     const truckSchedule = {
@@ -1031,7 +1033,7 @@ class FinalTruckTable extends React.Component {
                           </td>
                           <td>
                             <input
-                              type="text"
+                              type="file"
                               name="mobile"
                               value={this.state.data[idx].menu}
                               onChange={this.handleTruckMenuChange(idx)}
