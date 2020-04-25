@@ -89,7 +89,7 @@ public class FoodTruckController {
     @GetMapping(path = "findNameByTruckID")
     public @ResponseBody
     String findNameByTruckID(@RequestParam("id") long id){
-        return truckRepository.findNameBytruckid(id);
+        return truckRepository.findNameByid(id);
     }
 
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)

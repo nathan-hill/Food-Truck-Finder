@@ -103,7 +103,7 @@ public class ReviewController {
         List<Review> generated = revRepository.findReviewsByTruckid(ftid);
         List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
         for(Review r : generated){
-            String name = truckRepository.findNameBytruckid(r.getId());
+            String name = truckRepository.findNameByid(r.getId());
             FoodTruckReviewDTO f = new FoodTruckReviewDTO();
             f.setDescription(r.getDescription());
             f.setId(r.getId());
