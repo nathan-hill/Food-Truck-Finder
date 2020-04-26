@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -108,20 +109,23 @@ public class ReviewController {
         System.out.println(generated.size());
         List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
         for(Review r : generated){
-            System.out.println(r.getTruckid());
-            String name = truckRepository.findById(r.getTruckid()).get().getName();
-            System.out.println(name);
-            String customer = userRepository.findUserByid(r.getUserID()).getUsername();
-            System.out.println(customer);
-            FoodTruckReviewDTO f = new FoodTruckReviewDTO();
-            f.setDescription(r.getDescription());
-            f.setId(r.getId());
-            f.setName(name);
-            f.setCustomer(customer);
-            f.setRating(r.getRating());
-            f.setTruckid(r.getTruckid());
-            f.setUserID(r.getUserID());
-            ftlist.add(f);
+            try {
+                System.out.println(r.getTruckid());
+                String name = truckRepository.findById(r.getTruckid()).get().getName();
+                System.out.println(name);
+                String customer = userRepository.findUserByid(r.getUserID()).getUsername();
+                System.out.println(customer);
+                FoodTruckReviewDTO f = new FoodTruckReviewDTO();
+                f.setDescription(r.getDescription());
+                f.setId(r.getId());
+                f.setName(name);
+                f.setCustomer(customer);
+                f.setRating(r.getRating());
+                f.setTruckid(r.getTruckid());
+                f.setUserID(r.getUserID());
+                ftlist.add(f);
+            }catch (NoSuchElementException e){
+            }
         }
         return ftlist;
     }

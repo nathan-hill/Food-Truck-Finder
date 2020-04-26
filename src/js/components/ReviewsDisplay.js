@@ -46,7 +46,7 @@ class ReviewTable extends React.Component{
         this.state = {
             columns: [
                 {title: 'Customer', field: 'customer'},
-                {title: 'Food Truck', field: 'Name'},
+                {title: 'Food Truck', field: 'name'},
                 {title: 'Rating out of 5', field: 'rating'},
                 {title: 'Review', field: 'description'}
             ], data:[],
