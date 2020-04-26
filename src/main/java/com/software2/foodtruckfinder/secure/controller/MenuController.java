@@ -84,6 +84,13 @@ public class MenuController {
         }
     }
 
+    @DeleteMapping(path = "/removeByTruck")
+    public @ResponseBody
+    Boolean deleteByTruck(Long tid) {
+        mRepository.deleteBytruckid(tid);
+        return true;
+    }
+
     @DeleteMapping(path = "/removeMenu")
     public @ResponseBody
     Boolean removeMenu(Long mid) {

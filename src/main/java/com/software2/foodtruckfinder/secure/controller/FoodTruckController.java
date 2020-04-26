@@ -1,10 +1,7 @@
 package com.software2.foodtruckfinder.secure.controller;
 
-import com.software2.foodtruckfinder.secure.model.Menu;
-import com.software2.foodtruckfinder.secure.model.MenuDTO;
-import com.software2.foodtruckfinder.secure.model.Truck;
-import com.software2.foodtruckfinder.secure.repository.MenuRepository;
-import com.software2.foodtruckfinder.secure.repository.TruckRepository;
+import com.software2.foodtruckfinder.secure.model.*;
+import com.software2.foodtruckfinder.secure.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,10 +17,25 @@ import java.util.Optional;
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/v/trucks/")
 public class FoodTruckController {
+
     @Autowired
     private TruckRepository truckRepository;
 
+    @Autowired
     private MenuRepository mRepository;
+
+    @Autowired
+    private SubscriptionRepository subRepository;
+
+    @Autowired
+    private ReviewRepository revRepository;
+
+    @Autowired
+    private MessageRepository _mRepository;
+
+    @Autowired
+    private ScheduleRepository _scheduleRepository;
+
 
     public FoodTruckController(TruckRepository truckRepository) {
         this.truckRepository = truckRepository;
@@ -152,7 +164,30 @@ public class FoodTruckController {
     @DeleteMapping(path = "/removeTruck")
     public @ResponseBody
     Boolean removeTruck(Long truckid) {
+
+        mRepository.deleteBytruckid(truckid);
+
+        List<Review> reviews = revRepository.findReviewsByTruckid(truckid);
+        for(Review r : reviews){
+            revRepository.deleteById(r.getId());
+        }
+        List<Subscription> subscriptions = (List<Subscription>) subRepository.findByTruckId(truckid);
+        for(Subscription subs: subscriptions){
+            subRepository.deleteById(subs.getId());
+        }
+
+        List<Message> messages = _mRepository.findBySender(truckid);
+        for(Message m: messages){
+            _mRepository.deleteMessage(m.getId());
+        }
+
+        List<Schedule> schedules = _scheduleRepository.findByTruckID(truckid);
+        for(Schedule s: schedules){
+            _scheduleRepository.deleteById(s.getId());
+        }
+
         truckRepository.deleteTruck(truckid);
+
         return true;
     }
 

@@ -20,5 +20,10 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     @Query("delete from Menu where id = :mid")
     void deleteMenu(@Param("mid") Long mid);
 
+    @Modifying(flushAutomatically = true)
+    @Transactional
+    @Query("delete from Menu where truckid = :tid")
+    void deleteBytruckid(Long tid);
+
     boolean existsBytruckid(@NotBlank Long truckid);
 }
