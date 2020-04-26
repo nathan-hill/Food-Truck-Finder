@@ -377,13 +377,13 @@ export async function postNewSchedule(s) {
 
 export async function updateMenu(f, dt) {
   const request = {
+    url: constants.backend_url + "menu/add",
     method: "POST",
-    url: constants.backend_url + "menu/update",
     params: { 
       file: f,
       id: dt 
     },
-    headers: request_headers,
+    config: { headers: {'Content-Type': 'multipart/form-data' }}
   };
   console.log("POST: update menu");
   console.log(request);

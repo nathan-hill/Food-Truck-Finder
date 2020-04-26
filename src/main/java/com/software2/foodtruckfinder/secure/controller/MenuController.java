@@ -27,17 +27,21 @@ public class MenuController {
 
     @PostMapping(path = "add")
     public @ResponseBody
-    ResponseEntity<Menu> addNewMenu(@RequestParam MultipartFile file, @RequestParam long truckid) throws IOException {
-
-        if(mRepository.existsBytruckid(truckid)){
-            ResponseEntity<Menu> response = updateMenu(findByTruckId(truckid));
+    ResponseEntity<Menu> addNewMenu(MultipartFile file) throws IOException {
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getName());
+        long id = 3;
+        if(mRepository.existsBytruckid(id)){
+            ResponseEntity<Menu> response = updateMenu(findByTruckId(id));
             return response;
         }
         else{
             Menu n = new Menu();
             n.setCover(file.getBytes());
-            n.setTruckid(truckid);
+
+            n.setTruckid(id);
             n.setText(new Tess().getWords(file.getBytes()));
+
 
             if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
                 // do nothing
