@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-<<<<<<< HEAD
 //
 //public class FoodTruckControllerTest {
 //    private TruckRepository tr;
@@ -206,7 +205,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //
 //
 //}
-=======
+
 
 public class FoodTruckControllerTest {
     private TruckRepository tr;
@@ -234,6 +233,11 @@ public class FoodTruckControllerTest {
             @Override
             public List<Truck> findTrucksByOwnerID(long userId) {
                 return new ArrayList<Truck>();
+            }
+
+            @Override
+            public String findNameByid(long tid) {
+                return null;
             }
 
             @Override
@@ -402,4 +406,4 @@ public class FoodTruckControllerTest {
 
 
 }
->>>>>>> a8e71d9d79acf391c09d4ee45ef5486ab542e3a8
+

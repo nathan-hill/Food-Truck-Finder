@@ -12,6 +12,16 @@ public class FoodTruckReviewDTO {
     private Integer rating;
     private String Name;
 
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    private String customer;
+
     public FoodTruckReviewDTO() {
     }
 

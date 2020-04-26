@@ -4,7 +4,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import UserSettings from "./UserSettings";
-import CustomerTable from "./ReviewsByCustomer";
+import ReviewTable from "./ReviewsDisplay";
 import SearchIcon from "@material-ui/icons/Search";
 import GroupIcon from '@material-ui/icons/Group';
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -33,7 +33,7 @@ export const GuestListItems = (setDrawerComponent) => {
       <ListItem
         button
         onClick={() => {
-          return setDrawerComponent(<CustomerTable />);
+          return setDrawerComponent(<ReviewTable />);
         }}
       >
         <ListItemIcon>
@@ -95,7 +95,7 @@ export const CustomerListItems = (setDrawerComponent) => {
       <ListItem
         button
         onClick={() => {
-          return setDrawerComponent(<CustomerTable />);
+          return setDrawerComponent(<ReviewTable />);
         }}
       >
         <ListItemIcon>
@@ -141,7 +141,7 @@ export const OwnerListItems = (setDrawerComponent) => (
     <ListItem
         button
         onClick={() => {
-          return setDrawerComponent(<CustomerTable />);
+          return setDrawerComponent(<ReviewTable />);
         }}
       >
         <ListItemIcon>

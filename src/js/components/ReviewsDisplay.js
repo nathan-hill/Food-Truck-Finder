@@ -17,8 +17,6 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
-import {connect} from "react-redux";
-import * as Request from './../helpers/backendRequests'
 
 const tableIcons = {
     GradeIcon: forwardRef((props, ref) => <GradeIcon {...props} ref={ref}/>),
@@ -41,40 +39,39 @@ const tableIcons = {
 
 var constants = require("./../helpers/constants");
 
-class CustomerTable extends React.Component{
+class ReviewTable extends React.Component{
     constructor(props) {
         super(props);
         //may need to rename fields to match data returns
         this.state = {
             columns: [
-                {title: 'Customer', field: 'username'},
+                {title: 'Customer', field: 'customer'},
+                {title: 'Food Truck', field: 'Name'},
+                {title: 'Rating out of 5', field: 'rating'},
+                {title: 'Review', field: 'description'}
             ], data:[],
         }
     }
+
 
     
     //fill with list from database
 
     componentDidMount = () => {
         // console.log("ID: ", this.props.auth.user.sub);
-        axios.get(constants.backend_url + "users/")
+        axios.get(constants.backend_url + "review/getReviewsWithName")
         .then(res => {
             this.setState({data: res.data})
             // console.log(this.state.data)
         });
     }
 
+
     render() {
         return (
             <MaterialTable
-                actions={[ 
-                    rowData => ({
-                        icon: GradeIcon,
-                        tooltip: 'View My Reviews'
-                    }),
-                ]}
                 icons={tableIcons}
-                title=""
+                title="Reviews"
                 columns={this.state.columns}
                 data={this.state.data}
             />
@@ -82,4 +79,4 @@ class CustomerTable extends React.Component{
     }
 }
 
-export default CustomerTable;
+export default ReviewTable;
