@@ -2,26 +2,14 @@ package com.software2.foodtruckfinder.secure.model;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.*;
+public class MenuDTO {
 
-@Entity // This tells Hibernate to make a table out of this class
-public class Truck {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotNull
     private String Name;
-    @NotNull
     private String Description;
-    @NotNull
     private Long ownerID;
-    @NotNull
     private String type;
-    @NotNull
     private Integer cost;
-
     private String Menu;
 
     public String getMenu() {
@@ -31,31 +19,6 @@ public class Truck {
     public void setMenu(String menutext) {
         Menu = menutext;
     }
-
-
-    public Truck(Long id, String name, String description, Long ownerID, String type, Integer cost, String menu) {
-        this.id = id;
-        Name = name;
-        Description = description;
-        this.ownerID = ownerID;
-        this.type = type;
-        this.cost = cost;
-    }
-
-    public Truck(Truck t) {
-        this.id = t.getId();
-        this.Name = t.getName();
-        this.Description = t.getDescription();
-        this.ownerID = t.getOwnerID();
-        this.type = t.getType();
-        this.cost = t.getCost();
-    }
-
-    public Double getZero(){
-        return 0.0;
-    }
-
-    public Truck(){}
 
     public void setId(Long id) {
         this.id = id;
@@ -105,15 +68,4 @@ public class Truck {
         return cost;
     }
 
-    @Override
-    public String toString() {
-        return "Truck{" +
-                "id=" + id +
-                ", Name='" + Name + '\'' +
-                ", Description='" + Description + '\'' +
-                ", ownerID=" + ownerID +
-                ", type='" + type + '\'' +
-                ", cost=" + cost +
-                '}';
-    }
 }

@@ -1,12 +1,8 @@
 package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.Menu;
-import com.software2.foodtruckfinder.secure.model.Schedule;
-import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.repository.MenuRepository;
-import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.service.ImageProcessingAlgo.Tess;
-import com.software2.foodtruckfinder.secure.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,10 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -33,23 +27,22 @@ public class MenuController {
 
     @PostMapping(path = "add")
     public @ResponseBody
-    ResponseEntity<Menu> addNewMenu(@RequestBody Menu newm) {
-        Menu n = new Menu();
-        n.setId(newm.getId());
-        n.setText(new Tess().getWords(newm.getCover()));
-        n.setCover(newm.getCover());
-        n.setTruckid(newm.getTruckid());
+    ResponseEntity<Menu> addNewMenu(@RequestParam MultipartFile file, @RequestParam long truckid) throws IOException {
 
-        if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
-            // do nothing
-            return new ResponseEntity<Menu>(new Menu(), HttpStatus.BAD_REQUEST);
-        } else {
-            for (Menu m : mRepository.findAll()) {
-                if (m.getId().equals(newm.getId())) {
-                    return ResponseEntity.status(400).build();
-                }
+        if(mRepository.existsBytruckid(truckid)){
+            ResponseEntity<Menu> response = updateMenu(findByTruckId(truckid));
+            return response;
+        }
+        else{
+            Menu n = new Menu();
+            n.setCover(file.getBytes());
+            n.setTruckid(truckid);
+            n.setText(new Tess().getWords(n.getCover()));
+
+            if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
+                // do nothing
+                return new ResponseEntity<Menu>(new Menu(), HttpStatus.BAD_REQUEST);
             }
-
             Menu generatedM = mRepository.save(n);
             return new ResponseEntity<Menu>(generatedM, HttpStatus.OK);
         }
@@ -65,7 +58,7 @@ public class MenuController {
 
     @GetMapping(path = "findByTruckID")
     public @ResponseBody
-    Optional<Menu> findByTruckId(Long truck){
+    Menu findByTruckId(Long truck){
         return mRepository.findBytruckid(truck);
     }
 
@@ -89,6 +82,13 @@ public class MenuController {
         }else{
             return null;
         }
+    }
+
+    @DeleteMapping(path = "/removeByTruck")
+    public @ResponseBody
+    Boolean deleteByTruck(Long tid) {
+        mRepository.deleteBytruckid(tid);
+        return true;
     }
 
     @DeleteMapping(path = "/removeMenu")

@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping(path = "/v/review")
 public class ReviewController {
 
+    @Autowired
     private TruckRepository truckRepository;
 
     private UserRepository userRepository;

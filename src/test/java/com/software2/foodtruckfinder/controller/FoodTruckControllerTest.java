@@ -241,6 +241,11 @@ public class FoodTruckControllerTest {
             }
 
             @Override
+            public Truck findTruckById(Long id) {
+                return null;
+            }
+
+            @Override
             public List<Truck> findAll() {
                 return null;
             }
@@ -385,7 +390,7 @@ public class FoodTruckControllerTest {
     @Test
     @DisplayName("Find by Id Test")
     void findByIdTest(){
-        Optional<Truck> ot = fc.findByTruckId(0);
+        Optional<Truck> ot = fc.findByTruckId(1l);
         assertTrue(ot.isEmpty());
     }
 

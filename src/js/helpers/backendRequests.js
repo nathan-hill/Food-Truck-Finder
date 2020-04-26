@@ -206,7 +206,7 @@ export async function findTrucksByOwnerID(id) {
     params: { id: id },
     headers: request_headers,
   })
-    .then(function (response) {
+    .then(response => {
       console.log(response.data);
       return response.data;
     })
@@ -216,17 +216,17 @@ export async function findTrucksByOwnerID(id) {
     });
 }
 
-export async function getScheduleDTOByID(id) {
-  return await axios({
+export function getScheduleDTOByID(id) {
+  return axios({
     method: "GET",
     url: constants.backend_url + "schedule/getScheduleDTOByID",
     params: { id: id },
     headers: request_headers,
   })
-    .then(function (response) {
+    .then(response => {
       console.log(response.data);
       return response.data;
-    })
+    }) 
     .catch(function (error) {
       console.log(error);
       return error;
@@ -292,7 +292,6 @@ export async function updateSchedule(data){
     });
 }
 
-// currently doesn't work
 export async function deleteTruck(dt) {
   const request = {
     method: "DELETE",
@@ -362,6 +361,29 @@ export async function postNewSchedule(s) {
     headers: request_headers,
   };
   console.log("POST: new schedule");
+  console.log(request);
+
+  return await axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+export async function updateMenu(f, dt) {
+  const request = {
+    method: "POST",
+    url: constants.backend_url + "menu/update",
+    params: { 
+      file: f,
+      id: dt 
+    },
+    headers: request_headers,
+  };
+  console.log("POST: update menu");
   console.log(request);
 
   return await axios(request)

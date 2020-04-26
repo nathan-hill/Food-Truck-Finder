@@ -8,14 +8,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu, Long> {
 
-    Optional<Menu> findBytruckid(Long truck);
+    Menu findBytruckid(Long truck);
 
     @Modifying(flushAutomatically = true)
     @Transactional
     @Query("delete from Menu where id = :mid")
     void deleteMenu(@Param("mid") Long mid);
+
+    @Modifying(flushAutomatically = true)
+    @Transactional
+    @Query("delete from Menu where truckid = :tid")
+    void deleteBytruckid(Long tid);
+
+    boolean existsBytruckid(@NotBlank Long truckid);
 }
