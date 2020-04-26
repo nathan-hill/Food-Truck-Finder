@@ -37,7 +37,7 @@ public class MenuController {
             Menu n = new Menu();
             n.setCover(file.getBytes());
             n.setTruckid(truckid);
-            n.setText(new Tess().getWords(n.getCover()));
+            n.setText(new Tess().getWords(file.getBytes()));
 
             if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
                 // do nothing
