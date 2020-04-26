@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -18,6 +19,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from "@material-ui/core";
+
+var constants = require("./../helpers/constants");
 
 const BootstrapInput = withStyles((theme) => ({
   textField: {
@@ -45,7 +48,7 @@ class FinalTruckTable extends React.Component {
       ownerTruckID: props.auth.user.sub,
       data: [],
       schedule: [],
-      menu: ""
+      
     };
     this.onSubmit = this.onSaveRow.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
@@ -98,17 +101,40 @@ class FinalTruckTable extends React.Component {
   }
 
   handleTruckMenuChange = (idx) => (e) => {
-    console.log(e.target.files[0]);
     
-    this.setState({ menu: e.target.files[0]});
-    
+    console.log(this.state.data[idx]);
+    const newTrucks = this.state.data.map((truck, sidx) => {
+      if (idx !== sidx) return truck;
+      return { ...truck, menu: e.target.files[0]};
+    });
+    console.log(newTrucks);
+    this.setState({ data: newTrucks });
+  
   }
 
   
-  handleFileUpload = (idx) => () => {
+  handleFileUpload = (idx) => (e) => {
     const fd = new FormData();
-    fd.append('image', this.state.menu, this.state.menu.name)
-    console.log(fd.toString);
+    fd.append("file", this.state.data[idx].menu)
+    fd.append('truckid', this.state.data[idx].id);
+    console.log(fd);
+    console.log(this.state.data[idx].id);
+    
+    axios({
+      method: 'post',
+      url: constants.backend_url + "menu/add",
+      data: fd,
+      headers: {'Content-Type': 'multipart/form-data' }
+      })
+      .then(function (response) {
+          //handle success
+          console.log(response);
+      })
+      .catch(function (response) {
+          //handle error
+          console.log(response);
+      });
+
   }
 
   handleScheduleChange = (idx) => (e) => {
@@ -1039,7 +1065,8 @@ class FinalTruckTable extends React.Component {
                               type="file"
                               accept=".png,.jpeg"
                               name="menu"
-                              value={this.state.data[idx].menu}
+                              // value={this.state.data[idx].menu || ""}
+                              // defaultValue={""}
                               onChange={this.handleTruckMenuChange(idx)}
                               className="form-control"
                             />
