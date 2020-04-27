@@ -116,15 +116,17 @@ class FinalTruckTable extends React.Component {
   handleFileUpload = (idx) => (e) => {
     const fd = new FormData();
     fd.append("file", this.state.data[idx].menu)
-    fd.append('truckid', this.state.data[idx].id);
     console.log(fd);
     console.log(this.state.data[idx].id);
     
     axios({
       method: 'post',
-      url: constants.backend_url + "menu/add",
+      url: constants.backend_url + 'menu/add/' + this.state.data[idx].id ,
       data: fd,
-      headers: {'Content-Type': 'multipart/form-data' }
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'multipart/form-data' 
+        }
       })
       .then(function (response) {
           //handle success

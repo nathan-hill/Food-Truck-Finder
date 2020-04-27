@@ -25,17 +25,19 @@ public class MenuController {
         this.mRepository = mRepository;
     }
 
-    @PostMapping(path = "add")
+    @PostMapping(path = "add/{truckid}")
     public @ResponseBody
-    ResponseEntity<Menu> addNewMenu(MultipartFile file) throws IOException {
+    ResponseEntity<Menu> addNewMenu(MultipartFile file, @PathVariable("truckid") Long id) throws IOException {
         System.out.println(file.getOriginalFilename());
         System.out.println(file.getName());
-        long id = 3;
+        System.out.println(id);
         if(mRepository.existsBytruckid(id)){
+            System.out.println("entered already exists");
             ResponseEntity<Menu> response = updateMenu(findByTruckId(id));
             return response;
         }
         else{
+            System.out.println("entered doesn't exist");
             Menu n = new Menu();
             n.setCover(file.getBytes());
             n.setTruckid(id);
