@@ -10,6 +10,7 @@ import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
 import com.software2.foodtruckfinder.secure.service.Email;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 
 @RestController
@@ -59,7 +62,22 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        System.out.println(loginRequest.getPassword() + " " + loginRequest.getUsernameOrEmail());
+//        byte[] salt;
+//        String
+//        if(userRepository.existsByEmail(loginRequest.getUsernameOrEmail())){
+//            System.out.println("Exists by email");
+//            User u = userRepository.findByemail(loginRequest.getUsernameOrEmail());
+//
+//        }
+//        else if(userRepository.existsByUsername(loginRequest.getUsernameOrEmail())){
+//            System.out.println("Exists by username");
+//            User u = userRepository.findByusername(loginRequest.getUsernameOrEmail());
+//
+//        }
+//        else{
+//            System.out.println("Does not exist, giving it: " + loginRequest.getUsernameOrEmail());
+//        }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
@@ -71,6 +89,26 @@ public class AuthController {
 
         String jwt = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+    }
+
+    public byte[] generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[20];
+        random.nextBytes(bytes);
+        return bytes;
+    }
+
+    public String bytetoString(byte[] input) {
+        return org.apache.commons.codec.binary.Base64.encodeBase64String(input);
+    }
+
+    public byte[] stringToByte(String input) {
+        if (Base64.isBase64(input)) {
+            return Base64.decodeBase64(input);
+
+        } else {
+            return Base64.encodeBase64(input.getBytes());
+        }
     }
 
     @PostMapping("/signup")
@@ -92,10 +130,13 @@ public class AuthController {
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword(), signUpRequest.getType());
 
-        System.out.println(user.toString());
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //user.setId(counter++);
+        // Password Salting Process
+        user.setSalt(generateSalt());
+        String salty = bytetoString(user.getSalt());
+        // Appends salt to the current password
+        String pass = user.getPassword().concat(salty);
+        //Hashed the requested password + salt and stores it
+        user.setPassword(passwordEncoder.encode(pass));
 
         User result = userRepository.save(user);
 

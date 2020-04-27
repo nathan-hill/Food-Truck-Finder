@@ -18,13 +18,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsById(Long id);
 
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 
     Optional<User> findByUsernameOrEmail(String username, String email);
 
     List<User> findByIdIn(List<Long> userIds);
 
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username);
 
     Boolean existsByUsername(String username);
 
@@ -33,4 +33,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update User u set u.password = ?1 where u.id = ?2")
     void setNewPassword(String pass, Long id);
+
+    @Modifying
+    @Query("update User u set u.salt = ?1 where u.id = ?2")
+    void setSalt(byte[] salt, Long id);
+
+
 }

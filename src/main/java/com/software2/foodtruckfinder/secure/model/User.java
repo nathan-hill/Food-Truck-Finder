@@ -44,6 +44,8 @@ public class User extends DateAudit {
     @Size(min = 6, max = 100)
     private String password;
 
+    private byte[] salt;
+
     @NotBlank
     private String type;
 
@@ -57,6 +59,14 @@ public class User extends DateAudit {
         this.email = email;
         this.password = password;
         this.type = t;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     public String getType() {
