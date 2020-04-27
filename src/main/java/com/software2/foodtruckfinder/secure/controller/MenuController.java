@@ -25,7 +25,7 @@ public class MenuController {
         this.mRepository = mRepository;
     }
 
-    @PostMapping(path = "add/{truckid}")
+    @PostMapping(path = "add/{truckid}", consumes = {"multipart/form-data"})
     public @ResponseBody
     ResponseEntity<Menu> addNewMenu(MultipartFile file, @PathVariable("truckid") Long id) throws IOException {
         System.out.println(file.getOriginalFilename());
@@ -43,10 +43,13 @@ public class MenuController {
 
             n.setTruckid(id);
             n.setText(new Tess().getWords(file.getBytes()));
+            System.out.println(n.getId());
+            System.out.println(n.getCover());
+            System.out.println(n.getTruckid());
 
-
-            if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
+            if (n.getCover() == null || n.getTruckid() == null) {
                 // do nothing
+                System.out.println("nothing happened");
                 return new ResponseEntity<Menu>(new Menu(), HttpStatus.BAD_REQUEST);
             }
             Menu generatedM = mRepository.save(n);
