@@ -40,8 +40,10 @@ public class MenuController {
             System.out.println("entered doesn't exist");
             Menu n = new Menu();
             n.setCover(file.getBytes());
+
             n.setTruckid(id);
-            n.setText(new Tess().getWords(n.getCover()));
+            n.setText(new Tess().getWords(file.getBytes()));
+
 
             if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
                 // do nothing
