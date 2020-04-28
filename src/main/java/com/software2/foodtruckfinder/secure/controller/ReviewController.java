@@ -40,6 +40,7 @@ public class ReviewController {
         n.setRating(newR.getRating());
         n.setDescription(newR.getDescription());
         n.setTruckid(newR.getTruckid());
+        n.setTruckname(newR.getTruckname());
 
         for (Review uP : revRepository.findAll()) {
             if (uP.getId().equals(newR.getId())) {
@@ -63,6 +64,7 @@ public class ReviewController {
             n.setUserID(r.getUserID());
             n.setRating(r.getRating());
             n.setTruckid(r.getTruckid());
+            n.setTruckname(r.getTruckname());
 
             Review generatedReview = revRepository.save(n);
             return new ResponseEntity<Review>(generatedReview, HttpStatus.OK);
@@ -100,20 +102,13 @@ public class ReviewController {
 
     @GetMapping(path = "/getReviewsWithName")
     public @ResponseBody
-    List<FoodTruckReviewDTO> getReviewsByFTName(Long ftid) {
+    List<Review> getReviewsByFTName(Long ftid) {
         List<Review> generated = revRepository.findReviewsByTruckid(ftid);
-        List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
+
         for(Review r : generated){
-            String name = truckRepository.findNameByid(r.getId());
-            FoodTruckReviewDTO f = new FoodTruckReviewDTO();
-            f.setDescription(r.getDescription());
-            f.setId(r.getId());
-            f.setName(name);
-            f.setRating(r.getRating());
-            f.setTruckid(r.getTruckid());
-            f.setUserID(r.getUserID());
-            ftlist.add(f);
+            truckRepository.findNameByid(r.getId());
+            r.setTruckname(truckRepository.findNameByid(r.getId()));
         }
-        return ftlist;
+        return generated;
     }
 }
