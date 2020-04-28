@@ -67,8 +67,8 @@ public class UserController {
 
     @DeleteMapping(path = "/replacePassword")
     public @ResponseBody
-    // password is the new password
-    // uname is the user to give the new password
+        // password is the new password
+        // uname is the user to give the new password
     Boolean replacePassword(String password, Long uname) {
         // s should be the encoded string that I will use to replace in the db
         String s;
@@ -84,6 +84,7 @@ public class UserController {
         System.out.println("/getUserByID -> " + id);
         return userRepository.findUserByid(id);
     }
+
     @GetMapping(path = "/getByEmail")
     public @ResponseBody
     User findByemail(String e) {
@@ -105,9 +106,6 @@ public class UserController {
             User user = userUserPreferenceCombo.user;
             UserPreferences userPreferences = userUserPreferenceCombo.preferences;
 
-            System.out.println("user -> " + userUserPreferenceCombo.user.toString());
-            System.out.println("preferences -> " + userUserPreferenceCombo.preferences.toString());
-
             //retrieve reference of the old user from database
             User storedUser = userRepository.getOne(user.getId());
             User generatedUser = null;
@@ -116,6 +114,7 @@ public class UserController {
             storedUser.setEmail(user.getEmail());
             storedUser.setName(user.getName());
             storedUser.setUsername(user.getUsername());
+
             userRepository.save(storedUser);
 
             //get the stored preferences
@@ -141,15 +140,5 @@ public class UserController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(e.toString());
         }
-    }
-    public byte[] generateSalt() {
-        SecureRandom random = new SecureRandom();
-        byte bytes[] = new byte[20];
-        random.nextBytes(bytes);
-        return bytes;
-    }
-
-    public String bytetoString(byte[] input) {
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(input);
     }
 }

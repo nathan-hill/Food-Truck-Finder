@@ -58,23 +58,6 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-//        byte[] salt;
-//        String
-//        if(userRepository.existsByEmail(loginRequest.getUsernameOrEmail())){
-//            System.out.println("Exists by email");
-//            User u = userRepository.findByemail(loginRequest.getUsernameOrEmail());
-//
-//        }
-//        else if(userRepository.existsByUsername(loginRequest.getUsernameOrEmail())){
-//            System.out.println("Exists by username");
-//            User u = userRepository.findByusername(loginRequest.getUsernameOrEmail());
-//
-//        }
-//        else{
-//            System.out.println("Does not exist, giving it: " + loginRequest.getUsernameOrEmail());
-//        }
-
-        System.out.println(loginRequest.toString());
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -89,25 +72,6 @@ public class AuthController {
         return ResponseEntity.ok(new UserJWTdto(userRepository.findByUsername(loginRequest.getUsernameOrEmail()), new JwtAuthenticationResponse(jwt)));
     }
 
-    public byte[] generateSalt() {
-        SecureRandom random = new SecureRandom();
-        byte bytes[] = new byte[20];
-        random.nextBytes(bytes);
-        return bytes;
-    }
-
-    public String bytetoString(byte[] input) {
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(input);
-    }
-
-    public byte[] stringToByte(String input) {
-        if (Base64.isBase64(input)) {
-            return Base64.decodeBase64(input);
-
-        } else {
-            return Base64.encodeBase64(input.getBytes());
-        }
-    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User signUpRequest) {
@@ -128,14 +92,8 @@ public class AuthController {
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword(), signUpRequest.getType());
 
-        // Password Salting Process
-        user.setSalt(generateSalt());
-        String salty = bytetoString(user.getSalt());
-        // Appends salt to the current password
-        String pass = user.getPassword().concat(salty);
-        //Hashed the requested password + salt and stores it
-        user.setPassword(passwordEncoder.encode(pass));
 
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
