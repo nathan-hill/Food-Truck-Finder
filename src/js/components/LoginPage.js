@@ -32,13 +32,13 @@ export default class LoginPage extends React.Component {
     this.handleLoadingBar = this.handleLoadingBar.bind(this);
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
 
     this.setState({ isLoading: true });
 
-    let retState = login(this.state, this.handleLoadingBar);
-    
+    let retState = await login(this.state, this.handleLoadingBar);
+    console.log("retState", retState) 
     if (retState === null) {
       this.props.callback(false);
     } else {

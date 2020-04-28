@@ -2,10 +2,7 @@ package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
-import com.software2.foodtruckfinder.secure.payload.ApiResponse;
-import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
-import com.software2.foodtruckfinder.secure.payload.LoginRequest;
-import com.software2.foodtruckfinder.secure.payload.SignUpRequest;
+import com.software2.foodtruckfinder.secure.payload.*;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
@@ -27,7 +24,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 
@@ -88,7 +84,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return ResponseEntity.ok(new UserJWTdto(userRepository.findByUsername(loginRequest.getUsernameOrEmail()), new JwtAuthenticationResponse(jwt)));
     }
 
     public byte[] generateSalt() {

@@ -1,6 +1,7 @@
 package com.software2.foodtruckfinder.secure.model;
 
 import com.software2.foodtruckfinder.secure.audit.DateAudit;
+import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
