@@ -98,15 +98,7 @@ public class Rankings {
 
         this.schedules.removeIf((x) -> !x.getDay().equals(this.today));
 
-        for(Truck t: this.truckList){
-            if(this.schedules.stream().filter(x -> x.getTruckID() == t.getId()).findAny().isPresent()){
-                // there is a schedule for this truck
-            }else{
-                //there is no schedule for this truck
-                //System.out.println("removed" + t.getName());
-                this.truckList.remove(t);
-            }
-        }
+        truckList.removeIf(truck -> this.schedules.stream().anyMatch(x -> x.getTruckID() == truck.getId()));
 
         return this;
     }
@@ -183,7 +175,7 @@ public class Rankings {
     }
 
     private Double distance(Double x1, Double y1, Double x2, Double y2) {
-
+        System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
         return Math.sqrt(Math.pow(x2 - x1, 2.0) + Math.pow(y2 - y1, 2.0)) * 69.172; // number of miles per degree;
     }
 
