@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
 
-import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Optional;
 
@@ -34,22 +33,22 @@ public class UserController {
         this.userRepository = ur;
     }
 
-//    @PostMapping(path = "/add")
-//    public @ResponseBody
-//    ResponseEntity<User> addNewUser(@RequestBody User newUser) {
-//        User n = new User();
-//        n.setEmail(newUser.getEmail());
-//        n.setPassword(newUser.getPassword());
-//
-//        for (User user : userRepository.findAll()) {
-//            if (user.getEmail().equals(newUser.getEmail())) {
-//                return ResponseEntity.status(400).build();
-//            }
-//        }
-//
-//        User generatedUser = userRepository.save(n);
-//        return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
-//    }
+    @PostMapping(path = "/add")
+    public @ResponseBody
+    ResponseEntity<User> addNewUser(@RequestBody User newUser) {
+        User n = new User();
+        n.setEmail(newUser.getEmail());
+        n.setPassword(newUser.getPassword());
+
+        for (User user : userRepository.findAll()) {
+            if (user.getEmail().equals(newUser.getEmail())) {
+                return ResponseEntity.status(400).build();
+            }
+        }
+
+        User generatedUser = userRepository.save(n);
+        return new ResponseEntity<User>(generatedUser, HttpStatus.OK);
+    }
 
     @GetMapping(path = "/")
     public @ResponseBody
@@ -85,26 +84,16 @@ public class UserController {
         return userRepository.findUserByid(id);
     }
 
-    @GetMapping(path = "/getByEmail")
-    public @ResponseBody
-    User findByemail(String e) {
-        return userRepository.findByEmail(e);
-    }
-
-    @GetMapping(path = "/getByUsername")
-    public @ResponseBody
-    User findUserByusername(String u) {
-        return userRepository.findByUsername(u);
-    }
-
     @PutMapping(value = "/updateByUser", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Object updateUser(@RequestBody UserUserPreferenceCombo userUserPreferenceCombo) {
         try {
-
             //unpack the data
             User user = userUserPreferenceCombo.user;
             UserPreferences userPreferences = userUserPreferenceCombo.preferences;
+
+            System.out.println("user -> " + userUserPreferenceCombo.user.toString());
+            System.out.println("preferences -> " + userUserPreferenceCombo.preferences.toString());
 
             //retrieve reference of the old user from database
             User storedUser = userRepository.getOne(user.getId());
@@ -114,7 +103,6 @@ public class UserController {
             storedUser.setEmail(user.getEmail());
             storedUser.setName(user.getName());
             storedUser.setUsername(user.getUsername());
-
             userRepository.save(storedUser);
 
             //get the stored preferences

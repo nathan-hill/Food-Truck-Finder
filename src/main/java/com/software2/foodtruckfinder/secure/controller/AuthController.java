@@ -2,12 +2,14 @@ package com.software2.foodtruckfinder.secure.controller;
 
 import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
-import com.software2.foodtruckfinder.secure.payload.*;
+import com.software2.foodtruckfinder.secure.payload.ApiResponse;
+import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
+import com.software2.foodtruckfinder.secure.payload.LoginRequest;
+import com.software2.foodtruckfinder.secure.payload.SignUpRequest;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
 import com.software2.foodtruckfinder.secure.service.Email;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.security.SecureRandom;
 
 
 @RestController
@@ -58,7 +59,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+        System.out.println(loginRequest.getPassword() + " " + loginRequest.getUsernameOrEmail());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
@@ -69,9 +70,8 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new UserJWTdto(userRepository.findByUsername(loginRequest.getUsernameOrEmail()), new JwtAuthenticationResponse(jwt)));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
-
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User signUpRequest) {
@@ -84,7 +84,7 @@ public class AuthController {
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.CONFLICT);
+                    HttpStatus.BAD_REQUEST);
         }
 
 
@@ -92,8 +92,11 @@ public class AuthController {
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword(), signUpRequest.getType());
 
+        System.out.println(user.toString());
 
-        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setId(counter++);
+
         User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
@@ -105,4 +108,3 @@ public class AuthController {
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 }
-

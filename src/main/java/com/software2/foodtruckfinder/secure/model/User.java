@@ -1,17 +1,11 @@
 package com.software2.foodtruckfinder.secure.model;
 
 import com.software2.foodtruckfinder.secure.audit.DateAudit;
-import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -59,7 +53,6 @@ public class User extends DateAudit {
         this.password = password;
         this.type = t;
     }
-
 
     public String getType() {
         return type;
