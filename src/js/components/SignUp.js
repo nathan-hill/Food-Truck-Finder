@@ -3,7 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -12,7 +11,6 @@ import Container from "@material-ui/core/Container";
 import RadioButtons from "./../components/CreateRadioButtons";
 import * as Request from "./../helpers/backendRequests";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { login } from "../actions/login";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,10 +56,10 @@ export default class SignUp extends React.Component {
 
   onFail = (error) => {
     let message = "failed";
-    if (error.response.status == 400) {
+    if (error.response.status === 400) {
       console.log(error.response.status);
       message = "Username Already Taken!";
-    } else if (error.response.status == 409) {
+    } else if (error.response.status === 409) {
       message = "Email already taken!";
     }
     this.setState({

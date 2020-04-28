@@ -74,6 +74,8 @@ public class AuthController {
 //            System.out.println("Does not exist, giving it: " + loginRequest.getUsernameOrEmail());
 //        }
 
+        System.out.println(loginRequest.toString());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),

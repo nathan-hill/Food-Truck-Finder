@@ -15,8 +15,6 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import * as Request from "./../helpers/backendRequests";
 import { GuestListItems, CustomerListItems, OwnerListItems } from "./listItems";
 import { connect } from "react-redux";
-import { logout } from "../actions/login";
-import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import LoginPage from "./LoginPage";
 import Button from "@material-ui/core/Button";
@@ -24,7 +22,6 @@ import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SimpleMap from "./SimpleMap";
 import Notifications from "./Notifications";
-import InteractiveMap from "./InteractiveMap";
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 

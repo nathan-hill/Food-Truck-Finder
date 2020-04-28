@@ -1,8 +1,6 @@
 import axios from "axios";
 import setAuthorizationToken from "../helpers/setAuthorizationToken";
-import jwtDecode from "jwt-decode";
 import { SET_CURRENT_USER } from "./types";
-import * as Request from "./../helpers/backendRequests";
 var constants = require("./../helpers/constants");
 
 export function setCurrentUser(user) {
@@ -36,7 +34,7 @@ export function login(data, callback) {
     .then(async (res) => {
       console.error("got signed in");
       const token = res.data.jwt.accessToken;
-      let decodedToken = jwtDecode(token);
+      // let decodedToken = jwtDecode(token);
       localStorage.setItem("jwtToken", token);
       setAuthorizationToken(token);
 
