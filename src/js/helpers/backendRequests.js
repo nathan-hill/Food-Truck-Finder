@@ -94,7 +94,7 @@ export async function getUserByID(i) {
     });
 }
 
-export async function postNewUser(u) {
+export async function postNewUser(u, fail, success) {
   const request = {
     method: "POST",
     url: constants.backend_url + "api/auth/signup",
@@ -106,11 +106,12 @@ export async function postNewUser(u) {
 
   return await axios(request)
     .then(function (response) {
-      console.log(response.data);
-      return response.data;
+      success(response.data)
+      return true;
     })
     .catch(function (error) {
-      console.log(error);
+      fail(error)
+      return false;
     });
 }
 

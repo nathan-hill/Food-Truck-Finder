@@ -11,13 +11,12 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { connect } from "react-redux";
-import { login } from "../actions/login";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import SignUp from "./SignUp";
+import { login } from "./../actions/login";
 
-class LoginPage extends React.Component {
+export default class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,18 +36,19 @@ class LoginPage extends React.Component {
     e.preventDefault();
 
     this.setState({ isLoading: true });
-    this.props.login(this.state, this.handleLoadingBar).then((retState) => {
-      if(retState === null){
-        this.props.callback(false);
-      }else {
-        this.props.callback(retState);
-      }
-    });
+
+    let retState = login(this.state, this.handleLoadingBar);
+    
+    if (retState === null) {
+      this.props.callback(false);
+    } else {
+      this.props.callback(retState);
+    }
   }
 
-  handleLoadingBar(b) {
+  handleLoadingBar(b, d) {
     // console.log("the bar is being handled " + b);
-    this.setState({ isLoading: b, failed:true});
+    this.setState({ isLoading: b, failed: d });
   }
 
   onChange(e) {
@@ -67,7 +67,14 @@ class LoginPage extends React.Component {
       );
     }
 
-    let failMessage = (this.state.failed?<Typography color='red'>Invalid UserName or Password</Typography>: <div></div>);
+    let failMessage = this.state.failed ? (
+      <Typography color="error">Invalid UserName or Password</Typography>
+    ) : (
+      <React.Fragment />
+    );
+
+    console.log("login props:");
+    console.log(this.props);
 
     return (
       <Container component="main" maxWidth="xs">
@@ -125,11 +132,23 @@ class LoginPage extends React.Component {
             {loadBar}
             {failMessage}
             <Grid container>
-              <Grid item xs>
-                <Link to="/">Forgot password?</Link>
-              </Grid>
               <Grid item>
-                <Link to="/create_account">
+                <Link
+                  onClick={() => {
+                    this.props.changeDrawer(
+                      <SignUp
+                        onSuccess={() =>
+                          this.props.changeDrawer(
+                            <LoginPage
+                              callback={this.props.callback}
+                              changeDrawer={this.props.changeDrawer}
+                            />
+                          )
+                        }
+                      />
+                    );
+                  }}
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -160,10 +179,3 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
-LoginPage.propTypes = {
-  login: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-};
-
-export default connect(null, { login })(withRouter(LoginPage));

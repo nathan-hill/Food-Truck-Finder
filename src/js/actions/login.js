@@ -22,7 +22,7 @@ export function logout() {
 }
 
 export function login(data, callback) {
-  callback(true);
+  callback(true, false);
   data.headers = {
     "Access-Control-Allow-Origin": "*",
     "content-type": "application/json",
@@ -35,6 +35,7 @@ export function login(data, callback) {
     return axios
       .post(constants.backend_url + "api/auth/signin", data)
       .then(async (res) => {
+        console.error("got signed in");
         const token = res.data.accessToken;
         let decodedToken = jwtDecode(token);
         localStorage.setItem("jwtToken", token);
@@ -43,18 +44,22 @@ export function login(data, callback) {
         let user = "";
         user = await Request.getUserByID(decodedToken.sub)
           .then(function (r) {
+            console.error("got user");
+            callback(false, false);
             return r;
           })
           .catch((e) => {
-            callback(false);
+            console.error("failed to get user");
+            callback(false, true);
           });
 
         localStorage.setItem("role", user.type);
         dispatch(setCurrentUser(jwtDecode(token)));
-        return user
+        return user;
       })
       .catch((e) => {
-        callback(false);
+        console.error("failed to login");
+        callback(false, true);
         return null;
       });
   };

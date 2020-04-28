@@ -22,9 +22,9 @@ import LoginPage from "./LoginPage";
 import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import SimpleMap from './SimpleMap'
-import Notifications from './Notifications'
-import InteractiveMap from './InteractiveMap'
+import SimpleMap from "./SimpleMap";
+import Notifications from "./Notifications";
+import InteractiveMap from "./InteractiveMap";
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 
@@ -157,7 +157,7 @@ function Dashboard2(props) {
         onClick={() => {
           props.logout();
           setRole("guest");
-          setMainList(genList("guest"))
+          setMainList(genList("guest"));
         }}
       >
         LOG OUT
@@ -172,7 +172,7 @@ function Dashboard2(props) {
         className={classes.submit}
         onClick={() => {
           handleSelectionDrawerClick(
-            <LoginPage callback={handleLoginCallback} />
+            <LoginPage callback={handleLoginCallback} changeDrawer={handleSelectionDrawerClick}/>
           );
         }}
       >
@@ -186,7 +186,7 @@ function Dashboard2(props) {
     if (val !== false) {
       handleCloseComponentDrawer();
       setRole(val.type);
-      setMainList(genList(val.type))
+      setMainList(genList(val.type));
       console.log("the current role is " + role + " from " + val.type);
     } else {
       //do nothing
@@ -234,10 +234,9 @@ function Dashboard2(props) {
       // console.log(role + " = " + "owner")
       return OwnerListItems(handleSelectionDrawerClick);
     }
-  }
+  };
 
   const [mainList, setMainList] = React.useState(genList(role));
-    
 
   return (
     <div className={classes.root}>
@@ -270,7 +269,12 @@ function Dashboard2(props) {
             Meals With Wheels : {role.charAt(0).toUpperCase() + role.slice(1)}
           </Typography>
           {logButton}
-          <IconButton color="inherit" onClick={() => {handleSelectionDrawerClick(<Notifications/>)}}>
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              handleSelectionDrawerClick(<Notifications />);
+            }}
+          >
             <Badge badgeContent={numNotifications} color="secondary">
               <NotificationsIcon />
             </Badge>
@@ -278,7 +282,6 @@ function Dashboard2(props) {
         </Toolbar>
       </AppBar>
       <Drawer
-     
         variant="permanent"
         className={clsx(classes.selectionDrawer, {
           [classes.selectionDrawerOpen]: openSelection,
@@ -311,16 +314,6 @@ function Dashboard2(props) {
             setOpenComponent(false);
           },
         }}
-        // className={clsx(classes.componentDrawer, {
-        //   [classes.drawerOpen]: openComponent === true,
-        //   [classes.drawerClose]: openComponent !== true,
-        // })}
-        // classes={{
-        //   paper: clsx({
-        //     [classes.drawerOpen]: openComponent === true,
-        //     [classes.drawerClose]: openComponent !== true,
-        //   }),
-        // }}
       >
         {componentDrawerRender}
         {/* <DrawerDecider state={componentDrawerRender} /> */}
@@ -340,4 +333,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logout })(withRouter(Dashboard2));
+export default connect(mapStateToProps)(Dashboard2);
