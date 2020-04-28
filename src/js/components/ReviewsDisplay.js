@@ -1,6 +1,9 @@
 import React from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from 'material-table';
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import GradeIcon from '@material-ui/icons/Grade';
@@ -47,7 +50,13 @@ class ReviewTable extends React.Component{
             columns: [
                 {title: 'Customer', field: 'customer'},
                 {title: 'Food Truck', field: 'name'},
-                {title: 'Rating out of 5', field: 'rating'},
+                {title: 'Rating', 
+                    field: 'rating',
+                    render: rowData => (
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                            <Rating value={rowData.rating} disabled />
+                        </Box>
+                    )},
                 {title: 'Review', field: 'description'}
             ], data:[],
         }
@@ -74,6 +83,18 @@ class ReviewTable extends React.Component{
                 title="Reviews"
                 columns={this.state.columns}
                 data={this.state.data}
+                detailPanel={rowData => {
+                    return (
+                      <iframe
+                        width="100%"
+                        height="315"
+                        src="https://www.youtube.com/embed/C0DPdy98e4c"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      />
+                    )
+                  }}
             />
         );
     }
