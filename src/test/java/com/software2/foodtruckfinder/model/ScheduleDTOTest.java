@@ -34,49 +34,49 @@ public class ScheduleDTOTest {
         Double lat = 12.3;
         Double lon = 32.1;
 
-        sd.setMonOpen(true);
+        sd.setMonOpen(1);
         sd.setMonStartTime(start);
         sd.setMonEndTime(end);
         sd.setMonLatitude(lat);
         sd.setMonLongitude(lon);
 
-        sd.setTueOpen(true);
+        sd.setTueOpen(1);
         sd.setTueStartTime(start);
         sd.setTueEndTime(end);
         sd.setTueLatitude(lat);
         sd.setTueLongitude(lon);
 
-        sd.setWedOpen(true);
+        sd.setWedOpen(1);
         sd.setWedStartTime(start);
         sd.setWedEndTime(end);
         sd.setWedLatitude(lat);
         sd.setWedLongitude(lon);
 
-        sd.setWedOpen(true);
+        sd.setWedOpen(1);
         sd.setWedStartTime(start);
         sd.setWedEndTime(end);
         sd.setWedLatitude(lat);
         sd.setWedLongitude(lon);
 
-        sd.setThuOpen(true);
+        sd.setThuOpen(1);
         sd.setThuStartTime(start);
         sd.setThuEndTime(end);
         sd.setThuLatitude(lat);
         sd.setThuLongitude(lon);
 
-        sd.setFriOpen(true);
+        sd.setFriOpen(1);
         sd.setFriStartTime(start);
         sd.setFriEndTime(end);
         sd.setFriLatitude(lat);
         sd.setFriLongitude(lon);
 
-        sd.setSatOpen(true);
+        sd.setSatOpen(1);
         sd.setSatStartTime(start);
         sd.setSatEndTime(end);
         sd.setSatLatitude(lat);
         sd.setSatLongitude(lon);
 
-        sd.setSunOpen(true);
+        sd.setSunOpen(1);
         sd.setSunStartTime(start);
         sd.setSunEndTime(end);
         sd.setSunLatitude(lat);
@@ -89,37 +89,37 @@ public class ScheduleDTOTest {
         assertAll(
                 ()->assertEquals(1234l, sd.getId()),
                 ()->assertEquals(4321l, sd.getTruckID()),
-                ()->assertTrue(sd.MonOpen()),
+                ()->assertEquals(1, sd.MonOpen()),
                 ()->assertEquals(start, sd.getMonStartTime()),
                 ()->assertEquals(end, sd.getMonEndTime()),
                 ()->assertEquals(lat, sd.getMonLatitude()),
                 ()->assertEquals(lon, sd.getMonLongitude()),
-                ()->assertTrue(sd.TueOpen()),
+                ()->assertEquals(1, sd.TueOpen()),
                 ()->assertEquals(start, sd.getTueStartTime()),
                 ()->assertEquals(end, sd.getTueEndTime()),
                 ()->assertEquals(lat, sd.getTueLatitude()),
                 ()->assertEquals(lon, sd.getTueLongitude()),
-                ()->assertTrue(sd.WedOpen()),
+                ()->assertEquals(1, sd.WedOpen()),
                 ()->assertEquals(start, sd.getWedStartTime()),
                 ()->assertEquals(end, sd.getWedEndTime()),
                 ()->assertEquals(lat, sd.getWedLatitude()),
                 ()->assertEquals(lon, sd.getWedLongitude()),
-                ()->assertTrue(sd.ThuOpen()),
+                ()->assertEquals(1, sd.ThuOpen()),
                 ()->assertEquals(start, sd.getThuStartTime()),
                 ()->assertEquals(end, sd.getThuEndTime()),
                 ()->assertEquals(lat, sd.getThuLatitude()),
                 ()->assertEquals(lon, sd.getThuLongitude()),
-                ()->assertTrue(sd.FriOpen()),
+                ()->assertEquals(1, sd.FriOpen()),
                 ()->assertEquals(start, sd.getFriStartTime()),
                 ()->assertEquals(end, sd.getFriEndTime()),
                 ()->assertEquals(lat, sd.getFriLatitude()),
                 ()->assertEquals(lon, sd.getFriLongitude()),
-                ()->assertTrue(sd.SatOpen()),
+                ()->assertEquals(1, sd.SatOpen()),
                 ()->assertEquals(start, sd.getSatStartTime()),
                 ()->assertEquals(end, sd.getSatEndTime()),
                 ()->assertEquals(lat, sd.getSatLatitude()),
                 ()->assertEquals(lon, sd.getSatLongitude()),
-                ()->assertTrue(sd.SunOpen()),
+                ()->assertEquals(1, sd.SunOpen()),
                 ()->assertEquals(start, sd.getSunStartTime()),
                 ()->assertEquals(end, sd.getSunEndTime()),
                 ()->assertEquals(lat, sd.getSunLatitude()),
@@ -239,7 +239,7 @@ public class ScheduleDTOTest {
         Schedule sc = new Schedule();
         sc.setId(1234l);
         sc.setTruckID(4321l);
-        sc.setOpen(true);
+        sc.setOpen(1);
         sc.setStartTime(start);
         sc.setEndTime(end);
         sc.setLongitude(lon);

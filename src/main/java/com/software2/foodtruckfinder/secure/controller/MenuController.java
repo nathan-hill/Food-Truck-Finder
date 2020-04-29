@@ -25,22 +25,31 @@ public class MenuController {
         this.mRepository = mRepository;
     }
 
-    @PostMapping(path = "add")
+    @PostMapping(path = "add/{truckid}", consumes = {"multipart/form-data"})
     public @ResponseBody
-    ResponseEntity<Menu> addNewMenu(@RequestParam MultipartFile file, @RequestParam long truckid) throws IOException {
-
-        if(mRepository.existsBytruckid(truckid)){
-            ResponseEntity<Menu> response = updateMenu(findByTruckId(truckid));
+    ResponseEntity<Menu> addNewMenu(MultipartFile file, @PathVariable("truckid") Long id) throws IOException {
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getName());
+        System.out.println(id);
+        if(mRepository.existsBytruckid(id)){
+            System.out.println("entered already exists");
+            ResponseEntity<Menu> response = updateMenu(findByTruckId(id));
             return response;
         }
         else{
+            System.out.println("entered doesn't exist");
             Menu n = new Menu();
             n.setCover(file.getBytes());
-            n.setTruckid(truckid);
-            n.setText(new Tess().getWords(n.getCover()));
 
-            if (n.getId() == null || n.getCover() == null || n.getTruckid() == null) {
+            n.setTruckid(id);
+            n.setText(new Tess().getWords(file.getBytes()));
+            System.out.println(n.getId());
+            System.out.println(n.getCover());
+            System.out.println(n.getTruckid());
+
+            if (n.getCover() == null || n.getTruckid() == null) {
                 // do nothing
+                System.out.println("nothing happened");
                 return new ResponseEntity<Menu>(new Menu(), HttpStatus.BAD_REQUEST);
             }
             Menu generatedM = mRepository.save(n);

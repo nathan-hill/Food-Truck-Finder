@@ -23,7 +23,7 @@ public class ScheduleTest {
         LocalTime st = LocalTime.now();
         LocalTime et = LocalTime.now();
         s.setId(1234l);
-        s.setOpen(true);
+        s.setOpen(1);
         s.setStartTime(st);
         s.setEndTime(et);
         s.setLatitude(32.1);
@@ -39,15 +39,15 @@ public class ScheduleTest {
                 ()-> assertEquals(12.3, s.getLongitude()),
                 ()-> assertEquals(3, s.getDay()),
                 ()-> assertEquals(345l, s.getTruckID()),
-                ()-> assertTrue(s.getOpen())
+                ()-> assertEquals(1, s.getOpen())
         );
     }
 
     @Test
     @DisplayName("isOpen false test")
     void isOpenTest(){
-        s.setOpen(false);
-        assertFalse(s.getOpen());
+        s.setOpen(0);
+        assertEquals(0, s.getOpen());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class ScheduleTest {
         LocalTime st = LocalTime.now();
         LocalTime et = LocalTime.now();
         s.setId(1234l);
-        s.setOpen(true);
+        s.setOpen(1);
         s.setStartTime(st);
         s.setEndTime(et);
         s.setLatitude(32.1);
@@ -100,7 +100,7 @@ public class ScheduleTest {
                 ()-> assertEquals(clone.getLongitude(), s.getLongitude()),
                 ()-> assertEquals(clone.getDay(), s.getDay()),
                 ()-> assertEquals(clone.getTruckID(), s.getTruckID()),
-                ()-> assertTrue(clone.getOpen())
+                ()-> assertEquals(s.getOpen(), clone.getOpen())
         );
     }
 }

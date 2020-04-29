@@ -29,7 +29,7 @@ class FoodTruckPreferences extends React.Component {
     // console.log(this.state);
 
     let preferred = await Requests.getPreferredTrucks(
-      this.props.auth.user.sub,
+      this.props.auth.user.id,
       this.state.location.lat,
       this.state.location.lng
     );

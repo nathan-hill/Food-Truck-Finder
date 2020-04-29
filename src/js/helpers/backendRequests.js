@@ -92,7 +92,7 @@ export async function getUserByID(i) {
     });
 }
 
-export async function postNewUser(u) {
+export async function postNewUser(u, fail, success) {
   const request = {
     method: "POST",
     url: constants.backend_url + "api/auth/signup",
@@ -104,11 +104,12 @@ export async function postNewUser(u) {
 
   return await axios(request)
     .then(function (response) {
-      console.log(response.data);
-      return response.data;
+      success(response.data)
+      return true;
     })
     .catch(function (error) {
-      console.log(error);
+      fail(error)
+      return false;
     });
 }
 
@@ -236,8 +237,7 @@ export function getScheduleDTOByID(id) {
 export async function getUPById(id) {
   return await axios({
     method: "GET",
-    url: constants.backend_url + "upref/getUPreferencesByID",
-    params: { id },
+    url: constants.backend_url + "upref/getUPreferencesByID/" + id,
     headers: request_headers,
   })
     .then(function (response) {
@@ -375,13 +375,13 @@ export async function postNewSchedule(s) {
 
 export async function updateMenu(f, dt) {
   const request = {
+    url: constants.backend_url + "menu/add",
     method: "POST",
-    url: constants.backend_url + "menu/update",
     params: { 
       file: f,
       id: dt 
     },
-    headers: request_headers,
+    config: { headers: {'Content-Type': 'multipart/form-data' }}
   };
   console.log("POST: update menu");
   console.log(request);

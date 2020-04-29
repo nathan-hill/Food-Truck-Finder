@@ -27,30 +27,12 @@ public class UPreferenceControllerTest {
     @BeforeEach
     void init(){
         upr = new UPreferenceRepository() {
-            @Override
-            public List<String> findDislikesById(Long id) {
-                return new ArrayList<String>();
-            }
-
-            @Override
-            public List<String> findLikesById(Long id) {
-                return new ArrayList<String>();
-            }
 
             @Override
             public UserPreferences findUserPreferencesById(Long id) {
                 return new UserPreferences();
             }
 
-            @Override
-            public Double findProximityById(Long id) {
-                return 33d;
-            }
-
-            @Override
-            public Integer findPriceById(Long id) {
-                return 12;
-            }
 
             @Override
             public List<UserPreferences> findAll() {

@@ -44,6 +44,7 @@ public class ReviewController {
         n.setRating(newR.getRating());
         n.setDescription(newR.getDescription());
         n.setTruckid(newR.getTruckid());
+        n.setTruckname(newR.getTruckname());
 
         for (Review uP : revRepository.findAll()) {
             if (uP.getId().equals(newR.getId())) {
@@ -67,6 +68,7 @@ public class ReviewController {
             n.setUserID(r.getUserID());
             n.setRating(r.getRating());
             n.setTruckid(r.getTruckid());
+            n.setTruckname(r.getTruckname());
 
             Review generatedReview = revRepository.save(n);
             return new ResponseEntity<Review>(generatedReview, HttpStatus.OK);
