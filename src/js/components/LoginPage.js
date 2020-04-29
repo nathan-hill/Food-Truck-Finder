@@ -14,8 +14,10 @@ import Container from "@material-ui/core/Container";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import SignUp from "./SignUp";
 import { login } from "./../actions/login";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +38,7 @@ export default class LoginPage extends React.Component {
 
     this.setState({ isLoading: true });
 
-    let retState = await login(this.state, this.handleLoadingBar);
+    let retState = await this.props.login(this.state, this.handleLoadingBar);
     console.log("retState", retState) 
     if (retState === null) {
       this.props.callback(false);
@@ -178,3 +180,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
+LoginPage.propTypes = {
+  login: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};
+
+export default connect(null, {login})(LoginPage);
