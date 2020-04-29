@@ -6,8 +6,8 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import UserSettings from "./UserSettings";
 import ReviewTable from "./ReviewsDisplay";
 import SearchIcon from "@material-ui/icons/Search";
-import GroupIcon from '@material-ui/icons/Group';
 import SettingsIcon from "@material-ui/icons/Settings";
+import StarIcon from '@material-ui/icons/Star';
 import RateReviewIcon from "@material-ui/icons/RateReview";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import FoodTruckPreferences from "./FoodTruckPreferences";
@@ -37,7 +37,7 @@ export const GuestListItems = (setDrawerComponent) => {
         }}
       >
         <ListItemIcon>
-          <GroupIcon />
+          <StarIcon />
         </ListItemIcon>
         <ListItemText primary="Customer Reviews" />
       </ListItem>
@@ -99,7 +99,7 @@ export const CustomerListItems = (setDrawerComponent) => {
         }}
       >
         <ListItemIcon>
-          <GroupIcon />
+          <StarIcon />
         </ListItemIcon>
         <ListItemText primary="Customer Reviews" />
       </ListItem>
@@ -145,7 +145,7 @@ export const OwnerListItems = (setDrawerComponent) => (
         }}
       >
         <ListItemIcon>
-          <GroupIcon />
+          <StarIcon />
         </ListItemIcon>
         <ListItemText primary="Customer Reviews" />
       </ListItem>
