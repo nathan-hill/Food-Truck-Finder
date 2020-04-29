@@ -39,7 +39,7 @@ export const GuestListItems = (setDrawerComponent) => {
         <ListItemIcon>
           <GroupIcon />
         </ListItemIcon>
-        <ListItemText primary="Customers" />
+        <ListItemText primary="Customer Reviews" />
       </ListItem>
     </div>
   );
@@ -101,7 +101,7 @@ export const CustomerListItems = (setDrawerComponent) => {
         <ListItemIcon>
           <GroupIcon />
         </ListItemIcon>
-        <ListItemText primary="Customers" />
+        <ListItemText primary="Customer Reviews" />
       </ListItem>
     </div>
   );
@@ -147,7 +147,7 @@ export const OwnerListItems = (setDrawerComponent) => (
         <ListItemIcon>
           <GroupIcon />
         </ListItemIcon>
-        <ListItemText primary="Customers" />
+        <ListItemText primary="Customer Reviews" />
       </ListItem>
   </div>
 );
