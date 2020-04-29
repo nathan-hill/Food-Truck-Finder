@@ -24,7 +24,6 @@ import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SimpleMap from './SimpleMap'
 import Notifications from './Notifications'
-import InteractiveMap from './InteractiveMap'
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 
