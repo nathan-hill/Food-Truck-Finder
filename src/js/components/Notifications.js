@@ -62,7 +62,7 @@ class NotificationTable extends React.Component {
         // console.log("ID: ", this.props.auth.user.sub);
         axios.get(constants.backend_url + "message/MessagesbyUserID", {
             params: {
-                id: this.props.auth.user.sub
+                id: this.props.auth.user.id
             }
     }).then(res => {
             this.setState({data: res.data})
