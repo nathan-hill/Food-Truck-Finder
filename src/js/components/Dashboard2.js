@@ -22,6 +22,7 @@ import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SimpleMap from "./SimpleMap";
 import Notifications from "./Notifications";
+import {logout} from './../actions/login'
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 
@@ -331,4 +332,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(Dashboard2);
+export default connect(mapStateToProps,{ logout })(Dashboard2);
