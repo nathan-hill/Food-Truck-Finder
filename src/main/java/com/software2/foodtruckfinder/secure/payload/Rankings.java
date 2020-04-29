@@ -8,7 +8,6 @@ import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
 import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
-import org.springframework.data.web.HateoasPageableHandlerMethodArgumentResolver;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -108,15 +107,7 @@ public class Rankings {
 
         this.schedules.removeIf((x) -> !x.getDay().equals(this.today));
 
-        for (Truck t : this.truckList) {
-            if (this.schedules.stream().filter(x -> x.getTruckID() == t.getId()).findAny().isPresent()) {
-                // there is a schedule for this truck
-            } else {
-                //there is no schedule for this truck
-                //System.out.println("removed" + t.getName());
-                this.truckList.remove(t);
-            }
-        }
+        truckList.removeIf(truck -> this.schedules.stream().noneMatch(x -> x.getTruckID() == truck.getId()));
 
         return this;
     }
@@ -128,15 +119,15 @@ public class Rankings {
 
         for (Schedule s : this.schedules) {
             Double distance = distance(s.getLatitude(), s.getLongitude(), this.latitude, this.longitude);
-            this.userPref.getProximity();
-            //System.out.println(s.toString() + " -> " + distance);
 
-            distanceRanking.put(getTruckFromId(s.getTruckID()), Math.abs(distance - this.userPref.getProximity()));
+            double preferredDistance = this.userPref.getPrice();
+
+            distanceRanking.put(getTruckFromId(s.getTruckID()), Math.abs(distance - preferredDistance));
             this.truckDistances.put(getTruckFromId(s.getTruckID()), distance);
         }
 
 
-        distanceRanking.replaceAll((k, v) -> v > this.userPref.getProximity() ? 1 : v);
+//        distanceRanking.replaceAll((k, v) -> v > this.userPref.getProximity() ? 1 : v);
 
         normalizeMap(distanceRanking);
 
