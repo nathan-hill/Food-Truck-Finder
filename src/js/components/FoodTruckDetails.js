@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {Container} from "@material-ui/core";
 import * as Request from "../helpers/backendRequests";
 import FormComponent from "./rateAndReview";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -25,6 +27,8 @@ class FoodTruckDetails extends React.Component {
             let reviews = [];
             console.log("Getting reviews for truck ID: " + this.state.id);
             Request.getAllReviews().then(result => {
+                console.log("ALL REVIEWS:");
+                console.log(result);
                 let review;
                 for (review of result) {
                     if (review.truckid === this.state.id) {
@@ -48,19 +52,32 @@ class FoodTruckDetails extends React.Component {
         }
 
         return(
-          <Container component="main" maxWidth="xs">
-              <h2>
+            <Box mb={3}>
+
+              <Typography>
                   {this.state.name}
-              </h2>
-              <h3>
+              </Typography>
+              <Typography>
                   {this.state.description}
-              </h3>
+              </Typography>
               <h4>
-                  {this.state.reviews ? JSON.stringify(this.state.reviews) : null}
+                  {this.state.reviews ? this.state.reviews.map(review => {
+                      return (
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"}}
+                        >
+                            <Box mb={3}>
+                                <Typography component="legend"> {JSON.stringify(review)}  </Typography>
+                            </Box>
+                        </div>
+                      );
+                  }) : null}
               </h4>
 
               {reviewPanel}
-          </Container>
+            </Box>
         );
     }
 }

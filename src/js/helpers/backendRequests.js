@@ -341,7 +341,7 @@ export async function getAllReviews() {
   });
 }
 
-export async function addReview(userID,rating,description,truckid) {
+export async function addReview(userID,rating,description,truckid,truckname) {
   return await axios({
     method: "POST",
     url: constants.backend_url + "review/add",

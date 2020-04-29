@@ -38,17 +38,6 @@ export const CustomerListItems = (setDrawerComponent) => {
       <ListItem
         button
         onClick={() => {
-          console.log("Looking for search component customer");
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
-      <ListItem
-        button
-        onClick={() => {
           return setDrawerComponent(<UserSettings />);
         }}
       >
@@ -85,17 +74,6 @@ export const CustomerListItems = (setDrawerComponent) => {
 
 export const OwnerListItems = (setDrawerComponent) => (
   <div>
-    <ListItem
-      button
-      onClick={() => {
-        console.log("Looking for search component customer");
-      }}
-    >
-      <ListItemIcon>
-        <SearchIcon />
-      </ListItemIcon>
-      <ListItemText primary="Search" />
-    </ListItem>
     <ListItem button onClick={() => {return setDrawerComponent(<FinalTruckTable/>)}}>
       <ListItemIcon>
         <LocalShippongIcon/>

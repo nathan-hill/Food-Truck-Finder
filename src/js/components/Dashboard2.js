@@ -278,14 +278,6 @@ function Dashboard2(props) {
             Meals With Wheels : {role.charAt(0).toUpperCase() + role.slice(1)}
           </Typography>
 
-          <ReactSearchBox
-              placeholder="Search"
-              data={trucks}
-              onSelect={selection => {
-                onTruckClick(selection);
-              }}
-          />
-
           {logButton}
           <IconButton color="inherit" onClick={() => {handleSelectionDrawerClick(<Notifications/>)}}>
             <Badge badgeContent={numNotifications} color="secondary">
@@ -317,7 +309,17 @@ function Dashboard2(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainList}</List>
+        <List>
+          {mainList}
+          <ReactSearchBox
+            placeholder="Search all Food Trucks"
+            data={trucks}
+            onSelect={selection => {
+              onTruckClick(selection);
+            }}
+          />
+        </List>
+
       </Drawer>
       <Drawer
         variant="temporary"
