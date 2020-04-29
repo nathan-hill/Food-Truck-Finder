@@ -239,8 +239,7 @@ export function getScheduleDTOByID(id) {
 export async function getUPById(id) {
   return await axios({
     method: "GET",
-    url: constants.backend_url + "upref/getUPreferencesByID",
-    params: { id },
+    url: constants.backend_url + "upref/getUPreferencesByID/" + id,
     headers: request_headers,
   })
     .then(function (response) {
