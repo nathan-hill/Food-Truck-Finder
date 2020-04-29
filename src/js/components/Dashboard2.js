@@ -15,16 +15,16 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import * as Request from "./../helpers/backendRequests";
 import { GuestListItems, CustomerListItems, OwnerListItems } from "./listItems";
 import { connect } from "react-redux";
-import { logout } from "../actions/login";
-import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import LoginPage from "./LoginPage";
 import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import SimpleMap from './SimpleMap'
-import Notifications from './Notifications'
 import ReactSearchBox from "react-search-box";
+import SimpleMap from "./SimpleMap";
+import Notifications from "./Notifications";
+import {logout} from './../actions/login'
+import {withRouter} from "react-router";
 
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
@@ -152,6 +152,7 @@ function Dashboard2(props) {
 
   let numNotifications = 0;
   let logButton;
+  console.error("dashboard authentication props", props.auth)
   if (props.auth.isAuthenticated) {
     //function call to determine number of unread notifications
     numNotifications = 0;
@@ -164,7 +165,7 @@ function Dashboard2(props) {
         onClick={() => {
           props.logout();
           setRole("guest");
-          setMainList(genList("guest"))
+          setMainList(genList("guest"));
         }}
       >
         LOG OUT
@@ -179,7 +180,7 @@ function Dashboard2(props) {
         className={classes.submit}
         onClick={() => {
           handleSelectionDrawerClick(
-            <LoginPage callback={handleLoginCallback} />
+            <LoginPage callback={handleLoginCallback} changeDrawer={handleSelectionDrawerClick}/>
           );
         }}
       >
@@ -193,11 +194,11 @@ function Dashboard2(props) {
     if (val !== false) {
       handleCloseComponentDrawer();
       setRole(val.type);
-      setMainList(genList(val.type))
+      setMainList(genList(val.type));
       console.log("the current role is " + role + " from " + val.type);
     } else {
       //do nothing
-      console.log("SOMETHING HAS GONE WRONG");
+      console.log("the user has failed to login", val);
     }
     console.log("end login callback");
   };
@@ -245,7 +246,6 @@ function Dashboard2(props) {
   };
 
   const [mainList, setMainList] = React.useState(genList(role));
-    
 
   return (
     <div className={classes.root}>
@@ -279,7 +279,12 @@ function Dashboard2(props) {
           </Typography>
 
           {logButton}
-          <IconButton color="inherit" onClick={() => {handleSelectionDrawerClick(<Notifications/>)}}>
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              handleSelectionDrawerClick(<Notifications />);
+            }}
+          >
             <Badge badgeContent={numNotifications} color="secondary">
               <NotificationsIcon />
             </Badge>
@@ -329,21 +334,12 @@ function Dashboard2(props) {
             setOpenComponent(false);
           },
         }}
-        // className={clsx(classes.componentDrawer, {
-        //   [classes.drawerOpen]: openComponent === true,
-        //   [classes.drawerClose]: openComponent !== true,
-        // })}
-        // classes={{
-        //   paper: clsx({
-        //     [classes.drawerOpen]: openComponent === true,
-        //     [classes.drawerClose]: openComponent !== true,
-        //   }),
-        // }}
       >
         {componentDrawerRender}
         {/* <DrawerDecider state={componentDrawerRender} /> */}
       </Drawer>
       <SimpleMap trucks={trucks} onTruckClick={onTruckClick} />
+      {/* <InteractiveMap onClick/> */}
     </div>
   );
 }
@@ -357,4 +353,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logout })(withRouter(Dashboard2));
+export default connect(mapStateToProps,{ logout })(withRouter(Dashboard2));

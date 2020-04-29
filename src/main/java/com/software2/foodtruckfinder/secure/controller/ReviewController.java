@@ -1,9 +1,11 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.FoodTruckReviewDTO;
 import com.software2.foodtruckfinder.secure.model.Review;
 import com.software2.foodtruckfinder.secure.model.Schedule;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
+import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,9 @@ import java.util.List;
 public class ReviewController {
 
     @Autowired
+    private TruckRepository truckRepository;
+
+    @Autowired
     private ReviewRepository revRepository;
 
     public ReviewController(ReviewRepository ur) {
@@ -29,12 +34,14 @@ public class ReviewController {
     @PostMapping(path = "/add")
     public @ResponseBody
     ResponseEntity<Review> addReview(@RequestParam("userID") Long userID, @RequestParam("rating") Integer rating,
-                                     @RequestParam("description") String description, @RequestParam("truckid") Long truckid) {
+                                     @RequestParam("description") String description, @RequestParam("truckid") Long truckid,
+                                     @RequestParam("truckname") String truckname) {
         System.out.println("GOT REVIEW:");
         System.out.println(userID);
         System.out.println(rating);
         System.out.println(description);
         System.out.println(truckid);
+        System.out.println(truckname);
 
 
         Review n = new Review();
@@ -42,6 +49,7 @@ public class ReviewController {
         n.setRating(rating);
         n.setDescription(description);
         n.setTruckid(truckid);
+        n.setTruckname(truckname);
 
         Review generatedRev = revRepository.save(n);
         return new ResponseEntity<Review>(generatedRev, HttpStatus.OK);
@@ -59,6 +67,7 @@ public class ReviewController {
             n.setUserID(r.getUserID());
             n.setRating(r.getRating());
             n.setTruckid(r.getTruckid());
+            n.setTruckname(r.getTruckname());
 
             Review generatedReview = revRepository.save(n);
             return new ResponseEntity<Review>(generatedReview, HttpStatus.OK);
@@ -102,5 +111,17 @@ public class ReviewController {
     public @ResponseBody
     List<Review> getReviewsByFT(Long ftid) {
         return revRepository.findReviewsByTruckid(ftid);
+    }
+
+    @GetMapping(path = "/getReviewsWithName")
+    public @ResponseBody
+    List<Review> getReviewsByFTName(Long ftid) {
+        List<Review> generated = revRepository.findReviewsByTruckid(ftid);
+
+        for(Review r : generated){
+            truckRepository.findNameByid(r.getId());
+            r.setTruckname(truckRepository.findNameByid(r.getId()));
+        }
+        return generated;
     }
 }

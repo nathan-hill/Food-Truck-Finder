@@ -32,4 +32,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     Iterable<Message> findByIsReadFalseAndReceiver(Long id);
 
+    List<Message> findBySender(Long truckid);
 }

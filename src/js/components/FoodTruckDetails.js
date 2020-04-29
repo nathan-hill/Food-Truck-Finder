@@ -5,6 +5,7 @@ import * as Request from "../helpers/backendRequests";
 import FormComponent from "./rateAndReview";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import Rating from "@material-ui/lab/Rating";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -68,8 +69,10 @@ class FoodTruckDetails extends React.Component {
                             justifyContent: "center",
                             alignItems: "center"}}
                         >
-                            <Box mb={3}>
-                                <Typography component="legend"> {JSON.stringify(review)}  </Typography>
+                            <Box mb={3} border={1}>
+                                <Typography component="legend"> User {review.userID} rates: </Typography>
+                                <Rating name="pristine" value={review.rating} readOnly={true} />
+                                <Typography component="legend"> {review.description}  </Typography>
                             </Box>
                         </div>
                       );

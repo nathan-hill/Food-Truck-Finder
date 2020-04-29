@@ -23,6 +23,16 @@ public class Review implements Serializable {
     @NotNull
     private Integer rating;
 
+    private String truckname;
+
+    public String getTruckname() {
+        return truckname;
+    }
+
+    public void setTruckname(String truckname) {
+        this.truckname = truckname;
+    }
+
     public Long getTruckid() {
         return truckid;
     }

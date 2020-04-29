@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Entity
@@ -20,18 +19,18 @@ public class Schedule {
     private long truckID;
     @NotNull
     private Integer day;
-    private boolean isOpen;
+    private int isOpen;
     private LocalTime startTime;
     private LocalTime endTime;
     private Double longitude;
     private Double latitude;
-    public boolean isOpen() {
+    public int getOpen() {
         return isOpen;
     }
 
-    public void setOpen(boolean open) {
+    public void setOpen(int open) {
         isOpen = open;
-        if(isOpen == false){
+        if(isOpen == 0){
             setEndTime(null);
             setStartTime(null);
             setLatitude(null);
@@ -99,7 +98,7 @@ public class Schedule {
         Schedule newClone = new Schedule();
         newClone.setLatitude(this.getLatitude());
         newClone.setLongitude(this.getLongitude());
-        newClone.setOpen(this.isOpen());
+        newClone.setOpen(this.getOpen());
         newClone.setId(this.getId());
         newClone.setDay(this.getDay());
         newClone.setEndTime(this.getEndTime());

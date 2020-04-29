@@ -1,8 +1,10 @@
 package com.software2.foodtruckfinder.secure.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.model.UserPreferences;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UserUserPreferenceCombo {
     public User user;
     public UserPreferences preferences;

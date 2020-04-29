@@ -94,8 +94,9 @@ function FormComponent(props) {
     const handleSubmit = () => {
         console.log("Submit Review");
         console.log(truck);
+        console.log(props);
 
-        Request.addReview(props.auth.user.sub,starValue,textValue,truck.id).then(res => {
+        Request.addReview(props.auth.user.id,starValue,textValue,truck.id,truck.name).then(res => {
             console.log(res);
         })
 

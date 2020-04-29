@@ -1,8 +1,8 @@
 package com.software2.foodtruckfinder.secure.service;
 
-import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.payload.Rankings;
 import com.software2.foodtruckfinder.secure.payload.TruckDistance;
+import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
 import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RecommendedStore {
-    public static HashMap<UserState, ArrayList<TruckDistance>> _storedPreferences;
+    public static ConcurrentHashMap<UserState, ArrayList<TruckDistance>> _storedPreferences;
 
     static {
-        _storedPreferences = new HashMap<>();
+        _storedPreferences = new ConcurrentHashMap<>();
     }
 
-    public static  ArrayList<TruckDistance> getStoredPreferred(Long id, Double lat, Double lon, TruckRepository t, UPreferenceRepository u, ScheduleRepository s) throws Exception {
+    public static  ArrayList<TruckDistance> getStoredPreferred(Long id, Double lat, Double lon, TruckRepository t, UPreferenceRepository u, ScheduleRepository s, ReviewRepository r) throws Exception {
 
         for(Map.Entry<UserState, ArrayList<TruckDistance>> tr: _storedPreferences.entrySet()){
             System.err.println(tr.getKey().toString() + " " + tr.getValue());
@@ -35,11 +36,12 @@ public class RecommendedStore {
             Map<Long, Double> ranking = new LinkedHashMap<>();
 
             ArrayList<TruckDistance> truckDistance = new Rankings(id, lat, lon)
-                    .init(t, u, s)
+                    .init(t, u, s, r)
                     .prioritizeDate()
                     .prioritizeDistance()
                     .prioritizePrice()
                     .prioritizeType()
+                    .prioritizeReview()
                     .getResult();
 
             _storedPreferences.put(us, truckDistance);

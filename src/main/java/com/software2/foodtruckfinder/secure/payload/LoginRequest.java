@@ -2,9 +2,6 @@ package com.software2.foodtruckfinder.secure.payload;
 
 import javax.validation.constraints.NotBlank;
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
 public class LoginRequest {
     @NotBlank
     private String usernameOrEmail;
@@ -26,5 +23,13 @@ public class LoginRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginRequest{" +
+                "usernameOrEmail='" + usernameOrEmail + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

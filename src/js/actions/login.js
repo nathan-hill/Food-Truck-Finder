@@ -1,8 +1,6 @@
 import axios from "axios";
 import setAuthorizationToken from "../helpers/setAuthorizationToken";
-import jwtDecode from "jwt-decode";
 import { SET_CURRENT_USER } from "./types";
-import * as Request from "./../helpers/backendRequests";
 var constants = require("./../helpers/constants");
 
 export function setCurrentUser(user) {
@@ -22,7 +20,7 @@ export function logout() {
 }
 
 export function login(data, callback) {
-  callback(true);
+  callback(true, false);
   data.headers = {
     "Access-Control-Allow-Origin": "*",
     "content-type": "application/json",
@@ -31,37 +29,32 @@ export function login(data, callback) {
 
   data.usernameOrEmail = data.username;
 
-  return (dispatch) => {
-    return axios
-      .post(constants.backend_url + "api/auth/signin", data)
-      .then(async (res) => {
-        const token = res.data.accessToken;
-        let decodedToken = jwtDecode(token);
-        localStorage.setItem("jwtToken", token);
-        setAuthorizationToken(token);
+  return function(dispatch) {
+      return axios
+          .post(constants.backend_url + "api/auth/signin", data)
+          .then(async (res) => {
+              console.error("got signed in", res);
+              const token = res.data.jwt.accessToken;
+              // let decodedToken = jwtDecode(token);
+              localStorage.setItem("jwtToken", token);
+              setAuthorizationToken(token);
+              dispatch(setCurrentUser(res.data.u));
 
-        let user = "";
-        user = await Request.getUserByID(decodedToken.sub)
-          .then(function (r) {
-            return r;
+              localStorage.setItem("role", res.data.u.type);
+              callback(false, false);
+              return res.data.u;
           })
           .catch((e) => {
-            callback(false);
+              console.error("failed to login", e);
+              callback(false, true);
+              return null;
           });
-
-        localStorage.setItem("role", user.type);
-        dispatch(setCurrentUser(jwtDecode(token)));
-        return user
-      })
-      .catch((e) => {
-        callback(false);
-        return null;
-      });
   };
 }
-
+/*
 let initJwtToken = localStorage.getItem("jwtToken")
 if(initJwtToken) {
     setAuthorizationToken(initJwtToken)
     setCurrentUser(jwtDecode(initJwtToken));
 }
+*/
