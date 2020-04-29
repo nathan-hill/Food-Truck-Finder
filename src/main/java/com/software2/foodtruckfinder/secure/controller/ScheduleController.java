@@ -32,6 +32,7 @@ public class ScheduleController {
     @PostMapping(path = "add")
     public @ResponseBody
     ResponseEntity<Schedule[]> addNewSchedule(@RequestBody ScheduleDTO days) throws CloneNotSupportedException {
+        System.out.println(days);
         List<Schedule> generated = new ArrayList<>();
         Schedule temp = new Schedule();
 
@@ -94,7 +95,7 @@ public class ScheduleController {
     public @ResponseBody
     ScheduleDTO findScheduleDTOByID(@RequestParam("id") Long id) throws CloneNotSupportedException {
         List<Schedule> generated = _scheduleRepository.findByTruckID(id);
-        System.out.println(generated.stream().count());
+        System.out.println("test " + generated.stream().count());
         ScheduleDTO d = new ScheduleDTO();
         System.out.println("Here is the id of schedule DTO " + generated.get(0).getId());
         d.setAll(generated);
