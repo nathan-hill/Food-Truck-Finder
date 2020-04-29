@@ -51,7 +51,6 @@ class NotificationTable extends React.Component {
             columns: [
                 {title: 'Date', field: 'sentTime'},
                 {title: 'Food Truck', field: 'truckName'},
-                {title: 'Food Truck ID', field: 'sender'},
                 {title: 'Message', field: 'text'},
             ], data:[],
         }
@@ -61,7 +60,7 @@ class NotificationTable extends React.Component {
 
     componentDidMount = () => {
         // console.log("ID: ", this.props.auth.user.sub);
-        axios.get(constants.backend_url + "message/getMessagesbyUserID", {
+        axios.get(constants.backend_url + "message/MessagesbyUserID", {
             params: {
                 id: this.props.auth.user.sub
             }
@@ -78,7 +77,7 @@ class NotificationTable extends React.Component {
                     rowData => ({
                         icon: Check,
                         tooltip: 'Mark as Read',
-                        hidden: rowData.isRead,  //this isn't working
+                        hidden: rowData.read === "1",
                         onClick: (event, rowData) => Request.markMessageRead(rowData.id),
                     }),
                 ]}
