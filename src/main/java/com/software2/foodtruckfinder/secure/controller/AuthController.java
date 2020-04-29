@@ -5,7 +5,7 @@ import com.software2.foodtruckfinder.secure.model.UserPreferences;
 import com.software2.foodtruckfinder.secure.payload.ApiResponse;
 import com.software2.foodtruckfinder.secure.payload.JwtAuthenticationResponse;
 import com.software2.foodtruckfinder.secure.payload.LoginRequest;
-import com.software2.foodtruckfinder.secure.payload.SignUpRequest;
+import com.software2.foodtruckfinder.secure.payload.UserJWTdto;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import com.software2.foodtruckfinder.secure.security.JwtTokenProvider;
@@ -26,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 
 @RestController
@@ -48,11 +49,11 @@ public class AuthController {
     UPreferenceRepository userPreferencesRepository;
 
     @PostMapping("/notify")
-    public ResponseEntity<?> sendEmail(@RequestBody Email e){
+    public ResponseEntity<?> sendEmail(@RequestBody Email e) {
         System.out.println(e.toString());
-        if(e.send()){
+        if (e.send()) {
             return ResponseEntity.ok("Send Message");
-        }else{
+        } else {
             return ResponseEntity.badRequest().body("Failed to send message");
         }
     }
@@ -60,6 +61,15 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         System.out.println(loginRequest.getPassword() + " " + loginRequest.getUsernameOrEmail());
+        Optional<User> suspectedUser = userRepository.findByUsername(loginRequest.getUsernameOrEmail());
+
+        if (suspectedUser.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        User realUser = suspectedUser.get();
+
+        System.out.println(loginRequest.getPassword() + " matches " + passwordEncoder.encode(loginRequest.getPassword()) + " -> " + passwordEncoder.matches(loginRequest.getPassword(), realUser.getPassword()));
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
@@ -70,19 +80,19 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return new ResponseEntity<UserJWTdto>(new UserJWTdto(realUser, new JwtAuthenticationResponse(jwt)), HttpStatus.OK);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User signUpRequest) {
         System.out.println(signUpRequest.toString());
 
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
