@@ -8,14 +8,14 @@ import ReviewTable from "./ReviewsDisplay";
 import ReviewByCustomer from "./ReviewByCustomer";
 import ReviewsByOwner from "./ReviewsByOwner";
 import SettingsIcon from "@material-ui/icons/Settings";
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from "@material-ui/icons/Star";
 import RateReviewIcon from "@material-ui/icons/RateReview";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import FoodTruckPreferences from "./FoodTruckPreferences";
-import LocalShippongIcon from '@material-ui/icons/LocalShipping'
-import SendIcon from '@material-ui/icons/Send';
-import SendNotifications from './SendNotifications'
-import FinalTruckTable from './finalTruckTable'
+import LocalShippongIcon from "@material-ui/icons/LocalShipping";
+import SendIcon from "@material-ui/icons/Send";
+import SendNotifications from "./SendNotifications";
+import FinalTruckTable from "./finalTruckTable";
 
 export const GuestListItems = (setDrawerComponent) => {
   return (
@@ -88,15 +88,25 @@ export const CustomerListItems = (setDrawerComponent) => {
 
 export const OwnerListItems = (setDrawerComponent) => (
   <div>
-    <ListItem button onClick={() => {return setDrawerComponent(<FinalTruckTable/>)}}>
+    <ListItem
+      button
+      onClick={() => {
+        return setDrawerComponent(<FinalTruckTable />);
+      }}
+    >
       <ListItemIcon>
-        <LocalShippongIcon/>
+        <LocalShippongIcon />
       </ListItemIcon>
       <ListItemText primary="My Food Trucks" />
     </ListItem>
-    <ListItem button onClick={() => {return setDrawerComponent(<SendNotifications/>)}}>
+    <ListItem
+      button
+      onClick={() => {
+        return setDrawerComponent(<SendNotifications />);
+      }}
+    >
       <ListItemIcon>
-        <SendIcon/>
+        <SendIcon />
       </ListItemIcon>
       <ListItemText primary="Send Notifications" />
     </ListItem>

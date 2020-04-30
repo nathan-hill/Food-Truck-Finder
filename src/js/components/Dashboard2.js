@@ -7,7 +7,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -23,9 +22,12 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import ReactSearchBox from "react-search-box";
 import SimpleMap from "./SimpleMap";
 import Notifications from "./Notifications";
-import {logout} from './../actions/login'
-import {withRouter} from "react-router";
+import { logout } from "./../actions/login";
 import FoodTruckDetails from "./FoodTruckDetails";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import SearchIcon from "@material-ui/icons/Search";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
@@ -143,7 +145,7 @@ function Dashboard2(props) {
   React.useEffect(() => {
     Request.getTrucksForToday().then((x) => {
       let truck;
-      for(truck of x) {
+      for (truck of x) {
         truck.key = truck.name;
         truck.value = truck.name;
       }
@@ -154,7 +156,7 @@ function Dashboard2(props) {
 
   let numNotifications = 0;
   let logButton;
-  console.error("dashboard authentication props", props.auth)
+  console.error("dashboard authentication props", props.auth);
   if (props.auth.isAuthenticated) {
     //function call to determine number of unread notifications
     numNotifications = 0;
@@ -182,7 +184,10 @@ function Dashboard2(props) {
         className={classes.submit}
         onClick={() => {
           handleSelectionDrawerClick(
-            <LoginPage callback={handleLoginCallback} changeDrawer={handleSelectionDrawerClick}/>
+            <LoginPage
+              callback={handleLoginCallback}
+              changeDrawer={handleSelectionDrawerClick}
+            ></LoginPage>
           );
         }}
       >
@@ -229,11 +234,11 @@ function Dashboard2(props) {
   };
 
   const onTruckClick = (truck) => {
-      localStorage.setItem("clickedTruck",JSON.stringify(truck));
+    localStorage.setItem("clickedTruck", JSON.stringify(truck));
 
-      handleSelectionDrawerClick(
-        <FoodTruckDetails changeDrawer={handleSelectionDrawerClick}/>
-      );
+    handleSelectionDrawerClick(
+      <FoodTruckDetails loginCallback={handleLoginCallback} changeDrawer={handleSelectionDrawerClick} />
+    );
   };
 
   const genList = (role) => {
@@ -318,18 +323,30 @@ function Dashboard2(props) {
             )}
           </IconButton>
         </div>
-        <Divider />
         <List>
-          {mainList}
-          <ReactSearchBox
-            placeholder="Search all Food Trucks"
-            data={trucks}
-            onSelect={selection => {
-              onTruckClick(selection);
+          <ListItem
+            button
+            onClick={() => {
+              handleSelectionDrawerClick(
+                <div style={{paddingTop: "32px", paddingLeft: "30px", paddingRight: "30px"}}>
+                <ReactSearchBox 
+                  placeholder="Search all Food Trucks"
+                  data={trucks}
+                  onSelect={(selection) => {
+                    onTruckClick(selection);
+                  }}
+                />
+                </div>
+              );
             }}
-          />
+          >
+            <ListItemIcon>
+              <SearchIcon />
+            </ListItemIcon>
+            <ListItemText primary="Search" />
+          </ListItem>
+          {mainList}
         </List>
-
       </Drawer>
       <Drawer
         variant="temporary"
@@ -341,7 +358,6 @@ function Dashboard2(props) {
         }}
       >
         {componentDrawerRender}
-        {/* <DrawerDecider state={componentDrawerRender} /> */}
       </Drawer>
       <SimpleMap trucks={trucks} onTruckClick={onTruckClick} />
       {/* <InteractiveMap onClick/> */}
@@ -358,4 +374,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps,{ logout })(withRouter(Dashboard2));
+export default connect(mapStateToProps, { logout })(Dashboard2);

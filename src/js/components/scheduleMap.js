@@ -3,31 +3,25 @@ import React, { Component } from "react";
 import GoogleMap from "google-map-react";
 import { geolocated } from "react-geolocated";
 import BeenhereIcon from "@material-ui/icons/Beenhere";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 
 export class ScheduleMap extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
+      location: { lat: 0, lng: 0 },
+    };
 
-    }
-
-    this.onHover = this.onHover.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.moveTruck = this.moveTruck.bind(this);
   }
 
-  onHover(truckdata){
-    // console.log(truckdata)
-  }
-
-  onClick(truckData){
-    this.props.onTruckClick(truckData);
+  moveTruck(e) {
+    console.log(e);
+    this.setState({ location: { lat: e.lat, lng: e.lng } });
+    this.props.onClick(this.props.idx, this.state.location);
   }
 
   render() {
-    // console.log(this.props.trucks);
-    // this.props.trucks.map(x => {
-    //   // return console.log(x.longitude + " " + x.latitude);
-    // });
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
     ) : !this.props.isGeolocationEnabled ? (
@@ -38,15 +32,16 @@ export class ScheduleMap extends Component {
         <GoogleMap
           defaultCenter={[
             this.props.coords.latitude,
-            this.props.coords.longitude
+            this.props.coords.longitude,
           ]}
           defaultZoom={15}
+          onClick={this.moveTruck}
         >
-          {/* {this.props.trucks.map((x, i) => {
-            return (
-              <MapIcon onClick={() => {this.onClick(x)}} key={i} truckData={x} lat={x.latitude} lng={x.longitude} />
-            );
-          })} */}
+          <LocalShippingIcon
+            color="primary"
+            lat={this.state.location.lat}
+            lng={this.state.location.lng}
+          />
 
           <BeenhereIcon
             color="secondary"
@@ -63,7 +58,7 @@ export class ScheduleMap extends Component {
 
 export default geolocated({
   positionOptions: {
-    enableHighAccuracy: false
+    enableHighAccuracy: false,
   },
-  userDecisionTimeout: 5000
+  userDecisionTimeout: 5000,
 })(ScheduleMap);

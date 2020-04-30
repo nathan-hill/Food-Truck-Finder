@@ -20,7 +20,7 @@ public class Tess implements Algo {
             BufferedImage bImageFromConvert = ImageIO.read(in);
 
             return instance.doOCR(bImageFromConvert)
-                    .replaceAll("[^a-zA-Z0-9()]", "");
+                    .replaceAll("[^a-zA-Z0-9()\\s+]", "").replaceAll("(\\s)+"," ");
         }
         catch (TesseractException | IOException e)
         {

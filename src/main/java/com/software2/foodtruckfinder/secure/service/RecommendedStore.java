@@ -30,7 +30,7 @@ public class RecommendedStore {
 
         System.out.println(us.toString());
 
-        if(_storedPreferences.get(us) == null){
+//        if(_storedPreferences.get(us) == null){
             System.err.println("Did not find preference");
             //it has never been computed and needs to be
             Map<Long, Double> ranking = new LinkedHashMap<>();
@@ -47,11 +47,11 @@ public class RecommendedStore {
             _storedPreferences.put(us, truckDistance);
 
             return truckDistance;
-        }else{
-            System.err.println("Found Preference");
-
-            //it has been computed and will be shown to user;
-            return _storedPreferences.get(us);
-        }
+//        }else{
+//            System.err.println("Found Preference");
+//
+//            //it has been computed and will be shown to user;
+//            return _storedPreferences.get(us);
+//        }
     }
 }

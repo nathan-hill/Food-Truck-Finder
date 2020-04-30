@@ -479,3 +479,17 @@ export async function updateMenu(f, dt) {
       console.log(error);
     });
 }
+
+
+export async function getMenuByTruckId(id) {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "menu/" + id,
+    headers: request_headers
+  }).then(function(response){
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
+}

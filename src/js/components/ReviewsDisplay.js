@@ -19,6 +19,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const tableIcons = {
     GradeIcon: forwardRef((props, ref) => <GradeIcon {...props} ref={ref}/>),
@@ -46,6 +47,7 @@ class ReviewTable extends React.Component{
         super(props);
         //may need to rename fields to match data returns
         this.state = {
+            loading: false,
             columns: [
                 {title: 'Customer', field: 'customer'},
                 {title: 'Food Truck', field: 'name'},
@@ -66,10 +68,11 @@ class ReviewTable extends React.Component{
     //fill with list from database
 
     componentDidMount = () => {
+        this.setState({loading: true})
         // console.log("ID: ", this.props.auth.user.sub);
         axios.get(constants.backend_url + "review/getReviewsWithName")
         .then(res => {
-            this.setState({data: res.data})
+            this.setState({data: res.data, loading:false})
             // console.log(this.state.data)
         });
     }
@@ -77,12 +80,15 @@ class ReviewTable extends React.Component{
 
     render() {
         return (
+            <div>
             <MaterialTable
                 icons={tableIcons}
                 title="Reviews"
                 columns={this.state.columns}
                 data={this.state.data}
             />
+            {this.state.loading? <LinearProgress variant="query"/> : <div/>}
+            </div>
         );
     }
 }

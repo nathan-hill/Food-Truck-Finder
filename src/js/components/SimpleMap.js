@@ -1,26 +1,23 @@
 import React, { Component } from "react";
-
 import GoogleMap from "google-map-react";
 import { geolocated } from "react-geolocated";
 import MapIcon from "./MapIcon";
 import BeenhereIcon from "@material-ui/icons/Beenhere";
 
 export class SimpleMap extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-
-    }
+  constructor(props) {
+    super(props);
+    this.state = {};
 
     this.onHover = this.onHover.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  onHover(truckdata){
+  onHover(truckdata) {
     // console.log(truckdata)
   }
 
-  onClick(truckData){
+  onClick(truckData) {
     this.props.onTruckClick(truckData);
   }
 
@@ -37,16 +34,24 @@ export class SimpleMap extends Component {
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%", overflowX: "hidden" }}>
         <GoogleMap
-        bootstrapURLKeys={{ key:"AIzaSyCE0anFhOri3B98esx3V6i46vfSezirX_k"}}
+          // bootstrapURLKeys={{ key: "AIzaSyCE0anFhOri3B98esx3V6i46vfSezirX_k" }}
           defaultCenter={[
             this.props.coords.latitude,
-            this.props.coords.longitude
+            this.props.coords.longitude,
           ]}
           defaultZoom={15}
         >
           {this.props.trucks.map((x, i) => {
             return (
-              <MapIcon onClick={() => {this.onClick(x)}} key={i} truckData={x} lat={x.latitude} lng={x.longitude} />
+              <MapIcon
+                onClick={() => {
+                  this.onClick(x);
+                }}
+                key={i}
+                truckData={x}
+                lat={x.latitude}
+                lng={x.longitude}
+              />
             );
           })}
 
@@ -65,7 +70,7 @@ export class SimpleMap extends Component {
 
 export default geolocated({
   positionOptions: {
-    enableHighAccuracy: false
+    enableHighAccuracy: false,
   },
-  userDecisionTimeout: 5000
+  userDecisionTimeout: 5000,
 })(SimpleMap);

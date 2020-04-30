@@ -19,6 +19,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
+import Container from '@material-ui/core/Container';
 
 var constants = require("./../helpers/constants");
 
@@ -223,8 +224,8 @@ class UserSettings extends React.Component {
     }
 
     return (
-      //   <Container component="main" maxWidth="xs">
-      <Grid container styles={{ flexGrow: 1 }}>
+     <Container component="main" maxWidth="xs">
+      <Grid container styles={{ flexGrow: 1, width: "50%" }}>
         <Grid item xs={12}>
           {editCancelButton}
         </Grid>
@@ -410,6 +411,7 @@ class UserSettings extends React.Component {
         </Grid>
         {submitButton}
       </Grid>
+      </Container>
     );
   }
 }

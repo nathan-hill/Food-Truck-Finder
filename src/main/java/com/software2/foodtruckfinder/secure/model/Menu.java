@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Menu {
@@ -18,6 +19,9 @@ public class Menu {
     @Lob
     private byte[] cover;
 
+
+    @Column
+    @Size(max = 5000)
     private String text;
 
     public String getText() {

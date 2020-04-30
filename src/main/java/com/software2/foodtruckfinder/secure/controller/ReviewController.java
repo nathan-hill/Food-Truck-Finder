@@ -61,7 +61,7 @@ public class ReviewController {
         return new ResponseEntity<Review>(generatedRev, HttpStatus.OK);
     }
 
-    @PutMapping(value = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Review> updateReview(@RequestBody Review r) {
 
