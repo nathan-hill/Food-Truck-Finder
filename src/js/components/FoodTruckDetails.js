@@ -103,7 +103,7 @@ class FoodTruckDetails extends React.Component {
         <React.Fragment>
           <FormComponent callback={this.updateReviewsCallback.bind(this)} />
           {this.state.image ? (
-            <img src={`data:image/png;base64,${this.state.menu.cover}`} />
+            <img alt={"menu"} src={`data:image/png;base64,${this.state.menu.cover}`} />
           ) : (
             ""
           )}
