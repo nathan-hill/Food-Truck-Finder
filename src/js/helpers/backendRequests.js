@@ -165,7 +165,7 @@ export async function getUserSettings(id) {
 export async function getPreferredTrucks(id, lon, lat) {
   console.log("making request for preferred trucks");
   console.log(id + " " + lon + " " + lat);
-  return await axios({
+  return axios({
     method: "GET",
     url: constants.backend_url + "upref/getPreferred",
     params: {
@@ -250,6 +250,90 @@ export async function getUPById(id) {
     });
 }
 
+export async function getSubscriptionsByUserID(uid) {
+  return  await axios({
+    method: "GET",
+    url: constants.backend_url + "subscription/getSubscriptionsByUserID",
+    params: {uid},
+    headers: request_headers
+  }).then(function (response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+    return error;
+  });
+}
+
+export async function addSubscription(uid, truckId) {
+  return await axios({
+    method: "POST",
+    url: constants.backend_url + "subscription/add",
+    params: {uid, truckId},
+    headers: request_headers
+  }).then(function(response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
+export async function unsubscribe(subscriptionid) {
+  return await axios({
+    method: "DELETE",
+    url: constants.backend_url + "subscription/unsubscribe",
+    params: {subscriptionid},
+    headers: request_headers
+  }).then(function(response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
+export async function findReviewsByTruckID(truckID) {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "review/getReviewsByTruckId",
+    params: {truckID},
+    headers: request_headers
+  }).then(function (response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+    return error;
+  });
+}
+
+export async function getAllReviews() {
+  return await axios({
+    method: "GET",
+    url: constants.backend_url + "review/",
+    headers: request_headers
+  }).then(function(response){
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
+export async function addReview(userID,rating,description,truckid,truckname) {
+  return await axios({
+    method: "POST",
+    url: constants.backend_url + "review/add",
+    params: {userID,rating,description,truckid,truckname},
+    headers: request_headers
+  }).then(function(response) {
+    console.log(response.data);
+    return response.data;
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
 
 export async function updateTruckByID(data){
   const request = {

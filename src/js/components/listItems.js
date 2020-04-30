@@ -18,20 +18,9 @@ import SendIcon from '@material-ui/icons/Send';
 import SendNotifications from './SendNotifications'
 import FinalTruckTable from './finalTruckTable'
 
-export const GuestListItems = (setDrawerComponent) => {
+export const GuestListItems = (setComponentDrawer) => {
   return (
     <div>
-      <ListItem
-        button
-        onClick={() => {
-          console.log("Looking for search component guest");
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
       <ListItem
         button
         onClick={() => {
@@ -50,17 +39,6 @@ export const GuestListItems = (setDrawerComponent) => {
 export const CustomerListItems = (setDrawerComponent) => {
   return (
     <div>
-      <ListItem
-        button
-        onClick={() => {
-          console.log("Looking for search component customer");
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
       <ListItem
         button
         onClick={() => {
@@ -111,17 +89,6 @@ export const CustomerListItems = (setDrawerComponent) => {
 
 export const OwnerListItems = (setDrawerComponent) => (
   <div>
-    <ListItem
-      button
-      onClick={() => {
-        console.log("Looking for search component customer");
-      }}
-    >
-      <ListItemIcon>
-        <SearchIcon />
-      </ListItemIcon>
-      <ListItemText primary="Search" />
-    </ListItem>
     <ListItem button onClick={() => {return setDrawerComponent(<FinalTruckTable/>)}}>
       <ListItemIcon>
         <LocalShippongIcon/>

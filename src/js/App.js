@@ -22,8 +22,6 @@ export default class App extends Component {
           <HashRouter>
             <div>
               <Route exact path="/" component={Pages.Home} />
-              {/*<Route exact path="/UserReviews" component={Pages.UserReveiws} />
-              /* <Route exact path="/create_account" component={Pages.CreateAccount} />
               <Route exact path="/Request" component={Pages.DatabaseListing} />
               <Route exact path="/loginpage" component={Pages.Login} />
               <Route exact path="/Notifications" component={Pages.Notifications} />
@@ -33,8 +31,7 @@ export default class App extends Component {
               <Route exact path="/FoodTruckTable" component={Pages.Table} />
               <Route exact path="/FoodTruckDetails" component={Pages.TruckDetails} />
               <Route exact path="/UserProfile" component={Pages.UserProfile} />
-              {/* <Route exact path="/OwnerProfile" component={Pages.OwnerProfile} /> */}
-              {/* <Route exact path="/FoodTruckPreference" component={Pages.CustPreferences} /> */} */}
+              <Route exact path="/FoodTruckPreference" component={Pages.CustPreferences} />
             </div>
           </HashRouter>
         </div>

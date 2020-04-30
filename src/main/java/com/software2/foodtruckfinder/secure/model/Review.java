@@ -5,18 +5,15 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@IdClass(Review.class)
 public class Review implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
     @NotNull
     private Long truckid;
 
-    @Id
     @NotNull
     private Long userID;
 
@@ -25,6 +22,16 @@ public class Review implements Serializable {
 
     @NotNull
     private Integer rating;
+
+    private String truckname;
+
+    public String getTruckname() {
+        return truckname;
+    }
+
+    public void setTruckname(String truckname) {
+        this.truckname = truckname;
+    }
 
     public Long getTruckid() {
         return truckid;

@@ -28,17 +28,10 @@ public class SubscriptionController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity<Subscription> addNewSubscription(@RequestBody Subscription os) {
+    ResponseEntity<Subscription> addNewSubscription(@RequestParam("uid") Long uid, @RequestParam("truckId") Long truckId) {
         Subscription n = new Subscription();
-        n.setId(os.getId());
-        n.setTruckid(os.getTruckid());
-        n.setUid(os.getUid());
-
-        for (Subscription sP : subRepository.findAll()) {
-            if (sP.getId().equals(os.getId())) {
-                return ResponseEntity.status(400).build();
-            }
-        }
+        n.setUid(uid);
+        n.setTruckid(truckId);
 
         Subscription generatedS = subRepository.save(n);
         return new ResponseEntity<Subscription>(generatedS, HttpStatus.OK);
@@ -60,7 +53,7 @@ public class SubscriptionController {
 
     @DeleteMapping(path = "/unsubscribe")
     public @ResponseBody
-    Boolean unSubscribe(Long subscriptionid) {
+    Boolean unSubscribe(@RequestParam("subscriptionid") Long subscriptionid) {
         subRepository.deleteById(subscriptionid);
         return true;
     }
@@ -78,6 +71,12 @@ public class SubscriptionController {
     Subscription findSubscriptionById(Long id) {
         System.out.println(id);
         return subRepository.findSubscriptionById(id);
+    }
+
+    @GetMapping(path = "/getSubscriptionsByUserID")
+    public @ResponseBody
+    Iterable<Subscription> findSubscriptionsByUserID(Long uid) {
+        return subRepository.findSubscriptionsByUid(uid);
     }
 
     @PutMapping(value = "update", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -91,6 +91,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v/upref/**").permitAll()
                 .antMatchers("/v/schedule/**").permitAll()
                 .antMatchers("/v/message/**").permitAll()
+                .antMatchers("/v/review/").permitAll()
+                .antMatchers("/v/review/getReviewsByTruckId").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**").permitAll()
                 .anyRequest()
                 .authenticated();

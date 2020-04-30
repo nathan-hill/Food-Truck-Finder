@@ -1,11 +1,10 @@
-
 import React from "react";
-import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import axios from "axios";
-var constants = require('./../helpers/constants')
+import {connect} from "react-redux";
+import * as Request from "../helpers/backendRequests";
+import FormComponent from "./rateAndReview";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import Rating from "@material-ui/lab/Rating";
 
 class FoodTruckDetails extends React.Component {
     constructor(props) {
@@ -19,151 +18,82 @@ class FoodTruckDetails extends React.Component {
             isDisabled: true,
         };
 
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onEditSubmit = this.onEditSubmit.bind(this);
+        let truck = JSON.parse(localStorage.getItem("clickedTruck"));
+        this.state = truck;
+    }
 
-        // console.log("TRYING TO DO A GET NOW!!!")
-        axios.get( constants.backend_url + "trucks/findTruckByID", {
-            params: {
-                integer: this.state.id
+    updateReviewsCallback() {
+        console.log("callback printing this.state: ");
+        console.log(this.state);
+
+        let reviews = [];
+        console.log("Getting reviews for truck ID: " + this.state.id);
+        Request.getAllReviews().then(result => {
+            console.log("ALL REVIEWS:");
+            console.log(result);
+            let review;
+            for (review of result) {
+                if (review.truckid === this.state.id) {
+                    reviews.push(review);
+                }
             }
-        }).then(res => {
-            // console.log(res);
-            this.setState(res.data);
+
+            this.setState((state) => {
+                state.reviews = reviews;
+                return state;
+            });
         });
-    }
-
-    onChange(e) {
-        this.setState({[e.target.name]: e.target.value});
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        let data = {
-            id: this.state.id,
-            name: this.state.name,
-            schedule: this.state.schedule,
-            description: this.state.description,
-            menu: this.state.menu,
-            ownerID: this.state.ownerID,
-        }
-        data.headers = {
-            "Access-Control-Allow-Origin": "*",
-            "content-type": "application/json",
-            Accept: "application/json"
-        };
-
-        axios.put(constants.backend_url + "v/trucks/updateByTruck",data).then(res => {
-            // console.log(res);
-        })
-    }
-
-    onEditSubmit(e) {
-        e.preventDefault();
-        this.setState({isDisabled: !this.state.isDisabled})
-    }
+    };
 
     render() {
-        const { name, schedule, description, menu, isDisabled } = this.state;
-        const classes = makeStyles();
-
-        let submitButton;
-        if(!isDisabled) {
-            submitButton = <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-            >
-                Submit
-            </Button>
+        if(!this.state.reviews) {
+            this.updateReviewsCallback();
+        } else {
+            console.log("REVIEWS IN STATE: ");
+            console.log(this.state.reviews);
         }
 
-        let editCancelButton;
-        if(true) { //temp until client side verifies that this is the Owner account
-            editCancelButton= <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-            >
-                {isDisabled ? "Edit" : "Cancel"}
-            </Button>
+        let isLoggedIn = this.props.auth.isAuthenticated;
+        let reviewPanel;
+        if(isLoggedIn) {
+            reviewPanel = <FormComponent callback={this.updateReviewsCallback.bind(this)}/>
         }
 
-        return (
-            <Container component="main" maxWidth="xs">
-                <div className={classes.paper}>
-                    <form className={classes.form} noValidate onSubmit={this.onEditSubmit}>
-                        {editCancelButton}
-                    </form>
+        return(
+            <Box mb={3}>
 
-                    <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="name"
-                            label="Food Truck Name"
-                            name="name"
-                            onChange={this.onChange}
-                            value={name}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
+              <Typography>
+                  {this.state.name}
+              </Typography>
+              <Typography>
+                  {this.state.description}
+              </Typography>
+              <h4>
+                  {this.state.reviews ? this.state.reviews.map(review => {
+                      return (
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"}}
+                        >
+                            <Box mb={3} border={1}>
+                                <Typography component="legend"> User {review.userID} rates: </Typography>
+                                <Rating name="pristine" value={review.rating} readOnly={true} />
+                                <Typography component="legend"> {review.description}  </Typography>
+                            </Box>
+                        </div>
+                      );
+                  }) : null}
+              </h4>
 
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="schedule"
-                            label="Current Schedule"
-                            name="schedule"
-                            onChange={this.onChange}
-                            value={schedule}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
-
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="description"
-                            label="Description"
-                            name="description"
-                            onChange={this.onChange}
-                            value={description}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
-
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="menu"
-                            label="Current Menu"
-                            name="menu"
-                            onChange={this.onChange}
-                            value={menu}
-                            disabled={isDisabled}
-                            autoFocus
-                        />
-                        {submitButton}
-                   </form>
-                </div>
-            </Container>
+              {reviewPanel}
+            </Box>
         );
     }
 }
 
-export default FoodTruckDetails;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(FoodTruckDetails);
