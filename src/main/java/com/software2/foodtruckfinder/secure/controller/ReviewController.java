@@ -1,6 +1,11 @@
 package com.software2.foodtruckfinder.secure.controller;
 
-import com.software2.foodtruckfinder.secure.model.*;
+
+import com.software2.foodtruckfinder.secure.model.FoodTruckReviewDTO;
+import com.software2.foodtruckfinder.secure.model.Review;
+import com.software2.foodtruckfinder.secure.model.Truck;
+
+import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
@@ -13,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -23,14 +27,14 @@ public class ReviewController {
     @Autowired
     private TruckRepository truckRepository;
 
+    private UserRepository userRepository;
+
     @Autowired
     private ReviewRepository revRepository;
 
-    @Autowired
-    private UserRepository  userRepository;
-
-    public ReviewController(ReviewRepository ur) {
+    public ReviewController(ReviewRepository ur, UserRepository uRep) {
         this.revRepository = ur;
+        this.userRepository = uRep;
     }
 
     @PostMapping(path = "/add")
@@ -102,13 +106,16 @@ public class ReviewController {
 
     @GetMapping(path = "/getReviewsWithName")
     public @ResponseBody
-    List<Review> getReviewsByFTName(Long ftid) {
-        List<Review> generated = revRepository.findReviewsByTruckid(ftid);
-
+    List<FoodTruckReviewDTO> getReviewsWithName() {
+        List<Review> generated = revRepository.findAll();
+        List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
         for(Review r : generated){
-            truckRepository.findNameByid(r.getId());
+            String name = truckRepository.findNameByid(r.getId());
+            String customer = userRepository.findUserByid(r.getUserID()).getUsername();
+            FoodTruckReviewDTO f = new FoodTruckReviewDTO();
+            ftlist.add(f.copy(r, name, customer));
         }
-        return generated;
+        return ftlist;
     }
 
     @GetMapping(path = "/getReviewsByOwner")

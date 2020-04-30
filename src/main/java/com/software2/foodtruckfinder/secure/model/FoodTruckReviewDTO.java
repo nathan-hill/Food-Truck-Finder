@@ -14,7 +14,16 @@ public class FoodTruckReviewDTO {
     private String Customer;
 
     public FoodTruckReviewDTO copy(Review r, String ftname, String Customer) {
+        FoodTruckReviewDTO f = new FoodTruckReviewDTO();
+        f.setDescription(r.getDescription());
+        f.setId(r.getId());
+        f.setName(ftname);
+        f.setCustomer(Customer);
+        f.setRating(r.getRating());
+        f.setTruckid(r.getTruckid());
+        f.setUserID(r.getUserID());
 
+        return f;
     }
 
     public String getCustomer() {
@@ -25,10 +34,12 @@ public class FoodTruckReviewDTO {
         Customer = customer;
     }
 
+
     public FoodTruckReviewDTO() {
     }
 
     public String getName() {
+
         return FTName;
     }
 

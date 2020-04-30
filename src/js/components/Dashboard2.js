@@ -22,6 +22,7 @@ import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SimpleMap from "./SimpleMap";
 import Notifications from "./Notifications";
+import {logout} from './../actions/login'
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
 
@@ -142,6 +143,7 @@ function Dashboard2(props) {
 
   let numNotifications = 0;
   let logButton;
+  console.error("dashboard authentication props", props.auth)
   if (props.auth.isAuthenticated) {
     //function call to determine number of unread notifications
     numNotifications = 0;
@@ -187,7 +189,7 @@ function Dashboard2(props) {
       console.log("the current role is " + role + " from " + val.type);
     } else {
       //do nothing
-      console.log("SOMETHING HAS GONE WRONG");
+      console.log("the user has failed to login", val);
     }
     console.log("end login callback");
   };
@@ -330,4 +332,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Dashboard2);
+export default connect(mapStateToProps,{ logout })(Dashboard2);
