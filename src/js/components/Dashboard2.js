@@ -23,8 +23,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import ReactSearchBox from "react-search-box";
 import SimpleMap from "./SimpleMap";
 import Notifications from "./Notifications";
-import {logout} from './../actions/login'
-import {withRouter} from "react-router";
+import { logout } from "./../actions/login";
+import { withRouter } from "react-router";
 import FoodTruckDetails from "./FoodTruckDetails";
 
 const selectionDrawerWidth = 240;
@@ -143,7 +143,7 @@ function Dashboard2(props) {
   React.useEffect(() => {
     Request.getTrucksForToday().then((x) => {
       let truck;
-      for(truck of x) {
+      for (truck of x) {
         truck.key = truck.name;
         truck.value = truck.name;
       }
@@ -154,7 +154,7 @@ function Dashboard2(props) {
 
   let numNotifications = 0;
   let logButton;
-  console.error("dashboard authentication props", props.auth)
+  console.error("dashboard authentication props", props.auth);
   if (props.auth.isAuthenticated) {
     //function call to determine number of unread notifications
     numNotifications = 0;
@@ -182,7 +182,10 @@ function Dashboard2(props) {
         className={classes.submit}
         onClick={() => {
           handleSelectionDrawerClick(
-            <LoginPage callback={handleLoginCallback} changeDrawer={handleSelectionDrawerClick}/>
+            <LoginPage
+              callback={handleLoginCallback}
+              changeDrawer={handleSelectionDrawerClick}
+            />
           );
         }}
       >
@@ -229,11 +232,11 @@ function Dashboard2(props) {
   };
 
   const onTruckClick = (truck) => {
-      localStorage.setItem("clickedTruck",JSON.stringify(truck));
+    localStorage.setItem("clickedTruck", JSON.stringify(truck));
 
-      handleSelectionDrawerClick(
-        <FoodTruckDetails changeDrawer={handleSelectionDrawerClick}/>
-      );
+    handleSelectionDrawerClick(
+      <FoodTruckDetails changeDrawer={handleSelectionDrawerClick} />
+    );
   };
 
   const genList = (role) => {
@@ -324,12 +327,11 @@ function Dashboard2(props) {
           <ReactSearchBox
             placeholder="Search all Food Trucks"
             data={trucks}
-            onSelect={selection => {
+            onSelect={(selection) => {
               onTruckClick(selection);
             }}
           />
         </List>
-
       </Drawer>
       <Drawer
         variant="temporary"
@@ -358,4 +360,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps,{ logout })(withRouter(Dashboard2));
+export default connect(mapStateToProps, { logout })(withRouter(Dashboard2));

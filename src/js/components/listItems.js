@@ -6,18 +6,41 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import UserSettings from "./UserSettings";
 import ReviewTable from "./ReviewsDisplay";
 import SettingsIcon from "@material-ui/icons/Settings";
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from "@material-ui/icons/Star";
 import RateReviewIcon from "@material-ui/icons/RateReview";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import FoodTruckPreferences from "./FoodTruckPreferences";
-import LocalShippongIcon from '@material-ui/icons/LocalShipping'
-import SendIcon from '@material-ui/icons/Send';
-import SendNotifications from './SendNotifications'
-import FinalTruckTable from './finalTruckTable'
+import LocalShippongIcon from "@material-ui/icons/LocalShipping";
+import SendIcon from "@material-ui/icons/Send";
+import SendNotifications from "./SendNotifications";
+import FinalTruckTable from "./finalTruckTable";
+import SearchIcon from '@material-ui/icons/Search'
 
-export const GuestListItems = (setComponentDrawer) => {
+export const GuestListItems = (setDrawerComponent) => {
   return (
     <div>
+      <ListItem
+        button
+        onClick={() => {
+          console.log("Looking for search component guest");
+        }}
+      >
+        <ListItemIcon>
+          <SearchIcon />
+        </ListItemIcon>
+        <ListItemText primary="Search" />
+      </ListItem>
+      <ListItem
+        button
+        onClick={() => {
+          return setDrawerComponent(<ReviewTable />);
+        }}
+      >
+        <ListItemIcon>
+          <StarIcon />
+        </ListItemIcon>
+        <ListItemText primary="Customer Reviews" />
+      </ListItem>
     </div>
   );
 };
@@ -75,15 +98,25 @@ export const CustomerListItems = (setDrawerComponent) => {
 
 export const OwnerListItems = (setDrawerComponent) => (
   <div>
-    <ListItem button onClick={() => {return setDrawerComponent(<FinalTruckTable/>)}}>
+    <ListItem
+      button
+      onClick={() => {
+        return setDrawerComponent(<FinalTruckTable />);
+      }}
+    >
       <ListItemIcon>
-        <LocalShippongIcon/>
+        <LocalShippongIcon />
       </ListItemIcon>
       <ListItemText primary="My Food Trucks" />
     </ListItem>
-    <ListItem button onClick={() => {return setDrawerComponent(<SendNotifications/>)}}>
+    <ListItem
+      button
+      onClick={() => {
+        return setDrawerComponent(<SendNotifications />);
+      }}
+    >
       <ListItemIcon>
-        <SendIcon/>
+        <SendIcon />
       </ListItemIcon>
       <ListItemText primary="Send Notifications" />
     </ListItem>
@@ -94,15 +127,15 @@ export const OwnerListItems = (setDrawerComponent) => (
       <ListItemText primary="View Reviews" />
     </ListItem>
     <ListItem
-        button
-        onClick={() => {
-          return setDrawerComponent(<ReviewTable />);
-        }}
-      >
-        <ListItemIcon>
-          <StarIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customer Reviews" />
-      </ListItem>
+      button
+      onClick={() => {
+        return setDrawerComponent(<ReviewTable />);
+      }}
+    >
+      <ListItemIcon>
+        <StarIcon />
+      </ListItemIcon>
+      <ListItemText primary="Customer Reviews" />
+    </ListItem>
   </div>
 );
