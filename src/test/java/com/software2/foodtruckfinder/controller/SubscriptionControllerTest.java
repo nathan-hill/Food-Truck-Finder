@@ -176,9 +176,9 @@ public class SubscriptionControllerTest {
     @Test
     @DisplayName("Add test")
     void addTest(){
-        /*
-        assertEquals(HttpStatus.OK, sc.addNewSubscription(new Subscription()).getStatusCode());
-        */
+
+        assertEquals(HttpStatus.OK, sc.addNewSubscription(12l, 55l).getStatusCode());
+
     }
 
     @Test

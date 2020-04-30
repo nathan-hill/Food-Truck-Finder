@@ -18,7 +18,7 @@ import SendIcon from '@material-ui/icons/Send';
 import SendNotifications from './SendNotifications'
 import FinalTruckTable from './finalTruckTable'
 
-export const GuestListItems = (setComponentDrawer) => {
+export const GuestListItems = (setDrawerComponent) => {
   return (
     <div>
       <ListItem
