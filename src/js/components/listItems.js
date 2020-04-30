@@ -7,7 +7,6 @@ import UserSettings from "./UserSettings";
 import ReviewTable from "./ReviewsDisplay";
 import ReviewByCustomer from "./ReviewByCustomer";
 import ReviewsByOwner from "./ReviewsByOwner";
-import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from "@material-ui/icons/Settings";
 import StarIcon from '@material-ui/icons/Star';
 import RateReviewIcon from "@material-ui/icons/RateReview";
