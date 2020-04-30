@@ -18,7 +18,7 @@ class FoodTruckPreferences extends React.Component {
   }
 
   async componentDidMount() {
-    this.setState({loading: true})
+    this.setState({ loading: true });
     const cost = ["$", "$$", "$$$", "$$$$"];
     const { lat, lng } = await this.getcurrentLocation();
     this.setState((prev) => ({
@@ -42,18 +42,22 @@ class FoodTruckPreferences extends React.Component {
     let edited = preferred;
 
     for (let i = 0; i < preferred.length; i++) {
-      edited[i].distance = preferred[i].distance.toFixed(2);
-      edited[i].rating = preferred[i].rating? preferred[i].rating.toFixed(1): "";
-      edited[i].cost = cost[preferred[i].cost];
-      edited[i].type =
-        preferred[i].type.toLowerCase().charAt(0).toUpperCase() +
-        preferred[i].type.toLowerCase().substring(1);
+        edited[i].distance = preferred[i].distance
+          ? preferred[i].distance.toFixed(2)
+          : "";
 
-      delete edited[i].id;
-      delete edited[i].schedule;
-      delete edited[i].score;
-      delete edited[i].ownerID;
+        edited[i].rating = preferred[i].rating
+          ? preferred[i].rating.toFixed(1)
+          : "";
+        edited[i].cost = cost[preferred[i].cost];
+        edited[i].type =
+          preferred[i].type.toLowerCase().charAt(0).toUpperCase() +
+          preferred[i].type.toLowerCase().substring(1);
 
+        delete edited[i].id;
+        delete edited[i].schedule;
+        delete edited[i].score;
+        delete edited[i].ownerID;
     }
 
     // console.log("preferred trucks");
@@ -62,7 +66,7 @@ class FoodTruckPreferences extends React.Component {
       generalData: edited,
       generalCols: Object.keys(edited[0]),
       loading: false,
-    })
+    });
   }
 
   getcurrentLocation() {
@@ -98,7 +102,7 @@ class FoodTruckPreferences extends React.Component {
         >
           Recommended Food Trucks
         </Typography>
-        {this.state.loading? <LinearProgress variant="query"/>: <div/>}
+        {this.state.loading ? <LinearProgress variant="query" /> : <div />}
         <div>
           <CreateTable
             rows={this.state.generalData}

@@ -2,6 +2,7 @@ package com.software2.foodtruckfinder.secure.payload;
 
 import com.software2.foodtruckfinder.secure.model.Truck;
 
+import javax.validation.constraints.Null;
 import java.util.*;
 
 public class TruckDistance implements Comparable {
@@ -22,6 +23,13 @@ public class TruckDistance implements Comparable {
         ArrayList<TruckDistance> res = new ArrayList<>();
 
         for(Map.Entry<Truck, Double> e: sortedRankings.entrySet()){
+            try {
+                if (e.getKey() == null) {
+                    continue;
+                }
+            }catch(NullPointerException ex){
+                continue;
+            }
             res.add(new TruckDistance(e.getKey(), distances.get(e.getKey()), e.getValue(),  avgReviews.get(e.getKey())));
         }
 

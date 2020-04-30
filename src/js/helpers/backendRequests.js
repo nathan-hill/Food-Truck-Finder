@@ -311,7 +311,7 @@ export async function findReviewsByTruckID(truckID) {
 export async function getAllReviews() {
   return await axios({
     method: "GET",
-    url: constants.backend_url + "review/",
+    url: constants.backend_url + "review/getReviewsWithName",
     headers: request_headers
   }).then(function(response){
     console.log(response.data);

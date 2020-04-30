@@ -25,6 +25,7 @@ class FoodTruckDetails extends React.Component {
       truck: truck,
     };
     this.getBase64 = this.getBase64.bind(this);
+    this.updateReviews = this.updateReviews.bind(this);
   }
 
   getBase64(file, cb) {
@@ -38,23 +39,27 @@ class FoodTruckDetails extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async updateReviews() {
     this.setState({ loading: true });
     console.log("callback printing this.state: ");
     console.log(this.state);
 
     let menu = await Request.getMenuByTruckId(this.state.truck.truckid);
 
-    this.getBase64(menu.cover, (res) => {menu.cover = res});
+    if(menu) {
+      this.getBase64(menu.cover, (res) => {
+        menu.cover = res
+      });
+    }
 
     let reviews = [];
-    console.log("Getting reviews for truck ID: " + this.state.id);
+    console.log("Getting reviews for truck ID: " + this.state.truck.truckid);
     Request.getAllReviews().then((result) => {
       console.log("ALL REVIEWS:");
       console.log(result);
       let review;
       for (review of result) {
-        if (review.truckid === this.state.id) {
+        if (review.truckid === this.state.truck.truckid) {
           reviews.push(review);
         }
       }
@@ -63,25 +68,25 @@ class FoodTruckDetails extends React.Component {
       if (reviews.length > 0) {
         revComponents = reviews.map((review) => {
           return (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Box mb={3} border={1}>
-                <Typography component="legend">
-                  {" "}
-                  User {review.userID} rates:{" "}
-                </Typography>
-                <Rating name="pristine" value={review.rating} readOnly={true} />
-                <Typography component="legend">
-                  {" "}
-                  {review.description}{" "}
-                </Typography>
-              </Box>
-            </div>
+              <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+              >
+                <Box mb={3} border={1}>
+                  <Typography component="legend">
+                    {" "}
+                    {review.customer} rates:{" "}
+                  </Typography>
+                  <Rating name="pristine" value={review.rating} readOnly={true} />
+                  <Typography component="legend">
+                    {" "}
+                    {review.description}{" "}
+                  </Typography>
+                </Box>
+              </div>
           );
         });
       }
@@ -95,13 +100,17 @@ class FoodTruckDetails extends React.Component {
     });
   }
 
+  async componentDidMount() {
+    await this.updateReviews();
+  }
+
   render() {
     let isLoggedIn = this.props.auth.isAuthenticated;
     let reviewPanel;
     if (isLoggedIn) {
       reviewPanel = (
         <React.Fragment>
-          <FormComponent callback={this.updateReviewsCallback.bind(this)} />
+          <FormComponent callback={this.updateReviews} />
           {this.state.image ? (
             <img alt={"menu"} src={`data:image/png;base64,${this.state.menu.cover}`} />
           ) : (

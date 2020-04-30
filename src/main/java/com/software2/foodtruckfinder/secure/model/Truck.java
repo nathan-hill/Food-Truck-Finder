@@ -3,6 +3,7 @@ package com.software2.foodtruckfinder.secure.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Truck {
@@ -115,5 +116,24 @@ public class Truck {
                 ", type='" + type + '\'' +
                 ", cost=" + cost +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Truck)) return false;
+        Truck truck = (Truck) o;
+        return Objects.equals(getId(), truck.getId()) &&
+                Objects.equals(getName(), truck.getName()) &&
+                Objects.equals(getDescription(), truck.getDescription()) &&
+                Objects.equals(getOwnerID(), truck.getOwnerID()) &&
+                Objects.equals(getType(), truck.getType()) &&
+                Objects.equals(getCost(), truck.getCost()) &&
+                Objects.equals(getMenu(), truck.getMenu());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getDescription(), getOwnerID(), getType(), getCost(), getMenu());
     }
 }
