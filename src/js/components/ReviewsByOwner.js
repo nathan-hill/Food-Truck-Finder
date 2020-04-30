@@ -19,6 +19,8 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
+import {logout} from './../actions/login';
+import { connect } from "react-redux";
 
 const tableIcons = {
     GradeIcon: forwardRef((props, ref) => <GradeIcon {...props} ref={ref}/>),
@@ -41,7 +43,7 @@ const tableIcons = {
 
 var constants = require("../helpers/constants");
 
-class ReviewTable extends React.Component{
+class ReviewsByOwner extends React.Component{
     constructor(props) {
         super(props);
         //may need to rename fields to match data returns
@@ -67,9 +69,9 @@ class ReviewTable extends React.Component{
 
     componentDidMount = () => {
         // console.log("ID: ", this.props.auth.user.sub);
-        axios.get(constants.backend_url + "getfunction", {
+        axios.get(constants.backend_url + "review/getReviewsByOwner", {
             params: {
-                id: this.props.auth.user.id
+                ownerid: this.props.auth.user.id
             }
     }).then(res => {
             this.setState({data: res.data})
@@ -90,4 +92,8 @@ class ReviewTable extends React.Component{
     }
 }
 
-export default ReviewTable;
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+  });
+
+export default connect(mapStateToProps, {logout})(ReviewsByOwner);

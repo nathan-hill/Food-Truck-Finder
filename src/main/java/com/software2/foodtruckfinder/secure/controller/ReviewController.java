@@ -108,9 +108,10 @@ public class ReviewController {
     public @ResponseBody
     List<FoodTruckReviewDTO> getReviewsWithName() {
         List<Review> generated = revRepository.findAll();
+        System.out.println(generated.size());
         List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
         for(Review r : generated){
-            String name = truckRepository.findNameByid(r.getId());
+            String name = truckRepository.findTruckById(r.getTruckid()).getName();
             String customer = userRepository.findUserByid(r.getUserID()).getUsername();
             FoodTruckReviewDTO f = new FoodTruckReviewDTO();
             ftlist.add(f.copy(r, name, customer));
@@ -120,8 +121,9 @@ public class ReviewController {
 
     @GetMapping(path = "/getReviewsByOwner")
     public @ResponseBody
-    List<FoodTruckReviewDTO> getReviewsByOwner(Long ownerid) {
+    List<FoodTruckReviewDTO> getReviewsByOwner(@RequestParam("ownerid") Long ownerid) {
         List<Truck> trucks = truckRepository.findTrucksByOwnerID(ownerid);
+        System.out.println(trucks.size());
         List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
         FoodTruckReviewDTO ftr = null;
         for(Truck t : trucks){
@@ -142,8 +144,11 @@ public class ReviewController {
         List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
         FoodTruckReviewDTO ftr = null;
 
+        System.out.println(u.getName());
+
         for(Review rw: r){
             Truck t = truckRepository.findTruckById(rw.getTruckid());
+            System.out.println(t.getName());
             reviews.add(ftr.copy(rw, u.getName(), t.getName()));
         }
 

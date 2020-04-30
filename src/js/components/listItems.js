@@ -5,6 +5,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import UserSettings from "./UserSettings";
 import ReviewTable from "./ReviewsDisplay";
+import ReviewByCustomer from "./ReviewByCustomer";
+import ReviewsByOwner from "./ReviewsByOwner";
 import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from "@material-ui/icons/Settings";
 import StarIcon from '@material-ui/icons/Star';
@@ -73,7 +75,7 @@ export const CustomerListItems = (setDrawerComponent) => {
       <ListItem
         button
         onClick={() => {
-          console.log("looking for review component");
+          return setDrawerComponent(<ReviewByCustomer />);
         }}
       >
         <ListItemIcon>
@@ -132,7 +134,11 @@ export const OwnerListItems = (setDrawerComponent) => (
       </ListItemIcon>
       <ListItemText primary="Send Notifications" />
     </ListItem>
-    <ListItem button>
+    <ListItem 
+      button
+      onClick={() => {
+        return setDrawerComponent(<ReviewByCustomer />);
+      }}>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
