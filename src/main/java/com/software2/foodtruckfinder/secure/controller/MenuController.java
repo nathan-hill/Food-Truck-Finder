@@ -42,7 +42,9 @@ public class MenuController {
             n.setCover(file.getBytes());
 
             n.setTruckid(id);
-            n.setText(new Tess().getWords(file.getBytes()));
+            String words = new Tess().getWords(file.getBytes());
+            System.out.println(words.length() + " " + words);
+            n.setText(words);
             System.out.println(n.getId());
             System.out.println(n.getCover());
             System.out.println(n.getTruckid());
@@ -105,5 +107,11 @@ public class MenuController {
     Boolean removeMenu(Long mid) {
         mRepository.deleteMenu(mid);
         return true;
+    }
+
+    @GetMapping(path="/{id}")
+    public @ResponseBody
+    ResponseEntity<?> getMenuByTruckId(@PathVariable("id")Long id){
+        return new ResponseEntity<>(mRepository.getOne(id), HttpStatus.OK);
     }
 }

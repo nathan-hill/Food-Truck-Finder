@@ -93,6 +93,18 @@ class FinalTruckTable extends React.Component {
     this.setState({ data: newTrucks, loading: false });
   };
 
+  handleMapClick = (idx) => (e) => {
+    this.setState({ loading: true });
+
+    console.log(e);
+
+    //  this.setState({schedule: this.state.schedule.map((item, itemIndex) => {
+    //    if(itemIndex = idx){
+    //      return{ ...item, [monLatitude]: e.lat, [monLongitude]: e.lng}
+    //    }
+    //  })})
+  };
+
   handleTruckCostChange = (idx) => (e) => {
     this.setState({ loading: true });
     const newTrucks = this.state.data.map((truck, sidx) => {
@@ -350,7 +362,9 @@ class FinalTruckTable extends React.Component {
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panella content"
                     >
-                      <Typography align='center'>{this.state.data[idx].name}</Typography>
+                      <Typography align="center">
+                        {this.state.data[idx].name}
+                      </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <table
@@ -444,7 +458,13 @@ class FinalTruckTable extends React.Component {
                                       />
                                     </td>
                                     <td>
-                                      <Button onClick={this.handleClickOpen}>
+                                      <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleClickOpen}
+                                      >
                                         Set Truck Location
                                       </Button>
                                       <Dialog
@@ -462,7 +482,11 @@ class FinalTruckTable extends React.Component {
                                           <form
                                             className={BootstrapInput.container}
                                           >
-                                            <ScheduleMap />
+                                            <ScheduleMap
+                                              name="location"
+                                              idx={idx}
+                                              onClick={this.handleMapClick}
+                                            />
                                           </form>
                                         </DialogContent>
                                         <DialogActions>

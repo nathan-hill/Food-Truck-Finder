@@ -13,6 +13,7 @@ import LoginPage from "../components/LoginPage";
 class FoodTruckDetails extends React.Component {
   constructor(props) {
     super(props);
+    let truck = JSON.parse(localStorage.getItem("clickedTruck"));
     this.state = {
       loading: false,
       id: 1,
@@ -21,16 +22,30 @@ class FoodTruckDetails extends React.Component {
       description: "",
       menu: "",
       isDisabled: true,
+      truck: truck,
     };
-
-    let truck = JSON.parse(localStorage.getItem("clickedTruck"));
-    this.state = truck;
+    this.getBase64 = this.getBase64.bind(this);
   }
 
-  componentDidMount() {
+  getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      cb(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log("Error: ", error);
+    };
+  }
+
+  async componentDidMount() {
     this.setState({ loading: true });
     console.log("callback printing this.state: ");
     console.log(this.state);
+
+    let menu = await Request.getMenuByTruckId(this.state.truck.truckid);
+
+    this.getBase64(menu.cover, (res) => {menu.cover = res});
 
     let reviews = [];
     console.log("Getting reviews for truck ID: " + this.state.id);
@@ -75,6 +90,7 @@ class FoodTruckDetails extends React.Component {
         revComponents: revComponents,
         reviews: reviews,
         loading: false,
+        menuImage: menu,
       });
     });
   }
@@ -84,7 +100,14 @@ class FoodTruckDetails extends React.Component {
     let reviewPanel;
     if (isLoggedIn) {
       reviewPanel = (
-        <FormComponent callback={this.updateReviewsCallback.bind(this)} />
+        <React.Fragment>
+          <FormComponent callback={this.updateReviewsCallback.bind(this)} />
+          {this.state.image ? (
+            <img src={`data:image/png;base64,${this.state.menu.cover}`} />
+          ) : (
+            ""
+          )}
+        </React.Fragment>
       );
     } else {
       reviewPanel = (
