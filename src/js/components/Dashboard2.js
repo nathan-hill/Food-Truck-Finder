@@ -323,7 +323,6 @@ function Dashboard2(props) {
         </div>
         <Divider />
         <List>
-          {mainList}
           <ReactSearchBox
             placeholder="Search all Food Trucks"
             data={trucks}
@@ -331,6 +330,7 @@ function Dashboard2(props) {
               onTruckClick(selection);
             }}
           />
+          {mainList}
         </List>
       </Drawer>
       <Drawer
