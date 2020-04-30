@@ -67,9 +67,9 @@ public class UPreferenceController {
         return true;
     }
 
-    @GetMapping(path = "/getUPreferencesByID")
+    @GetMapping(path = "/getUPreferencesByID/{id}")
     public @ResponseBody
-    UserPreferences findUPreferencesByID(Long id) {
+    UserPreferences findUPreferencesByID(@PathVariable("id") Long id) {
 
         UserPreferences opt = uprefRepository.findUserPreferencesById(id);
         System.out.println("/getUPreferencesByID -> " + opt);
