@@ -53,7 +53,7 @@ public class SubscriptionController {
 
     @DeleteMapping(path = "/unsubscribe")
     public @ResponseBody
-    Boolean unSubscribe(Long subscriptionid) {
+    Boolean unSubscribe(@RequestParam("subscriptionid") Long subscriptionid) {
         subRepository.deleteById(subscriptionid);
         return true;
     }

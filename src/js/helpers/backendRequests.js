@@ -282,11 +282,11 @@ export async function addSubscription(uid, truckId) {
   });
 }
 
-export async function unsubscribe(sub_id) {
+export async function unsubscribe(subscriptionid) {
   return await axios({
-    method: "POST",
+    method: "DELETE",
     url: constants.backend_url + "subscription/unsubscribe",
-    params: {sub_id},
+    params: {subscriptionid},
     headers: request_headers
   }).then(function(response) {
     console.log(response.data);

@@ -25,6 +25,7 @@ import SimpleMap from "./SimpleMap";
 import Notifications from "./Notifications";
 import {logout} from './../actions/login'
 import {withRouter} from "react-router";
+import FoodTruckDetails from "./FoodTruckDetails";
 
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
@@ -128,6 +129,7 @@ function Dashboard2(props) {
   const [componentDrawerRender, setComponentDrawerRender] = React.useState(
     null
   );
+
   const [role, setRole] = React.useState(
     typeof localStorage.getItem("role") === undefined ||
       localStorage.getItem("role") === "undefined" ||
@@ -228,7 +230,10 @@ function Dashboard2(props) {
 
   const onTruckClick = (truck) => {
       localStorage.setItem("clickedTruck",JSON.stringify(truck));
-      props.history.push("/FoodTruckDetails")
+
+      handleSelectionDrawerClick(
+        <FoodTruckDetails changeDrawer={handleSelectionDrawerClick}/>
+      );
   };
 
   const genList = (role) => {

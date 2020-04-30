@@ -6,15 +6,15 @@ import {connect} from "react-redux";
 import * as Request from './../helpers/backendRequests'
 
 async function getInitialSubValue(props,truck) {
-    let userid = props.auth.user.sub;
+    let userid = props.auth.user.id;
 
     let subscriptionsData = await Request.getSubscriptionsByUserID(userid);
     console.log("SUBS DATA!");
     console.log(subscriptionsData);
     console.log(truck);
 
-        for(let subscription in subscriptionsData) {
-            if(subscription.uid === props.auth.user.sub && subscription.truckid === truck.id) {
+        for(let subscription of subscriptionsData) {
+            if(subscription.uid === props.auth.user.id && subscription.truckid === truck.id) {
                 console.log("TRUCK FOUND!");
                 return  true;
             } else {
@@ -35,11 +35,12 @@ function FormComponent(props) {
     let initSub = null;
     getInitialSubValue(props,truck).then(result => {
        initSub = result;
+       setSubscribeValue(initSub);
     });
 
     const [subscribeValue, setSubscribeValue] = React.useState(initSub);
 
-    let isLoggedIn = props.auth.user.sub;
+    let isLoggedIn = props.auth.user.id;
     if(isLoggedIn) {
         console.log("LOGGED IN!!!!!!");
     }
@@ -58,13 +59,21 @@ function FormComponent(props) {
     async function handleClick()  {
         if(subscribeValue) {
             //unsubscribe
-            let userid = props.auth.user.sub;
+            let userid = props.auth.user.id;
 
             let subscriptionsData = await Request.getSubscriptionsByUserID(userid);
 
+            console.log("attempting unsubscribe");
+
             if(subscriptionsData) {
-                for(let subscription in subscriptionsData) {
-                    if(subscription.uid === props.auth.user.sub && subscription.truckid === truck.id) {
+                console.log("iterating through subscriptions");
+
+                for(let subscription of subscriptionsData) {
+                    console.log(subscription);
+                    if(subscription.uid === props.auth.user.id && subscription.truckid === truck.id) {
+                        console.log("sending unsubscribe request!");
+                        console.log(subscription);
+
                         Request.unsubscribe(subscription.id).then(result => {
                             setSubscribeValue(false);
                         }).catch(error => {
@@ -78,14 +87,14 @@ function FormComponent(props) {
         } else {
             //subscribe
             let data = {
-                uid: props.auth.user.sub,
+                uid: props.auth.user.id,
                 truckId: truck.id
             };
 
             console.log("Sending a subscribe request:");
             console.log(data);
 
-            Request.addSubscription(props.auth.user.sub, truck.id).then(response => {
+            Request.addSubscription(props.auth.user.id, truck.id).then(response => {
                 setSubscribeValue(true);
             });
         }
