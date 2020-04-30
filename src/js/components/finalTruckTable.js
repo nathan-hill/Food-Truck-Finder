@@ -45,7 +45,7 @@ class FinalTruckTable extends React.Component {
       open: false,
       addOpen: false,
       addText: "",
-      ownerTruckID: props.auth.user.sub,
+      ownerTruckID: props.auth.user.id,
       data: [],
       schedule: [],
       
@@ -56,6 +56,7 @@ class FinalTruckTable extends React.Component {
   }
 
   async componentDidMount() {
+    console.log(this.props.auth.user.id);
     // get the array of trucks
     let userData = await Request.findTrucksByOwnerID(this.state.ownerTruckID);
   
@@ -160,7 +161,7 @@ class FinalTruckTable extends React.Component {
 
   
   handleAddRow = (idx) => (e) => {
-    const truckItem = {
+    var truckItem = {
       ownerID: this.state.ownerTruckID,
       id: "",
       name: this.state.addText,
@@ -169,7 +170,7 @@ class FinalTruckTable extends React.Component {
       menu: null,
     };
 
-    const truckSchedule = {
+    var truckSchedule = {
       ownerID: this.state.ownerTruckID,
       id: "",
       monOpen: "",
@@ -214,63 +215,71 @@ class FinalTruckTable extends React.Component {
       sunLatitude: "",
       sunLongitude: "",
     };
-
     
     // add new truck into database
     Request.postNewTruck(truckItem)
     .then(response => {
-      console.log("truck");
-      console.log(response);
-      console.log(response.data);
-      this.setState({
-        data: [...this.state.data, response.data]
-      });
+      truckItem = response.data;
     });
     
     // add new truck schedule to database
     Request.postNewSchedule(truckSchedule)
     .then(response => {
       // print the object
-      console.log(response);
-      console.log(response.data);
       // set the id returned 
       truckSchedule.id = response.data[0].id;
-      this.setState({
-        schedule: [...this.state.schedule, truckSchedule],
-      });
+    });
+    
+    
 
-      
+    setTimeout(() => {
+      console.log(truckItem);
+      console.log(truckSchedule);
+
+      this.setState({
+        data: [...this.state.data, truckItem],
+        schedule: [...this.state.schedule, truckSchedule],
+        addOpen: false,
+        addText: "",
     });
     console.log(this.state.schedule);
     console.log(this.state.data);
-
-    // requiered to close the text field for setting food truck name
-    this.setState({
-      addOpen: false,
-      addText: "",
-    });
+ 
+    }, 3000);
+    
   };
 
   handleRemoveSpecificRow = (idx) => () => {
     //remove the foodtruck from the database
+    console.log(this.state.data[idx].id);
+
     Request.deleteSchedule(this.state.data[idx].id);
-    Request.deleteTruck(this.state.data[idx].id)
+
+    setTimeout(() => {
+      Request.deleteTruck(this.state.data[idx].id);
+    }, 500);
+
+    
+
+
+    
+    setTimeout(() => {
+      // prepare data to be modified
+      const data = [...this.state.data];
+
+      // prepare schedule to be modified
+      const schedule = [...this.state.schedule];
+
+      // remove the specific truck and schedule from the table
+      data.splice(idx, 1);
+      schedule.splice(idx, 1);
+
+      // set the data to this new state
+      this.setState({ data });
+      this.setState({ schedule });
+    }, 1000);
     
     
-    
-    // prepare data to be modified
-    const data = [...this.state.data];
-
-    // prepare schedule to be modified
-    const schedule = [...this.state.schedule];
-
-    // remove the specific truck and schedule from the table
-    data.splice(idx, 1);
-    schedule.splice(idx, 1);
-
-    // set the data to this new state
-    this.setState({ data });
-    this.setState({ schedule });
   };
 
   onSaveRow(idx) {
@@ -372,8 +381,8 @@ class FinalTruckTable extends React.Component {
                                         input={<BootstrapInput />}
                                       >
                                         <option aria-label="None" value="" />
-                                        <option value={"0"}>Open</option>
-                                        <option value={"1"}>Closed</option>
+                                        <option value={"1"}>Open</option>
+                                        <option value={"0"}>Closed</option>
                                       </NativeSelect>
                                     </FormControl>
                                   </td>
@@ -443,8 +452,8 @@ class FinalTruckTable extends React.Component {
                                         input={<BootstrapInput />}
                                       >
                                         <option aria-label="None" value="" />
-                                        <option value={"0"}>Open</option>
-                                        <option value={"1"}>Closed</option>
+                                        <option value={"1"}>Open</option>
+                                        <option value={"0"}>Closed</option>
                                       </NativeSelect>
                                     </FormControl>
                                   </td>
@@ -541,8 +550,8 @@ class FinalTruckTable extends React.Component {
                                         input={<BootstrapInput />}
                                       >
                                         <option aria-label="None" value="" />
-                                        <option value={"0"}>Open</option>
-                                        <option value={"1"}>Closed</option>
+                                        <option value={"1"}>Open</option>
+                                        <option value={"0"}>Closed</option>
                                       </NativeSelect>
                                     </FormControl>
                                   </td>
@@ -639,8 +648,8 @@ class FinalTruckTable extends React.Component {
                                         input={<BootstrapInput />}
                                       >
                                         <option aria-label="None" value="" />
-                                        <option value={"0"}>Open</option>
-                                        <option value={"1"}>Closed</option>
+                                        <option value={"1"}>Open</option>
+                                        <option value={"0"}>Closed</option>
                                       </NativeSelect>
                                     </FormControl>
                                   </td>
@@ -737,8 +746,8 @@ class FinalTruckTable extends React.Component {
                                         input={<BootstrapInput />}
                                       >
                                         <option aria-label="None" value="" />
-                                        <option value={"0"}>Open</option>
-                                        <option value={"1"}>Closed</option>
+                                        <option value={"1"}>Open</option>
+                                        <option value={"0"}>Closed</option>
                                       </NativeSelect>
                                     </FormControl>
                                   </td>
@@ -835,8 +844,8 @@ class FinalTruckTable extends React.Component {
                                         input={<BootstrapInput />}
                                       >
                                         <option aria-label="None" value="" />
-                                        <option value={"0"}>Open</option>
-                                        <option value={"1"}>Closed</option>
+                                        <option value={"1"}>Open</option>
+                                        <option value={"0"}>Closed</option>
                                       </NativeSelect>
                                     </FormControl>
                                   </td>
@@ -935,8 +944,8 @@ class FinalTruckTable extends React.Component {
                                         input={<BootstrapInput />}
                                       >
                                         <option aria-label="None" value="" />
-                                        <option value={"0"}>Open</option>
-                                        <option value={"1"}>Closed</option>
+                                        <option value={"1"}>Open</option>
+                                        <option value={"0"}>Closed</option>
                                       </NativeSelect>
                                     </FormControl>
                                   </td>
