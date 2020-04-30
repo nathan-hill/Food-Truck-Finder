@@ -1,11 +1,9 @@
 package com.software2.foodtruckfinder.secure.controller;
 
-import com.software2.foodtruckfinder.secure.model.FoodTruckReviewDTO;
-import com.software2.foodtruckfinder.secure.model.Review;
-import com.software2.foodtruckfinder.secure.model.Schedule;
-import com.software2.foodtruckfinder.secure.model.UserPreferences;
+import com.software2.foodtruckfinder.secure.model.*;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
+import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -26,6 +25,9 @@ public class ReviewController {
 
     @Autowired
     private ReviewRepository revRepository;
+
+    @Autowired
+    private UserRepository  userRepository;
 
     public ReviewController(ReviewRepository ur) {
         this.revRepository = ur;
@@ -40,7 +42,6 @@ public class ReviewController {
         n.setRating(newR.getRating());
         n.setDescription(newR.getDescription());
         n.setTruckid(newR.getTruckid());
-        n.setTruckname(newR.getTruckname());
 
         for (Review uP : revRepository.findAll()) {
             if (uP.getId().equals(newR.getId())) {
@@ -64,7 +65,6 @@ public class ReviewController {
             n.setUserID(r.getUserID());
             n.setRating(r.getRating());
             n.setTruckid(r.getTruckid());
-            n.setTruckname(r.getTruckname());
 
             Review generatedReview = revRepository.save(n);
             return new ResponseEntity<Review>(generatedReview, HttpStatus.OK);
@@ -107,8 +107,40 @@ public class ReviewController {
 
         for(Review r : generated){
             truckRepository.findNameByid(r.getId());
-            r.setTruckname(truckRepository.findNameByid(r.getId()));
         }
         return generated;
     }
+
+    @GetMapping(path = "/getReviewsByOwner")
+    public @ResponseBody
+    List<FoodTruckReviewDTO> getReviewsByOwner(Long ownerid) {
+        List<Truck> trucks = truckRepository.findTrucksByOwnerID(ownerid);
+        List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
+        FoodTruckReviewDTO ftr = null;
+        for(Truck t : trucks){
+            List<Review> r = revRepository.findReviewsByTruckid(t.getId());
+            for(Review rw: r){
+                User u = userRepository.findUserByid(rw.getUserID());
+                reviews.add(ftr.copy(rw, u.getName(), t.getName()));
+            }
+        }
+        return reviews;
+    }
+
+    @GetMapping(path = "/getReviewsByCustomer")
+    public @ResponseBody
+    List<FoodTruckReviewDTO> getReviewsByCustomer(Long uid) {
+        List<Review> r = revRepository.findReviewsByUserID(uid);
+        User u = userRepository.findUserByid(uid);
+        List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
+        FoodTruckReviewDTO ftr = null;
+
+        for(Review rw: r){
+            Truck t = truckRepository.findTruckById(rw.getTruckid());
+            reviews.add(ftr.copy(rw, u.getName(), t.getName()));
+        }
+
+        return reviews;
+    }
+
 }

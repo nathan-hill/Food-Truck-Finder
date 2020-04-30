@@ -10,17 +10,30 @@ public class FoodTruckReviewDTO {
     private Long userID;
     private String description;
     private Integer rating;
-    private String Name;
+    private String FTName;
+    private String Customer;
+
+    public FoodTruckReviewDTO copy(Review r, String ftname, String Customer) {
+
+    }
+
+    public String getCustomer() {
+        return Customer;
+    }
+
+    public void setCustomer(String customer) {
+        Customer = customer;
+    }
 
     public FoodTruckReviewDTO() {
     }
 
     public String getName() {
-        return Name;
+        return FTName;
     }
 
     public void setName(String name) {
-        Name = name;
+        FTName = name;
     }
 
     public Long getTruckid() {
