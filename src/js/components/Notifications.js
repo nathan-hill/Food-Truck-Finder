@@ -83,6 +83,7 @@ class NotificationTable extends React.Component {
                 ]}
                 icons={tableIcons}
                 title="Notifications"
+                style={{width: 600}}
                 columns={this.state.columns}
                 data={this.state.data}
                 editable={{
