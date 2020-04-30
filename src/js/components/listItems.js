@@ -24,17 +24,6 @@ export const GuestListItems = (setDrawerComponent) => {
       <ListItem
         button
         onClick={() => {
-          console.log("Looking for search component guest");
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
-      <ListItem
-        button
-        onClick={() => {
           return setDrawerComponent(<ReviewTable />);
         }}
       >

@@ -26,6 +26,10 @@ import Notifications from "./Notifications";
 import { logout } from "./../actions/login";
 import { withRouter } from "react-router";
 import FoodTruckDetails from "./FoodTruckDetails";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import SearchIcon from "@material-ui/icons/Search";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
@@ -323,13 +327,28 @@ function Dashboard2(props) {
         </div>
         <Divider />
         <List>
-          <ReactSearchBox
-            placeholder="Search all Food Trucks"
-            data={trucks}
-            onSelect={(selection) => {
-              onTruckClick(selection);
+          <ListItem
+            button
+            onClick={() => {
+              handleSelectionDrawerClick(
+                <div style={{paddingTop: "32px", paddingLeft: "30px", paddingRight: "30px"}}>
+
+                <ReactSearchBox 
+                  placeholder="Search all Food Trucks"
+                  data={trucks}
+                  onSelect={(selection) => {
+                    onTruckClick(selection);
+                  }}
+                />
+                </div>
+              );
             }}
-          />
+          >
+            <ListItemIcon>
+              <SearchIcon />
+            </ListItemIcon>
+            <ListItemText primary="Search" />
+          </ListItem>
           {mainList}
         </List>
       </Drawer>
