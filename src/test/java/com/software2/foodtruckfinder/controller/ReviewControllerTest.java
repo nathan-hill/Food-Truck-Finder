@@ -2,8 +2,10 @@ package com.software2.foodtruckfinder.controller;
 
 import com.software2.foodtruckfinder.secure.controller.ReviewController;
 import com.software2.foodtruckfinder.secure.model.Review;
+import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.payload.ReviewAverages;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
+import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ReviewControllerTest {
     private ReviewRepository rr;
     private ReviewController rc;
+    private UserRepository ur;
 
     @BeforeEach
     void init(){
@@ -162,7 +165,169 @@ public class ReviewControllerTest {
             }
         };
 
-        rc = new ReviewController(rr);
+        ur = new UserRepository() {
+            @Override
+            public User findUserByid(Long id) {
+                return null;
+            }
+
+            @Override
+            public boolean existsById(Long id) {
+                return false;
+            }
+
+            @Override
+            public Optional<User> findByEmail(String email) {
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<User> findByUsernameOrEmail(String username, String email) {
+                return Optional.empty();
+            }
+
+            @Override
+            public List<User> findByIdIn(List<Long> userIds) {
+                return null;
+            }
+
+            @Override
+            public Optional<User> findByUsername(String username) {
+                return Optional.empty();
+            }
+
+            @Override
+            public Boolean existsByUsername(String username) {
+                return null;
+            }
+
+            @Override
+            public Boolean existsByEmail(String email) {
+                return null;
+            }
+
+            @Override
+            public void setNewPassword(String pass, Long id) {
+
+            }
+
+            @Override
+            public List<User> findAll() {
+                return null;
+            }
+
+            @Override
+            public List<User> findAll(Sort sort) {
+                return null;
+            }
+
+            @Override
+            public List<User> findAllById(Iterable<Long> longs) {
+                return null;
+            }
+
+            @Override
+            public <S extends User> List<S> saveAll(Iterable<S> entities) {
+                return null;
+            }
+
+            @Override
+            public void flush() {
+
+            }
+
+            @Override
+            public <S extends User> S saveAndFlush(S entity) {
+                return null;
+            }
+
+            @Override
+            public void deleteInBatch(Iterable<User> entities) {
+
+            }
+
+            @Override
+            public void deleteAllInBatch() {
+
+            }
+
+            @Override
+            public User getOne(Long aLong) {
+                return null;
+            }
+
+            @Override
+            public <S extends User> List<S> findAll(Example<S> example) {
+                return null;
+            }
+
+            @Override
+            public <S extends User> List<S> findAll(Example<S> example, Sort sort) {
+                return null;
+            }
+
+            @Override
+            public Page<User> findAll(Pageable pageable) {
+                return null;
+            }
+
+            @Override
+            public <S extends User> S save(S entity) {
+                return null;
+            }
+
+            @Override
+            public Optional<User> findById(Long aLong) {
+                return Optional.empty();
+            }
+
+            @Override
+            public long count() {
+                return 0;
+            }
+
+            @Override
+            public void deleteById(Long aLong) {
+
+            }
+
+            @Override
+            public void delete(User entity) {
+
+            }
+
+            @Override
+            public void deleteAll(Iterable<? extends User> entities) {
+
+            }
+
+            @Override
+            public void deleteAll() {
+
+            }
+
+            @Override
+            public <S extends User> Optional<S> findOne(Example<S> example) {
+                return Optional.empty();
+            }
+
+            @Override
+            public <S extends User> Page<S> findAll(Example<S> example, Pageable pageable) {
+                return null;
+            }
+
+            @Override
+            public <S extends User> long count(Example<S> example) {
+                return 0;
+            }
+
+            @Override
+            public <S extends User> boolean exists(Example<S> example) {
+                return false;
+            }
+        };
+
+        rc = new ReviewController(rr, ur);
     }
 
     @Test

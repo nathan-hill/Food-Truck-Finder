@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -18,6 +19,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from "@material-ui/core";
+
+var constants = require("./../helpers/constants");
 
 const BootstrapInput = withStyles((theme) => ({
   textField: {
@@ -45,6 +48,7 @@ class FinalTruckTable extends React.Component {
       ownerTruckID: props.auth.user.sub,
       data: [],
       schedule: [],
+      
     };
     this.onSubmit = this.onSaveRow.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
@@ -63,7 +67,7 @@ class FinalTruckTable extends React.Component {
       // depends on if you want to keep original `this.state.schedule`
   
       // if you do:
-      schedule: [...this.state.schedule, ...listOfScheduleData],
+      schedule: listOfScheduleData,
       data: userData
       
     });
@@ -97,27 +101,64 @@ class FinalTruckTable extends React.Component {
   }
 
   handleTruckMenuChange = (idx) => (e) => {
+    
+    console.log(this.state.data[idx]);
     const newTrucks = this.state.data.map((truck, sidx) => {
       if (idx !== sidx) return truck;
-      return { ...truck, type: e.target.value };
+      return { ...truck, menu: e.target.files[0]};
     });
-    
+    console.log(newTrucks);
     this.setState({ data: newTrucks });
+  
   }
 
+  
+  handleFileUpload = (idx) => (e) => {
+    const fd = new FormData();
+    fd.append("file", this.state.data[idx].menu)
+    console.log(fd);
+    console.log(this.state.data[idx].id);
+    
+    axios({
+      method: 'post',
+      url: constants.backend_url + 'menu/add/' + this.state.data[idx].id ,
+      data: fd,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'multipart/form-data' 
+        }
+      })
+      .then(function (response) {
+          //handle success
+          console.log(response);
+      })
+      .catch(function (response) {
+          //handle error
+          console.log(response);
+      });
+
+  }
 
   handleScheduleChange = (idx) => (e) => {
-    const { name, value } = e.target;
-    const schedule = [...this.state.schedule];
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
 
-    schedule[idx] = {
-      [name]: value,
-    };
     this.setState({
-      schedule,
+      schedule: this.state.schedule.map((item, itemIndex) => {
+        if (itemIndex === idx) {
+          return {
+            ...item,
+            [name]: value
+          }
+        }
+        return item;
+      })
     });
+   console.log(this.state.schedule[idx]);
   };
 
+  
   handleAddRow = (idx) => (e) => {
     const truckItem = {
       ownerID: this.state.ownerTruckID,
@@ -125,7 +166,7 @@ class FinalTruckTable extends React.Component {
       name: this.state.addText,
       cost: "",
       type: "",
-      menu: "",
+      menu: null,
     };
 
     const truckSchedule = {
@@ -174,34 +215,48 @@ class FinalTruckTable extends React.Component {
       sunLongitude: "",
     };
 
+    
     // add new truck into database
-    const truckRequest = Request.postNewTruck(truckItem);
-    const truckData = Promise.resolve(truckRequest);
+    Request.postNewTruck(truckItem)
+    .then(response => {
+      console.log("truck");
+      console.log(response);
+      console.log(response.data);
+      this.setState({
+        data: [...this.state.data, response.data]
+      });
+    });
     
+    // add new truck schedule to database
+    Request.postNewSchedule(truckSchedule)
+    .then(response => {
+      // print the object
+      console.log(response);
+      console.log(response.data);
+      // set the id returned 
+      truckSchedule.id = response.data[0].id;
+      this.setState({
+        schedule: [...this.state.schedule, truckSchedule],
+      });
 
+      
+    });
+    console.log(this.state.schedule);
+    console.log(this.state.data);
 
-    const scheduleRequest = Request.postNewSchedule(truckSchedule);
-    const scheduleData = Promise.resolve(scheduleRequest);
-    
-
-    truckItem.id = truckData.data.id;
-    truckSchedule.id = scheduleData.data[0].id;
-
-    
+    // requiered to close the text field for setting food truck name
     this.setState({
       addOpen: false,
       addText: "",
-
-      data: [...this.state.data, truckItem],
-      schedule: [...this.state.schedule, truckSchedule],
     });
   };
 
   handleRemoveSpecificRow = (idx) => () => {
     //remove the foodtruck from the database
-    Request.deleteTruck(this.state.data[idx].id)
     Request.deleteSchedule(this.state.data[idx].id);
-    console.log()
+    Request.deleteTruck(this.state.data[idx].id)
+    
+    
     
     // prepare data to be modified
     const data = [...this.state.data];
@@ -308,9 +363,10 @@ class FinalTruckTable extends React.Component {
                                   <td>Monday</td>
                                   <td>
                                     <FormControl className={classes.margin}>
-                                      <InputLabel htmlFor="Food-Type">O/C</InputLabel>
+                                      <InputLabel htmlFor="openClosed">O/C</InputLabel>
                                       <NativeSelect
-                                        id="costSelect"
+                                        id="openClosed"
+                                        name="monOpen"
                                         value={this.state.schedule[idx].monOpen}
                                         onChange={this.handleScheduleChange(idx)}
                                         input={<BootstrapInput />}
@@ -325,6 +381,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="Start Time"
+                                      name="monStartTime"
                                       type="time"
                                       value={this.state.schedule[idx].monStartTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -338,6 +395,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="End Time"
+                                      name="monEndTime"
                                       type="time"
                                       value={this.state.schedule[idx].monEndTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -379,6 +437,7 @@ class FinalTruckTable extends React.Component {
                                       <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                       <NativeSelect
                                         id="costSelect"
+                                        name="tueOpen"
                                         value={this.state.schedule[idx].tueOpen}
                                         onChange={this.handleScheduleChange(idx)}
                                         input={<BootstrapInput />}
@@ -394,6 +453,7 @@ class FinalTruckTable extends React.Component {
                                       id="time"
                                       label="Start Time"
                                       type="time"
+                                      name="tueStartTime"
                                       value={this.state.schedule[idx].tueStartTime}
                                       onChange={this.handleScheduleChange(idx)}
                                       className={classes.textField}
@@ -407,6 +467,7 @@ class FinalTruckTable extends React.Component {
                                       id="time"
                                       label="End Time"
                                       type="time"
+                                      name="tueEndTime"
                                       value={this.state.schedule[idx].tueEndTime}
                                       onChange={this.handleScheduleChange(idx)}
                                       className={classes.textField}
@@ -429,6 +490,7 @@ class FinalTruckTable extends React.Component {
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
                                           value={this.state.schedule[idx].tueLatitude}
+                                          name="tueLatitude"
                                           onChange={this.handleScheduleChange(idx)}
                                           startAdornment={
                                             <InputAdornment position="start">
@@ -450,6 +512,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="tueLongitude"
                                           value={
                                             this.state.schedule[idx].tueLongitude
                                           }
@@ -472,6 +535,7 @@ class FinalTruckTable extends React.Component {
                                       <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                       <NativeSelect
                                         id="costSelect"
+                                        name="wedOpen"
                                         value={this.state.schedule[idx].wedOpen}
                                         onChange={this.handleScheduleChange(idx)}
                                         input={<BootstrapInput />}
@@ -486,6 +550,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="Start Time"
+                                      name="wedStartTime"
                                       type="time"
                                       value={this.state.schedule[idx].wedStartTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -499,6 +564,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="End Time"
+                                      name="wedEndTime"
                                       type="time"
                                       value={this.state.schedule[idx].wedEndTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -521,6 +587,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="wedLatitude"
                                           value={this.state.schedule[idx].wedLatitude}
                                           onChange={this.handleScheduleChange(idx)}
                                           startAdornment={
@@ -543,6 +610,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="wedLongitude"
                                           value={
                                             this.state.schedule[idx].wedLongitude
                                           }
@@ -566,6 +634,7 @@ class FinalTruckTable extends React.Component {
                                       <NativeSelect
                                         id="costSelect"
                                         value={this.state.schedule[idx].thuOpen}
+                                        name="thuOpen"
                                         onChange={this.handleScheduleChange(idx)}
                                         input={<BootstrapInput />}
                                       >
@@ -579,6 +648,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="Start Time"
+                                      name="thuStartTime"
                                       type="time"
                                       value={this.state.schedule[idx].thuStartTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -592,6 +662,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="End Time"
+                                      name="thuEndTime"
                                       type="time"
                                       value={this.state.schedule[idx].thuEndTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -614,6 +685,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="thuLatitude"
                                           value={this.state.schedule[idx].thuLatitude}
                                           onChange={this.handleScheduleChange(idx)}
                                           startAdornment={
@@ -636,6 +708,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="thuLongitude"
                                           value={
                                             this.state.schedule[idx].thuLongitude
                                           }
@@ -658,6 +731,7 @@ class FinalTruckTable extends React.Component {
                                       <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                       <NativeSelect
                                         id="costSelect"
+                                        name="friOpen"
                                         value={this.state.schedule[idx].friOpen}
                                         onChange={this.handleScheduleChange(idx)}
                                         input={<BootstrapInput />}
@@ -672,6 +746,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="Start Time"
+                                      name="friStartTime"
                                       type="time"
                                       value={this.state.schedule[idx].friStartTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -685,6 +760,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="End Time"
+                                      name="friEndTime"
                                       type="time"
                                       value={this.state.schedule[idx].friEndTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -707,6 +783,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="friLatitude"
                                           value={this.state.schedule[idx].friLatitude}
                                           onChange={this.handleScheduleChange(idx)}
                                           startAdornment={
@@ -729,6 +806,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="friLongitude"
                                           value={
                                             this.state.schedule[idx].friLongitude
                                           }
@@ -751,6 +829,7 @@ class FinalTruckTable extends React.Component {
                                       <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                       <NativeSelect
                                         id="costSelect"
+                                        name="satOpen"
                                         value={this.state.schedule[idx].satOpen}
                                         onChange={this.handleScheduleChange(idx)}
                                         input={<BootstrapInput />}
@@ -765,6 +844,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="Start Time"
+                                      name="satStartTime"
                                       type="time"
                                       value={this.state.schedule[idx].satStartTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -778,6 +858,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="End Time"
+                                      name="satEndTime"
                                       type="time"
                                       value={this.state.schedule[idx].satEndTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -800,6 +881,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="satLatitude"
                                           value={this.state.schedule[idx].satLatitude}
                                           onChange={() => {
                                             this.handleScheduleChange(idx);
@@ -824,6 +906,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="satLongitude"
                                           value={
                                             this.state.schedule[idx].satLongitude
                                           }
@@ -846,6 +929,7 @@ class FinalTruckTable extends React.Component {
                                       <InputLabel htmlFor="Food-Type">O/C</InputLabel>
                                       <NativeSelect
                                         id="costSelect"
+                                        name="sunOpen"
                                         value={this.state.schedule[idx].sunOpen}
                                         onChange={this.handleScheduleChange(idx)}
                                         input={<BootstrapInput />}
@@ -860,6 +944,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="Start Time"
+                                      name="sunStartTime"
                                       type="time"
                                       value={this.state.schedule[idx].sunStartTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -873,6 +958,7 @@ class FinalTruckTable extends React.Component {
                                     <TextField
                                       id="time"
                                       label="End Time"
+                                      name="sunEndTime"
                                       type="time"
                                       value={this.state.schedule[idx].sunEndTime}
                                       onChange={this.handleScheduleChange(idx)}
@@ -895,6 +981,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="sunLatitude"
                                           value={this.state.schedule[idx].sunLatitude}
                                           onChange={this.handleScheduleChange(idx)}
                                           startAdornment={
@@ -917,6 +1004,7 @@ class FinalTruckTable extends React.Component {
                                         </InputLabel>
                                         <OutlinedInput
                                           id="outlined-adornment-amount"
+                                          name="sunLongitude"
                                           value={
                                             this.state.schedule[idx].sunLongitude
                                           }
@@ -976,12 +1064,15 @@ class FinalTruckTable extends React.Component {
                           </td>
                           <td>
                             <input
-                              type="text"
-                              name="mobile"
-                              value={this.state.data[idx].menu}
+                              type="file"
+                              accept=".png,.jpeg"
+                              name="menu"
+                              // value={this.state.data[idx].menu || ""}
+                              // defaultValue={""}
                               onChange={this.handleTruckMenuChange(idx)}
                               className="form-control"
                             />
+                            <button onClick={this.handleFileUpload(idx)}>Upload</button>
                           </td>
                           <td>
                             <button

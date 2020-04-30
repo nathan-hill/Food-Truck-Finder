@@ -3,13 +3,10 @@ package com.software2.foodtruckfinder.secure.model;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleDTO {
@@ -22,43 +19,43 @@ public class ScheduleDTO {
     private long truckID;
 
     // private Integer day;
-    private boolean monOpen;
+    private int monOpen;
     private LocalTime monStartTime;
     private LocalTime monEndTime;
     private Double monLongitude;
     private Double monLatitude;
 
-    private boolean tueOpen;
+    private int tueOpen;
     private LocalTime tueStartTime;
     private LocalTime tueEndTime;
     private Double tueLongitude;
     private Double tueLatitude;
 
-    private boolean wedOpen;
+    private int wedOpen;
     private LocalTime wedStartTime;
     private LocalTime wedEndTime;
     private Double wedLongitude;
     private Double wedLatitude;
 
-    private boolean thuOpen;
+    private int thuOpen;
     private LocalTime thuStartTime;
     private LocalTime thuEndTime;
     private Double thuLongitude;
     private Double thuLatitude;
 
-    private boolean friOpen;
+    private int friOpen;
     private LocalTime friStartTime;
     private LocalTime friEndTime;
     private Double friLongitude;
     private Double friLatitude;
 
-    private boolean satOpen;
+    private int satOpen;
     private LocalTime satStartTime;
     private LocalTime satEndTime;
     private Double satLongitude;
     private Double satLatitude;
 
-    private boolean sunOpen;
+    private int sunOpen;
     private LocalTime sunStartTime;
     private LocalTime sunEndTime;
     private Double sunLongitude;
@@ -80,13 +77,13 @@ public class ScheduleDTO {
         this.truckID = truckID;
     }
 
-    public boolean MonOpen() {
+    public int MonOpen() {
         return monOpen;
     }
 
-    public void setMonOpen(boolean open) {
+    public void setMonOpen(int open) {
         monOpen = open;
-        if (monOpen == false) {
+        if (monOpen == 0) {
             setMonEndTime(null);
             setMonStartTime(null);
             setMonLatitude(null);
@@ -126,13 +123,13 @@ public class ScheduleDTO {
         this.monLatitude = latitude;
     }
 
-    public boolean TueOpen() {
+    public int TueOpen() {
         return tueOpen;
     }
 
-    public void setTueOpen(boolean open) {
+    public void setTueOpen(int open) {
         tueOpen = open;
-        if (tueOpen == false) {
+        if (tueOpen == 0) {
             setTueEndTime(null);
             setTueStartTime(null);
             setTueLatitude(null);
@@ -172,13 +169,13 @@ public class ScheduleDTO {
         this.tueLatitude = latitude;
     }
 
-    public boolean WedOpen() {
+    public int WedOpen() {
         return wedOpen;
     }
 
-    public void setWedOpen(boolean open) {
+    public void setWedOpen(int open) {
         wedOpen = open;
-        if (wedOpen == false) {
+        if (wedOpen == 0) {
             setWedEndTime(null);
             setWedStartTime(null);
             setWedLatitude(null);
@@ -218,13 +215,13 @@ public class ScheduleDTO {
         this.wedLatitude = latitude;
     }
 
-    public boolean ThuOpen() {
+    public int ThuOpen() {
         return thuOpen;
     }
 
-    public void setThuOpen(boolean open) {
+    public void setThuOpen(int open) {
         thuOpen = open;
-        if (thuOpen == false) {
+        if (thuOpen == 0) {
             setThuEndTime(null);
             setThuStartTime(null);
             setThuLatitude(null);
@@ -264,13 +261,13 @@ public class ScheduleDTO {
         this.thuLatitude = latitude;
     }
 
-    public boolean FriOpen() {
+    public int FriOpen() {
         return friOpen;
     }
 
-    public void setFriOpen(boolean open) {
+    public void setFriOpen(int open) {
         friOpen = open;
-        if (friOpen == false) {
+        if (friOpen == 0) {
             setFriEndTime(null);
             setFriStartTime(null);
             setFriLatitude(null);
@@ -310,13 +307,13 @@ public class ScheduleDTO {
         this.friLatitude = latitude;
     }
 
-    public boolean SatOpen() {
+    public int SatOpen() {
         return satOpen;
     }
 
-    public void setSatOpen(boolean open) {
+    public void setSatOpen(int open) {
         satOpen = open;
-        if (satOpen == false) {
+        if (satOpen == 0) {
             setSatEndTime(null);
             setSatStartTime(null);
             setSatLatitude(null);
@@ -356,13 +353,13 @@ public class ScheduleDTO {
         this.satLatitude = latitude;
     }
 
-    public boolean SunOpen() {
+    public int SunOpen() {
         return sunOpen;
     }
 
-    public void setSunOpen(boolean open) {
+    public void setSunOpen(int open) {
         sunOpen = open;
-        if (sunOpen == false) {
+        if (sunOpen == 0) {
             setSunEndTime(null);
             setSunStartTime(null);
             setSunLatitude(null);
@@ -552,49 +549,49 @@ public class ScheduleDTO {
 
         this.setMonLatitude(s.get(0).getLatitude());
         this.setMonLongitude(s.get(0).getLongitude());
-        this.setMonOpen(s.get(0).isOpen());
+        this.setMonOpen(s.get(0).getOpen());
         this.setMonEndTime(s.get(0).getEndTime());
         this.setMonStartTime(s.get(0).getStartTime());
 
 
         this.setTueLatitude(s.get(1).getLatitude());
         this.setTueLongitude(s.get(1).getLongitude());
-        this.setTueOpen(s.get(1).isOpen());
+        this.setTueOpen(s.get(1).getOpen());
         this.setTueEndTime(s.get(1).getEndTime());
         this.setTueStartTime(s.get(1).getStartTime());
 
 
         this.setWedLatitude(s.get(2).getLatitude());
         this.setWedLongitude(s.get(2).getLongitude());
-        this.setWedOpen(s.get(2).isOpen());
+        this.setWedOpen(s.get(2).getOpen());
         this.setWedEndTime(s.get(2).getEndTime());
         this.setWedStartTime(s.get(2).getStartTime());
 
 
         this.setThuLatitude(s.get(3).getLatitude());
         this.setThuLongitude(s.get(3).getLongitude());
-        this.setThuOpen(s.get(3).isOpen());
+        this.setThuOpen(s.get(3).getOpen());
         this.setThuEndTime(s.get(3).getEndTime());
         this.setThuStartTime(s.get(3).getStartTime());
 
 
         this.setFriLatitude(s.get(4).getLatitude());
         this.setFriLongitude(s.get(4).getLongitude());
-        this.setFriOpen(s.get(4).isOpen());
+        this.setFriOpen(s.get(4).getOpen());
         this.setFriEndTime(s.get(4).getEndTime());
         this.setFriStartTime(s.get(4).getStartTime());
 
 
         this.setSatLatitude(s.get(5).getLatitude());
         this.setSatLongitude(s.get(5).getLongitude());
-        this.setSatOpen(s.get(5).isOpen());
+        this.setSatOpen(s.get(5).getOpen());
         this.setSatEndTime(s.get(5).getEndTime());
         this.setSatStartTime(s.get(5).getStartTime());
 
 
         this.setSunLatitude(s.get(6).getLatitude());
         this.setSunLongitude(s.get(6).getLongitude());
-        this.setSunOpen(s.get(6).isOpen());
+        this.setSunOpen(s.get(6).getOpen());
         this.setSunEndTime(s.get(6).getEndTime());
         this.setSunStartTime(s.get(6).getStartTime());
 

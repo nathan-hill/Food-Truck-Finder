@@ -99,7 +99,6 @@ public class TruckTest {
                 "id=" + 456 +
                 ", Name='" + "coolTruckName" + '\'' +
                 ", Description='" + "awesome tacos" + '\'' +
-                ", Menu='" + "tacos" + '\'' +
                 ", ownerID=" + "12" +
                 ", type='" + "mexican" + '\'' +
                 ", cost=" + "3" +

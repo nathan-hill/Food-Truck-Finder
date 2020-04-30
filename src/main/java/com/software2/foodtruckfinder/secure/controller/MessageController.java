@@ -137,6 +137,31 @@ public class MessageController {
         return m;
     }
 
+    //should be all you need to get all messages that are associated with a user
+    @GetMapping(path = "/MessagesbyUserID")
+    public @ResponseBody
+    List<NotificationsDTO> findByUserId(@RequestParam("id") Long id) {
+        System.out.println(id);
+        Iterable<Message> m =_mRepository.findByReceiver(id);
+        m.forEach(System.out::println);
+        List<NotificationsDTO> list = new ArrayList<NotificationsDTO>();
+        for(Message x : m){
+            NotificationsDTO n = new NotificationsDTO();
+            n.setTruckName(x.getTruckName());
+            n.setSentTime(x.getSentTime());
+            n.setText(x.getText());
+            if(x.getRead()){
+                n.setRead("1");
+            }else{
+                n.setRead("0");
+            }
+            list.add(n);
+        }
+        return list;
+    }
+
+
+
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Message> updateMessage(@RequestBody Message m) throws CloneNotSupportedException {

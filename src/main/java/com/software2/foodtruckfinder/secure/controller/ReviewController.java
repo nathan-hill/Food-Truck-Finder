@@ -1,9 +1,11 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+import com.software2.foodtruckfinder.secure.model.FoodTruckReviewDTO;
 import com.software2.foodtruckfinder.secure.model.Review;
-import com.software2.foodtruckfinder.secure.model.Schedule;
-import com.software2.foodtruckfinder.secure.model.UserPreferences;
+import com.software2.foodtruckfinder.secure.model.Truck;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
+import com.software2.foodtruckfinder.secure.repository.TruckRepository;
+import com.software2.foodtruckfinder.secure.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -20,10 +23,16 @@ import java.util.List;
 public class ReviewController {
 
     @Autowired
+    private TruckRepository truckRepository;
+
+    private UserRepository userRepository;
+
+    @Autowired
     private ReviewRepository revRepository;
 
-    public ReviewController(ReviewRepository ur) {
+    public ReviewController(ReviewRepository ur, UserRepository uRep) {
         this.revRepository = ur;
+        this.userRepository = uRep;
     }
 
     @PostMapping(path = "/add")
@@ -35,6 +44,7 @@ public class ReviewController {
         n.setRating(newR.getRating());
         n.setDescription(newR.getDescription());
         n.setTruckid(newR.getTruckid());
+        n.setTruckname(newR.getTruckname());
 
         for (Review uP : revRepository.findAll()) {
             if (uP.getId().equals(newR.getId())) {
@@ -58,6 +68,7 @@ public class ReviewController {
             n.setUserID(r.getUserID());
             n.setRating(r.getRating());
             n.setTruckid(r.getTruckid());
+            n.setTruckname(r.getTruckname());
 
             Review generatedReview = revRepository.save(n);
             return new ResponseEntity<Review>(generatedReview, HttpStatus.OK);
@@ -91,5 +102,33 @@ public class ReviewController {
     public @ResponseBody
     List<Review> getReviewsByFT(Long ftid) {
         return revRepository.findReviewsByTruckid(ftid);
+    }
+
+    @GetMapping(path = "/getReviewsWithName")
+    public @ResponseBody
+    List<FoodTruckReviewDTO> getReviewsWithName() {
+        List<Review> generated = revRepository.findAll();
+        System.out.println(generated.size());
+        List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
+        for(Review r : generated){
+            try {
+                System.out.println(r.getTruckid());
+                String name = truckRepository.findById(r.getTruckid()).get().getName();
+                System.out.println(name);
+                String customer = userRepository.findUserByid(r.getUserID()).getUsername();
+                System.out.println(customer);
+                FoodTruckReviewDTO f = new FoodTruckReviewDTO();
+                f.setDescription(r.getDescription());
+                f.setId(r.getId());
+                f.setName(name);
+                f.setCustomer(customer);
+                f.setRating(r.getRating());
+                f.setTruckid(r.getTruckid());
+                f.setUserID(r.getUserID());
+                ftlist.add(f);
+            }catch (NoSuchElementException e){
+            }
+        }
+        return ftlist;
     }
 }

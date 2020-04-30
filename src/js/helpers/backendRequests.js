@@ -60,22 +60,20 @@ export function deleteMessage(i) {
     });
 }
 
-export function getUnreadNotifications(i) {
-  //return 1    //for testing
-  return axios({
+export async function getReviewsByUser(i) {
+  return await axios({
     method: "GET",
-    url: constants.backend_url + "message/getUnreadMessagesByUserS",
-    params: { id: i },
+    url: constants.backend_url + "review/getReviewsByUser",
+    params: { uid: i },
     headers: request_headers,
   })
-    .then((response) => {
+    .then(function (response) {
       console.log(response.data);
-      this.responseData = response.data;
       return response.data;
     })
     .catch(function (error) {
       console.log(error);
-    }).length;
+    });
 }
 
 export async function getUserByID(i) {
@@ -94,7 +92,7 @@ export async function getUserByID(i) {
     });
 }
 
-export async function postNewUser(u) {
+export async function postNewUser(u, fail, success) {
   const request = {
     method: "POST",
     url: constants.backend_url + "api/auth/signup",
@@ -106,11 +104,12 @@ export async function postNewUser(u) {
 
   return await axios(request)
     .then(function (response) {
-      console.log(response.data);
-      return response.data;
+      success(response.data)
+      return true;
     })
     .catch(function (error) {
-      console.log(error);
+      fail(error)
+      return false;
     });
 }
 
@@ -208,7 +207,7 @@ export async function findTrucksByOwnerID(id) {
     params: { id: id },
     headers: request_headers,
   })
-    .then(function (response) {
+    .then(response => {
       console.log(response.data);
       return response.data;
     })
@@ -218,17 +217,17 @@ export async function findTrucksByOwnerID(id) {
     });
 }
 
-export async function getScheduleDTOByID(id) {
-  return await axios({
+export function getScheduleDTOByID(id) {
+  return axios({
     method: "GET",
     url: constants.backend_url + "schedule/getScheduleDTOByID",
     params: { id: id },
     headers: request_headers,
   })
-    .then(function (response) {
+    .then(response => {
       console.log(response.data);
       return response.data;
-    })
+    }) 
     .catch(function (error) {
       console.log(error);
       return error;
@@ -238,8 +237,7 @@ export async function getScheduleDTOByID(id) {
 export async function getUPById(id) {
   return await axios({
     method: "GET",
-    url: constants.backend_url + "upref/getUPreferencesByID",
-    params: { id },
+    url: constants.backend_url + "upref/getUPreferencesByID/" + id,
     headers: request_headers,
   })
     .then(function (response) {
@@ -294,7 +292,6 @@ export async function updateSchedule(data){
     });
 }
 
-// currently doesn't work
 export async function deleteTruck(dt) {
   const request = {
     method: "DELETE",
@@ -364,6 +361,29 @@ export async function postNewSchedule(s) {
     headers: request_headers,
   };
   console.log("POST: new schedule");
+  console.log(request);
+
+  return await axios(request)
+    .then(function (response) {
+      console.log(response.data);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+export async function updateMenu(f, dt) {
+  const request = {
+    url: constants.backend_url + "menu/add",
+    method: "POST",
+    params: { 
+      file: f,
+      id: dt 
+    },
+    config: { headers: {'Content-Type': 'multipart/form-data' }}
+  };
+  console.log("POST: update menu");
   console.log(request);
 
   return await axios(request)

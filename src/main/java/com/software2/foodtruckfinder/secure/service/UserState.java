@@ -17,6 +17,26 @@ public class UserState {
     ArrayList<String> type;
     Integer day;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public Double getDis() {
+        return dis;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
     public UserState(UserPreferences one, Double lat, Double lon) {
         this.id = one.getId();
         this.lat = lat;

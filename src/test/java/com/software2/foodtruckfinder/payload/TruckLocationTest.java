@@ -33,7 +33,7 @@ public class TruckLocationTest {
     }
 
     @Test
-    @DisplayName("Menu Test")
+    @DisplayName("MenuTest Test")
     void menuTest(){
         tl.setMenu("test");
         assertEquals("test", tl.getMenu());

@@ -57,6 +57,11 @@ public class MessageControllerTest {
             }
 
             @Override
+            public List<Message> findBySender(Long truckid) {
+                return null;
+            }
+
+            @Override
             public List<Message> findAll() {
                 return new ArrayList<Message>();
             }

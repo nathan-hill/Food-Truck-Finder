@@ -3,32 +3,33 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import RadioButtons from "./../components/CreateRadioButtons";
+import * as Request from "./../helpers/backendRequests";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 export default class SignUp extends React.Component {
@@ -36,27 +37,73 @@ export default class SignUp extends React.Component {
     super(props);
 
     this.state = {
-      rbstate: true
+      rbstate: true,
+      loading: false,
+      failed: false,
+      message: "",
     };
+    this.onSubmitUser = this.onSubmitUser.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onFail = this.onFail.bind(this);
   }
-  // export default funciton RadioButtons() {
-  //   const [selectedValue, setSelectedValue] = React.useState("a");
 
-  //   handleChange = event => {
-  //     setSelectedValue(event.target.value);
-  //   };
-  // }
+  onSuccess = (status) => {
+    this.setState({ loading: false, failed: false });
+    console.log("the registration did not failed");
+    this.setState({ status: status.message });
+    this.props.onSuccess();
+  };
+
+  onFail = (error) => {
+    let message = "failed";
+    if (error.response.status === 400) {
+      console.log(error.response.status);
+      message = "Username Already Taken!";
+    } else if (error.response.status === 409) {
+      message = "Email already taken!";
+    }
+    this.setState({
+      loading: false,
+      failed: true,
+      message: message,
+    });
+  };
+
+  onSubmitUser = async (e) => {
+    e.preventDefault();
+    this.setState({loading: true})
+    const user = {
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value,
+      name:
+        e.target.elements.firstName.value +
+        " " +
+        e.target.elements.lastName.value,
+      username: e.target.elements.username.value,
+      type: e.target.elements.type.value,
+    };
+
+    Request.postNewUser(user, this.onFail, this.onSuccess);
+  };
 
   changeRBState = (e) => {
-
-    // console.log("Im HEr")
-
     this.setState({ rbstate: false });
   };
 
   render() {
+    let failMessage = this.state.failed ? (
+      <Typography color="error">{this.state.message}</Typography>
+    ) : (
+      <div></div>
+    );
+
+    let loadingBar = this.state.loading ? (
+      <LinearProgress variant="query" />
+    ) : (
+      <React.Fragment />
+    );
+
     const classes = useStyles;
-    // console.log(this.state.rbstate);
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -69,7 +116,7 @@ export default class SignUp extends React.Component {
           </Typography>
           <form
             className={classes.form}
-            onSubmit={this.props.action}
+            onSubmit={this.onSubmitUser}
             noValidate
           >
             <Grid container spacing={2}>
@@ -132,16 +179,8 @@ export default class SignUp extends React.Component {
                 <Grid item xs={12} style={{ paddingTop: "35px" }}>
                   <RadioButtons action={this.changeRBState} />
                 </Grid>
-                <Typography style={{ color: "RED" }}>
-                  {this.props.status}
-                </Typography>
+                {failMessage}
                 <br />
-                {/* <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                /> */}
               </Grid>
             </Grid>
             <Button
@@ -154,12 +193,8 @@ export default class SignUp extends React.Component {
             >
               Sign Up
             </Button>
+            {loadingBar}
             <Grid container justify="flex-end">
-              <Grid item>
-                <Link to="loginpage" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
             </Grid>
           </form>
         </div>

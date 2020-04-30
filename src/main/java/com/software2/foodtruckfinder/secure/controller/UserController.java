@@ -66,8 +66,8 @@ public class UserController {
 
     @DeleteMapping(path = "/replacePassword")
     public @ResponseBody
-    // password is the new password
-    // uname is the user to give the new password
+        // password is the new password
+        // uname is the user to give the new password
     Boolean replacePassword(String password, Long uname) {
         // s should be the encoded string that I will use to replace in the db
         String s;

@@ -1,17 +1,15 @@
 package com.software2.foodtruckfinder.secure.controller;
 
-import com.software2.foodtruckfinder.secure.model.Schedule;
-import com.software2.foodtruckfinder.secure.model.Truck;
-import com.software2.foodtruckfinder.secure.repository.TruckRepository;
+import com.software2.foodtruckfinder.secure.model.*;
+import com.software2.foodtruckfinder.secure.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +17,25 @@ import java.util.Optional;
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/v/trucks/")
 public class FoodTruckController {
+
     @Autowired
     private TruckRepository truckRepository;
+
+    @Autowired
+    private MenuRepository mRepository;
+
+    @Autowired
+    private SubscriptionRepository subRepository;
+
+    @Autowired
+    private ReviewRepository revRepository;
+
+    @Autowired
+    private MessageRepository _mRepository;
+
+    @Autowired
+    private ScheduleRepository _scheduleRepository;
+
 
     public FoodTruckController(TruckRepository truckRepository) {
         this.truckRepository = truckRepository;
@@ -35,7 +50,7 @@ public class FoodTruckController {
         n.setName(newTruck.getName());
         n.setDescription(newTruck.getDescription());
         n.setOwnerID(newTruck.getOwnerID());
-        n.setMenu(newTruck.getMenu());
+        n.setMenu(null);
 
         if(n.getName() == "" || n.getOwnerID() == null){
             // do nothing
@@ -70,14 +85,57 @@ public class FoodTruckController {
 
     @GetMapping(path = "findTruckByID")
     public @ResponseBody
-    Optional<Truck> findByTruckId(Integer integer){
-        return truckRepository.findById(integer);
+    Optional<Truck> findByTruckId(Long id){
+        return truckRepository.findById(id);
     }
 
     @GetMapping(path = "findTrucksByOwnerID")
     public @ResponseBody
     List<Truck> findTrucksByOwnerID(@RequestParam("id") long id){
-        return truckRepository.findTrucksByOwnerID(id);
+        List<Truck> trucks = truckRepository.findTrucksByOwnerID(id);
+        for(Truck t : trucks){
+            t.setMenu(null);
+        }
+        return trucks;
+    }
+
+    @GetMapping(path = "GetMenuDTOsByTruckID")
+    public @ResponseBody
+    List<MenuDTO> getMenuDTOsByTruckID(@RequestParam("id") long id){
+        List<Truck> trucks = truckRepository.findTrucksByOwnerID(id);
+        List<MenuDTO> d = new ArrayList<MenuDTO>();
+        for(Truck t : trucks){
+            d.add(getMenuDTOByTruckID(t.getId()));
+        }
+        return d;
+    }
+
+    @GetMapping(path = "GetMenuDTOByTruckID")
+    public @ResponseBody
+    MenuDTO getMenuDTOByTruckID(@RequestParam("id") long id){
+        Menu m = mRepository.findBytruckid(id);
+        MenuDTO d = new MenuDTO();
+        Truck t = truckRepository.findTruckById(id);
+        d.setMenu(m.getText());
+        d.setId(id);
+        d.setCost(t.getCost());
+        d.setDescription(t.getDescription());
+        d.setName(t.getName());
+        d.setOwnerID(t.getOwnerID());
+        d.setType(t.getType());
+        return d;
+    }
+
+    @GetMapping(path = "findMenuByTruckID")
+    public @ResponseBody
+    Menu findMenuByTruckID(@RequestParam("id") long id){
+        return mRepository.findBytruckid(id);
+    }
+
+    @GetMapping(path = "findNameByTruckID")
+    public @ResponseBody
+    String findNameByTruckID(@RequestParam("id") long id){
+        return truckRepository.findNameByid(id);
     }
 
     @PutMapping(value = "updateByTruck", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -90,11 +148,11 @@ public class FoodTruckController {
             Truck newT = new Truck();
             newT.setId(tdets.getId());
             newT.setDescription(tdets.getDescription());
-            newT.setMenu(tdets.getMenu());
             newT.setName(tdets.getName());
             newT.setOwnerID(tdets.getOwnerID());
             newT.setType(tdets.getType());
             newT.setCost(tdets.getCost());
+            newT.setMenu(tdets.getMenu());
 
             Truck generatedTruck = truckRepository.save(newT);
             return new ResponseEntity<Truck>(generatedTruck, HttpStatus.OK);
@@ -106,33 +164,35 @@ public class FoodTruckController {
     @DeleteMapping(path = "/removeTruck")
     public @ResponseBody
     Boolean removeTruck(Long truckid) {
+
+        mRepository.deleteBytruckid(truckid);
+
+        List<Review> reviews = revRepository.findReviewsByTruckid(truckid);
+        for(Review r : reviews){
+            revRepository.deleteById(r.getId());
+        }
+        List<Subscription> subscriptions = (List<Subscription>) subRepository.findByTruckId(truckid);
+        for(Subscription subs: subscriptions){
+            subRepository.deleteById(subs.getId());
+        }
+
+        List<Message> messages = _mRepository.findBySender(truckid);
+        for(Message m: messages){
+            _mRepository.deleteMessage(m.getId());
+        }
+
+        List<Schedule> schedules = _scheduleRepository.findByTruckID(truckid);
+        for(Schedule s: schedules){
+            _scheduleRepository.deleteById(s.getId());
+        }
+
         truckRepository.deleteTruck(truckid);
+
         return true;
     }
 
 
-//    @PostMapping("/uploadMenu")
-//    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-//        DBFile dbFile = dbFileStorageService.storeFile(file);
-//
-//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("/downloadFile/")
-//                .path(dbFile.getId())
-//                .toUriString();
-//
-//        return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri,
-//                file.getContentType(), file.getSize());
-//    }
-//
-//    @GetMapping("/downloadFile/{fileId}")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) {
-//        // Load file from database
-//        DBFile dbFile = dbFileStorageService.getFile(fileId);
-//
-//        return ResponseEntity.ok()
-//                .contentType(MediaType.parseMediaType(dbFile.getFileType()))
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
-//                .body(new ByteArrayResource(dbFile.getData()));
-//    }
+
+
 
 }
