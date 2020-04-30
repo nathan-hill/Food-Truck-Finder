@@ -137,7 +137,7 @@ export const OwnerListItems = (setDrawerComponent) => (
     <ListItem 
       button
       onClick={() => {
-        return setDrawerComponent(<ReviewByCustomer />);
+        return setDrawerComponent(<ReviewsByOwner />);
       }}>
       <ListItemIcon>
         <BarChartIcon />

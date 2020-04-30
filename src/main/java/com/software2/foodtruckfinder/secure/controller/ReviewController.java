@@ -130,7 +130,7 @@ public class ReviewController {
             List<Review> r = revRepository.findReviewsByTruckid(t.getId());
             for(Review rw: r){
                 User u = userRepository.findUserByid(rw.getUserID());
-                reviews.add(ftr.copy(rw, u.getName(), t.getName()));
+                reviews.add(ftr.copy(rw, t.getName(), u.getUsername()));
             }
         }
         return reviews;
@@ -149,7 +149,7 @@ public class ReviewController {
         for(Review rw: r){
             Truck t = truckRepository.findTruckById(rw.getTruckid());
             System.out.println(t.getName());
-            reviews.add(ftr.copy(rw, u.getName(), t.getName()));
+            reviews.add(ftr.copy(rw, t.getName(), u.getUsername()));
         }
 
         return reviews;
