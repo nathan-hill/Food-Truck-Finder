@@ -7,7 +7,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -24,7 +23,6 @@ import ReactSearchBox from "react-search-box";
 import SimpleMap from "./SimpleMap";
 import Notifications from "./Notifications";
 import { logout } from "./../actions/login";
-import { withRouter } from "react-router";
 import FoodTruckDetails from "./FoodTruckDetails";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -239,7 +237,7 @@ function Dashboard2(props) {
     localStorage.setItem("clickedTruck", JSON.stringify(truck));
 
     handleSelectionDrawerClick(
-      <FoodTruckDetails changeDrawer={handleSelectionDrawerClick} />
+      <FoodTruckDetails loginCallback={handleLoginCallback} changeDrawer={handleSelectionDrawerClick} />
     );
   };
 
@@ -325,14 +323,12 @@ function Dashboard2(props) {
             )}
           </IconButton>
         </div>
-        <Divider />
         <List>
           <ListItem
             button
             onClick={() => {
               handleSelectionDrawerClick(
                 <div style={{paddingTop: "32px", paddingLeft: "30px", paddingRight: "30px"}}>
-
                 <ReactSearchBox 
                   placeholder="Search all Food Trucks"
                   data={trucks}
@@ -378,4 +374,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logout })(withRouter(Dashboard2));
+export default connect(mapStateToProps, { logout })(Dashboard2);

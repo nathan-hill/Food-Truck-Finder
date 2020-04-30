@@ -15,5 +15,5 @@ public interface TruckLocation {
     Double getLongitude();
     String getStart_time();
     Integer getTruckid();
-    Boolean getIs_open();
+    Integer getIs_open();
 }

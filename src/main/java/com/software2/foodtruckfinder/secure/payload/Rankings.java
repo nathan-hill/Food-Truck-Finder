@@ -126,9 +126,6 @@ public class Rankings {
             this.truckDistances.put(getTruckFromId(s.getTruckID()), distance);
         }
 
-
-//        distanceRanking.replaceAll((k, v) -> v > this.userPref.getProximity() ? 1 : v);
-
         normalizeMap(distanceRanking);
 
         apply(distanceRanking);
@@ -174,7 +171,7 @@ public class Rankings {
         this.avgReviews = new LinkedHashMap<Truck, Double>();
 
         for (Truck t : this.truckList) {
-            reviewRank.put(t, 0.0);
+            reviewRank.put(t, 2.5);
         }
 
         for (ReviewAverages ra : this.reviews) {
@@ -226,12 +223,14 @@ public class Rankings {
     }
 
     public ArrayList<TruckDistance> getResult() {
+
         this.rankings = MapUtil.sortByValue(this.rankings);
 
-        //System.out.println("Sorted by rank");
-        //this.rankings.entrySet().stream().forEach(System.out::println);
+        ArrayList<TruckDistance> td = new ArrayList<TruckDistance>(TruckDistance.makeArrayFromMap(this.truckDistances, this.rankings, this.avgReviews));
 
-        return new ArrayList<TruckDistance>(TruckDistance.makeArrayFromMap(this.truckDistances, this.rankings,this.avgReviews));
+        td.removeIf(t -> t.getDistance() > 100);
+
+        return td;
     }
 
     public static <K, V extends Comparable<V>> Map<K, V> sortMapByValue(Map<K, V> map) {

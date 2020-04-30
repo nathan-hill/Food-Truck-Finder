@@ -16,7 +16,6 @@ import LocalShippongIcon from "@material-ui/icons/LocalShipping";
 import SendIcon from "@material-ui/icons/Send";
 import SendNotifications from "./SendNotifications";
 import FinalTruckTable from "./finalTruckTable";
-import SearchIcon from '@material-ui/icons/Search'
 
 export const GuestListItems = (setDrawerComponent) => {
   return (

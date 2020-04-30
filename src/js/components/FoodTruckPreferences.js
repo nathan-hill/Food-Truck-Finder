@@ -3,6 +3,7 @@ import * as Requests from "../helpers/backendRequests";
 import { connect } from "react-redux";
 import CreateTable from "./CreateTable";
 import { Typography } from "@material-ui/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 class FoodTruckPreferences extends React.Component {
   constructor(props) {
@@ -12,10 +13,12 @@ class FoodTruckPreferences extends React.Component {
       rows: [],
       columns: [],
       currentLocation: { lat: 0, lng: 0 },
+      loading: false,
     };
   }
 
   async componentDidMount() {
+    this.setState({loading: true})
     const cost = ["$", "$$", "$$$", "$$$$"];
     const { lat, lng } = await this.getcurrentLocation();
     this.setState((prev) => ({
@@ -40,6 +43,7 @@ class FoodTruckPreferences extends React.Component {
 
     for (let i = 0; i < preferred.length; i++) {
       edited[i].distance = preferred[i].distance.toFixed(2);
+      edited[i].rating = preferred[i].rating? preferred[i].rating.toFixed(1): "";
       edited[i].cost = cost[preferred[i].cost];
       edited[i].type =
         preferred[i].type.toLowerCase().charAt(0).toUpperCase() +
@@ -48,7 +52,8 @@ class FoodTruckPreferences extends React.Component {
       delete edited[i].id;
       delete edited[i].schedule;
       delete edited[i].score;
-      delete edited[i].ownerID; 
+      delete edited[i].ownerID;
+
     }
 
     // console.log("preferred trucks");
@@ -56,7 +61,8 @@ class FoodTruckPreferences extends React.Component {
     this.setState({
       generalData: edited,
       generalCols: Object.keys(edited[0]),
-    });
+      loading: false,
+    })
   }
 
   getcurrentLocation() {
@@ -80,11 +86,25 @@ class FoodTruckPreferences extends React.Component {
   render() {
     return (
       <div id="container" className="container">
-        <Typography>Recommended Food Trucks</Typography>
-        <CreateTable
-          rows={this.state.generalData}
-          cols={this.state.generalCols}
-        />
+        <Typography
+          variant="h4"
+          align="center"
+          style={{
+            paddingTop: "20px",
+            paddingLeft: "50px",
+            paddingRight: "50px",
+            paddingBottom: "20px",
+          }}
+        >
+          Recommended Food Trucks
+        </Typography>
+        {this.state.loading? <LinearProgress variant="query"/>: <div/>}
+        <div>
+          <CreateTable
+            rows={this.state.generalData}
+            cols={this.state.generalCols}
+          />
+        </div>
       </div>
     );
   }
