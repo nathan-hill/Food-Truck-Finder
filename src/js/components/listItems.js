@@ -5,7 +5,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import UserSettings from "./UserSettings";
 import ReviewTable from "./ReviewsDisplay";
-import SearchIcon from "@material-ui/icons/Search";
 import SettingsIcon from "@material-ui/icons/Settings";
 import StarIcon from '@material-ui/icons/Star';
 import RateReviewIcon from "@material-ui/icons/RateReview";
@@ -16,31 +15,9 @@ import SendIcon from '@material-ui/icons/Send';
 import SendNotifications from './SendNotifications'
 import FinalTruckTable from './finalTruckTable'
 
-export const GuestListItems = (setDrawerComponent) => {
+export const GuestListItems = (setComponentDrawer) => {
   return (
     <div>
-      <ListItem
-        button
-        onClick={() => {
-          console.log("Looking for search component guest");
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
-      <ListItem
-        button
-        onClick={() => {
-          return setDrawerComponent(<ReviewTable />);
-        }}
-      >
-        <ListItemIcon>
-          <StarIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customer Reviews" />
-      </ListItem>
     </div>
   );
 };
@@ -48,17 +25,6 @@ export const GuestListItems = (setDrawerComponent) => {
 export const CustomerListItems = (setDrawerComponent) => {
   return (
     <div>
-      <ListItem
-        button
-        onClick={() => {
-          console.log("Looking for search component customer");
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
       <ListItem
         button
         onClick={() => {
@@ -109,17 +75,6 @@ export const CustomerListItems = (setDrawerComponent) => {
 
 export const OwnerListItems = (setDrawerComponent) => (
   <div>
-    <ListItem
-      button
-      onClick={() => {
-        console.log("Looking for search component customer");
-      }}
-    >
-      <ListItemIcon>
-        <SearchIcon />
-      </ListItemIcon>
-      <ListItemText primary="Search" />
-    </ListItem>
     <ListItem button onClick={() => {return setDrawerComponent(<FinalTruckTable/>)}}>
       <ListItemIcon>
         <LocalShippongIcon/>

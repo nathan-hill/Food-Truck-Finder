@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-
 public class FoodTruckControllerTest {
     private TruckRepository tr;
     private FoodTruckController fc;
@@ -220,4 +218,3 @@ public class FoodTruckControllerTest {
 
 
 }
-

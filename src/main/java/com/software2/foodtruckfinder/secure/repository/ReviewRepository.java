@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findReviewsByTruckid(Long tid);
+    List<Review> findReviewsByTruckid(Long truckid);
 
     @Query(value = "select avg(rating) as avg, truck.* from review join truck where review.truckid = truck.id group by truckid ;"
             , nativeQuery = true)

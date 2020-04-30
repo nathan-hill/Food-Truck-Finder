@@ -37,20 +37,23 @@ public class ReviewController {
 
     @PostMapping(path = "/add")
     public @ResponseBody
-    ResponseEntity<Review> addReview(@RequestBody Review newR) {
-        Review n = new Review();
-        n.setId(newR.getId());
-        n.setUserID(newR.getUserID());
-        n.setRating(newR.getRating());
-        n.setDescription(newR.getDescription());
-        n.setTruckid(newR.getTruckid());
-        n.setTruckname(newR.getTruckname());
+    ResponseEntity<Review> addReview(@RequestParam("userID") Long userID, @RequestParam("rating") Integer rating,
+                                     @RequestParam("description") String description, @RequestParam("truckid") Long truckid,
+                                     @RequestParam("truckname") String truckname) {
+        System.out.println("GOT REVIEW:");
+        System.out.println(userID);
+        System.out.println(rating);
+        System.out.println(description);
+        System.out.println(truckid);
+        System.out.println(truckname);
 
-        for (Review uP : revRepository.findAll()) {
-            if (uP.getId().equals(newR.getId())) {
-                return ResponseEntity.status(400).build();
-            }
-        }
+
+        Review n = new Review();
+        n.setUserID(userID);
+        n.setRating(rating);
+        n.setDescription(description);
+        n.setTruckid(truckid);
+        n.setTruckname(truckname);
 
         Review generatedRev = revRepository.save(n);
         return new ResponseEntity<Review>(generatedRev, HttpStatus.OK);
@@ -83,6 +86,16 @@ public class ReviewController {
     Iterable<Review> getAllReviews() {
         // This returns a JSON or XML with the users
         return revRepository.findAll();
+    }
+
+    @GetMapping(path = "/getReviewsByTruckId")
+    public @ResponseBody
+    List<Review> getReviewsByTruckId(Long truckid) {
+        List<Review> result = revRepository.findReviewsByTruckid(truckid);
+
+        System.out.println(result.toString());
+
+        return result;
     }
 
     @DeleteMapping(path = "/delete")

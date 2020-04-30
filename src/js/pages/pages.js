@@ -10,9 +10,9 @@ import NotificationTable from "./../components/Notifications";
 import SendNotificationForm from "./../components/SendNotifications";
 import Button from "@material-ui/core/Button";
 import FoodTruckPreferences from "../components/FoodTruckPreferences";
+import FormComponent from "../components/rateAndReview";
 import Dashboard2 from '../components/Dashboard2'
 import TruckTable from "../components/finalTruckTable";
-
 
 export class TestRouting extends React.Component {
   render() {
@@ -43,6 +43,9 @@ export class TestRouting extends React.Component {
           </li>
           <li>
             <Link to="/FoodTruckPreference">Recommended Food Trucks</Link>
+          </li>
+          <li>
+            <Link to="/rateAndReview">Rate and Review Food Truck Form</Link>
           </li>
         </ul>
       </div>
@@ -187,11 +190,12 @@ export class Table extends React.Component {
 
 export class TruckDetails extends React.Component {
   render() {
-    return (
-      <div>
-        <FoodTruckDetails />
-      </div>
-    );
+      return(
+        <div>
+          <Link to="/">Back</Link>
+          <FoodTruckDetails/>
+        </div>
+      );
   }
 }
 
@@ -309,5 +313,24 @@ export class Home extends React.Component {
         <Dashboard2 />
       </div>
     );
+  }
+}
+
+export class TruckReview extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: ""
+    };
+  }
+
+  render() {
+      return(
+        <div>
+          <Link to="/">Back</Link>
+          <FormComponent/>
+        </div>
+      );
   }
 }

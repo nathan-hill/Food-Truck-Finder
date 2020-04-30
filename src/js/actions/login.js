@@ -51,3 +51,10 @@ export function login(data, callback) {
           });
   };
 }
+/*
+let initJwtToken = localStorage.getItem("jwtToken")
+if(initJwtToken) {
+    setAuthorizationToken(initJwtToken)
+    setCurrentUser(jwtDecode(initJwtToken));
+}
+*/
