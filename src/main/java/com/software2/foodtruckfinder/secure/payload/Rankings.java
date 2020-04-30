@@ -9,6 +9,7 @@ import com.software2.foodtruckfinder.secure.repository.ScheduleRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UPreferenceRepository;
 
+import javax.validation.constraints.Null;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -38,13 +39,17 @@ public class Rankings {
     private void apply(Map<Truck, Double> priceRanking) {
         System.out.println("_________________________");
         for (Map.Entry<Truck, Double> entry : priceRanking.entrySet()) {
-            if (this.rankings.get(entry.getKey()) == null) {
-                System.err.println(entry.getKey().toString());
-                System.err.println(this.rankings.entrySet().stream().filter(x -> x.getKey().getId() == entry.getKey().getId()).findFirst().get().toString());
-                System.err.println("Didnt find truck to apply");
-            } else {
-                Double newVal = this.rankings.get(entry.getKey()) + entry.getValue();
-                this.rankings.put(entry.getKey(), newVal);
+            try {
+                if (this.rankings.get(entry.getKey()) == null) {
+//                System.err.println(entry.getKey().toString());
+//                System.err.println(this.rankings.entrySet().stream().filter(x -> x.getKey().getId() == entry.getKey().getId()).findFirst().get().toString());
+                    System.err.println("Didnt find truck to apply");
+                } else {
+                    Double newVal = this.rankings.get(entry.getKey()) + entry.getValue();
+                    this.rankings.put(entry.getKey(), newVal);
+                }
+            }catch(NullPointerException e){
+                continue ;
             }
         }
     }
@@ -118,6 +123,14 @@ public class Rankings {
         //System.out.println(this.latitude + " " + this.longitude);
 
         for (Schedule s : this.schedules) {
+            try {
+                if (s.getLatitude() == null || s.getLongitude() == null) {
+                    continue;
+                }
+            } catch (NullPointerException e) {
+                continue;
+//                distanceRanking.put(getTruckFromId(s.getTruckID()), )
+            }
             Double distance = distance(s.getLatitude(), s.getLongitude(), this.latitude, this.longitude);
 
             double preferredDistance = this.userPref.getPrice();
@@ -202,7 +215,7 @@ public class Rankings {
         return Math.sqrt(Math.pow(x2 - x1, 2.0) + Math.pow(y2 - y1, 2.0)) * 69.172; // number of miles per degree;
     }
 
-    private Truck getTruckFromId(Long id) {
+    public Truck getTruckFromId(Long id) {
         for (Truck t : this.truckList) {
             if (t.getId().equals(id)) {
                 return t;
@@ -228,7 +241,18 @@ public class Rankings {
 
         ArrayList<TruckDistance> td = new ArrayList<TruckDistance>(TruckDistance.makeArrayFromMap(this.truckDistances, this.rankings, this.avgReviews));
 
-        td.removeIf(t -> t.getDistance() > 100);
+        Iterator<TruckDistance> truckIterator = td.iterator();
+        while(truckIterator.hasNext()) {
+            try {
+                TruckDistance truck = truckIterator.next();
+
+                if (truck.getDistance() > 100) {
+                    truckIterator.remove();
+                }
+            }catch(NullPointerException e){
+                continue;
+            }
+        }
 
         return td;
     }
