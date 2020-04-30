@@ -125,7 +125,7 @@ public class ReviewController {
         List<Truck> trucks = truckRepository.findTrucksByOwnerID(ownerid);
         System.out.println(trucks.size());
         List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
-        FoodTruckReviewDTO ftr = null;
+        FoodTruckReviewDTO ftr = new FoodTruckReviewDTO();;
         for(Truck t : trucks){
             List<Review> r = revRepository.findReviewsByTruckid(t.getId());
             for(Review rw: r){
@@ -142,7 +142,7 @@ public class ReviewController {
         List<Review> r = revRepository.findReviewsByUserID(uid);
         User u = userRepository.findUserByid(uid);
         List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
-        FoodTruckReviewDTO ftr = null;
+        FoodTruckReviewDTO ftr = new FoodTruckReviewDTO();
 
         System.out.println(u.getName());
 
