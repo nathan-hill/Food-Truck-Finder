@@ -5,6 +5,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import UserSettings from "./UserSettings";
 import ReviewTable from "./ReviewsDisplay";
+import ReviewByCustomer from "./ReviewByCustomer";
+import ReviewsByOwner from "./ReviewsByOwner";
 import SettingsIcon from "@material-ui/icons/Settings";
 import StarIcon from "@material-ui/icons/Star";
 import RateReviewIcon from "@material-ui/icons/RateReview";
@@ -39,7 +41,7 @@ export const GuestListItems = (setDrawerComponent) => {
         <ListItemIcon>
           <StarIcon />
         </ListItemIcon>
-        <ListItemText primary="Customer Reviews" />
+        <ListItemText primary="Truck Reviews" />
       </ListItem>
     </div>
   );
@@ -62,7 +64,7 @@ export const CustomerListItems = (setDrawerComponent) => {
       <ListItem
         button
         onClick={() => {
-          console.log("looking for review component");
+          return setDrawerComponent(<ReviewByCustomer />);
         }}
       >
         <ListItemIcon>
@@ -90,7 +92,7 @@ export const CustomerListItems = (setDrawerComponent) => {
         <ListItemIcon>
           <StarIcon />
         </ListItemIcon>
-        <ListItemText primary="Customer Reviews" />
+        <ListItemText primary="All Reviews" />
       </ListItem>
     </div>
   );
@@ -120,22 +122,26 @@ export const OwnerListItems = (setDrawerComponent) => (
       </ListItemIcon>
       <ListItemText primary="Send Notifications" />
     </ListItem>
-    <ListItem button>
+    <ListItem 
+      button
+      onClick={() => {
+        return setDrawerComponent(<ReviewsByOwner />);
+      }}>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="View Reviews" />
+      <ListItemText primary="My Reviews" />
     </ListItem>
     <ListItem
-      button
-      onClick={() => {
-        return setDrawerComponent(<ReviewTable />);
-      }}
-    >
-      <ListItemIcon>
-        <StarIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customer Reviews" />
-    </ListItem>
+        button
+        onClick={() => {
+          return setDrawerComponent(<ReviewTable />);
+        }}
+      >
+        <ListItemIcon>
+          <StarIcon />
+        </ListItemIcon>
+        <ListItemText primary="All Reviews" />
+      </ListItem>
   </div>
 );

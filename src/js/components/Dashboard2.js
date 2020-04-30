@@ -185,7 +185,7 @@ function Dashboard2(props) {
             <LoginPage
               callback={handleLoginCallback}
               changeDrawer={handleSelectionDrawerClick}
-            />
+            ></LoginPage>
           );
         }}
       >
@@ -343,7 +343,6 @@ function Dashboard2(props) {
         }}
       >
         {componentDrawerRender}
-        {/* <DrawerDecider state={componentDrawerRender} /> */}
       </Drawer>
       <SimpleMap trucks={trucks} onTruckClick={onTruckClick} />
       {/* <InteractiveMap onClick/> */}

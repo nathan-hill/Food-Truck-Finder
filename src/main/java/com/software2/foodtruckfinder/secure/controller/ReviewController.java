@@ -1,8 +1,11 @@
 package com.software2.foodtruckfinder.secure.controller;
 
+
 import com.software2.foodtruckfinder.secure.model.FoodTruckReviewDTO;
 import com.software2.foodtruckfinder.secure.model.Review;
 import com.software2.foodtruckfinder.secure.model.Truck;
+
+import com.software2.foodtruckfinder.secure.model.User;
 import com.software2.foodtruckfinder.secure.repository.ReviewRepository;
 import com.software2.foodtruckfinder.secure.repository.TruckRepository;
 import com.software2.foodtruckfinder.secure.repository.UserRepository;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -59,7 +61,7 @@ public class ReviewController {
         return new ResponseEntity<Review>(generatedRev, HttpStatus.OK);
     }
 
-    @PutMapping(value = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Review> updateReview(@RequestBody Review r) {
 
@@ -71,7 +73,6 @@ public class ReviewController {
             n.setUserID(r.getUserID());
             n.setRating(r.getRating());
             n.setTruckid(r.getTruckid());
-            n.setTruckname(r.getTruckname());
 
             Review generatedReview = revRepository.save(n);
             return new ResponseEntity<Review>(generatedReview, HttpStatus.OK);
@@ -124,24 +125,48 @@ public class ReviewController {
         System.out.println(generated.size());
         List<FoodTruckReviewDTO> ftlist = new ArrayList<FoodTruckReviewDTO>();
         for(Review r : generated){
-            try {
-                System.out.println(r.getTruckid());
-                String name = truckRepository.findById(r.getTruckid()).get().getName();
-                System.out.println(name);
-                String customer = userRepository.findUserByid(r.getUserID()).getUsername();
-                System.out.println(customer);
-                FoodTruckReviewDTO f = new FoodTruckReviewDTO();
-                f.setDescription(r.getDescription());
-                f.setId(r.getId());
-                f.setName(name);
-                f.setCustomer(customer);
-                f.setRating(r.getRating());
-                f.setTruckid(r.getTruckid());
-                f.setUserID(r.getUserID());
-                ftlist.add(f);
-            }catch (NoSuchElementException e){
-            }
+            String name = truckRepository.findTruckById(r.getTruckid()).getName();
+            String customer = userRepository.findUserByid(r.getUserID()).getUsername();
+            FoodTruckReviewDTO f = new FoodTruckReviewDTO();
+            ftlist.add(f.copy(r, name, customer));
         }
         return ftlist;
     }
+
+    @GetMapping(path = "/getReviewsByOwner")
+    public @ResponseBody
+    List<FoodTruckReviewDTO> getReviewsByOwner(@RequestParam("ownerid") Long ownerid) {
+        List<Truck> trucks = truckRepository.findTrucksByOwnerID(ownerid);
+        System.out.println(trucks.size());
+        List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
+        FoodTruckReviewDTO ftr = new FoodTruckReviewDTO();;
+        for(Truck t : trucks){
+            List<Review> r = revRepository.findReviewsByTruckid(t.getId());
+            for(Review rw: r){
+                User u = userRepository.findUserByid(rw.getUserID());
+                reviews.add(ftr.copy(rw, t.getName(), u.getUsername()));
+            }
+        }
+        return reviews;
+    }
+
+    @GetMapping(path = "/getReviewsByCustomer")
+    public @ResponseBody
+    List<FoodTruckReviewDTO> getReviewsByCustomer(Long uid) {
+        List<Review> r = revRepository.findReviewsByUserID(uid);
+        User u = userRepository.findUserByid(uid);
+        List<FoodTruckReviewDTO> reviews = new ArrayList<FoodTruckReviewDTO>();
+        FoodTruckReviewDTO ftr = new FoodTruckReviewDTO();
+
+        System.out.println(u.getName());
+
+        for(Review rw: r){
+            Truck t = truckRepository.findTruckById(rw.getTruckid());
+            System.out.println(t.getName());
+            reviews.add(ftr.copy(rw, t.getName(), u.getUsername()));
+        }
+
+        return reviews;
+    }
+
 }

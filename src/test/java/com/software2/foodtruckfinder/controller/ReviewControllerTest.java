@@ -333,9 +333,11 @@ public class ReviewControllerTest {
     @Test
     @DisplayName("addReview Test")
     void addTest(){
-       /*
-        assertEquals(HttpStatus.OK, rc.addReview(new Review()).getStatusCode());
-        */
+
+        assertEquals(HttpStatus.OK,
+                rc.addReview(123l, 3, "mexican", 345l, "tom's")
+                        .getStatusCode());
+
     }
 
     @Test
