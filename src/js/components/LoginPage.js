@@ -78,7 +78,9 @@ class LoginPage extends React.Component {
     console.log(this.props);
 
     return (
+      
       <Container component="main" maxWidth="xs">
+        <br/>
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -102,6 +104,7 @@ class LoginPage extends React.Component {
               error={errors.username}
               autoFocus
             />
+            
             <TextField
               variant="outlined"
               margin="normal"
@@ -116,10 +119,12 @@ class LoginPage extends React.Component {
               id="password"
               autoComplete="current-password"
             />
+            <br/>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <br/>
             <Button
               type="submit"
               fullWidth
@@ -150,6 +155,7 @@ class LoginPage extends React.Component {
                     );
                   }}
                 >
+                  <br/>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
