@@ -10,15 +10,28 @@ public class FoodTruckReviewDTO {
     private Long userID;
     private String description;
     private Integer rating;
-    private String name;
-    private String customer;
+    private String FTName;
+    private String Customer;
+
+    public FoodTruckReviewDTO copy(Review r, String ftname, String Customer) {
+        FoodTruckReviewDTO f = new FoodTruckReviewDTO();
+        f.setDescription(r.getDescription());
+        f.setId(r.getId());
+        f.setName(ftname);
+        f.setCustomer(Customer);
+        f.setRating(r.getRating());
+        f.setTruckid(r.getTruckid());
+        f.setUserID(r.getUserID());
+
+        return f;
+    }
 
     public String getCustomer() {
-        return customer;
+        return Customer;
     }
 
     public void setCustomer(String customer) {
-        this.customer = customer;
+        Customer = customer;
     }
 
 
@@ -26,11 +39,12 @@ public class FoodTruckReviewDTO {
     }
 
     public String getName() {
-        return name;
+
+        return FTName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        FTName = name;
     }
 
     public Long getTruckid() {
