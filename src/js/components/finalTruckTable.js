@@ -329,7 +329,7 @@ class FinalTruckTable extends React.Component {
         <div className="row clearfix">
           <div className="col-md-12 column">
             {this.state.data.map((item, idx) =>(
-                <ExpansionPanel style={{overflowX: "scroll", width: "100%"}}>
+                <ExpansionPanel style={{ width: "100%"}}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}
                   aria-controls="panella content">
                     <Typography>

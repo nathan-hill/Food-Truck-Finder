@@ -26,7 +26,6 @@ import Notifications from "./Notifications";
 import { logout } from "./../actions/login";
 import { withRouter } from "react-router";
 import FoodTruckDetails from "./FoodTruckDetails";
-import { Share } from "./Share";
 
 const selectionDrawerWidth = 240;
 const componentDrawerWidth = 500;
@@ -344,7 +343,6 @@ function Dashboard2(props) {
         }}
       >
         {componentDrawerRender}
-        {/* <DrawerDecider state={componentDrawerRender} /> */}
       </Drawer>
       <SimpleMap trucks={trucks} onTruckClick={onTruckClick} />
       {/* <InteractiveMap onClick/> */}

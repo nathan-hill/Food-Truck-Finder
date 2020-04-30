@@ -15,7 +15,7 @@ var constants = require('../helpers/constants')
 
 export const Share = (props) => {
 
-  let TruckName = JSON.parse(props.selected).name;
+  let TruckName = props.name;
   let shareUrl = constants.backend_url
   let size = 32;
 
