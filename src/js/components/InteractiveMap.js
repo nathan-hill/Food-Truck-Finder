@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import GoogleMap from "google-map-react";
 import { geolocated } from "react-geolocated";
-import MapIcon from "./MapIcon";
-import BeenhereIcon from "@material-ui/icons/Beenhere";
 
 export class InteractiveMap extends Component {
   constructor(props) {

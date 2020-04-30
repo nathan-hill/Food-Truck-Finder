@@ -10,17 +10,27 @@ public class FoodTruckReviewDTO {
     private Long userID;
     private String description;
     private Integer rating;
-    private String Name;
+    private String name;
+    private String customer;
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
 
     public FoodTruckReviewDTO() {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public Long getTruckid() {

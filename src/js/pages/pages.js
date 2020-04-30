@@ -199,6 +199,16 @@ export class TruckDetails extends React.Component {
   }
 }
 
+/*export class UserReviews extends React.Component{
+  render() {
+    return (
+      <div>
+        <ReviewsByCustomer />
+      </div>
+    );
+  }
+}*/
+
 export class UserProfile extends React.Component {
   constructor(props) {
     super(props);

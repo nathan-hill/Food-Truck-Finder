@@ -23,37 +23,6 @@ public class FoodTruckControllerTest {
     @BeforeEach
     void init(){
         tr = new TruckRepository() {
-            //mock repository for testing because true repository isn't loaded until application is running
-            @Override
-            public boolean existsById(Long id) {
-                return true;
-            }
-
-            @Override
-            public List<Truck> findByTypeIn(List<String> type) {
-                return null;
-            }
-
-            @Override
-            public Optional<Truck> findById(Integer in) {
-                return Optional.empty();
-            }
-
-            @Override
-            public List<Truck> findTrucksByOwnerID(long userId) {
-                return new ArrayList<Truck>();
-            }
-
-            @Override
-            public String findNameByid(long id) {
-                return null;
-            }
-
-            @Override
-            public Truck findTruckById(Long id) {
-                return null;
-            }
-
             @Override
             public List<Truck> findAll() {
                 return null;
@@ -65,63 +34,13 @@ public class FoodTruckControllerTest {
             }
 
             @Override
-            public List<Truck> findAllById(Iterable<Long> longs) {
-                return null;
-            }
-
-            @Override
-            public <S extends Truck> List<S> saveAll(Iterable<S> entities) {
-                return null;
-            }
-
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public <S extends Truck> S saveAndFlush(S entity) {
-                return null;
-            }
-
-            @Override
-            public void deleteInBatch(Iterable<Truck> entities) {
-
-            }
-
-            @Override
-            public void deleteAllInBatch() {
-
-            }
-
-            @Override
-            public Truck getOne(Long aLong) {
-                return null;
-            }
-
-            @Override
-            public <S extends Truck> List<S> findAll(Example<S> example) {
-                return null;
-            }
-
-            @Override
-            public <S extends Truck> List<S> findAll(Example<S> example, Sort sort) {
-                return null;
-            }
-
-            @Override
             public Page<Truck> findAll(Pageable pageable) {
                 return null;
             }
 
             @Override
-            public <S extends Truck> S save(S entity) {
+            public List<Truck> findAllById(Iterable<Long> longs) {
                 return null;
-            }
-
-            @Override
-            public Optional<Truck> findById(Long aLong) {
-                return Optional.empty();
             }
 
             @Override
@@ -150,8 +69,58 @@ public class FoodTruckControllerTest {
             }
 
             @Override
+            public <S extends Truck> S save(S entity) {
+                return null;
+            }
+
+            @Override
+            public <S extends Truck> List<S> saveAll(Iterable<S> entities) {
+                return null;
+            }
+
+            @Override
+            public Optional<Truck> findById(Long aLong) {
+                return Optional.empty();
+            }
+
+            @Override
+            public void flush() {
+
+            }
+
+            @Override
+            public <S extends Truck> S saveAndFlush(S entity) {
+                return null;
+            }
+
+            @Override
+            public void deleteInBatch(Iterable<Truck> entities) {
+
+            }
+
+            @Override
+            public void deleteAllInBatch() {
+
+            }
+
+            @Override
+            public Truck getOne(Long aLong) {
+                return null;
+            }
+
+            @Override
             public <S extends Truck> Optional<S> findOne(Example<S> example) {
                 return Optional.empty();
+            }
+
+            @Override
+            public <S extends Truck> List<S> findAll(Example<S> example) {
+                return null;
+            }
+
+            @Override
+            public <S extends Truck> List<S> findAll(Example<S> example, Sort sort) {
+                return null;
             }
 
             @Override
@@ -169,11 +138,40 @@ public class FoodTruckControllerTest {
                 return false;
             }
 
-			@Override
-			public void deleteTruck(Long tid) {
-				// TODO Auto-generated method stub
-				
-			}
+            @Override
+            public void deleteTruck(Long tid) {
+
+            }
+
+            @Override
+            public boolean existsById(Long id) {
+                return true;
+            }
+
+            @Override
+            public List<Truck> findByTypeIn(List<String> type) {
+                return null;
+            }
+
+            @Override
+            public Optional<Truck> findById(Integer in) {
+                return Optional.empty();
+            }
+
+            @Override
+            public List<Truck> findTrucksByOwnerID(long ownerID) {
+                return new ArrayList<Truck>();
+            }
+
+            @Override
+            public String findNameByid(long id) {
+                return null;
+            }
+
+            @Override
+            public Truck findTruckById(Long id) {
+                return null;
+            }
         };
         fc = new FoodTruckController(tr);
     }
@@ -199,7 +197,7 @@ public class FoodTruckControllerTest {
     @Test
     @DisplayName("Find by Id Test")
     void findByIdTest(){
-        Optional<Truck> ot = fc.findByTruckId((long) 0);
+        Optional<Truck> ot = fc.findByTruckId(1l);
         assertTrue(ot.isEmpty());
     }
 

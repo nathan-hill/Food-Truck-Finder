@@ -25,8 +25,9 @@ var constants = require("./../helpers/constants");
 class UserSettings extends React.Component {
   constructor(props) {
     super(props);
+    console.log("user props in user settings",props.auth)
     this.state = {
-      id: props.auth.user.sub,
+      id: props.auth.user.id,
       name: "",
       username: "",
       email: "",
@@ -405,21 +406,8 @@ class UserSettings extends React.Component {
                 }
               )}
             </List>
-            {/* <CheckBoxList
-              options={[
-                "MEXICAN",
-                "AMERICAN",
-                "ITALIAN",
-                "CHINESE",
-                "VIETNAMESE",
-              ]}
-              checked={this.state.likes}
-              disabled={this.state.isDisabled}
-              onChange={this.onCheckBoxChange}
-            /> */}
           </Paper>
         </Grid>
-
         {submitButton}
       </Grid>
     );

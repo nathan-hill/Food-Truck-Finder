@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/lab": "^4.0.0-alpha.48",
+    "@material-ui/lab": "^4.0.0-alpha.51",
     "@devexpress/dx-react-core": "^2.6.2",
     "@devexpress/dx-react-grid": "^2.6.2",
     "@devexpress/dx-react-grid-material-ui": "^2.6.2",

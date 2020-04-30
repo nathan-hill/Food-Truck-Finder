@@ -81,8 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js").permitAll()
                 .antMatchers("/v/api/auth/**").permitAll() // changing this to the users endpoints will allow you to access the user endpoints
+                .antMatchers("/v/review/getReviewsWithName").permitAll()
                 .antMatchers("/v/users/delete").permitAll()//remove this in final deliverable
                 .antMatchers("/v/users/").permitAll()
+                .antMatchers("v/users/getUserByID").permitAll()
+                .antMatchers("v/trucks/findNameByTruckID").permitAll()
                 .antMatchers("/v/trucks/findTruckByID").permitAll()
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability").permitAll()
                 .antMatchers("/v/upref/**").permitAll()
