@@ -78,7 +78,7 @@ class FoodTruckDetails extends React.Component {
                 <Box mb={3} border={1}>
                   <Typography component="legend">
                     {" "}
-                    User {review.userID} rates:{" "}
+                    {review.customer} rates:{" "}
                   </Typography>
                   <Rating name="pristine" value={review.rating} readOnly={true} />
                   <Typography component="legend">
