@@ -1,6 +1,5 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Container} from "@material-ui/core";
 import * as Request from "../helpers/backendRequests";
 import FormComponent from "./rateAndReview";
 import Box from "@material-ui/core/Box";
