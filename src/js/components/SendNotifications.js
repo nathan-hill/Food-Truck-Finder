@@ -20,7 +20,8 @@ class SendNotificationForm extends React.Component {
       trucks: [],
       selectedTrucks: [],
       checked: [],
-      message: ""
+      message: "",
+      id: props.auth.user.id,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -79,7 +80,7 @@ class SendNotificationForm extends React.Component {
   }
 
   async componentDidMount() {
-    let data = await Request.getAllTrucks(this.state.id);
+    let data = await Request.findTrucksByOwnerID(this.state.id);
 
     // console.log("Get user Data");
     // console.log(data);
