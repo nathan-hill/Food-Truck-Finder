@@ -60,22 +60,20 @@ export function deleteMessage(i) {
     });
 }
 
-export function getUnreadNotifications(i) {
-  //return 1    //for testing
-  return axios({
+export async function getReviewsByUser(i) {
+  return await axios({
     method: "GET",
-    url: constants.backend_url + "message/getUnreadMessagesByUserS",
-    params: { id: i },
+    url: constants.backend_url + "review/getReviewsByUser",
+    params: { uid: i },
     headers: request_headers,
   })
-    .then((response) => {
+    .then(function (response) {
       console.log(response.data);
-      this.responseData = response.data;
       return response.data;
     })
     .catch(function (error) {
       console.log(error);
-    }).length;
+    });
 }
 
 export async function getUserByID(i) {

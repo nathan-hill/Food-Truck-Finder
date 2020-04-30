@@ -1,9 +1,11 @@
 import React from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from 'material-table';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import Check from '@material-ui/icons/Check';
+import GradeIcon from '@material-ui/icons/Grade';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import Clear from '@material-ui/icons/Clear';
@@ -17,11 +19,9 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from "axios";
-import {connect} from "react-redux";
-import * as Request from './../helpers/backendRequests'
 
 const tableIcons = {
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
+    GradeIcon: forwardRef((props, ref) => <GradeIcon {...props} ref={ref}/>),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
     DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
@@ -41,74 +41,50 @@ const tableIcons = {
 
 var constants = require("./../helpers/constants");
 
-class NotificationTable extends React.Component {
-    
-
+class ReviewTable extends React.Component{
     constructor(props) {
         super(props);
         //may need to rename fields to match data returns
         this.state = {
             columns: [
-                {title: 'Date', field: 'sentTime'},
-                {title: 'Food Truck', field: 'truckName'},
-                {title: 'Message', field: 'text'},
+                {title: 'Customer', field: 'customer'},
+                {title: 'Food Truck', field: 'name'},
+                {title: 'Rating', 
+                    field: 'rating',
+                    render: rowData => (
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                            <Rating value={rowData.rating} disabled />
+                        </Box>
+                    )},
+                {title: 'Review', field: 'description'}
             ], data:[],
         }
     }
 
+
+    
     //fill with list from database
 
     componentDidMount = () => {
         // console.log("ID: ", this.props.auth.user.sub);
-        axios.get(constants.backend_url + "message/MessagesbyUserID", {
-            params: {
-                id: this.props.auth.user.id
-            }
-    }).then(res => {
+        axios.get(constants.backend_url + "review/getReviewsWithName")
+        .then(res => {
             this.setState({data: res.data})
             // console.log(this.state.data)
         });
     }
 
+
     render() {
         return (
             <MaterialTable
-                actions={[ 
-                    rowData => ({
-                        icon: Check,
-                        tooltip: 'Mark as Read',
-                        hidden: rowData.read === "1",
-                        onClick: (event, rowData) => Request.markMessageRead(rowData.id),
-                    }),
-                ]}
                 icons={tableIcons}
-                title="Notifications"
+                title="Reviews"
                 columns={this.state.columns}
                 data={this.state.data}
-                editable={{
-                    onRowDelete: oldData =>
-                    new Promise(resolve => {
-                        setTimeout(() => {
-                            resolve();
-                            this.setState(prevState => {
-                                // sets the table to current state
-                                const data = [...prevState.data];
-
-                                // deletes a data point form the table
-                                Request.deleteMessage(oldData.id);
-                                data.splice(data.indexOf(oldData), 1);
-                                return {...prevState, data};
-                            });
-                        }, 600);
-                    }),
-                }}
             />
         );
     }
 }
 
-const mapStateToProps = state => ({
-    auth: state.auth,
-});
-
-export default connect(mapStateToProps, null)(NotificationTable);
+export default ReviewTable;

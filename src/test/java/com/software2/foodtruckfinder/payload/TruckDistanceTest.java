@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TruckDistanceTest {
     private TruckDistance td;
 
-<<<<<<< HEAD
     @BeforeEach
     void init(){
         Truck t = new Truck();
@@ -23,7 +22,7 @@ public class TruckDistanceTest {
         t.setDescription("tacos and street corn");
         t.setOwnerID(4567l);
         t.setCost(3);
-        td = new TruckDistance(t, 1.5, 1.0);
+        td = new TruckDistance(t, 1.5, 1.0, 1.3);
     }
 
     @Test
@@ -53,7 +52,7 @@ public class TruckDistanceTest {
         td.setScore(4.3);
         assertEquals(4.3, td.getScore());
     }
-=======
+
 //    @BeforeEach
 //    void init(){
 //        Truck t = new Truck();
@@ -96,6 +95,5 @@ public class TruckDistanceTest {
 //        td.setScore(4.3);
 //        assertEquals(4.3, td.getScore());
 //    }
->>>>>>> a8e71d9d79acf391c09d4ee45ef5486ab542e3a8
 
 }
