@@ -23,24 +23,32 @@ class FoodTruckDetails extends React.Component {
         this.state = truck;
     }
 
+    updateReviewsCallback() {
+        console.log("callback printing this.state: ");
+        console.log(this.state);
+
+        let reviews = [];
+        console.log("Getting reviews for truck ID: " + this.state.id);
+        Request.getAllReviews().then(result => {
+            console.log("ALL REVIEWS:");
+            console.log(result);
+            let review;
+            for (review of result) {
+                if (review.truckid === this.state.id) {
+                    reviews.push(review);
+                }
+            }
+
+            this.setState((state) => {
+                state.reviews = reviews;
+                return state;
+            });
+        });
+    };
+
     render() {
         if(!this.state.reviews) {
-            let reviews = [];
-            console.log("Getting reviews for truck ID: " + this.state.id);
-            Request.getAllReviews().then(result => {
-                console.log("ALL REVIEWS:");
-                console.log(result);
-                let review;
-                for (review of result) {
-                    if (review.truckid === this.state.id) {
-                        reviews.push(review);
-                    }
-                }
-
-                this.setState((state) => {
-                    return {reviews: reviews}
-                });
-            });
+            this.updateReviewsCallback();
         } else {
             console.log("REVIEWS IN STATE: ");
             console.log(this.state.reviews);
@@ -49,7 +57,7 @@ class FoodTruckDetails extends React.Component {
         let isLoggedIn = this.props.auth.isAuthenticated;
         let reviewPanel;
         if(isLoggedIn) {
-            reviewPanel = <FormComponent/>
+            reviewPanel = <FormComponent callback={this.updateReviewsCallback.bind(this)}/>
         }
 
         return(

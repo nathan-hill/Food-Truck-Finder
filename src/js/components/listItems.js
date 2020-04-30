@@ -17,17 +17,6 @@ import FinalTruckTable from './finalTruckTable'
 export const GuestListItems = (setComponentDrawer) => {
   return (
     <div>
-      <ListItem
-        button
-        onClick={() => {
-          console.log("Looking for search component guest");
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search" />
-      </ListItem>
     </div>
   );
 };

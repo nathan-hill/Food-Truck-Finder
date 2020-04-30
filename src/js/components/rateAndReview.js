@@ -56,7 +56,9 @@ function FormComponent(props) {
      */
 
 
-    async function handleClick()  {
+    async function handleClick(e)  {
+        e.preventDefault();
+
         if(subscribeValue) {
             //unsubscribe
             let userid = props.auth.user.id;
@@ -100,13 +102,16 @@ function FormComponent(props) {
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
         console.log("Submit Review");
         console.log(truck);
         console.log(props);
 
         Request.addReview(props.auth.user.id,starValue,textValue,truck.id,truck.name).then(res => {
             console.log(res);
+            props.callback();
         })
 
     };
